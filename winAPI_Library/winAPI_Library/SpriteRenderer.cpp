@@ -1,5 +1,7 @@
 #include "SpriteRenderer.h"
 
+SpriteRenderer* SpriteRenderer::mthis = nullptr;
+
 SpriteRenderer::SpriteRenderer(){ }
 SpriteRenderer::~SpriteRenderer(){ }
 void SpriteRenderer::Init()

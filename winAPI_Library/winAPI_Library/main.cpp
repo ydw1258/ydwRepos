@@ -1,5 +1,11 @@
 #include <windows.h>
+#include<iostream>
+#include "Physics.h"
 
+using namespace std;
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+#pragma comment(lib, "msimg32.lib")
+#pragma comment(lib, "winmm.lib")
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -42,10 +48,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
 	PAINTSTRUCT ps;
+	static float time = 0;
+
+	Physics::GetInstance()->accumulate();
+	time += Physics::GetInstance()->deltaTime;
+	cout <<  time << endl;
+
+
 
 	switch (iMessage)
 	{
 	case WM_CREATE:
+		
 		hdc = GetDC(hWnd);
 		SetTimer(hWnd, 1, 10, NULL);
 		ReleaseDC(hWnd, hdc);
@@ -53,6 +67,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 		return 0;
 	case WM_TIMER:
+		
+		
 		return 0;
 	case WM_LBUTTONDOWN:
 		return 0;

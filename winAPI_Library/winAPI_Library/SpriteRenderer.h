@@ -12,6 +12,7 @@ enum SPRITEIMAGES
 class SpriteRenderer
 {
 private:
+	static SpriteRenderer* mthis;
 	int backgroundOffsetX[10] = { 0 };
 	int backgroundOffsetY[10] = { 0 };
 	SPRITEIMAGES spriteImages;
@@ -19,9 +20,18 @@ private:
 	int backgroundImageSizeX[10];
 	int backgroundImageSizeY[10];
 public:
+	static SpriteRenderer* GetInstance()
+	{
+		if (mthis == nullptr)
+			mthis = new SpriteRenderer();
+		return mthis;
+	}
 	void Init();
 	SpriteRenderer();
 	~SpriteRenderer();
 	void DrawPlayer(HDC hdc, int playerX, int PlayerY, int playerSizeX, int playerSizeY);
 	void DrawBackground(HDC hdc, int backGroundImageSizeX, int backGroundImageSizeY);
 };
+
+#pragma once
+
