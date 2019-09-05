@@ -1,0 +1,23 @@
+﻿  consoleMain.cpp
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(14): warning C4101: 'p' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(45): error C2065: 'AccumulateTime': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(46): error C2065: 'AccCal_Time': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(47): error C2065: 'FPSCount': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(53): error C2065: 'NextCount': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(55): error C2065: 'DeltaTime': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(55): error C2065: 'NextCount': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(55): error C2065: 'CurCount': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(55): error C2065: 'CpuFrequency': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(56): error C2065: 'CurCount': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(56): error C2065: 'NextCount': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(59): error C2065: 'AccCal_Time': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(59): error C2065: 'DeltaTime': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(60): error C2065: 'AccumulateTime': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(60): error C2065: 'DeltaTime': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(62): error C2065: 'FPSCount': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(63): error C2065: 'AccCal_Time': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(65): error C2065: 'Fps': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(65): error C2065: 'FPSCount': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(65): error C2065: 'AccCal_Time': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(66): error C2065: 'AccCal_Time': 선언되지 않은 식별자입니다.
+c:\users\administrator\source\repos\winapi_library\consolemain\consolemain.cpp(67): error C2065: 'FPSCount': 선언되지 않은 식별자입니다.

@@ -1,0 +1,6 @@
+﻿  BitMap.cpp
+  Tile.cpp
+  main.cpp
+c:\users\administrator\source\repos\winapi_library\winapi_library\main.cpp(44): warning C4101: 'pt' :참조되지 않은 지역 변수입니다.
+  코드를 생성하고 있습니다...
+  winAPI_Library.vcxproj -> C:\Users\Administrator\source\repos\winAPI_Library\Debug\winAPI_Library.exe
