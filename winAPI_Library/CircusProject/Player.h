@@ -1,5 +1,6 @@
 #pragma once
 #include"ResourceManager.h"
+#include"SpriteRenderer.h"
 
 enum PLAYERSTATE
 {
@@ -13,6 +14,7 @@ class Player
 	int defaultY = 650;
 	int x = 100;
 	int y = defaultY;
+
 	int jumpspeed = 2;
 	bool isJump;
 	bool isUp = true;

@@ -34,7 +34,7 @@ void EnemyFire::Init(FIRETYPE _fireType)
 		break;
 	}
 }
-
+//SpriteManager·Î ±³Ã¼
 void EnemyFire::Draw(HDC hdc)
 {
 	switch (fireType)

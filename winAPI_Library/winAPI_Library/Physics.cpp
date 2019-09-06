@@ -22,8 +22,6 @@ bool Physics::RECTbyPointCollisionCheck(RECT rc, POINT pt)
 	return false;
 }
 
-
-
 void Physics::accumulate()
 {
 	// 델타타임을 구한다.

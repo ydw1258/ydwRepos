@@ -16,9 +16,9 @@ private:
 	int backgroundOffsetX[10] = { 0 };
 	int backgroundOffsetY[10] = { 0 };
 	SPRITEIMAGES spriteImages;
-	int scrollSpeed[10];
-	int backgroundImageSizeX[10];
-	int backgroundImageSizeY[10];
+	int scrollSpeedX[10];
+	int ImageSizeX[10];
+	int ImageSizeY[10];
 public:
 	static SpriteRenderer* GetInstance()
 	{

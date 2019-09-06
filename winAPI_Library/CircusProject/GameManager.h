@@ -3,6 +3,7 @@
 #include"EnemyFire.h"
 #include"Player.h"
 #include<list>
+#include<vector>
 using namespace std;
 
 enum Scene
@@ -18,8 +19,10 @@ private:
 	int remains; //남은 플레이어 기회
 	int backgroundOffsetX[10] = { 0 };
 	list<EnemyFire> lEnemyFires;
+	Player player;
 	static GameManager* mthis;
-	
+	float Timer[10] = { 0 };
+	float TimerReset[10] = { 0 };
 public:
 	bool isGameOver = false;
 	Scene scene;
@@ -36,10 +39,14 @@ public:
 	void MakeEnemyFutonFire();
 	void MoveEnemyFire(int moveSpeed);
 	void MoveBackground(int scrollSpeed);
+	void Draw(HDC hdc);
 	void DrawBackground(HDC hdc);
 	void DrawFire(HDC hdc);
 	bool CollisionCheck(RECT rc, Player& player);
 	void GameOver(Player& player);
+	void Update(); //배경움직이고 등등
+	void Init(HDC hdc, HINSTANCE _g_hInst);
+	void SetTimers();
 	GameManager();
 	~GameManager();
 };
