@@ -1,4 +1,5 @@
 #include "SpriteRenderer.h"
+#include "GameManager.h"
 #include<iostream>
 using namespace std;
 
@@ -16,7 +17,7 @@ void SpriteRenderer::Init(IMAGENUM _startSprite, int _AllSpriteNum, int _ImageSi
 //타이머로 특정 간격 마다 호출 (이미지 변경의 시점만)
 void SpriteRenderer::DrawObject(HDC hdc, int objectX, int objectY)
 {
-	ResourceManager::GetInstance()->Draw(hdc, objectX, objectY, ImageSizeX, ImageSizeY, CurSprite);
+ 	ResourceManager::GetInstance()->Draw(hdc, objectX, objectY, ImageSizeX, ImageSizeY, CurSprite);
 }
 void SpriteRenderer::SpriteChange()
 {
@@ -37,7 +38,7 @@ void SpriteRenderer::DrawBackground(HDC hdc, int objectX, int objectY, int repea
 		}
 	}
 }
-void SpriteRenderer::DrawMoveBackground(HDC hdc, int objectX, int objectY, int scrollSpeedX, int scrollSpeedY)
+bool SpriteRenderer::DrawMoveBackground(HDC hdc, int objectX, int objectY, int scrollSpeedX, int scrollSpeedY) //이미지 오프셋이 초기화되면 true반환, 임시..
 {
 	DrawObject(hdc, objectX - backgroundOffsetX, objectY - backgroundOffsetY);
 	//cout << scrollSpeedX << endl;
@@ -46,9 +47,15 @@ void SpriteRenderer::DrawMoveBackground(HDC hdc, int objectX, int objectY, int s
 	backgroundOffsetY -= scrollSpeedY;
 
 	if (objectX - backgroundOffsetX + ImageSizeX < 0)
+	{
 		backgroundOffsetX = 0;
+		GameManager::GetInstance()->distance -= 10; //뺄 예정
+		return true;
+	}
+		
 	if (objectX - backgroundOffsetX + ImageSizeY < 0)
 		backgroundOffsetY = 0;
+	return false;
 }
 void SpriteRenderer::DrawSrolledBackground(HDC hdc, int objectX, int objectY, int repeatXNum, int repeatYNum, int scrollSpeedX, int scrollSpeedY)
 {

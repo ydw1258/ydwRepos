@@ -34,27 +34,12 @@ void ResourceManager::Init(HDC hdc, HINSTANCE hInstance)
 	bitmap[22].Init(hdc, hInstance, "player1.bmp");
 	bitmap[23].Init(hdc, hInstance, "player2.bmp");
 	bitmap[24].Init(hdc, hInstance, "star.bmp");
-	bitmap[25].Init(hdc, hInstance, "star2.bmp");
-	bitmap[26].Init(hdc, hInstance, "star3.bmp");
+	bitmap[25].Init(hdc, hInstance, "star1.bmp");
+	bitmap[26].Init(hdc, hInstance, "star2.bmp");
 	bitmap[27].Init(hdc, hInstance, "win.bmp");
 	bitmap[28].Init(hdc, hInstance, "win2.bmp");
 
 	AddFontResourceA("godoMaum.ttf");
-	
-	// 2. 정보 설정하기 
-	/*
-	LOGFONT lf; 
-	memset(&lf, 0, sizeof(lf));
-	lf.lfHeight = -MulDiv(24, dc->GetDeviceCaps(LOGPIXELSY), 72);
-	lf.lfWeight = FW_NORMAL; lf.lfOutPrecision = OUT_TT_ONLY_PRECIS; strcpy(lf.lfFaceName, ("Gesso"));
-	// 3. 폰트 만들기
-	CFont newFont;
-	if(!newFont.CreateFontIndirect(&lf))
-		return; // 4. 사용할 폰트 선택하기
-	CFont *pFont = dc->SelectObject(&newFont);
-	// 5. 쓰고 폰트 이전껄로 돌리고 만든 폰트 지우기. 
-	dc->TextOut(50, 40, "slway", 5); dc->SelectObject(pFont); newFont.DeleteObject();
-	*/
 }
 
 void ResourceManager::Draw(HDC hdc, int x, int y, int cx, int cy, IMAGENUM imageNum)

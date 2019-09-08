@@ -22,6 +22,6 @@ public:
 	void DrawObject(HDC hdc, int playerX, int PlayerY);
 	void SpriteChange();
 	void DrawBackground(HDC hdc, int objectX, int objectY, int repeatXNum, int repeatYNum);
-	void DrawMoveBackground(HDC hdc, int objectX, int objectY, int scrollSpeedX = 0, int scrollSpeedY = 0);
+	bool DrawMoveBackground(HDC hdc, int objectX, int objectY, int scrollSpeedX = 0, int scrollSpeedY = 0);
 	void DrawSrolledBackground(HDC hdc, int objectX, int objectY, int repeatXNum, int repeatYNum, int _scrollSpeedX = 0, int _scrollSpeedY = 0);
 };

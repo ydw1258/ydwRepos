@@ -20,8 +20,8 @@ void EnemyFire::Init(FIRETYPE _fireType, int _x, int _y, int _moveSpeed)
 		break;
 	case SMALL:
 		spriteRenderer = new SpriteRenderer[2];
-		spriteRenderer[0].Init(ENEMY_l_b, 2, 26, 104);
-		spriteRenderer[1].Init(ENEMY_l_f, 2, 25, 104);
+		spriteRenderer[0].Init(IMAGENUM_ENEMY_l_b, 2, 26, 104);
+		spriteRenderer[1].Init(IMAGENUM_ENEMY_l_f, 2, 25, 104);
 		break;
 	case FUTON:
 		spriteRenderer = new SpriteRenderer();

@@ -7,6 +7,7 @@
 #include "BitMap.h"
 #include <crtdbg.h>
 #include<iostream>
+
 using namespace std;
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #pragma comment(lib, "msimg32.lib")
@@ -88,6 +89,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			GameManager::GetInstance()->player.Move(true);
 			return 0;
 		case VK_SPACE:
+			switch (GameManager::GetInstance()->scene)
+			{
+			case TITLE:
+				GameManager::GetInstance()->GameStart();
+				break;
+			case STAGE1:
+				break;
+			default:
+				break;
+			}
 			if (GameManager::GetInstance()->isGameOver)
 				return 0;
 			GameManager::GetInstance()->player.SetJump();

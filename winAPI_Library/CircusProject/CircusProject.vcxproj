@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BitMap.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CircusMain.cpp" />
     <ClCompile Include="EnemyFire.cpp" />
     <ClCompile Include="FontManager.cpp" />
@@ -152,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitMap.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="EnemyFire.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameManager.h" />

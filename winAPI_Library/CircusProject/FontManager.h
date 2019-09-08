@@ -12,6 +12,10 @@ private:
 public:
 	void Init();
 	void Draw(int num, int x, int y);
-	void moveDraw(int num, int x, int y, int scrollSpeedX = 0, int scrollSpeedY = 0);
+	void Draw(const char* str ,int x, int y);
+	void moveDraw(int num, int x, int y, int scrollSpeedX = 0, int scrollSpeedY = 0, int resetX = 0, int resetY = 0);
+	void fontOffsetResetX();
+	void fontOffsetResetY();
 	void Release();
+	
 };

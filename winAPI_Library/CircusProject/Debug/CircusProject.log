@@ -1,2 +1,5 @@
-﻿  FontManager.cpp
+﻿  Camera.cpp
+  GameManager.cpp
+c:\users\ydw\desktop\ydwrepos\winapi_library\circusproject\gamemanager.cpp(211): warning C4101: 'rcTemp' :참조되지 않은 지역 변수입니다.
+  코드를 생성하고 있습니다...
   CircusProject.vcxproj -> C:\Users\ydw\Desktop\ydwRepos\winAPI_Library\Debug\CircusProject.exe
