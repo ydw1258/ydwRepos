@@ -1,4 +1,5 @@
 #include "MiterBoard.h"
+#include "GameManager.h"
 
 void MiterBoard::Init()
 {
@@ -7,7 +8,7 @@ void MiterBoard::Init()
 void MiterBoard::Draw(int distance, int x, int y, int scrollSpeedX, int scrollSpeedY) //offset이 초기화 되면 true반환
 {
 	Image.DrawMoveBackground(ResourceManager::backBuffer->GetmemDC(), x, y, scrollSpeedX);
-	_font.moveDraw(distance, x, y, scrollSpeedX, 0, -86); //미터 가로이미지 크기
+	_font.Draw(distance, x, y); //미터 가로이미지 크기
 }
 
 MiterBoard::MiterBoard(){}

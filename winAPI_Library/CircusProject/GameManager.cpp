@@ -121,21 +121,24 @@ void GameManager::InGameDraw(HDC hdc)
 		MoveEnemyFire(0);
 		// 안움직일때
 		backGround[0].DrawBackground(ResourceManager::backBuffer->GetmemDC(), 0, 535, 20, 1);
-		backGround[1].DrawSrolledBackground(ResourceManager::backBuffer->GetmemDC(), 0, 470, 20, 1);
+		backGround[1].DrawBackground(ResourceManager::backBuffer->GetmemDC(), 0, 470, 20, 1);
 		break;
 	case LEFT:
 		backGround[0].DrawBackground(ResourceManager::backBuffer->GetmemDC(), 0, 535, 20, 1);
-		backGround[1].DrawSrolledBackground(ResourceManager::backBuffer->GetmemDC(), 0, 470, 20, 1, 3);
-		backElephant.DrawMoveBackground(ResourceManager::backBuffer->GetmemDC(), 970, 470, 3);
-		miter.Draw(distance, 970, 670, 3);
-		MoveEnemyFire(1);
+		backGround[1].DrawBackground(ResourceManager::backBuffer->GetmemDC(), 0, 470, 20, 1);
+		backElephant.DrawMoveBackground(ResourceManager::backBuffer->GetmemDC(), 970, 470, 0);
+		miter.Draw(distance, 970, 670, 0);
+		CameraX--;
+		MoveEnemyFire(0);
 		break;
 	case RIGHT:
 		backGround[0].DrawBackground(ResourceManager::backBuffer->GetmemDC(), 0, 535, 20, 1);
-		backGround[1].DrawSrolledBackground(ResourceManager::backBuffer->GetmemDC(), 0, 470, 20, 1, -3);
-		backElephant.DrawMoveBackground(ResourceManager::backBuffer->GetmemDC(), 970, 470, -3);
-		miter.Draw(distance, 970, 670, -3);
-		MoveEnemyFire(-1);
+		backGround[1].DrawBackground(ResourceManager::backBuffer->GetmemDC(), 0, 470, 20, 1);
+		backElephant.DrawMoveBackground(ResourceManager::backBuffer->GetmemDC(), 970, 470, 0);
+		CameraX++;
+		miter.Draw(distance, 970, 670, 0);
+		MoveEnemyFire(0);
+		
 		break;
 	}
 	backElephant.DrawMoveBackground(ResourceManager::backBuffer->GetmemDC(), 970, 470, 0);
@@ -153,7 +156,6 @@ void GameManager::InGameDraw(HDC hdc)
 }
 void GameManager::DrawStagelogo(HDC hdc)
 {
-	
 }
 
 void GameManager::DrawFire(HDC hdc)
@@ -171,6 +173,7 @@ void GameManager::GameOver()
 }
 void GameManager::GameStart()
 {
+	DrawBlack();
 	scene = STAGE1;
 }
 void GameManager::MakeEnemyFire(FIRETYPE EnemyFireType)
@@ -228,6 +231,14 @@ void GameManager::CollisionView()
 		Rectangle(ResourceManager::backBuffer->GetmemDC(), it->GetFireRect().left, it->GetFireRect().top, it->GetFireRect().right, it->GetFireRect().bottom);
 	}
 }
-
+void GameManager::DrawBlack()
+{
+	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+	myBrush = CreateSolidBrush(RGB(0, 0, 0));
+	HBRUSH oldBrush = (HBRUSH)SelectObject(ResourceManager::GetInstance()->backBuffer->GetmemDC(), myBrush);
+	Rectangle(ResourceManager::GetInstance()->backBuffer->GetmemDC(), 0, 0, 1024, 740);
+	SelectObject(ResourceManager::GetInstance()->backBuffer->GetmemDC(), oldBrush);
+	DeleteObject(myBrush);
+}
 GameManager::GameManager(){}
 GameManager::~GameManager(){}

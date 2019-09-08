@@ -1,16 +1,17 @@
 #include "EnemyFire.h"
 #include "ResourceManager.h"
+#include "GameManager.h"
 
 EnemyFire::EnemyFire(){}
 EnemyFire::~EnemyFire(){}
 
 void EnemyFire::Init(FIRETYPE _fireType, int _x, int _y, int _moveSpeed)
 {
-	x = _x;
+	x = _x + GameManager::GetInstance()->CameraX;
 	y = _y;
 	moveSpeed = _moveSpeed;
 	fireType = _fireType;
-
+	
 	switch (fireType)
 	{
 	case NORMAL:
@@ -37,8 +38,8 @@ void EnemyFire::Draw(HDC hdc, PLAYERSTATE playerState)
 	switch (fireType)
 	{
 	case NORMAL:
-		spriteRenderer[0].DrawObject(hdc, x, y);
-		spriteRenderer[1].DrawObject(hdc, x + 25, y);
+		spriteRenderer[0].DrawObject(hdc, x , y);
+		spriteRenderer[1].DrawObject(hdc, x+ 25, y);
 		break;
 	case SMALL:
 		spriteRenderer[0].DrawObject(hdc, x, y);
@@ -58,22 +59,22 @@ RECT EnemyFire::GetFireRect()
 	switch (fireType)
 	{
 	case NORMAL:
-		fireRect.left = x + 15;
+		fireRect.left = x + 15 - GameManager::GetInstance()->CameraX;
 		fireRect.top = y + 120;
 		fireRect.right = fireRect.left + 20;
 		fireRect.bottom = fireRect.top + 20;
 		break;
 	case SMALL:
-		fireRect.left = x + 15;
+		fireRect.left = x + 15 - GameManager::GetInstance()->CameraX;
 		fireRect.top = y + 100;
 		fireRect.right = fireRect.left + 10;
 		fireRect.bottom = fireRect.top + 10;
 		break;
 	case FUTON:
-		fireRect.left = x + 10;
+		fireRect.left = x + 10 - GameManager::GetInstance()->CameraX;
 		fireRect.top = y;
-		fireRect.right = x + 30;
-		fireRect.bottom = y + 40;
+		fireRect.right = fireRect.left + 10;
+		fireRect.bottom = fireRect.top + 40;
 		break;
 	default:
 		break;

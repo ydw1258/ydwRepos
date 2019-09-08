@@ -20,6 +20,7 @@ private:
 	int score;
 	int remains; //남은 플레이어 기회
 	int backgroundOffsetX[10] = { 0 };
+
 	list<EnemyFire> lEnemyFires;
 	SpriteRenderer backGround[2];
 	SpriteRenderer backElephant;
@@ -30,6 +31,7 @@ private:
 	float Timer[10] = { 0 };
 	float TimerReset[10] = { 0 };
 public:
+	int CameraX = 0;
 	int distance = 90;
 	Player player;
 	bool isGameOver = false;
@@ -47,6 +49,7 @@ public:
 	void Draw(HDC hdc);
 	void DrawTitle(HDC hdc);
 	void DrawStagelogo(HDC hdc);
+	void DrawBlack();
 	void InGameDraw(HDC hdc);
 	void DrawFire(HDC hdc);
 	bool CollisionCheck();

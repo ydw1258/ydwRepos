@@ -17,7 +17,7 @@ void SpriteRenderer::Init(IMAGENUM _startSprite, int _AllSpriteNum, int _ImageSi
 //타이머로 특정 간격 마다 호출 (이미지 변경의 시점만)
 void SpriteRenderer::DrawObject(HDC hdc, int objectX, int objectY)
 {
- 	ResourceManager::GetInstance()->Draw(hdc, objectX, objectY, ImageSizeX, ImageSizeY, CurSprite);
+ 	ResourceManager::GetInstance()->Draw(hdc, objectX - GameManager::GetInstance()->CameraX, objectY, ImageSizeX, ImageSizeY, CurSprite);
 }
 void SpriteRenderer::SpriteChange()
 {

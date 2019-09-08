@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "GameManager.h"
 
 RECT Player::GetPlayerRect()
 {
@@ -68,7 +69,7 @@ void Player::Draw(HDC hdc)
 	case STOP:
 	case LEFT:
 	case RIGHT:
-		moveSprite[curSprite - PLAYER0].DrawObject(hdc, x, y);
+		moveSprite[curSprite - PLAYER0].DrawObject(hdc, x + GameManager::GetInstance()->CameraX, y);
 		//moveSprite[1].DrawObject(hdc, x, y);
 		break;
 	case PLAYER_DIE:
