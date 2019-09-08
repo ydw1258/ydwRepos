@@ -1,6 +1,6 @@
 #pragma once
-#include"Windows.h"
-
+#include"SpriteRenderer.h"
+#include "Player.h"
 enum FIRETYPE
 {
 	NORMAL,
@@ -10,18 +10,17 @@ enum FIRETYPE
 class EnemyFire
 {
 private:
+	int moveSpeed;
 	int x;
 	int y;
-	int moveSpeed;
-	
+	SpriteRenderer* spriteRenderer;
 	FIRETYPE fireType;
 public:
-	RECT FireRect;
 	EnemyFire();
 	~EnemyFire();
-	void Init(FIRETYPE _fireType);
+	void Init(FIRETYPE _fireType, int _x, int _y, int _moveSpeed);
 	void Move(int _moveSpeed);
 	bool OutOfScreen();
-	void Draw(HDC hdc);
-	void RECTDisplay(HDC hdc);
+	void Draw(HDC hdc, PLAYERSTATE playerState);
+	RECT GetFireRect();
 };

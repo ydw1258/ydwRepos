@@ -14,35 +14,34 @@ class Player
 	int defaultY = 650;
 	int x = 100;
 	int y = defaultY;
-
 	int jumpspeed = 2;
-	bool isJump;
+	bool isJump = false;
 	bool isUp = true;
 	int jumpTopY = 550;
-	PLAYERSTATE playerState = STOP;
-	IMAGENUM playerImage = PLAYER0;
+	SpriteRenderer moveSprite[2];
+	SpriteRenderer jumpSprite;
+	SpriteRenderer dieSprite;
+	IMAGENUM curSprite = PLAYER0;
 public:
-	RECT playerRECT;
+	RECT GetPlayerRect();
+	void Init();
+	void SpriteChange();
+	PLAYERSTATE playerState = STOP;
 	void Move(bool direction);
 	void Jump();
 	void Draw(HDC hdc);
+
 	void SetJump()
 	{
 		isJump = true;
-		playerImage = PLAYER2;
-	}
-	PLAYERSTATE GetPlayerState()
-	{
-		return playerState;
 	}
 	void SetDie()
 	{
 		playerState = PLAYER_DIE;
-		playerImage = DIE;
+		curSprite = IMAGENUM_DIE;
 	}
 
 	void Stop();
 	Player();
 	~Player();
-	void RECTDisplay(HDC hdc);
 };

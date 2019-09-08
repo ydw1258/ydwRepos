@@ -2,6 +2,7 @@
 #include"Player.h"
 #include"GameManager.h"
 #include"SpriteRenderer.h"
+#include"ResourceManager.h"
 #include"Physics.h"
 #include "BitMap.h"
 #include <crtdbg.h>
@@ -63,6 +64,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		ReleaseDC(hWnd, hdc);
 		return 0;
 	case WM_TIMER:
+		//GameManager::GetInstance()->distance += 3;
 		GameManager::GetInstance()->Update();
 		InvalidateRect(hWnd, NULL, false); //다시그리기 WM_PAINT를 호출
 		return 0;
@@ -72,17 +74,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_KEYDOWN:
+		
 		switch (wParam)
 		{
 		case VK_LEFT:
-			GameManager::GetInstance()->distance += 3;
-			GameManager::GetInstance()->MoveEnemyFire(-3);
+			if (GameManager::GetInstance()->isGameOver)
+				return 0;
+			GameManager::GetInstance()->player.Move(false);
+			return 0;
 		case VK_RIGHT:
-			GameManager::GetInstance()->distance -= 8;
-			GameManager::GetInstance()->MoveEnemyFire(8);
+			if (GameManager::GetInstance()->isGameOver)
+				return 0;
+			GameManager::GetInstance()->player.Move(true);
 			return 0;
 		case VK_SPACE:
-			//player.SetJump();
+			if (GameManager::GetInstance()->isGameOver)
+				return 0;
+			GameManager::GetInstance()->player.SetJump();
 			return 0;
 		}
 		return 0;
@@ -91,6 +99,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		{
 		case VK_LEFT:
 		case VK_RIGHT:
+			if (GameManager::GetInstance()->isGameOver)
+				return 0;
+			GameManager::GetInstance()->player.Stop();
 			break;
 		}
 		return 0;

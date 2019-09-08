@@ -1,111 +1,135 @@
 #include "GameManager.h"
-#include "ResourceManager.h"
 #include<iostream>
 using namespace std;
 
 GameManager* GameManager::mthis = nullptr;
-
-void GameManager::DrawBackground(HDC hdc)
+enum TIMERID
 {
-	//SpriteManager로 교체
-	for (int i = -5; i < 20; i++)
-	{
+	TIMER_MAKEFIRE,
+	TIMER_SPRITECHANGE
+};
+void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
+{
+	for (int i = 0; i < 10; i++)
+		Timer[i] = 0;
+	player.Init();
+	ResourceManager::GetInstance()->Init(hdc, _g_hInst);
+	MakeEnemyFire(NORMAL);
+	SetTimers();
 
-		//녹색 배경
-		ResourceManager::GetInstance()->Draw(hdc, i * 67, 535, 67, 183, IMAGENUM_BACK);
-		//관객
-		ResourceManager::GetInstance()->Draw(hdc, i * 64 + backgroundOffsetX[0], 470, 65, 64, BACKNORMAL);
+	backGround[0].Init(IMAGENUM_BACK, 1, 67, 183);
+	backGround[1].Init(IMAGENUM_BACKNORMAL, 1, 65, 64);
+	backElephant.Init(IMAGENUM_BACKDECO, 1, 66, 67);
+	_miter.Init();
+}
+void GameManager::SetTimers()
+{
+	TimerReset[TIMER_MAKEFIRE] = 5.0f;
+	TimerReset[TIMER_SPRITECHANGE] = 0.4f;
+}
+//Update 매프레임 호출
+void GameManager::Update()
+{
+	Physics::GetInstance()->deltaTimeInit();
+	static bool flag = false;
+
+	if (CollisionCheck() && !flag)
+	{
+		flag = true;
+		player.SetDie();
 	}
-	ResourceManager::GetInstance()->Draw(hdc, 1100 + backgroundOffsetX[1], 470, 66, 67, IMAGENUM_BACKDECO);
+	player.Jump();
+	
+	for (int i = 0; i < 10; i++)
+	{
+		Timer[i] += Physics::GetInstance()->deltaTime;
+		
+		if (Timer[i] >= TimerReset[i])
+		{
+			Timer[i] = 0;
+			switch (i)
+			{
+			case TIMER_MAKEFIRE:
+				GameManager::GetInstance()->MakeEnemyFire((FIRETYPE)(NORMAL + rand() % 3));
+				break;
+			case TIMER_SPRITECHANGE:
+				player.SpriteChange();
+				break;
+			}
+		}
+	}
+}
+//Draw 매프레임 호출
+void GameManager::Draw(HDC hdc)
+{
+	switch (player.playerState)
+	{
+	case STOP:
+		MoveEnemyFire(0);
+		// 안움직일때
+		backGround[0].DrawBackground(ResourceManager::backBuffer->GetmemDC(), 0, 535, 20, 1);
+		backGround[1].DrawSrolledBackground(ResourceManager::backBuffer->GetmemDC(), 0, 470, 20, 1);
+		break;
+	case LEFT:
+		backGround[0].DrawBackground(ResourceManager::backBuffer->GetmemDC(), 0, 535, 20, 1);
+		backGround[1].DrawSrolledBackground(ResourceManager::backBuffer->GetmemDC(), 0, 470, 20, 1, 3);
+		backElephant.DrawMoveBackground(ResourceManager::backBuffer->GetmemDC(), 970, 470, 3);
+		_miter.Draw(distance, 970, 670, 3);
+		MoveEnemyFire(1);
+		break;
+	case RIGHT:
+		backGround[0].DrawBackground(ResourceManager::backBuffer->GetmemDC(), 0, 535, 20, 1);
+		backGround[1].DrawSrolledBackground(ResourceManager::backBuffer->GetmemDC(), 0, 470, 20, 1, -3);
+		backElephant.DrawMoveBackground(ResourceManager::backBuffer->GetmemDC(), 970, 470, -3);
+		_miter.Draw(distance, 970, 670, -3);
+		MoveEnemyFire(-1);
+		break;
+	}
+	backElephant.DrawMoveBackground(ResourceManager::backBuffer->GetmemDC(), 970, 470, 0);
+	_miter.Draw(distance, 970, 670);
+	DrawFire(ResourceManager::backBuffer->GetmemDC());
+	player.Draw(ResourceManager::backBuffer->GetmemDC());
+	
+	//AddFontResourceA("godoMaum.ttf");
+	CollisionView();
+	BitBlt(hdc, 0, 0, 1024, 720, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
+	if (player.playerState == PLAYER_DIE)
+		isGameOver = true;
 }
 
 void GameManager::DrawFire(HDC hdc)
 {
 	for (auto it = lEnemyFires.begin(); it != lEnemyFires.end(); it++)
 	{
-		it->Draw(hdc);
+		it->Draw(hdc, player.playerState);
 	}
 }
-bool GameManager::CollisionCheck(RECT rc, Player& player)
-{
-	RECT rcTemp;
 
-	for (auto it = lEnemyFires.begin(); it != lEnemyFires.end(); it++)
-	{
-		if (Physics::GetInstance()->RECTbyRECTCollisionCheck(rc, it->FireRect))
-		{
-			GameOver(player);
-			return true;
-		}
-	}
-}
-void GameManager::GameOver(Player& player)
+void GameManager::GameOver()
 {
 	isGameOver = true;
 	player.SetDie();
 }
-void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
-{
-	for (int i = 0; i < 10; i++)
-		Timer[i] = 0;
-	ResourceManager::GetInstance()->Init(hdc, _g_hInst);
-	GetInstance()->MakeEnemyFire(NORMAL);
-	Physics::GetInstance()->deltaTimeInit();
-	SetTimers();
-}
-void GameManager::SetTimers()
-{
-	TimerReset[0] = 0.3f;
-	TimerReset[1] = 3.0f;
-}
-void GameManager::Update()
-{
-	for (int i = 0; i < 10; i++)
-	{
-		Timer[i] += Physics::GetInstance()->deltaTime;
-	}
-	//각 타이머때 마다 해주어야할 로직 작성
-	if (Timer[0] >= TimerReset[0])
-	{
-		cout << "억" << endl;
-		Timer[0] = 0;
-	}
-	cout << Timer[0] << endl;
-	if (Timer[1] >= TimerReset[1])
-	{
-		cout << "악" << endl;
-		Timer[0] = 0;
-	}
-	cout << Timer[1] << endl;
-	/*
-	GameManager::GetInstance()->MoveEnemyFire(0);
-	GameManager::GetInstance()->MakeEnemyFire((FIRETYPE)(NORMAL + rand() % 3));
-	player.Move(false);
-	GameManager::GetInstance()->MoveBackground(2);
-	GameManager::GetInstance()->MoveBackground(-2);
-	*/
-
-	//죽은경우 타이머 재설정..
-	//GameManager::GetInstance()->Restart();
-}
-
 void GameManager::MakeEnemyFire(FIRETYPE EnemyFireType)
 {
 	EnemyFire enemyFire;
-	enemyFire.Init(EnemyFireType);
+	switch (EnemyFireType)
+	{
+	case NORMAL:
+	case SMALL:
+		enemyFire.Init(EnemyFireType, 1000, 565, 1);
+		break;
+	case FUTON:
+		enemyFire.Init(EnemyFireType, 1000, 660, 1);
+		break;
+	default:
+		break;
+	}
 	
 	lEnemyFires.push_back(enemyFire);
 }
 
-void GameManager::MakeEnemyFutonFire()
-{
-	EnemyFire enemyFire;
-	enemyFire.Init(FUTON);
-	lEnemyFires.push_back(enemyFire);
-}
-
-
-void GameManager::MoveEnemyFire(int moveSpeed)//default == 0
+void GameManager::MoveEnemyFire(int moveSpeed) //default == 0
 {
 	for (auto it = lEnemyFires.begin(); it != lEnemyFires.end();)
 	{
@@ -118,33 +142,28 @@ void GameManager::MoveEnemyFire(int moveSpeed)//default == 0
 			it++;
 	}
 }
+bool GameManager::CollisionCheck()
+{
+	RECT rcTemp;
+		
+	for (auto it = lEnemyFires.begin(); it != lEnemyFires.end(); it++)
+	{
+		if (Physics::GetInstance()->RECTbyRECTCollisionCheck(player.GetPlayerRect(), it->GetFireRect()))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+void GameManager::CollisionView()
+{
+	Rectangle(ResourceManager::backBuffer->GetmemDC(), player.GetPlayerRect().left, player.GetPlayerRect().top, 
+													player.GetPlayerRect().right, player.GetPlayerRect().bottom);
+	for (auto it = lEnemyFires.begin(); it != lEnemyFires.end(); it++)
+	{
+		Rectangle(ResourceManager::backBuffer->GetmemDC(), it->GetFireRect().left, it->GetFireRect().top, it->GetFireRect().right, it->GetFireRect().bottom);
+	}
+}
 
-void GameManager::MoveBackground(int scrollSpeed)
-{
-	cout << backgroundOffsetX[0] << endl;
-	for(int i =0;i < 10; i++)
-		backgroundOffsetX[i] += scrollSpeed;
-	if (backgroundOffsetX[0] == -64)
-		backgroundOffsetX[0] = 0;
-	if(backgroundOffsetX[1] == -3000)
-		backgroundOffsetX[1] = 0;
-}
-void GameManager::Restart()
-{
-	exit(1);
-}
-
-void GameManager::Draw(HDC hdc)
-{
-	DrawBackground(ResourceManager::backBuffer->GetmemDC());
-	DrawFire(ResourceManager::backBuffer->GetmemDC());
-	player.Draw(ResourceManager::backBuffer->GetmemDC());
-	BitBlt(hdc, 0, 0, 1024, 720, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
-	
-}
-GameManager::GameManager()
-{
-}
-GameManager::~GameManager()
-{
-}
+GameManager::GameManager(){}
+GameManager::~GameManager(){}

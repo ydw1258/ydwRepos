@@ -1,40 +1,41 @@
 #include "Player.h"
 
+RECT Player::GetPlayerRect()
+{
+	RECT playerRect;
+	playerRect.top = y;
+	playerRect.bottom = y + 40;
+	playerRect.left = x + 20;
+	playerRect.right = x + 40;
+	return playerRect;
+}
+
+void Player::Init()
+{
+	moveSprite[0].Init(PLAYER0, 1, 66, 63);
+	moveSprite[1].Init(PLAYER1, 1, 66, 63);
+	jumpSprite.Init(PLAYER2, 1, 66, 63);
+	dieSprite.Init(IMAGENUM_DIE, 1, 66, 63);
+}
+
 void Player::Move(bool direction)
 {
 	if (isJump)
 		return;
-	playerRECT.left = x + 10;
-	playerRECT.top = y;
-	playerRECT.right = x + 30;
-	playerRECT.bottom = y + 20;
-
 	if (direction)
 	{
-		playerState = LEFT;
-		if(playerImage == PLAYER1)
-			playerImage = PLAYER0;
-		else if (playerImage == PLAYER0)
-			playerImage = PLAYER1;
+		playerState = RIGHT;
 	}
 	else
 	{
-		playerState = RIGHT;
-		if (playerImage == PLAYER1)
-			playerImage = PLAYER0;
-		else if (playerImage == PLAYER0)
-			playerImage = PLAYER1;
+		playerState = LEFT;
 	}
 }
-
 void Player::Jump()
 {
 	if (!isJump)
 		return;
-	playerRECT.left = x + 10;
-	playerRECT.top = y;
-	playerRECT.right = x + 30;
-	playerRECT.bottom = y + 20;
+	curSprite = PLAYER2;
 
 	if (isUp)
 	{
@@ -50,10 +51,9 @@ void Player::Jump()
 		
 		if (y == defaultY)
 		{
-			
 			isJump = false;
 			isUp = true;
-			playerImage = PLAYER0;
+			curSprite = PLAYER0;
 		}
 	}
 }
@@ -63,19 +63,44 @@ void Player::Stop()
 }
 void Player::Draw(HDC hdc)
 {
-	ResourceManager::GetInstance()->Draw(hdc, x, y, 66, 63, playerImage);
+	switch (playerState)
+	{
+	case STOP:
+	case LEFT:
+	case RIGHT:
+		moveSprite[curSprite - PLAYER0].DrawObject(hdc, x, y);
+		//moveSprite[1].DrawObject(hdc, x, y);
+		break;
+	case PLAYER_DIE:
+		dieSprite.DrawObject(hdc, x, y);
+		break;
+	default:
+		break;
+	}
 	
 }
-void Player::RECTDisplay(HDC hdc)
+void Player::SpriteChange()
 {
-	Rectangle(hdc, playerRECT.left, playerRECT.top, playerRECT.right, playerRECT.bottom);
+	if (isJump)
+		return;
+
+	switch (playerState)
+	{
+	case STOP:
+		break;
+	case LEFT:
+	case RIGHT:
+		if (curSprite == PLAYER0)
+			curSprite = PLAYER1;
+		else
+			curSprite = PLAYER0;
+		break;
+	case PLAYER_DIE:
+		break;
+	default:
+		break;
+	}
 }
 
-Player::Player()
-{
-	
-}
-
-Player::~Player()
-{
-}
+Player::Player(){}
+Player::~Player(){}

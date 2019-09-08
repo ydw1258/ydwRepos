@@ -2,6 +2,7 @@
 #include<Windows.h>
 #include"ResourceManager.h"
 #include"Physics.h"
+
 class SpriteRenderer
 {
 private:
@@ -12,19 +13,15 @@ private:
 	IMAGENUM CurSprite;
 	int AllSpriteNum; //ÃÑ ¸®¼Ò½º °¹¼ö
 
-	int scrollSpeedX;
-	int scrollSpeedY;
 	int ImageSizeX;
 	int ImageSizeY;
 public:
-	void Init(IMAGENUM _startSprite, int _AllSpriteNum, int _ImageSizeX, int _ImageSizeY, 
-		int _backgroundOffsetX = 0, int _backgroundOffsetY = 0, int _scrollSpeedX = 0, int _scrollSpeedY = 0);
+	void Init(IMAGENUM _startSprite, int _AllSpriteNum, int _ImageSizeX, int _ImageSizeY);
 	SpriteRenderer();
 	~SpriteRenderer();
 	void DrawObject(HDC hdc, int playerX, int PlayerY);
-	void DrawBackground(HDC hdc, int repeatXNum, int repeatYNum);
-	void DrawSrolledBackground(HDC hdc, int repeatXNum, int repeatYNum);
+	void SpriteChange();
+	void DrawBackground(HDC hdc, int objectX, int objectY, int repeatXNum, int repeatYNum);
+	void DrawMoveBackground(HDC hdc, int objectX, int objectY, int scrollSpeedX = 0, int scrollSpeedY = 0);
+	void DrawSrolledBackground(HDC hdc, int objectX, int objectY, int repeatXNum, int repeatYNum, int _scrollSpeedX = 0, int _scrollSpeedY = 0);
 };
-
-#pragma once
-

@@ -142,7 +142,9 @@
     <ClCompile Include="BitMap.cpp" />
     <ClCompile Include="CircusMain.cpp" />
     <ClCompile Include="EnemyFire.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="MiterBoard.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -151,7 +153,9 @@
   <ItemGroup>
     <ClInclude Include="BitMap.h" />
     <ClInclude Include="EnemyFire.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="MiterBoard.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceManager.h" />
