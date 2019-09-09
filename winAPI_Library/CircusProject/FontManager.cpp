@@ -23,7 +23,7 @@ void FontManager::Draw(int num, int x, int y, int scrollSpeedX, int scrollSpeedY
 	SetBkMode(ResourceManager::backBuffer->GetmemDC(), TRANSPARENT);
 
 	wsprintf(outText, "%d", num);
-	TextOut(ResourceManager::backBuffer->GetmemDC(), x - fontOffsetX + 30 - GameManager::GetInstance()->CameraX, y - fontOffsetY, outText, 7); //strlen(szText)
+	TextOut(ResourceManager::backBuffer->GetmemDC(), x - fontOffsetX - GameManager::GetInstance()->CameraX, y - fontOffsetY, outText, strlen(outText)); //strlen(szText)
 	fontOffsetX -= scrollSpeedX;
 	fontOffsetY -= scrollSpeedY;
 

@@ -11,12 +11,18 @@ RECT Player::GetPlayerRect()
 	return playerRect;
 }
 
-void Player::Init()
+void Player::Init(int _playerSpeed)
 {
 	moveSprite[0].Init(PLAYER0, 1, 66, 63);
 	moveSprite[1].Init(PLAYER1, 1, 66, 63);
 	jumpSprite.Init(PLAYER2, 1, 66, 63);
 	dieSprite.Init(IMAGENUM_DIE, 1, 66, 63);
+	playerSpeed = _playerSpeed;
+}
+
+void Player::Reset()
+{
+	//player Reset..
 }
 
 void Player::Move(bool direction)
@@ -48,7 +54,7 @@ void Player::Jump()
 	}
 	else
 	{
-		y+= jumpspeed;
+		y += jumpspeed;
 		
 		if (y == defaultY)
 		{
@@ -73,7 +79,7 @@ void Player::Draw(HDC hdc)
 		//moveSprite[1].DrawObject(hdc, x, y);
 		break;
 	case PLAYER_DIE:
-		dieSprite.DrawObject(hdc, x, y);
+		dieSprite.DrawObject(hdc, x + GameManager::GetInstance()->CameraX, y);
 		break;
 	default:
 		break;

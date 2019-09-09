@@ -21,21 +21,27 @@ bool Physics::RECTbyPointCollisionCheck(RECT rc, POINT pt)
 	}
 	return false;
 }
-
+void Physics::deltaTimeInit()
+{
+	// 델타타임을 구한다.
+	DWORD curTime = timeGetTime();      //현재 시간
+	//deltaTime = 0.015f;
+	deltaTime = (curTime - lastTime) * 0.001f;
+	lastTime = curTime;
+}
 void Physics::accumulate()
 {
 	// 델타타임을 구한다.
-	
+
 	DWORD curTime = timeGetTime();      //현재 시간
 	deltaTime = (curTime - lastTime) * 0.001f;
-	
-	/*
-	QueryPerformanceCounter(&NextCount);
-	deltaTime = ((float)(NextCount.QuadPart - CurCount.QuadPart)) / ((float)CpuFrequency.QuadPart);
-	CurCount.QuadPart = NextCount.QuadPart;
+
+	//QueryPerformanceCounter(&NextCount);
+	//deltaTime = ((float)(NextCount.QuadPart - CurCount.QuadPart)) / ((float)CpuFrequency.QuadPart);
+	//CurCount.QuadPart = NextCount.QuadPart;
+
 
 	// FPS 계산 1초당 프레임 수...
-	AccCal_Time += deltaTime;
-	AccumulateTime += deltaTime;
-	*/
+	//AccCal_Time += deltaTime;
+	//AccumulateTime += deltaTime;
 }

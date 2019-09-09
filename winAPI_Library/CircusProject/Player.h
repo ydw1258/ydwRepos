@@ -12,8 +12,7 @@ enum PLAYERSTATE
 class Player
 {
 	int defaultY = 650;
-	int x = 100;
-	int y = defaultY;
+	
 	int jumpspeed = 2;
 	bool isJump = false;
 	bool isUp = true;
@@ -23,10 +22,14 @@ class Player
 	SpriteRenderer dieSprite;
 	IMAGENUM curSprite = PLAYER0;
 public:
+	int x = 100;
+	int y = defaultY;
+	int playerSpeed;
 	RECT GetPlayerRect();
-	void Init();
+	void Init(int _playerSpeed);
 	void SpriteChange();
 	PLAYERSTATE playerState = STOP;
+	void Reset();
 	void Move(bool direction);
 	void Jump();
 	void Draw(HDC hdc);

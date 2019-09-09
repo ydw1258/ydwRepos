@@ -6,13 +6,16 @@ using namespace std;
 SpriteRenderer::SpriteRenderer() { }
 SpriteRenderer::~SpriteRenderer() { }
 
-void SpriteRenderer::Init(IMAGENUM _startSprite, int _AllSpriteNum, int _ImageSizeX, int _ImageSizeY)
+//화면끝에서 없어지는 반복 배경일 경우 objectX, objectY 필요.
+void SpriteRenderer::Init(IMAGENUM _startSprite, int _AllSpriteNum, int _ImageSizeX, int _ImageSizeY, int objectX, int objectY)
 {
 	startSprite = _startSprite;
 	CurSprite = _startSprite;
 	AllSpriteNum = _AllSpriteNum;
 	ImageSizeX = _ImageSizeX;
 	ImageSizeY = _ImageSizeY;
+	defaultX = objectX + ImageSizeX - (GameManager::GetInstance()->CameraX % ImageSizeX);
+	//defaultY = objectY + ImageSizeY - (GameManager::GetInstance()->CameraY % ImageSizeY);
 }
 //타이머로 특정 간격 마다 호출 (이미지 변경의 시점만)
 void SpriteRenderer::DrawObject(HDC hdc, int objectX, int objectY)
@@ -29,33 +32,19 @@ void SpriteRenderer::SpriteChange()
 void SpriteRenderer::DrawBackground(HDC hdc, int objectX, int objectY, int repeatXNum, int repeatYNum)
 {
 	//같은 배경 여럿찍기
-	for (int i = 0; i < repeatYNum; i++)
+	for (int i = -1; i < repeatYNum; i++)
 	{
-		for (int j = 0; j < repeatXNum; j++)
+		for (int j = -1; j < repeatXNum; j++)
 		{
-			//단순 반복 배경
-			DrawObject(hdc, objectX + j * ImageSizeX, objectY + ImageSizeY * i);
+			ResourceManager::GetInstance()->Draw(hdc, j * GameManager::GetInstance()->CameraX % ImageSizeX, objectY * i, ImageSizeX, ImageSizeY, CurSprite);
 		}
 	}
 }
-bool SpriteRenderer::DrawMoveBackground(HDC hdc, int objectX, int objectY, int scrollSpeedX, int scrollSpeedY) //이미지 오프셋이 초기화되면 true반환, 임시..
+//보수중
+//화면 넘어가면 다시 원래의 좌표로
+void SpriteRenderer::DrawMoveBackground(HDC hdc, int objectX, int objectY)
 {
-	DrawObject(hdc, objectX - backgroundOffsetX, objectY - backgroundOffsetY);
-	//cout << scrollSpeedX << endl;
-
-	backgroundOffsetX -= scrollSpeedX;
-	backgroundOffsetY -= scrollSpeedY;
-
-	if (objectX - backgroundOffsetX + ImageSizeX < 0)
-	{
-		backgroundOffsetX = 0;
-		GameManager::GetInstance()->distance -= 10; //뺄 예정
-		return true;
-	}
-		
-	if (objectX - backgroundOffsetX + ImageSizeY < 0)
-		backgroundOffsetY = 0;
-	return false;
+	ResourceManager::GetInstance()->Draw(hdc, objectX - GameManager::GetInstance()->CameraX % (ImageSizeX * 16), objectY, ImageSizeX, ImageSizeY, CurSprite);
 }
 void SpriteRenderer::DrawSrolledBackground(HDC hdc, int objectX, int objectY, int repeatXNum, int repeatYNum, int scrollSpeedX, int scrollSpeedY)
 {
@@ -63,11 +52,11 @@ void SpriteRenderer::DrawSrolledBackground(HDC hdc, int objectX, int objectY, in
 	//ResourceManager::GetInstance()->Draw(hdc, backgroundOffsetX, backgroundOffsetY, ImageSizeX, ImageSizeY, CurSprite);
 	//그림이 왼쪽으로 이동시
 	
-	for (int i = 0; i < repeatYNum; i++)
+	for (int i = 1; i < repeatYNum + 1; i++)
 	{
-		for (int j = 0; j < repeatXNum; j++)
+		for (int j = -1; j < repeatXNum - 1; j++)
 		{
-			DrawObject(hdc, objectX + (j - 1) * ImageSizeX - backgroundOffsetX - ImageSizeX, objectY + ImageSizeY * i - backgroundOffsetY);
+			ResourceManager::GetInstance()->Draw(hdc, objectX + j * ImageSizeX - (GameManager::GetInstance()->CameraX % ImageSizeX), objectY * i, ImageSizeX, ImageSizeY, CurSprite);
 		}
 	}
 	//cout << scrollSpeedX << endl;

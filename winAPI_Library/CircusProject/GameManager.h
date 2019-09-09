@@ -4,6 +4,7 @@
 #include "ResourceManager.h"
 #include"Player.h"
 #include "MiterBoard.h"
+#include "Goal.h"
 #include<list>
 #include<vector>
 using namespace std;
@@ -25,11 +26,13 @@ private:
 	SpriteRenderer backGround[2];
 	SpriteRenderer backElephant;
 	SpriteRenderer star;
-	MiterBoard miter;
+	vector<MiterBoard> miters;
 	static GameManager* mthis;
 	FontManager TitleFont;
+	Goal goal;
 	float Timer[10] = { 0 };
 	float TimerReset[10] = { 0 };
+	bool GameOverflag = false;
 public:
 	int CameraX = 0;
 	int distance = 90;
@@ -60,6 +63,8 @@ public:
 	void InTitleUpdate();
 	void Init(HDC hdc, HINSTANCE _g_hInst);
 	void SetTimers();
+	void MiterInit();
+	void MiterDraw();
 	GameManager();
 	~GameManager();
 };
