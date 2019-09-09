@@ -43,8 +43,8 @@ void GameManager::Update()
 	case TITLE:
 		InTitleUpdate();
 		break;
-	case STAGE1:
-		InGameUpdate();
+	case EDIT_MODE:
+		EditModeUpdate();
 		break;
 	default:
 		break;
@@ -60,7 +60,7 @@ void GameManager::InTitleUpdate()
 		star.SpriteChange();
 	}
 }
-void GameManager::InGameUpdate()
+void GameManager::EditModeUpdate()
 {
 	if (isGameOver)
 	{
@@ -109,8 +109,8 @@ void GameManager::Draw(HDC hdc)
 	case TITLE:
 		DrawTitle(hdc);
 		return;
-	case STAGE1:
-		InGameDraw(hdc);
+	case EDIT_MODE:
+		EditModeDraw(hdc);
 		break;
 	default:
 		break;
@@ -126,7 +126,7 @@ void GameManager::DrawTitle(HDC hdc)
 
 	BitBlt(hdc, 0, 0, 1024, 720, hdc, 0, 0, SRCCOPY);
 }
-void GameManager::InGameDraw(HDC hdc)
+void GameManager::EditModeDraw(HDC hdc)
 {
 	if (isGameOver)
 		return;
@@ -189,7 +189,7 @@ void GameManager::GameOver()
 void GameManager::GameStart()
 {
 	DrawBlack();
-	scene = STAGE1;
+	scene = EDIT_MODE;
 }
 void GameManager::Restart()
 {

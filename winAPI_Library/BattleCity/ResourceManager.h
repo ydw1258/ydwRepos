@@ -1,0 +1,70 @@
+#pragma once
+#include <Windows.h>
+#include<map>
+#include<string>
+#include"BitMap.h"
+using namespace std;
+
+enum IMAGENUM
+{
+	IMAGENUM_BLACKBACKGROUND,
+	IMAGENUM_BLOCK00,
+	IMAGENUM_BLOCK01,
+	IMAGENUM_BLOCK02,
+	IMAGENUM_BLOCK03,
+	IMAGENUM_BLOCK04,
+	IMAGENUM_BLOCK05,
+	IMAGENUM_BLOCK06,
+	IMAGENUM_BLOCK07,
+	IMAGENUM_BLOCK08,
+	IMAGENUM_BLOCK09,
+	IMAGENUM_BLOCK10,
+	IMAGENUM_BLOCK11,
+	IMAGENUM_BLOCK12,
+	IMAGENUM_BLOCK13,
+	IMAGENUM_BLOCK14,
+	IMAGENUM_E_DOWN_00,
+	IMAGENUM_E_DOWN_01,
+	IMAGENUM_E_DOWN_02,
+	IMAGENUM_E_LEFT_00,
+	IMAGENUM_E_LEFT_01,
+	IMAGENUM_E_LEFT_02,
+	IMAGENUM_E_RIGHT_00,
+	IMAGENUM_E_RIGHT_01,
+	IMAGENUM_E_RIGHT_02,
+	IMAGENUM_E_UP_00,
+	IMAGENUM_E_UP_01,
+	IMAGENUM_E_UP_02,
+	IMAGENUM_ENEMY_ICON,
+
+
+	IMAGE_NUM_PLAYERTANK_DOWN_00,
+	IMAGE_NUM_PLAYERTANK_DOWN_01,
+	IMAGE_NUM_PLAYERTANK_LEFT_00,
+	IMAGE_NUM_PLAYERTANK_LEFT_01,
+	IMAGE_NUM_PLAYERTANK_RIGHT_00,
+	IMAGE_NUM_PLAYERTANK_RIGHT_01,
+	IMAGE_NUM_PLAYERTANK_UP_00,
+	IMAGE_NUM_PLAYERTANK_UP_01,
+};
+class ResourceManager
+{
+private:
+	static ResourceManager* mthis;
+	BitMap* bitmap;
+public:
+	static BitMap* backBuffer;
+
+	static ResourceManager* GetInstance()
+	{
+		if (mthis == nullptr)
+			mthis = new ResourceManager();
+		return mthis;
+	}
+
+	void Release();
+	void Init(HDC hdc, HINSTANCE hInstance);
+	void Draw(HDC hdc, int x, int y, int cx, int cy, IMAGENUM imageNum);
+	ResourceManager();
+	~ResourceManager();
+};

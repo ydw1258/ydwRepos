@@ -1,3 +1,10 @@
-﻿  GameManager.cpp
-c:\users\administrator\documents\github\ydwrepos\winapi_library\circusproject\gamemanager.cpp(255): warning C4101: 'rcTemp' :참조되지 않은 지역 변수입니다.
+﻿  CircusMain.cpp
+  EnemyFire.cpp
+  FontManager.cpp
+  GameManager.cpp
+c:\users\administrator\documents\github\ydwrepos\winapi_library\circusproject\gamemanager.cpp(260): warning C4101: 'rcTemp' :참조되지 않은 지역 변수입니다.
+  MiterBoard.cpp
+  Player.cpp
+  SpriteRenderer.cpp
+  코드를 생성하고 있습니다...
   CircusProject.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\winAPI_Library\Debug\CircusProject.exe

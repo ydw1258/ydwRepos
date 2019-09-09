@@ -12,7 +12,7 @@ using namespace std;
 enum Scene
 {
 	TITLE,
-	STAGE1
+	EDIT_MODE
 };
 
 class GameManager
@@ -53,13 +53,13 @@ public:
 	void DrawTitle(HDC hdc);
 	void DrawStagelogo(HDC hdc);
 	void DrawBlack();
-	void InGameDraw(HDC hdc);
+	void EditModeDraw(HDC hdc);
 	void DrawFire(HDC hdc);
 	bool CollisionCheck();
 	void CollisionView();
 	void GameOver();
 	void Update(); //배경움직이고 등등
-	void InGameUpdate();
+	void EditModeUpdate();
 	void InTitleUpdate();
 	void Init(HDC hdc, HINSTANCE _g_hInst);
 	void SetTimers();

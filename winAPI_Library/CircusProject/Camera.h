@@ -6,10 +6,8 @@ class Camera
 {
 private:
 	static Camera* mthis;
-	int x;
-	int y;
-	int targetX;
-	int targetY;
+	int cameraX;
+	int cameraY;
 public:
 	static Camera* GetInstance()
 	{

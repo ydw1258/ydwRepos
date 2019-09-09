@@ -94,7 +94,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			case TITLE:
 				GameManager::GetInstance()->GameStart();
 				break;
-			case STAGE1:
+			case EDIT_MODE:
 				break;
 			default:
 				break;

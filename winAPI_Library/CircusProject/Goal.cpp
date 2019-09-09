@@ -1,7 +1,5 @@
 #include "Goal.h"
 
-
-
 void Goal::Init(int _x, int _y)
 {
 	x = _x;
@@ -14,11 +12,5 @@ void Goal::Draw(HDC hdc)
 	sprite.DrawObject(hdc, x, y);
 }
 
-Goal::Goal()
-{
-}
-
-
-Goal::~Goal()
-{
-}
+Goal::Goal(){ }
+Goal::~Goal(){ }
