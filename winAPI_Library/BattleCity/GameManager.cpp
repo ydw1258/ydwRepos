@@ -14,6 +14,8 @@ enum TIMERID
 
 void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
 {
+	player.Init(33, 26, IMAGE_NUM_PLAYERTANK_UP_00);
+
 	for (int i = 0; i < 10; i++)
 		Timer[i] = 0;
 	//player.Init(3); // playerSpeed
@@ -57,9 +59,7 @@ void GameManager::InTitleUpdate()
 	}
 }
 void GameManager::EditModeUpdate()
-{
-	
-}
+{}
 
 //Draw 매프레임 호출
 void GameManager::Draw(HDC hdc)
@@ -87,23 +87,17 @@ void GameManager::DrawTitle(HDC hdc)
 }
 void GameManager::EditModeDraw(HDC hdc)
 {
-	player.Draw(ResourceManager::backBuffer->GetmemDC(), GameOffsetX, GameOffsetY);
-	player.EditDraw();
+	BitBlt(hdc, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
+	ResourceManager::GetInstance()->Draw(hdc, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, IMAGENUM_BLACKBACKGROUND);
 	for (int i = 0; i < 14; i++)
 	{
 		blocks[i].Draw(hdc, 650, i * 40);
 	}
-		
-	BitBlt(hdc, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
-	//Render로 교체
-	if (GameOverflag == true)
-		isGameOver = true;
+	player.EditDraw(ResourceManager::backBuffer->GetmemDC(), GameOffsetX, GameOffsetY);
 }
 void GameManager::DrawStagelogo(HDC hdc)
 {
 }
-
-
 
 void GameManager::GameOver()
 {

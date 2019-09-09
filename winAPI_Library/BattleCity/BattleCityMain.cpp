@@ -11,20 +11,20 @@
 #include"Physics.h"
 #include "BitMap.h" */
 #define ID_R1 101
-#define ID_R2 101
-#define ID_R3 101
-#define ID_R4 101
-#define ID_R5 101
-#define ID_R6 101
-#define ID_R7 101
-#define ID_R8 101
-#define ID_R9 101
-#define ID_R10 101
-#define ID_R11 101
-#define ID_R12 101
-#define ID_R13 101
-#define ID_R14 101
-#define ID_R15 101
+#define ID_R2 102
+#define ID_R3 103
+#define ID_R4 104
+#define ID_R5 105
+#define ID_R6 106
+#define ID_R7 107
+#define ID_R8 108
+#define ID_R9 109
+#define ID_R10 110
+#define ID_R11 111
+#define ID_R12 112
+#define ID_R13 113
+#define ID_R14 114
+#define ID_R15 115
 
 using namespace std;
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
@@ -79,9 +79,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	hdc = GetDC(hWnd);
 
 	HWND r[15];
+
 	switch (iMessage)
 	{
-	case WM_CREATE: //p217
+	case WM_CREATE:
 		SetTimer(hWnd, 1, 10, NULL);
 		//CreateWindow(TEXT("Button"), TEXT(""), WS_CHILD | WS_VISIBLE | BS_GROUPBOX, 750, 10, 150, 700, hWnd, (HMENU)0, g_hInst, NULL);
 
@@ -106,7 +107,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			}
 			return 0;
 		}
-
 		switch (LOWORD(wParam))
 		{
 		case 0:
@@ -150,14 +150,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case  WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		GameManager::GetInstance()->Draw(hdc);
+		
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_KEYDOWN:
 		switch (wParam)
 		{
 		case VK_LEFT:
+			GameManager::GetInstance()->player.PlayerMoveInEditMode(LEFT);
 			return 0;
 		case VK_RIGHT:
+			GameManager::GetInstance()->player.PlayerMoveInEditMode(RIGHT);
+			return 0;
+		case VK_UP:
+			GameManager::GetInstance()->player.PlayerMoveInEditMode(UP);
+			return 0;
+		case VK_DOWN:
+			GameManager::GetInstance()->player.PlayerMoveInEditMode(DOWN);
 			return 0;
 		case VK_SPACE:
 			return 0;

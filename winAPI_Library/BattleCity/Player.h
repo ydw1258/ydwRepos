@@ -10,21 +10,20 @@ enum DIRECTION
 };
 class Player
 {
-public:
-	Player();
-	~Player();
-#pragma once
+private:
 	SpriteRenderer upSprite;
 	SpriteRenderer downSprite;
 	SpriteRenderer leftSprite;
 	SpriteRenderer rightSprite;
-	int x;
-	int y;
+	int x = 0;
+	int y = 0;
 	int	sizeX;
 	int	sizeY;
 	DIRECTION direction;
 	SpriteRenderer curSprite;
 public:
+	Player();
+	~Player();
 	//InGame
 	void EditDraw(HDC hdc, int offsetX, int offsetY);
 	//InEdit
