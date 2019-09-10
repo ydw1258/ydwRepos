@@ -12,16 +12,12 @@
 #define WINDOW_WIDTH 600
 #define WINDOW_HEIGHT 600
 
-#define TILE_WIDTH_NUM 13
-#define TILE_HEIGHT_NUM 13
-
 using namespace std;
 
 enum Scene
 {
 	TITLE,
-	EDIT_MODE,
-	INGAME
+	EDIT_MODE
 };
 
 class GameManager
@@ -40,9 +36,6 @@ private:
 	bool GameOverflag = false;
 	const int GameOffsetX = 20;
 	const int GameOffsetY = 20;
-	int mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { 0 };
-	int TileImageSizeX = 33;
-	int TileImageSizeY = 25;
 public:
 	Player player;
 	bool isGameOver = false;
@@ -68,7 +61,6 @@ public:
 	void EditModeUpdate();
 	void InTitleUpdate();
 	void Init(HDC hdc, HINSTANCE _g_hInst);
-	void Input(WPARAM wParam);
 	void SetTimers();
 	GameManager();
 	~GameManager();

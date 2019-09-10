@@ -87,7 +87,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		//CreateWindow(TEXT("Button"), TEXT(""), WS_CHILD | WS_VISIBLE | BS_GROUPBOX, 750, 10, 150, 700, hWnd, (HMENU)0, g_hInst, NULL);
 
 		r[0] = CreateWindow("button", "Rectangle", WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON | WS_GROUP, 720, 0, 120, 30, hWnd, (HMENU)ID_R1, g_hInst, NULL);
-		for (int i = 1; i < 15; i++)
+		for (int i = 1; i < 14; i++)
 		{
 			r[i] = CreateWindow("button", "Block", WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON, 720, 40 * i, 120, 30, hWnd, (HMENU)i, g_hInst, NULL);
 		}
@@ -99,8 +99,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		ReleaseDC(hWnd, hdc);
 		return 0;
 	case WM_COMMAND:
-		if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) >= ID_R1 && LOWORD(wParam) <= ID_R15)
-		{
+		if (HIWORD(wParam) == BN_CLICKED) {
+			switch (LOWORD(wParam)) {
+				MessageBox(hWnd, str, "라디오 버튼 클릭", MB_OK);
+			case 0:
+				break;
+			}
 			return 0;
 		}
 		switch (LOWORD(wParam))
@@ -133,6 +137,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			OFN.lpstrFile = lpstrFile;
 			OFN.nMaxFile = 256;
 			OFN.lpstrInitialDir = "c:\\";
+			
+			MessageBox(hWnd, TEXT("second button clicked"), TEXT("BUTTON"), MB_OK);
 			break;
 		}
 		return 0;
@@ -148,7 +154,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_KEYDOWN:
-		GameManager::GetInstance()->Input(wParam);
+		switch (wParam)
+		{
+		case VK_LEFT:
+			GameManager::GetInstance()->player.PlayerMoveInEditMode(LEFT);
+			return 0;
+		case VK_RIGHT:
+			GameManager::GetInstance()->player.PlayerMoveInEditMode(RIGHT);
+			return 0;
+		case VK_UP:
+			GameManager::GetInstance()->player.PlayerMoveInEditMode(UP);
+			return 0;
+		case VK_DOWN:
+			GameManager::GetInstance()->player.PlayerMoveInEditMode(DOWN);
+			return 0;
+		case VK_SPACE:
+			return 0;
+		}
 		return 0;
 	case WM_KEYUP:
 		switch (wParam)

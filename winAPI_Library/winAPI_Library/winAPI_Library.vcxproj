@@ -142,8 +142,6 @@
     <ClCompile Include="BitMap.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FontManager.cpp" />
-    <ClCompile Include="GameFrameMain.cpp" />
-    <ClCompile Include="GameFrameWork.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Follower.cpp" />
     <ClCompile Include="main.cpp" />
@@ -155,7 +153,6 @@
     <ClInclude Include="BitMap.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FontManager.h" />
-    <ClInclude Include="GameFrameWork.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Follower.h" />
     <ClInclude Include="ResourceManager.h" />

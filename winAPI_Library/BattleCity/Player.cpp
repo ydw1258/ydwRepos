@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "GameManager.h"
 
 Player::Player(){}
 Player::~Player(){}
@@ -7,7 +6,7 @@ Player::~Player(){}
 //EditMode
 void Player::EditDraw(HDC hdc, int offsetX, int offsetY)
 {
-	upSprite.DrawObject(hdc, x * sizeX + offsetX, y * sizeY + offsetY);
+	upSprite.DrawObject(hdc, x + offsetX, y + offsetY);
 }
 
 void Player::Init(int _sizeX, int _sizeY, IMAGENUM imageNum)
@@ -26,21 +25,19 @@ void Player::PlayerMoveInEditMode(DIRECTION direction)
 	{
 	case UP:
 		if (y > 0)
-			y--;
+			y -= sizeY;
 		break;
 	case DOWN:
-		if (y < TILE_HEIGHT_NUM - 1)
-			y++;
+		if (y < 13 * sizeY)
+			y += sizeY;
 		break;
 	case LEFT:
-		if (x > TILE_WIDTH_NUM - 1)
-			x--;
+		if (x > 0)
+			x -= sizeX;
 		break;
 	case RIGHT:
-		if (x < 12)
-			x++;
-		else
-			return;
+		if (x < 13 * sizeX)
+			x += sizeX;
 		break;
 	default:
 		break;

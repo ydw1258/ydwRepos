@@ -26,10 +26,9 @@ void ResourceManager::Init(HDC hdc, HINSTANCE hInstance)
 	};
 
 	bitmap = new BitMap[50];
-	string blackBackStr = "BattleResource/battlecityBack";
-
+	
 	backBuffer = bitmap[0].Create(hdc, 600, 600);
-	//backBuffer = bitmap[0].Init(hdc, hInstance, blackBackStr.c_str());
+
 	for(int i = 1; i <= 40; i++)
 		bitmap[i].Init(hdc, hInstance, fileNames[i].c_str());
 }

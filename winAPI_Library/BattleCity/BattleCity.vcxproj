@@ -143,7 +143,6 @@
     <ClCompile Include="BitMap.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FontManager.cpp" />
-    <ClCompile Include="GameFrameWork.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -155,7 +154,6 @@
     <ClInclude Include="BitMap.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FontManager.h" />
-    <ClInclude Include="GameFrameWork.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
