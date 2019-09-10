@@ -25,6 +25,36 @@ void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
 	for (int i = 0; i < 14; i++)
 		blocks[i].Init(33, 25, (IMAGENUM)(IMAGENUM_BLOCK00 + i));
 }
+void GameManager::Input(WPARAM wParam)
+{
+	switch (scene)
+	{
+	case TITLE:
+		break;
+	case EDIT_MODE:
+		switch (wParam)
+		{
+		case VK_LEFT:
+			player.PlayerMoveInEditMode(LEFT);
+			return;
+		case VK_RIGHT:
+			player.PlayerMoveInEditMode(RIGHT);
+			return;
+		case VK_UP:
+			player.PlayerMoveInEditMode(UP);
+			return;
+		case VK_DOWN:
+			player.PlayerMoveInEditMode(DOWN);
+			return;
+		case VK_SPACE:
+			
+			return;
+		}
+		break;
+	default:
+		break;
+	}
+}
 void GameManager::SetTimers()
 {
 	TimerReset[TIMER_MAKEFIRE] = 5.0f;
@@ -92,6 +122,50 @@ void GameManager::EditModeDraw(HDC hdc)
 	for (int i = 0; i < 14; i++)
 	{
 		blocks[i].Draw(hdc, 650, i * 40);
+	}
+	
+	for (int i = 0; i < TILE_HEIGHT_NUM; i++)
+	{
+		for (int j = 0; j < TILE_WIDTH_NUM; j++)
+		{
+			switch (mapTile[i * TILE_HEIGHT_NUM + j])
+			{
+			case 0:
+				blocks[1].Draw(hdc, j * TileImageSizeX + GameOffsetX, i *TileImageSizeY + GameOffsetY);
+				break;
+			case 1:
+				
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			case 8:
+				break;
+			case 9:
+				break;
+			case 10:
+				break;
+			case 11:
+				break;
+			case 12:
+				break;
+			case 13:
+				break;
+			case 14:
+				break;
+			case 15:
+				break;
+			}
+		}
 	}
 	player.EditDraw(ResourceManager::backBuffer->GetmemDC(), GameOffsetX, GameOffsetY);
 }
