@@ -1,3 +1,4 @@
-﻿  GameManager.cpp
-c:\users\ydw\desktop\ydwrepos\winapi_library\battlecity\gamemanager.cpp(120): warning C4101: 'rcTemp' :참조되지 않은 지역 변수입니다.
-  BattleCity.vcxproj -> C:\Users\ydw\Desktop\ydwRepos\winAPI_Library\Debug\BattleCity.exe
+﻿  BattleCityMain.cpp
+c:\users\administrator\documents\github\ydwrepos\winapi_library\battlecity\battlecitymain.cpp(120): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(1774): note: 'sprintf' 선언을 참조하십시오.
+  BattleCity.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\winAPI_Library\Debug\BattleCity.exe
