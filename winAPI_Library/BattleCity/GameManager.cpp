@@ -35,16 +35,16 @@ void GameManager::Input(WPARAM wParam)
 		switch (wParam)
 		{
 		case VK_LEFT:
-			player.PlayerMoveInEditMode(LEFT);
+			player.PlayerMove(LEFT);
 			return;
 		case VK_RIGHT:
-			player.PlayerMoveInEditMode(RIGHT);
+			player.PlayerMove(RIGHT);
 			return;
 		case VK_UP:
-			player.PlayerMoveInEditMode(UP);
+			player.PlayerMove(UP);
 			return;
 		case VK_DOWN:
-			player.PlayerMoveInEditMode(DOWN);
+			player.PlayerMove(DOWN);
 			return;
 		case VK_SPACE:
 			
@@ -94,17 +94,7 @@ void GameManager::EditModeUpdate()
 //Draw 매프레임 호출
 void GameManager::Draw(HDC hdc)
 {
-	switch (scene)
-	{
-	case TITLE:
-		DrawTitle(hdc);
-		return;
-	case EDIT_MODE:
-		EditModeDraw(hdc);
-		break;
-	default:
-		break;
-	}
+	EditModeDraw(hdc);
 }
 void GameManager::DrawTitle(HDC hdc)
 {

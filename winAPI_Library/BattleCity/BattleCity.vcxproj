@@ -24,6 +24,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BattleCity</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>BattleCity_Editor</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -143,7 +144,6 @@
     <ClCompile Include="BitMap.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FontManager.cpp" />
-    <ClCompile Include="GameFrameWork.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -155,7 +155,6 @@
     <ClInclude Include="BitMap.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FontManager.h" />
-    <ClInclude Include="GameFrameWork.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />

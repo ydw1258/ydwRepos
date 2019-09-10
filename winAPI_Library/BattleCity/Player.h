@@ -29,6 +29,6 @@ public:
 	//InEdit
 	void Init(int _sizeX, int _sizeY, IMAGENUM imageNum);
 	void Draw(HDC hdc, int offsetX, int offsetY);
-	void PlayerMoveInEditMode(DIRECTION direction);
+	void PlayerMove(DIRECTION direction);
 };
 

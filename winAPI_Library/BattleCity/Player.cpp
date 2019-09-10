@@ -20,7 +20,7 @@ void Player::Init(int _sizeX, int _sizeY, IMAGENUM imageNum)
 	rightSprite.Init(IMAGE_NUM_PLAYERTANK_RIGHT_00, 2, 33, 26);
 }
 
-void Player::PlayerMoveInEditMode(DIRECTION direction)
+void Player::PlayerMove(DIRECTION direction)
 {
 	switch (direction)
 	{
