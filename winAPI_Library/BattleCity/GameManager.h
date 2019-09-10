@@ -2,7 +2,6 @@
 #include<Windows.h>
 #include "ResourceManager.h"
 #include"SpriteRenderer.h"
-#include"Player.h"
 #include"FontManager.h"
 #include"Physics.h"
 #include<list>
@@ -41,10 +40,9 @@ private:
 	const int GameOffsetX = 20;
 	const int GameOffsetY = 20;
 	int mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { 0 };
-	int TileImageSizeX = 33;
-	int TileImageSizeY = 25;
+	int TileImageSizeX = 32;
+	int TileImageSizeY = 32;
 public:
-	Player player;
 	bool isGameOver = false;
 	//Scene scene = TITLE;
 	Scene scene = EDIT_MODE;
@@ -68,7 +66,8 @@ public:
 	void EditModeUpdate();
 	void InTitleUpdate();
 	void Init(HDC hdc, HINSTANCE _g_hInst);
-	void Input(WPARAM wParam);
+	void Input(WPARAM wParam, LPARAM lParam, int radioButtonCheckNum);
+	void CheckTileInput(int x, int y, int radioButtonCheckNum);
 	void SetTimers();
 	GameManager();
 	~GameManager();

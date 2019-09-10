@@ -14,8 +14,6 @@ enum TIMERID
 
 void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
 {
-	player.Init(33, 26, IMAGE_NUM_PLAYERTANK_UP_00);
-
 	for (int i = 0; i < 10; i++)
 		Timer[i] = 0;
 	//player.Init(3); // playerSpeed
@@ -23,37 +21,39 @@ void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
 	ResourceManager::GetInstance()->Init(hdc, _g_hInst);
 	SetTimers();
 	for (int i = 0; i < 14; i++)
-		blocks[i].Init(33, 25, (IMAGENUM)(IMAGENUM_BLOCK00 + i));
+		blocks[i].Init(16, 16, (IMAGENUM)(IMAGENUM__BLOCK + i));
 }
-void GameManager::Input(WPARAM wParam)
+void GameManager::Input(WPARAM wParam, LPARAM lParam, int radioButtonCheckNum)
 {
-	switch (scene)
+	CheckTileInput(LOWORD(lParam), HIWORD(lParam), radioButtonCheckNum);
+}
+void GameManager::CheckTileInput(int x, int y, int radioButtonCheckNum)
+{
+	RECT rect;
+	POINT pt;
+	pt.x = x;
+	pt.y = y;
+
+
+	for (int i = 0; i < TILE_HEIGHT_NUM; i++)
 	{
-	case TITLE:
-		break;
-	case EDIT_MODE:
-		switch (wParam)
+		for (int j = 0; j < TILE_WIDTH_NUM; j++)
 		{
-		case VK_LEFT:
-			player.PlayerMove(LEFT);
-			return;
-		case VK_RIGHT:
-			player.PlayerMove(RIGHT);
-			return;
-		case VK_UP:
-			player.PlayerMove(UP);
-			return;
-		case VK_DOWN:
-			player.PlayerMove(DOWN);
-			return;
-		case VK_SPACE:
-			
-			return;
+			rect.top = i * TileImageSizeY + GameOffsetY;
+			rect.bottom = (i + 1) * TileImageSizeY + GameOffsetY;
+			rect.left = j * TileImageSizeX + GameOffsetX;
+			rect.right = (j + 1) * TileImageSizeX  + GameOffsetX;
+
+			//cout << rect.top << " " << rect.bottom << " " << rect.left << " " << rect.right << endl;
+			if (Physics::GetInstance()->RECTbyPointCollisionCheck(rect, pt))
+			{
+				//라디오 버튼 클릭된 것
+				mapTile[i * TILE_WIDTH_NUM + j] = radioButtonCheckNum;
+					//SendMessage(r1, BM_GETCHECK, 0, 0) == BST_CHECKED) GRAPH = 0;
+			}
 		}
-		break;
-	default:
-		break;
 	}
+	
 }
 void GameManager::SetTimers()
 {
@@ -66,18 +66,7 @@ void GameManager::SetTimers()
 void GameManager::Update()
 {
 	Physics::GetInstance()->deltaTimeInit();
-
-	switch (scene)
-	{
-	case TITLE:
-		InTitleUpdate();
-		break;
-	case EDIT_MODE:
-		EditModeUpdate();
-		break;
-	default:
-		break;
-	}
+	EditModeUpdate();
 }
 void GameManager::InTitleUpdate()
 {
@@ -94,116 +83,24 @@ void GameManager::EditModeUpdate()
 //Draw 매프레임 호출
 void GameManager::Draw(HDC hdc)
 {
-	EditModeDraw(hdc);
-}
-void GameManager::DrawTitle(HDC hdc)
-{
-	BitBlt(hdc, 0, 0, 1024, 720, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
-
-	char titleName[7] = "Circus";
-	TitleFont.Draw(titleName, 250, 200);
-
-	BitBlt(hdc, 0, 0, 1024, 720, hdc, 0, 0, SRCCOPY);
-}
-void GameManager::EditModeDraw(HDC hdc)
-{
 	BitBlt(hdc, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
 	ResourceManager::GetInstance()->Draw(hdc, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, IMAGENUM_BLACKBACKGROUND);
+	
 	for (int i = 0; i < 14; i++)
 	{
-		blocks[i].Draw(hdc, 650, i * 40);
+		blocks[i].Draw(hdc, GameOffsetX, i * TileImageSizeY+ GameOffsetY);
 	}
-	
+
 	for (int i = 0; i < TILE_HEIGHT_NUM; i++)
 	{
 		for (int j = 0; j < TILE_WIDTH_NUM; j++)
 		{
-			switch (mapTile[i * TILE_HEIGHT_NUM + j])
-			{
-			case 0:
-				blocks[1].Draw(hdc, j * TileImageSizeX + GameOffsetX, i *TileImageSizeY + GameOffsetY);
-				break;
-			case 1:
-				
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-			case 4:
-				break;
-			case 5:
-				break;
-			case 6:
-				break;
-			case 7:
-				break;
-			case 8:
-				break;
-			case 9:
-				break;
-			case 10:
-				break;
-			case 11:
-				break;
-			case 12:
-				break;
-			case 13:
-				break;
-			case 14:
-				break;
-			case 15:
-				break;
-			}
+			blocks[mapTile[i * TILE_HEIGHT_NUM + j]].Draw(hdc, j * TileImageSizeX + GameOffsetX, i * TileImageSizeY + GameOffsetY);
+			
 		}
 	}
-	player.EditDraw(ResourceManager::backBuffer->GetmemDC(), GameOffsetX, GameOffsetY);
-}
-void GameManager::DrawStagelogo(HDC hdc)
-{
 }
 
-void GameManager::GameOver()
-{
-	isGameOver = true;
-	//player.SetDie();
-}
-void GameManager::GameStart()
-{
-	DrawBlack();
-	scene = EDIT_MODE;
-}
-void GameManager::Restart()
-{
-	isGameOver = false;
-	GameOverflag = false;
-	//player.Reset();
-}
-bool GameManager::CollisionCheck()
-{
-	RECT rcTemp;
-
-	/*
-	for (auto it = lEnemyFires.begin(); it != lEnemyFires.end(); it++)
-	{
-		if (Physics::GetInstance()->RECTbyRECTCollisionCheck(player.GetPlayerRect(), it->GetFireRect()))
-		{
-			return true;
-		}
-	}*/
-	return false;
-}
-void GameManager::CollisionView()
-{
-	/*
-	Rectangle(ResourceManager::backBuffer->GetmemDC(), player.GetPlayerRect().left, player.GetPlayerRect().top,
-		player.GetPlayerRect().right, player.GetPlayerRect().bottom);
-	for (auto it = lEnemyFires.begin(); it != lEnemyFires.end(); it++)
-	{
-		Rectangle(ResourceManager::backBuffer->GetmemDC(), it->GetFireRect().left, it->GetFireRect().top, it->GetFireRect().right, it->GetFireRect().bottom);
-	}
-	*/
-}
 void GameManager::DrawBlack()
 {
 	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);

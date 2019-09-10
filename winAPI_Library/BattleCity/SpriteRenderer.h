@@ -1,7 +1,6 @@
 #pragma once
 #include<Windows.h>
 #include"ResourceManager.h"
-#include"Camera.h"
 
 class SpriteRenderer
 {

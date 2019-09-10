@@ -14,10 +14,6 @@ void Player::Init(int _sizeX, int _sizeY, IMAGENUM imageNum)
 {
 	sizeX = _sizeX;
 	sizeY = _sizeY;
-	upSprite.Init(IMAGE_NUM_PLAYERTANK_UP_00, 2, 33, 26);
-	downSprite.Init(IMAGE_NUM_PLAYERTANK_DOWN_00, 2, 33, 26);
-	leftSprite.Init(IMAGE_NUM_PLAYERTANK_LEFT_00, 2, 33, 26);
-	rightSprite.Init(IMAGE_NUM_PLAYERTANK_RIGHT_00, 2, 33, 26);
 }
 
 void Player::PlayerMove(DIRECTION direction)

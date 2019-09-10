@@ -1,7 +1,8 @@
-#include <windows.h>
+#include <Windows.h>
 #include <crtdbg.h>
-#include<iostream>
+#include <iostream>
 #include "GameManager.h"
+#include "RadioButtonID.h"
 
 /*
 #include"Player.h"
@@ -10,21 +11,7 @@
 #include"ResourceManager.h"
 #include"Physics.h"
 #include "BitMap.h" */
-#define ID_R1 101
-#define ID_R2 102
-#define ID_R3 103
-#define ID_R4 104
-#define ID_R5 105
-#define ID_R6 106
-#define ID_R7 107
-#define ID_R8 108
-#define ID_R9 109
-#define ID_R10 110
-#define ID_R11 111
-#define ID_R12 112
-#define ID_R13 113
-#define ID_R14 114
-#define ID_R15 115
+
 
 using namespace std;
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
@@ -35,10 +22,12 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 HINSTANCE g_hInst;
 char g_szClassName[256] = "Hello World!!";
+HWND r[15];
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
 	HWND hWnd;
+	
 	MSG Message;
 	WNDCLASS WndClass;
 	g_hInst = hInstance;
@@ -77,8 +66,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	char str[256];
 	char lpstrFile[MAX_PATH] = "";
 	hdc = GetDC(hWnd);
-
-	HWND r[15];
+	int checkNum = 0;
 
 	switch (iMessage)
 	{
@@ -148,16 +136,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_KEYDOWN:
-		GameManager::GetInstance()->Input(wParam);
-		return 0;
 	case WM_KEYUP:
-		switch (wParam)
+	case WM_LBUTTONDOWN:
+		
+		for (int i = 0; i < 15; i++)
 		{
-		case VK_LEFT:
-			break;
-		case VK_RIGHT:
-			break;
+			if (SendMessage(r[i], BM_GETCHECK, 0, 0) == BST_CHECKED) {
+				checkNum = i;
+				break;
+			}
 		}
+		GameManager::GetInstance()->Input(wParam, lParam, checkNum);
 		return 0;
 	case WM_DESTROY:
 		KillTimer(hWnd, 1);

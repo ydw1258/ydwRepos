@@ -5,17 +5,17 @@ BitMap* ResourceManager::backBuffer = nullptr;
 
 void ResourceManager::Init(HDC hdc, HINSTANCE hInstance)
 {
-	string fileNames[50] = {"BattleResource/Res/__block.bmp",
-							"BattleResource/Res/__brick.bmp",
-							"BattleResource/Res/__bush.bmp",
-							"BattleResource/Res/__empty.bmp",
-							"BattleResource/Res/__steel.bmp",
-							"BattleResource/Res/_block.bmp",
-							"BattleResource/Res/_brick.bmp",
-							"BattleResource/Res/_bush.bmp",
-							"BattleResource/Res/_empty.bmp",
-							"BattleResource/Res/_steel.bmp",
-							"BattleResource/Res/_water.bmp",
+	string fileNames[50] = {"BattleResource/__block.bmp",
+							"BattleResource/__brick.bmp",
+							"BattleResource/__bush.bmp",
+							"BattleResource/__empty.bmp",
+							"BattleResource/__steel.bmp",
+							"BattleResource/_block.bmp",
+							"BattleResource/_brick.bmp",
+							"BattleResource/_bush.bmp",
+							"BattleResource/_empty.bmp",
+							"BattleResource/_steel.bmp",
+							"BattleResource/_water.bmp",
 	};
 
 	bitmap = new BitMap[50];

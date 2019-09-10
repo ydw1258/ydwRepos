@@ -19,7 +19,7 @@ void SpriteRenderer::Init(IMAGENUM _startSprite, int _AllSpriteNum, int _ImageSi
 //타이머로 특정 간격 마다 호출 (이미지 변경의 시점만)
 void SpriteRenderer::DrawObject(HDC hdc, int objectX, int objectY)
 {
-	ResourceManager::GetInstance()->Draw(hdc, objectX - Camera::GetInstance()->cameraX, objectY - Camera::GetInstance()->cameraY, ImageSizeX, ImageSizeY, CurSprite);
+	ResourceManager::GetInstance()->Draw(hdc, objectX, objectY, ImageSizeX, ImageSizeY, CurSprite);
 }
 void SpriteRenderer::SpriteChange()
 {
@@ -35,7 +35,7 @@ void SpriteRenderer::DrawBackground(HDC hdc, int objectX, int objectY, int repea
 	{
 		for (int j = -1; j < repeatXNum; j++)
 		{
-			ResourceManager::GetInstance()->Draw(hdc, j * Camera::GetInstance()->cameraX % ImageSizeX, objectY * i, ImageSizeX, ImageSizeY, CurSprite);
+			ResourceManager::GetInstance()->Draw(hdc, j, objectY * i, ImageSizeX, ImageSizeY, CurSprite);
 		}
 	}
 }
@@ -43,7 +43,7 @@ void SpriteRenderer::DrawBackground(HDC hdc, int objectX, int objectY, int repea
 //화면 넘어가면 다시 원래의 좌표로
 void SpriteRenderer::DrawMoveBackground(HDC hdc, int objectX, int objectY)
 {
-	ResourceManager::GetInstance()->Draw(hdc, objectX - Camera::GetInstance()->cameraX % (ImageSizeX * 16), objectY, ImageSizeX, ImageSizeY, CurSprite);
+	ResourceManager::GetInstance()->Draw(hdc, objectX, objectY, ImageSizeX, ImageSizeY, CurSprite);
 }
 void SpriteRenderer::DrawSrolledBackground(HDC hdc, int objectX, int objectY, int repeatXNum, int repeatYNum, int scrollSpeedX, int scrollSpeedY)
 {
@@ -55,7 +55,7 @@ void SpriteRenderer::DrawSrolledBackground(HDC hdc, int objectX, int objectY, in
 	{
 		for (int j = -1; j < repeatXNum - 1; j++)
 		{
-			ResourceManager::GetInstance()->Draw(hdc, objectX + j * ImageSizeX - (Camera::GetInstance()->cameraX % ImageSizeX), objectY * i, ImageSizeX, ImageSizeY, CurSprite);
+			ResourceManager::GetInstance()->Draw(hdc, objectX + j * ImageSizeX, objectY * i, ImageSizeX, ImageSizeY, CurSprite);
 		}
 	}
 	//cout << scrollSpeedX << endl;

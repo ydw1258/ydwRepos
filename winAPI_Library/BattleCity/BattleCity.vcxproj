@@ -142,22 +142,19 @@
   <ItemGroup>
     <ClCompile Include="BattleCityMain.cpp" />
     <ClCompile Include="BitMap.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Physics.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitMap.h" />
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Physics.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="RadioButtonID.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Tile.h" />
