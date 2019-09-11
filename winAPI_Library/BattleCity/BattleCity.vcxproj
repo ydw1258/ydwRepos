@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitMap.h" />
+    <ClInclude Include="EditorBlockType.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Physics.h" />

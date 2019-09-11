@@ -1,12 +1,15 @@
 #pragma once
 #include<Windows.h>
+#include<string>
 #include "ResourceManager.h"
 #include"SpriteRenderer.h"
 #include"FontManager.h"
 #include"Physics.h"
 #include<list>
 #include<vector>
+#include<stack>
 #include"Tile.h"
+#include "EditorBlockType.h"
 
 #define WINDOW_WIDTH 600
 #define WINDOW_HEIGHT 600
@@ -23,6 +26,11 @@ enum Scene
 	INGAME
 };
 
+struct MapStackInfo
+{
+	POINT pt;
+	BLOCKTYPE mapValue;
+};
 class GameManager
 {
 private:
@@ -31,7 +39,6 @@ private:
 
 	SpriteRenderer backGround;
 	Tile blocks[15];
-
 	static GameManager* mthis;
 	FontManager TitleFont;
 	float Timer[10] = { 0 };
@@ -39,11 +46,16 @@ private:
 	bool GameOverflag = false;
 	const int GameOffsetX = 20;
 	const int GameOffsetY = 20;
-	int mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { 0 };
-	int TileImageSizeX = 32;
-	int TileImageSizeY = 32;
+	stack<MapStackInfo> mapTileUndoStack;
+	stack<MapStackInfo> mapTileRedoStack;
+	BLOCKTYPE mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { EMPTY };
+	
+	
+	const int TileImageSizeX = 32;
+	const int TileImageSizeY = 32;
 public:
 	bool isGameOver = false;
+	
 	//Scene scene = TITLE;
 	Scene scene = EDIT_MODE;
 	static GameManager* GetInstance()
@@ -58,6 +70,8 @@ public:
 	void DrawTitle(HDC hdc);
 	void DrawStagelogo(HDC hdc);
 	void DrawBlack();
+	void DrawTile(HDC hdc, BLOCKTYPE blockType, int x, int y);
+	void MenuBlockDraw(HDC hdc);
 	void EditModeDraw(HDC hdc);
 	bool CollisionCheck();
 	void CollisionView();
@@ -66,9 +80,15 @@ public:
 	void EditModeUpdate();
 	void InTitleUpdate();
 	void Init(HDC hdc, HINSTANCE _g_hInst);
-	void Input(WPARAM wParam, LPARAM lParam, int radioButtonCheckNum);
-	void CheckTileInput(int x, int y, int radioButtonCheckNum);
+	void Input(WPARAM wParam, LPARAM lParam, BLOCKTYPE radioButtonCheckNum);
+	void CheckTileInput(int x, int y, BLOCKTYPE radioButtonCheckNum);
 	void SetTimers();
+
+	void LoadMap(int* mapValues);
+	void SaveMap(string saveFileName);
+	void Undo(); //ctrl z
+	void Redo(); //ctrl y
+
 	GameManager();
 	~GameManager();
 };

@@ -7,27 +7,20 @@ using namespace std;
 
 enum IMAGENUM
 {
-	IMAGENUM_BLACKBACKGROUND,
-	IMAGENUM__BLOCK,
-	IMAGENUM__BRICK,
-	IMAGENUM__BUSH,
-	IMAGENUM__EMPTY,
-	IMAGENUM__STEEL,
-	IMAGENUM_BLOCK,
-	IMAGENUM_BRICK,
-	IMAGENUM_BUSH,
 	IMAGENUM_EMPTY,
-	IMAGENUM_STEEL,
+	IMAGENUM_BRICK,
+	IMAGENUM_BLOCK,
 	IMAGENUM_WATER,
+	IMAGENUM_BUSH,
+	IMAGENUM_STEEL,
+	IMAGENUM_BLACKBACKGROUND,
+	/*"BattleResource/__empty.bmp"
+	"BattleResource/__brick.bmp",
+	"BattleResource/__block.bmp",
+	"BattleResource/__water.bmp",
+	"BattleResource/__bush.bmp",
+	"BattleResource/__steel.bmp", */
 
-	IMAGENUM_ROW_1_UP_00,
-	IMAGENUM_ROW_1_UP_01,
-	IMAGENUM_ROW_1_LEFT_00,
-	IMAGENUM_ROW_1_LEFT_01,
-	IMAGENUM_ROW_1_RIGHT_00,
-	IMAGENUM_ROW_1_RIGHT_01,
-	IMAGENUM_ROW_1_DOWN_00,
-	IMAGENUM_ROW_1_DOWN_01
 };
 class ResourceManager
 {
