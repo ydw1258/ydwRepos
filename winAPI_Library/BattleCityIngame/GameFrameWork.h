@@ -1,19 +1,13 @@
 #pragma once
 #include <Windows.h>
 #include <chrono>
-#include"ResourceManager.h"
-#include"SpriteRenderer.h"
+#include <math.h>
+#include <stdio.h>
+#include "ResourceManager.h"
 #include "Player.h"
 using namespace std;
 
 #define FPS			60.0f
-
-enum STATE
-{
-	IDLE,
-	MOVE,
-	JUMP
-};
 
 class GameFrameWork
 {
@@ -25,11 +19,6 @@ private:
 
 	Player player;
 	
-	//수학적으로
-	STATE		m_eState;
-	//물리적
-	float		m_fVectorX;
-	float		m_fVectorY;
 	int OffsetX = 20;
 	int OffsetY = 20;
 

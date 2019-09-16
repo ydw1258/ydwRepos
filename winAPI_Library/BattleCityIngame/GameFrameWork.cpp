@@ -1,15 +1,11 @@
 #include "GameFrameWork.h"
 #include"GameManager.h"
-#include <math.h>
-#include <stdio.h>
+
 
 GameFrameWork::GameFrameWork()
 {
 	player.x = 200.0f;
 	player.y = 500.0f;
-
-	m_fVectorX = 1.0f;
-	m_fVectorY = 0.0f;
 
 	m_LastTime = std::chrono::system_clock::now();
 }
@@ -24,7 +20,7 @@ void GameFrameWork::Init(HWND hWnd, HINSTANCE g_hInst)
 	ResourceManager::GetInstance()->Init(hdc, g_hInst);
 
 	for (int i = 0; i < 11; i++)
-		blockSprites[i].Init((IMAGENUM)(IMAGENUM__BLOCK + i), 1, 16, 16);
+		blockSprites[i].Init((IMAGENUM)(IMAGENUM_BLOCK + i), 1, 16, 16);
 	ReleaseDC(hWnd, hdc);
 
 	player.Init(16,16, IMAGENUM_ROW_1_DOWN_00);
@@ -91,7 +87,7 @@ void GameFrameWork::Render()
 
 	/* */
 	for(int i = 0 ; i < 15;i++)
-		ResourceManager::GetInstance()->Draw(hdc,10, 10 + i*20, 32, 32, (IMAGENUM)(IMAGENUM__EMPTY + i));
+		ResourceManager::GetInstance()->Draw(hdc,10, 10 + i*20, 32, 32, (IMAGENUM)(IMAGENUM_EMPTY + i));
 
 	ReleaseDC(m_hWnd, hdc);
 }

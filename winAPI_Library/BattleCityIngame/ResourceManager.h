@@ -7,13 +7,13 @@ using namespace std;
 
 enum IMAGENUM
 {
+	IMAGENUM_EMPTY,
+	IMAGENUM_BRICK,
+	IMAGENUM_BLOCK,
+	IMAGENUM_WATER,
+	IMAGENUM_BUSH,
+	IMAGENUM_STEEL,
 	IMAGENUM_BLACKBACKGROUND,
-	IMAGENUM__EMPTY,
-	IMAGENUM__BLICK,
-	IMAGENUM__BLOCK,
-	IMAGENUM__WATER,
-	IMAGENUM__BUSH,
-	IMAGENUM__STEEL,
 
 	IMAGENUM_ROW_1_UP_00,
 	IMAGENUM_ROW_1_UP_01,
@@ -26,7 +26,7 @@ enum IMAGENUM
 };
 
 class ResourceManager
-{
+{///
 private:
 	static ResourceManager* mthis;
 	BitMap* bitmap;
