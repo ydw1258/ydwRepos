@@ -10,7 +10,7 @@
 #include"Tile.h"
 #include"FontManager.h"
 #include "Physics.h"
-
+#include "Player.h"
 
 enum BLOCKTYPE
 {
@@ -89,20 +89,11 @@ public:
 	void DrawStagelogo(HDC hdc);
 	void DrawBlack();
 	void DrawTile(HDC hdc, BLOCKTYPE blockType, int x, int y);
-	void MenuBlockDraw(HDC hdc);
-	bool CollisionCheck();
-	void Update(); //배경움직이고 등등
-	void EditModeUpdate();
-	void InTitleUpdate();
+	bool CollisionCheck(Player player);
 	void Init(HDC hdc, HINSTANCE _g_hInst);
 	void Input(WPARAM wParam, LPARAM lParam, BLOCKTYPE radioButtonCheckNum);
-	void CheckTileInput(int x, int y, BLOCKTYPE radioButtonCheckNum);
-	void SetTimers();
 
 	void LoadMap(int* mapValues);
-	void SaveMap(string saveFileName);
-	void Undo(); //ctrl z
-	void Redo(); //ctrl y
 
 	GameManager();
 	~GameManager();

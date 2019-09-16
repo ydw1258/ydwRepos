@@ -17,6 +17,7 @@ void GameFrameWork::Init(HWND hWnd, HINSTANCE g_hInst)
 	HDC hdc = GetDC(hWnd);
 	ResourceManager::GetInstance()->Init(hdc, g_hInst);
 	GameManager::GetInstance()->Init(hdc, g_hInst);
+
 	for (int i = 0; i < 11; i++)
 		blockSprites[i].Init((IMAGENUM)(IMAGENUM_BLOCK + i), 1, 16, 16);
 	ReleaseDC(hWnd, hdc);
@@ -56,6 +57,10 @@ void GameFrameWork::Update()
 
 void GameFrameWork::OperateInput()
 {
+	if (GameManager::GetInstance()->CollisionCheck(player))
+		return;
+	cout << player.x << endl;
+	cout << player.y << endl;
 	if (GetKeyState(VK_LEFT) & 0x8000)
 	{
 		player.PlayerMove(LEFT);
@@ -82,7 +87,6 @@ void GameFrameWork::Render()
 	
 	GameManager::GetInstance()->Draw(ResourceManager::backBuffer->GetmemDC());
 	player.Draw(ResourceManager::backBuffer->GetmemDC(), 40, 40);
-
 	BitBlt(hdc, 0, 0, 600, 600, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
 
 	ReleaseDC(m_hWnd, hdc);

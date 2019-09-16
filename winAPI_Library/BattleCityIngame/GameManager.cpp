@@ -136,6 +136,46 @@ void GameManager::DrawTile(HDC hdc, BLOCKTYPE blockType, int x, int y)
 	}
 }
 
+bool GameManager::CollisionCheck(Player player)
+{
+	RECT playerRect;
+	playerRect.top = player.y;
+	playerRect.bottom = player.y + 32;
+	playerRect.left = player.x;
+	playerRect.right = player.x + 32;
+
+
+	for (int i = 0; i < TILE_HEIGHT_NUM; i++)
+	{
+		for (int j = 0; j < TILE_WIDTH_NUM; j++)
+		{
+			if (mapTile[TILE_HEIGHT_NUM*i + j] == BLICK_RIGHT ||
+				mapTile[TILE_HEIGHT_NUM*i + j] == BLICK_DOWN ||
+				mapTile[TILE_HEIGHT_NUM*i + j] == BLICK_LEFT ||
+				mapTile[TILE_HEIGHT_NUM*i + j] == BLICK_UP ||
+				mapTile[TILE_HEIGHT_NUM*i + j] == BLICK_FULL ||
+				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_RIGHT ||
+				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_DOWN ||
+				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_LEFT ||
+				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_UP ||
+				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_FULL ||
+				mapTile[TILE_HEIGHT_NUM*i + j] == WATER)
+			{
+				RECT Rect;
+				Rect.top = i * TileImageSizeY;
+				Rect.bottom = (i + 1) * TileImageSizeY;
+				Rect.left = j * TileImageSizeX;
+				Rect.right = (j + 1) * TileImageSizeX;
+				
+				if (Physics::GetInstance()->RECTbyRECTCollisionCheck(playerRect, Rect))
+					return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 void GameManager::DrawBlack()
 {
 	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
