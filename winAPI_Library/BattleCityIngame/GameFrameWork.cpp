@@ -27,7 +27,7 @@ void GameFrameWork::Init(HWND hWnd, HINSTANCE g_hInst)
 		blockSprites[i].Init((IMAGENUM)(IMAGENUM__BLOCK + i), 1, 16, 16);
 	ReleaseDC(hWnd, hdc);
 
-	player.Init(64,64, IMAGENUM_ROW_1_DOWN_00);
+	player.Init(16,16, IMAGENUM_ROW_1_DOWN_00);
 }
 
 
@@ -64,7 +64,7 @@ void GameFrameWork::OperateInput()
 {
 	if (GetKeyState(VK_LEFT) & 0x8000)
 	{
-
+		
 	}
 	if (GetKeyState(VK_RIGHT) & 0x8000)
 	{
@@ -78,29 +78,6 @@ void GameFrameWork::OperateInput()
 	{
 
 	}
-	if (GetKeyState(VK_SPACE) & 0x8000)
-	{
-		if (m_bJump == false)
-		{
-			// 키 다운
-			m_bJump = true;
-
-		}
-		else
-		{
-			//누르고 있을때
-		}
-	}
-	else
-	{
-		if (m_bJump)
-		{
-			//키 업
-		}
-		m_bJump = false;
-
-	}
-
 }
 
 void GameFrameWork::Render()
@@ -109,15 +86,12 @@ void GameFrameWork::Render()
 
 	ResourceManager::GetInstance()->Draw(ResourceManager::backBuffer->GetmemDC(), 0, 0, 600, 600, IMAGENUM_BLACKBACKGROUND);
 	
-	for (int i = 0; i < 11; i++)
-	{
-		for (int j = 0; j < 4; j++);
-		{
-			blockSprites[i].DrawObject(ResourceManager::backBuffer->GetmemDC(), i * 16, 10);
-		}
-		
-	}
 	BitBlt(hdc, 0, 0, 600, 600, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
-	player
+	player.Draw(hdc, 20, 20);
+
+	/* */
+	for(int i = 0 ; i < 15;i++)
+		ResourceManager::GetInstance()->Draw(hdc,10, 10 + i*20, 32, 32, (IMAGENUM)(IMAGENUM__EMPTY + i));
+
 	ReleaseDC(m_hWnd, hdc);
 }

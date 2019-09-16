@@ -30,6 +30,8 @@ private:
 	//¹°¸®Àû
 	float		m_fVectorX;
 	float		m_fVectorY;
+	int OffsetX = 20;
+	int OffsetY = 20;
 
 	int mapTile[13 * 13];
 public:
