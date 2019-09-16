@@ -11,6 +11,7 @@ enum DIRECTION
 class Player
 {
 private:
+	float speed = 0.4f;
 	SpriteRenderer upSprite;
 	SpriteRenderer downSprite;
 	SpriteRenderer leftSprite;

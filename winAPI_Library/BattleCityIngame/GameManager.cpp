@@ -15,6 +15,20 @@ void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
 
 	for (int i = 0; i < 6; i++)
 		blocks[i].Init(16, 16, (IMAGENUM)(IMAGENUM_EMPTY + i));
+
+	string fileName = "C:\\stage01.txt";
+	string buffer;
+	int mapValues[TILE_HEIGHT_NUM * TILE_WIDTH_NUM];
+
+	ifstream inFile(fileName);
+
+	int count = 0;
+	while (inFile.peek() != EOF) {
+		// std::getline은 입력 스트림에서 string으로 한 줄을 읽습니다.
+		getline(inFile, buffer);
+		mapValues[count++] = atoi(buffer.c_str());
+	}
+	GameManager::GetInstance()->LoadMap(mapValues);
 }
 
 void GameManager::LoadMap(int* mapValues)

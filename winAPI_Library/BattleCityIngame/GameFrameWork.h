@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "ResourceManager.h"
 #include "Player.h"
+
 using namespace std;
 
 #define FPS			60.0f
