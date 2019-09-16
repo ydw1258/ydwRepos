@@ -24,10 +24,11 @@ public:
 	float y = 0;
 	Player();
 	~Player();
-
+	//InGame
+	void EditDraw(HDC hdc, int offsetX, int offsetY);
+	//InEdit
 	void Init(int _sizeX, int _sizeY, IMAGENUM imageNum);
 	void Draw(HDC hdc, int offsetX, int offsetY);
 	void PlayerMove(DIRECTION direction);
-	void SpriteChange();
 };
 

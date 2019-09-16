@@ -4,6 +4,12 @@
 Player::Player() {}
 Player::~Player() {}
 
+//EditMode
+void Player::EditDraw(HDC hdc, int offsetX, int offsetY)
+{
+	upSprite.DrawObject(hdc, x * sizeX + offsetX, y * sizeY + offsetY);
+}
+
 void Player::Init(int _sizeX, int _sizeY, IMAGENUM imageNum)
 {
 	sizeX = _sizeX;
@@ -42,11 +48,8 @@ void Player::PlayerMove(DIRECTION direction)
 	}
 }
 
+//Ingame
 void Player::Draw(HDC hdc, int offsetX, int offsetY)
 {
 	curSprite.DrawObject(hdc, x, y);
-}
-void Player::SpriteChange()
-{
-	curSprite.SpriteChange();
 }
