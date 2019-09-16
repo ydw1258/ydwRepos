@@ -21,22 +21,22 @@ void Player::PlayerMove(DIRECTION direction)
 	{
 	case UP:
 		curSprite = upSprite;
-		if (y > 0)
+		if (y > GameManager::GetInstance()->GameOffsetY)
 			y-= speed;
 		break;
 	case DOWN:
 		curSprite = downSprite;
-		if (y < 600)
+		if (y < sizeY * 12 + GameManager::GetInstance()->GameOffsetY)
 			y+= speed;
 		break;
 	case LEFT:
 		curSprite = leftSprite;
-		if (x > 0)
-			x-= speed;
+		if (x > GameManager::GetInstance()->GameOffsetX)
+			x -= speed;
 		break;
 	case RIGHT:
 		curSprite = rightSprite;
-		if (x < 600)
+		if (x < sizeX * 12 + GameManager::GetInstance()->GameOffsetX)
 			x+= speed;
 		break;
 	}

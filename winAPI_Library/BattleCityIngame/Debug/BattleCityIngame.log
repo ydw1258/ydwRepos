@@ -1,3 +1,10 @@
-﻿  Player.cpp
-c:\users\administrator\documents\github\ydwrepos\winapi_library\battlecityingame\player.cpp(47): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  BattleCityIngame.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\winAPI_Library\Debug\BattleCityIngame.exe
+﻿  GameManager.cpp
+c:\users\ydw\desktop\ydwrepos\winapi_library\battlecityingame\gamemanager.cpp(142): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\ydw\desktop\ydwrepos\winapi_library\battlecityingame\gamemanager.cpp(143): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\ydw\desktop\ydwrepos\winapi_library\battlecityingame\gamemanager.cpp(144): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\ydw\desktop\ydwrepos\winapi_library\battlecityingame\gamemanager.cpp(145): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\ydw\desktop\ydwrepos\winapi_library\battlecityingame\gamemanager.cpp(192): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\ydw\desktop\ydwrepos\winapi_library\battlecityingame\gamemanager.cpp(193): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\ydw\desktop\ydwrepos\winapi_library\battlecityingame\gamemanager.cpp(194): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\ydw\desktop\ydwrepos\winapi_library\battlecityingame\gamemanager.cpp(195): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  BattleCityIngame.vcxproj -> C:\Users\ydw\Desktop\ydwRepos\winAPI_Library\Debug\BattleCityIngame.exe

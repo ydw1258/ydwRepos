@@ -64,15 +64,16 @@ private:
 	float Timer[10] = { 0 };
 	float TimerReset[10] = { 0 };
 	bool GameOverflag = false;
-	const int GameOffsetX = 20;
-	const int GameOffsetY = 20;
+	
 	stack<MapStackInfo> mapTileUndoStack;
 	stack<MapStackInfo> mapTileRedoStack;
 	BLOCKTYPE mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { EMPTY };
-
+	
+public:
+	const int GameOffsetX = 20;
+	const int GameOffsetY = 20;
 	const int TileImageSizeX = 32;
 	const int TileImageSizeY = 32;
-public:
 	bool isGameOver = false;
 
 	//Scene scene = TITLE;
@@ -90,6 +91,7 @@ public:
 	void DrawBlack();
 	void DrawTile(HDC hdc, BLOCKTYPE blockType, int x, int y);
 	bool CollisionCheck(Player player);
+	void CollisionDraw(Player player, HDC hdc);
 	void Init(HDC hdc, HINSTANCE _g_hInst);
 	void Input(WPARAM wParam, LPARAM lParam, BLOCKTYPE radioButtonCheckNum);
 

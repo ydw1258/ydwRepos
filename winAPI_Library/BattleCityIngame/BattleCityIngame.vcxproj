@@ -141,11 +141,13 @@
   <ItemGroup>
     <ClInclude Include="BitMap.h" />
     <ClInclude Include="BlockType.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameFrameWork.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Tile.h" />
@@ -153,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="BattleCityIngameMain.cpp" />
     <ClCompile Include="BitMap.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameFrameWork.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -161,6 +164,9 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="Tile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BattleCityIngame.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

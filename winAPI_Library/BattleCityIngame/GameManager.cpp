@@ -1,5 +1,5 @@
 #include "GameManager.h"
-
+#include<Windows.h>
 using namespace std;
 GameManager* GameManager::mthis = nullptr;
 
@@ -143,8 +143,7 @@ bool GameManager::CollisionCheck(Player player)
 	playerRect.bottom = player.y + 32;
 	playerRect.left = player.x;
 	playerRect.right = player.x + 32;
-
-
+	
 	for (int i = 0; i < TILE_HEIGHT_NUM; i++)
 	{
 		for (int j = 0; j < TILE_WIDTH_NUM; j++)
@@ -162,20 +161,67 @@ bool GameManager::CollisionCheck(Player player)
 				mapTile[TILE_HEIGHT_NUM*i + j] == WATER)
 			{
 				RECT Rect;
-				Rect.top = i * TileImageSizeY;
-				Rect.bottom = (i + 1) * TileImageSizeY;
-				Rect.left = j * TileImageSizeX;
-				Rect.right = (j + 1) * TileImageSizeX;
-				
+				Rect.top = i * TileImageSizeY + GameOffsetY;
+				Rect.bottom = (i + 1) * TileImageSizeY + GameOffsetY;
+				Rect.left = j * TileImageSizeX + GameOffsetX;
+				Rect.right = (j + 1) * TileImageSizeX + GameOffsetX;
+			
 				if (Physics::GetInstance()->RECTbyRECTCollisionCheck(playerRect, Rect))
+				{
+					RECT rcTemp;
+
+					IntersectRect(&rcTemp, &Rect, &playerRect);
+					if (playerRect.top > Rect.top)//player가 아래에 있을때
+						player.y += 300;
+					else
+						player.y--;
 					return true;
+				}
+					
 			}
 		}
 	}
+	cout << player.y << endl;
 
 	return false;
 }
+void GameManager::CollisionDraw(Player player, HDC hdc)
+{
+	RECT playerRect;
+	playerRect.top = player.y;
+	playerRect.bottom = player.y + 32;
+	playerRect.left = player.x;
+	playerRect.right = player.x + 32;
 
+	Rectangle(hdc, playerRect.left, playerRect.top, playerRect.right, playerRect.bottom);
+
+	for (int i = 0; i < TILE_HEIGHT_NUM; i++)
+	{
+		for (int j = 0; j < TILE_WIDTH_NUM; j++)
+		{
+			if (mapTile[TILE_HEIGHT_NUM * i + j] == BLICK_RIGHT ||
+				mapTile[TILE_HEIGHT_NUM * i + j] == BLICK_DOWN ||
+				mapTile[TILE_HEIGHT_NUM * i + j] == BLICK_LEFT ||
+				mapTile[TILE_HEIGHT_NUM * i + j] == BLICK_UP ||
+				mapTile[TILE_HEIGHT_NUM * i + j] == BLICK_FULL ||
+				mapTile[TILE_HEIGHT_NUM * i + j] == IRON_RIGHT ||
+				mapTile[TILE_HEIGHT_NUM * i + j] == IRON_DOWN ||
+				mapTile[TILE_HEIGHT_NUM * i + j] == IRON_LEFT ||
+				mapTile[TILE_HEIGHT_NUM * i + j] == IRON_UP ||
+				mapTile[TILE_HEIGHT_NUM * i + j] == IRON_FULL ||
+				mapTile[TILE_HEIGHT_NUM * i + j] == WATER)
+			{
+				RECT Rect;
+				Rect.top = i * TileImageSizeY + GameOffsetY;
+				Rect.bottom = (i + 1) * TileImageSizeY + GameOffsetY;
+				Rect.left = j * TileImageSizeX + GameOffsetX;
+				Rect.right = (j + 1) * TileImageSizeX + GameOffsetX;
+
+				Rectangle(hdc, Rect.left, Rect.top, Rect.right, Rect.bottom);
+			}
+		}
+	}
+}
 void GameManager::DrawBlack()
 {
 	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);

@@ -4,7 +4,7 @@
 GameFrameWork::GameFrameWork()
 {
 	player.x = 200.0f;
-	player.y = 200.0f;
+	player.y = 400.0f;
 
 	m_LastTime = std::chrono::system_clock::now();
 }
@@ -42,7 +42,7 @@ void GameFrameWork::Update()
 
 		ScreenToClient(m_hWnd, &pt);
 	}
-
+	
 	std::chrono::duration<float> sec = std::chrono::system_clock::now() - m_LastTime;
 	/*if (sec.count() < (1 / FPS))
 		return;*/
@@ -51,7 +51,6 @@ void GameFrameWork::Update()
 	m_LastTime = std::chrono::system_clock::now();
 
 	OperateInput();
-
 	Render();
 }
 
@@ -59,8 +58,6 @@ void GameFrameWork::OperateInput()
 {
 	if (GameManager::GetInstance()->CollisionCheck(player))
 		return;
-	cout << player.x << endl;
-	cout << player.y << endl;
 	if (GetKeyState(VK_LEFT) & 0x8000)
 	{
 		player.PlayerMove(LEFT);
@@ -87,6 +84,8 @@ void GameFrameWork::Render()
 	
 	GameManager::GetInstance()->Draw(ResourceManager::backBuffer->GetmemDC());
 	player.Draw(ResourceManager::backBuffer->GetmemDC(), 40, 40);
+	GameManager::GetInstance()->CollisionDraw(player, ResourceManager::backBuffer->GetmemDC());
+	
 	BitBlt(hdc, 0, 0, 600, 600, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
 
 	ReleaseDC(m_hWnd, hdc);
