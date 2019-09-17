@@ -50,7 +50,6 @@ private:
 	stack<MapStackInfo> mapTileRedoStack;
 	BLOCKTYPE mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { EMPTY };
 	
-	
 	const int TileImageSizeX = 32;
 	const int TileImageSizeY = 32;
 public:

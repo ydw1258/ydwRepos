@@ -3,10 +3,11 @@
 using namespace std;
 GameManager* GameManager::mthis = nullptr;
 
-
 void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
 {
 	BLOCKTYPE mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { EMPTY };
+	startPos.x = 5 * TileImageSizeX;
+	startPos.y = 13 * TileImageSizeY;
 
 	for (int i = 0; i < 10; i++)
 		Timer[i] = 0;
@@ -15,7 +16,7 @@ void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
 
 	for (int i = 0; i < 6; i++)
 		blocks[i].Init(16, 16, (IMAGENUM)(IMAGENUM_EMPTY + i));
-
+	blocks[IMAGENUM_EGLE].Init(32, 32, IMAGENUM_EGLE);
 	string fileName = "C:\\stage01.txt";
 	string buffer;
 	int mapValues[TILE_HEIGHT_NUM * TILE_WIDTH_NUM];
@@ -37,9 +38,43 @@ void GameManager::LoadMap(int* mapValues)
 	{
 		for (int j = 0; j < TILE_WIDTH_NUM; j++)
 		{
+			if (i == 12 && j == 5)
+			{
+				mapTile[i * TILE_HEIGHT_NUM + j] = BLOCKEGLE;
+				continue;
+			}
+				
 			mapTile[i * TILE_HEIGHT_NUM + j] = (BLOCKTYPE)mapValues[i * TILE_HEIGHT_NUM + j];
 			cout << mapValues[i * TILE_HEIGHT_NUM + j] << endl;
 		}
+	}
+}
+
+void GameManager::Shot(Player player)
+{
+  	if (bullets.size() == 0)
+	{
+		Bullet bullet;
+		bullet.Init(player.x, player.y, player.direction);
+		bullets.push_back(bullet);
+	}
+}
+void GameManager::MoveBullets()
+{
+	for (list<Bullet>::iterator it = bullets.begin(); it != bullets.end();)
+	{
+		it->Move();
+		if (it->OutofRange())
+			it = bullets.erase(it);
+		else
+			it++;
+	}
+}
+void GameManager::DrawBullets(HDC hdc)
+{
+	for (list<Bullet>::iterator it = bullets.begin(); it != bullets.end(); it++)
+	{
+		it->Draw(hdc);
 	}
 }
 //Draw 매프레임 호출
@@ -56,7 +91,6 @@ void GameManager::Draw(HDC hdc)
 	}
 	//blocks[3].Draw(hdc, 680, 10 + GameOffsetY);
 	BitBlt(hdc, 0, 0, 600, 600, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
-
 }
 void GameManager::DrawTile(HDC hdc, BLOCKTYPE blockType, int x, int y)
 {
@@ -131,12 +165,15 @@ void GameManager::DrawTile(HDC hdc, BLOCKTYPE blockType, int x, int y)
 		blocks[5].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
 		blocks[5].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
 		break;
+	case BLOCKEGLE:
+		blocks[IMAGENUM_EGLE].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
+		break;
 	default:
 		break;
 	}
 }
 
-bool GameManager::CollisionCheck(Player player)
+bool GameManager::CollisionCheck(Player& player)
 {
 	RECT playerRect;
 	playerRect.top = player.y;
@@ -158,6 +195,7 @@ bool GameManager::CollisionCheck(Player player)
 				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_LEFT ||
 				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_UP ||
 				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_FULL ||
+				mapTile[TILE_HEIGHT_NUM*i + j] == BLOCKEGLE ||
 				mapTile[TILE_HEIGHT_NUM*i + j] == WATER)
 			{
 				RECT Rect;
@@ -170,11 +208,28 @@ bool GameManager::CollisionCheck(Player player)
 				{
 					RECT rcTemp;
 
-					IntersectRect(&rcTemp, &Rect, &playerRect);
-					if (playerRect.top > Rect.top)//player가 아래에 있을때
-						player.y += 300;
-					else
+					//IntersectRect(&rcTemp, &Rect, &playerRect);
+					if (playerRect.top > Rect.top && player.direction == UP) //player가 아래에 있을때
+					{
+						player.y++;
+						return true;
+					}
+					else if(playerRect.top < Rect.top && player.direction == DOWN)
+					{
 						player.y--;
+						return true;
+					}
+					
+					if (playerRect.left > Rect.left && player.direction == LEFT) //player가 오른쪽에 있을때
+					{
+						player.x++;
+						return true;
+					}
+					else if(playerRect.left < Rect.left && player.direction == RIGHT)
+					{
+						player.x--;
+						return true;
+					}
 					return true;
 				}
 					
@@ -182,6 +237,7 @@ bool GameManager::CollisionCheck(Player player)
 		}
 	}
 	cout << player.y << endl;
+	cout << player.direction << endl;
 
 	return false;
 }

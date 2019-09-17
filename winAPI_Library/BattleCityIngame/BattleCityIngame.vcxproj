@@ -142,6 +142,7 @@
     <ClInclude Include="BitMap.h" />
     <ClInclude Include="BlockType.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameFrameWork.h" />
     <ClInclude Include="GameManager.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="BattleCityIngameMain.cpp" />
     <ClCompile Include="BitMap.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameFrameWork.cpp" />
     <ClCompile Include="GameManager.cpp" />

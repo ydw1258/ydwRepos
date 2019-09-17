@@ -23,6 +23,12 @@ void ResourceManager::Init(HDC hdc, HINSTANCE hInstance)
 							"BattleResource/_row-1-col-6.bmp",
 							"BattleResource/_row-1-col-7.bmp",
 							"BattleResource/_row-1-col-8.bmp",
+							"BattleResource/__eagle.bmp",
+							"BattleResource/__flag.bmp",
+							"BattleResource/__shield.bmp",
+							"BattleResource/__bullet.bmp",
+							"BattleResource/__explosion_big.bmp",
+							"BattleResource/__explosion_small.bmp"
 	};
 
 	bitmap = new BitMap[50];
@@ -30,7 +36,7 @@ void ResourceManager::Init(HDC hdc, HINSTANCE hInstance)
 	backBuffer = bitmap[0].Create(hdc, 600, 600);
 	//backBuffer = bitmap[0].Init(hdc, hInstance, blackBackStr.c_str());
 
-	for (int i = 0; i < 14; i++)
+	for (int i = 0; i < 25; i++)
 	{
 		bitmap[i + 1].Init(hdc, hInstance, fileNames[i].c_str());
 	}

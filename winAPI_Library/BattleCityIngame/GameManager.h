@@ -11,6 +11,7 @@
 #include"FontManager.h"
 #include "Physics.h"
 #include "Player.h"
+#include "Bullet.h"
 
 enum BLOCKTYPE
 {
@@ -27,7 +28,8 @@ enum BLOCKTYPE
 	IRON_FULL,
 	WATER,
 	BUSH,
-	ICE
+	ICE,
+	BLOCKEGLE
 };
 //#include "BlockType.h"
 
@@ -54,6 +56,7 @@ struct MapStackInfo
 class GameManager
 {
 private:
+	POINT startPos;
 	int score;
 	int remains; //남은 플레이어 기회
 
@@ -68,7 +71,7 @@ private:
 	stack<MapStackInfo> mapTileUndoStack;
 	stack<MapStackInfo> mapTileRedoStack;
 	BLOCKTYPE mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { EMPTY };
-	
+	list<Bullet> bullets;
 public:
 	const int GameOffsetX = 20;
 	const int GameOffsetY = 20;
@@ -90,12 +93,15 @@ public:
 	void DrawStagelogo(HDC hdc);
 	void DrawBlack();
 	void DrawTile(HDC hdc, BLOCKTYPE blockType, int x, int y);
-	bool CollisionCheck(Player player);
+	bool CollisionCheck(Player& player);
 	void CollisionDraw(Player player, HDC hdc);
 	void Init(HDC hdc, HINSTANCE _g_hInst);
-	void Input(WPARAM wParam, LPARAM lParam, BLOCKTYPE radioButtonCheckNum);
-
+	
+	void Shot(Player player);
 	void LoadMap(int* mapValues);
+
+	void MoveBullets();
+	void DrawBullets(HDC hdc);
 
 	GameManager();
 	~GameManager();

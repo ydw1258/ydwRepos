@@ -18,9 +18,10 @@ private:
 	SpriteRenderer rightSprite;
 	int	sizeX;
 	int	sizeY;
-	DIRECTION direction;
+	
 	SpriteRenderer curSprite;
 public:
+	DIRECTION direction;
 	float x = 0;
 	float y = 0;
 	Player();
@@ -30,5 +31,7 @@ public:
 	void Draw(HDC hdc, int offsetX, int offsetY);
 	void PlayerMove(DIRECTION direction);
 	void SpriteChange();
+	
+
 };
 

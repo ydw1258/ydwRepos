@@ -1,17 +1,5 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v150\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(BattleCity.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
-  BattleCityMain.cpp
-c:\users\ydw\desktop\ydwrepos\winapi_library\battlecity\battlecitymain.cpp(128): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(1774): note: 'sprintf' 선언을 참조하십시오.
-c:\users\ydw\desktop\ydwrepos\winapi_library\battlecity\battlecitymain.cpp(149): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(1774): note: 'sprintf' 선언을 참조하십시오.
-  BitMap.cpp
-  FontManager.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(BattleCity.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
   GameManager.cpp
-c:\users\ydw\desktop\ydwrepos\winapi_library\battlecity\gamemanager.cpp(104): warning C4101: 'tempMapTile' :참조되지 않은 지역 변수입니다.
-c:\users\ydw\desktop\ydwrepos\winapi_library\battlecity\gamemanager.cpp(124): warning C4101: 'tempMapTile' :참조되지 않은 지역 변수입니다.
-  Physics.cpp
-  ResourceManager.cpp
-  SpriteRenderer.cpp
-  Tile.cpp
-  코드를 생성하고 있습니다...
-  BattleCity.vcxproj -> C:\Users\ydw\Desktop\ydwRepos\winAPI_Library\Debug\BattleCity_Editor.exe
+c:\users\administrator\documents\github\ydwrepos\winapi_library\battlecity\gamemanager.cpp(107): warning C4101: 'tempMapTile' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\documents\github\ydwrepos\winapi_library\battlecity\gamemanager.cpp(127): warning C4101: 'tempMapTile' :참조되지 않은 지역 변수입니다.
+  BattleCity.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\winAPI_Library\Debug\BattleCity_Editor.exe

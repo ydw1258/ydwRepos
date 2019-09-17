@@ -1,3 +1,4 @@
+#include "..\BattleCityIngame\GameManager.h"
 #include "GameManager.h"
 #include<iostream>
 #include<fstream>
@@ -31,6 +32,10 @@ void GameManager::Input(WPARAM wParam, LPARAM lParam, BLOCKTYPE radioButtonCheck
 {
 	CheckTileInput(LOWORD(lParam), HIWORD(lParam), radioButtonCheckNum);
 }
+void GameManager::Shot()
+{
+	if(bullets.size)
+}
 void GameManager::CheckTileInput(int x, int y, BLOCKTYPE radioButtonCheckNum)
 {
 	RECT rect;
@@ -50,6 +55,9 @@ void GameManager::CheckTileInput(int x, int y, BLOCKTYPE radioButtonCheckNum)
 			//cout << rect.top << " " << rect.bottom << " " << rect.left << " " << rect.right << endl;
 			if (Physics::GetInstance()->RECTbyPointCollisionCheck(rect, pt))
 			{
+				if (j == 4 && i == 12 || j == 5 && i == 12 || j == 6 && i == 12 || j == 7 && i == 12 ||
+					j == 0 && i == 0 || j == 6 && i == 0 || j == 12 && i == 0)
+					return;
 				MapStackInfo mapStackInfo;
 				mapStackInfo.pt.x = j;
 				mapStackInfo.pt.y = i;

@@ -3,8 +3,8 @@
 
 GameFrameWork::GameFrameWork()
 {
-	player.x = 200.0f;
-	player.y = 400.0f;
+	player.x = 4 * GameManager::GetInstance()->TileImageSizeX + OffsetX;
+	player.y = 12 * GameManager::GetInstance()->TileImageSizeY + OffsetY;
 
 	m_LastTime = std::chrono::system_clock::now();
 }
@@ -50,30 +50,40 @@ void GameFrameWork::Update()
 	m_fElapseTime = sec.count();
 	m_LastTime = std::chrono::system_clock::now();
 
+	GameManager::GetInstance()->MoveBullets();
 	OperateInput();
 	Render();
 }
 
 void GameFrameWork::OperateInput()
 {
+	if (GetKeyState(VK_SPACE) & 0x8000)
+	{
+		GameManager::GetInstance()->Shot(player);
+	}
 	if (GameManager::GetInstance()->CollisionCheck(player))
 		return;
 	if (GetKeyState(VK_LEFT) & 0x8000)
 	{
 		player.PlayerMove(LEFT);
+		return;
 	}
 	if (GetKeyState(VK_RIGHT) & 0x8000)
 	{
 		player.PlayerMove(RIGHT);
+		return;
 	}
 	if (GetKeyState(VK_UP) & 0x8000)
 	{
 		player.PlayerMove(UP);
+		return;
 	}
 	if (GetKeyState(VK_DOWN) & 0x8000)
 	{
 		player.PlayerMove(DOWN);
+		return;
 	}
+	
 }
 
 void GameFrameWork::Render()
@@ -81,11 +91,11 @@ void GameFrameWork::Render()
 	HDC hdc = GetDC(m_hWnd);
 
 	ResourceManager::GetInstance()->Draw(ResourceManager::backBuffer->GetmemDC(), 0, 0, 600, 600, IMAGENUM_BLACKBACKGROUND);
-	
 	GameManager::GetInstance()->Draw(ResourceManager::backBuffer->GetmemDC());
-	player.Draw(ResourceManager::backBuffer->GetmemDC(), 40, 40);
-	GameManager::GetInstance()->CollisionDraw(player, ResourceManager::backBuffer->GetmemDC());
-	
+
+	player.Draw(ResourceManager::backBuffer->GetmemDC(), 20, 20);
+	//GameManager::GetInstance()->CollisionDraw(player, ResourceManager::backBuffer->GetmemDC());
+	GameManager::GetInstance()->DrawBullets(ResourceManager::backBuffer->GetmemDC());
 	BitBlt(hdc, 0, 0, 600, 600, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
 
 	ReleaseDC(m_hWnd, hdc);
