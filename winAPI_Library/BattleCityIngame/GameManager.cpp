@@ -30,6 +30,118 @@ void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
 		mapValues[count++] = atoi(buffer.c_str());
 	}
 	GameManager::GetInstance()->LoadMap(mapValues);
+
+	for (int i = 0; i < TILE_HEIGHT_NUM; i++)
+	{
+		for (int j = 0; j < TILE_WIDTH_NUM; j++)
+		{
+			judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+			judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+			judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_EMPTY;
+			judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+			
+			switch (mapTile[TILE_HEIGHT_NUM * i + j])
+			{
+			case EMPTY:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				break;
+			case BLICK_RIGHT:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BRICK;
+				break;
+			case BLICK_DOWN:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BRICK;
+				break;
+			case BLICK_LEFT:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				break;
+			case BLICK_UP:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				break;
+			case BLICK_FULL:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BRICK;
+				break;
+			case IRON_RIGHT:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BLOCK;
+				break;
+			case IRON_DOWN:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BLOCK;
+				break;
+			case IRON_LEFT:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				break;
+			case IRON_UP:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				break;
+			case IRON_FULL:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BLOCK;
+				break;
+			case WATER:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_WATER;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_WATER;
+				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_WATER;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_WATER;
+				break;
+			case BUSH:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BUSH;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BUSH;
+				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_BUSH;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BUSH;
+				break;
+			case ICE:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_STEEL;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_STEEL;
+				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_STEEL;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_STEEL;
+				break;
+			case BLOCKEGLE:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				break;
+			default:
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				break;
+			}
+		}
+	}
+
 }
 
 void GameManager::LoadMap(int* mapValues)
@@ -81,92 +193,41 @@ void GameManager::DrawBullets(HDC hdc)
 void GameManager::Draw(HDC hdc)
 {
 	ResourceManager::GetInstance()->Draw(hdc, 0, 0, 600, 600, IMAGENUM_BLACKBACKGROUND);
-
-	for (int i = 0; i < TILE_HEIGHT_NUM; i++)
+	
+	for (int i = 0; i < SMALL_TILE_HEIGHT_NUM; i++)
 	{
-		for (int j = 0; j < TILE_WIDTH_NUM; j++)
+		for (int j = 0; j < SMALL_TILE_WIDTH_NUM; j++)
 		{
-			DrawTile(hdc, mapTile[i * TILE_HEIGHT_NUM + j], j, i);
+			DrawTile(hdc, judgeMapTile[i * SMALL_TILE_HEIGHT_NUM + j], j, i);
+			cout << judgeMapTile[i * SMALL_TILE_HEIGHT_NUM + j] << " ";
 		}
 	}
-	//blocks[3].Draw(hdc, 680, 10 + GameOffsetY);
+	
 	BitBlt(hdc, 0, 0, 600, 600, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
 }
-void GameManager::DrawTile(HDC hdc, BLOCKTYPE blockType, int x, int y)
+void GameManager::DrawTile(HDC hdc, JUDGEBLOCKTYPE blockType, int x, int y)
 {
 	const int MINIBLOCKSIZE = 16;
 
 	switch (blockType)
 	{
-	case EMPTY:
-		blocks[0].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
-		blocks[0].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY);
-		blocks[0].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		blocks[0].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
+	case JUDGE_EMPTY:
+		blocks[0].Draw(hdc, x * MINIBLOCKSIZE + GameOffsetX, y * MINIBLOCKSIZE + GameOffsetY);
 		break;
-	case BLICK_RIGHT:
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY);
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
+	case JUDGE_BRICK:
+		blocks[1].Draw(hdc, x * MINIBLOCKSIZE + GameOffsetX, y * MINIBLOCKSIZE + GameOffsetY);
 		break;
-	case BLICK_DOWN:
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
+	case JUDGE_BLOCK:
+		blocks[2].Draw(hdc, x * MINIBLOCKSIZE + GameOffsetX, y * MINIBLOCKSIZE + GameOffsetY);
 		break;
-	case BLICK_LEFT:
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
+	case JUDGE_WATER:
+		blocks[3].Draw(hdc, x * MINIBLOCKSIZE + GameOffsetX, y * MINIBLOCKSIZE + GameOffsetY);
 		break;
-	case BLICK_UP:
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY);
+	case JUDGE_BUSH:
+		blocks[4].Draw(hdc, x * MINIBLOCKSIZE + GameOffsetX, y * MINIBLOCKSIZE + GameOffsetY);
 		break;
-	case BLICK_FULL:
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY);
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		blocks[1].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		break;
-	case IRON_RIGHT:
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY);
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-	case IRON_DOWN:
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		break;
-	case IRON_LEFT:
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		break;
-	case IRON_UP:
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY);
-		break;
-	case IRON_FULL:
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY);
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		blocks[2].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		break;
-	case WATER:
-		blocks[3].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
-		blocks[3].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY);
-		blocks[3].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		blocks[3].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		break;
-	case BUSH:
-		blocks[4].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
-		blocks[4].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY);
-		blocks[4].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		blocks[4].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		break;
-	case ICE:
-		blocks[5].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
-		blocks[5].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY);
-		blocks[5].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		blocks[5].Draw(hdc, x * TileImageSizeX + GameOffsetX + MINIBLOCKSIZE, y * TileImageSizeY + GameOffsetY + MINIBLOCKSIZE);
-		break;
-	case BLOCKEGLE:
-		blocks[IMAGENUM_EGLE].Draw(hdc, x * TileImageSizeX + GameOffsetX, y * TileImageSizeY + GameOffsetY);
+	case JUDGE_STEEL:
+		blocks[5].Draw(hdc, x * MINIBLOCKSIZE + GameOffsetX, y * MINIBLOCKSIZE + GameOffsetY);
 		break;
 	default:
 		break;
@@ -208,7 +269,6 @@ bool GameManager::CollisionCheck(Player& player)
 				{
 					RECT rcTemp;
 
-					//IntersectRect(&rcTemp, &Rect, &playerRect);
 					if (playerRect.top > Rect.top && player.direction == UP) //player가 아래에 있을때
 					{
 						player.y++;
@@ -219,7 +279,6 @@ bool GameManager::CollisionCheck(Player& player)
 						player.y--;
 						return true;
 					}
-					
 					if (playerRect.left > Rect.left && player.direction == LEFT) //player가 오른쪽에 있을때
 					{
 						player.x++;

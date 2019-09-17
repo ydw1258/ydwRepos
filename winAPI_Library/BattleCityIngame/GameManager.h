@@ -31,6 +31,16 @@ enum BLOCKTYPE
 	ICE,
 	BLOCKEGLE
 };
+enum JUDGEBLOCKTYPE
+{
+	JUDGE_EMPTY,
+	JUDGE_BRICK,
+	JUDGE_BLOCK,
+	JUDGE_WATER,
+	JUDGE_BUSH,
+	JUDGE_STEEL
+};
+
 //#include "BlockType.h"
 
 #define WINDOW_WIDTH 600
@@ -38,6 +48,9 @@ enum BLOCKTYPE
 
 #define TILE_WIDTH_NUM 13
 #define TILE_HEIGHT_NUM 13
+
+#define SMALL_TILE_WIDTH_NUM 26
+#define SMALL_TILE_HEIGHT_NUM 26
 
 using namespace std;
 
@@ -71,6 +84,7 @@ private:
 	stack<MapStackInfo> mapTileUndoStack;
 	stack<MapStackInfo> mapTileRedoStack;
 	BLOCKTYPE mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { EMPTY };
+	JUDGEBLOCKTYPE judgeMapTile[SMALL_TILE_HEIGHT_NUM * SMALL_TILE_WIDTH_NUM];
 	list<Bullet> bullets;
 public:
 	const int GameOffsetX = 20;
@@ -88,11 +102,11 @@ public:
 		return mthis;
 	}
 	void GameStart();
-	void Draw(HDC hdc);
+	void Draw(HDC hdSc);
 	void DrawTitle(HDC hdc);
 	void DrawStagelogo(HDC hdc);
 	void DrawBlack();
-	void DrawTile(HDC hdc, BLOCKTYPE blockType, int x, int y);
+	void DrawTile(HDC hdc, JUDGEBLOCKTYPE blockType, int x, int y);
 	bool CollisionCheck(Player& player);
 	void CollisionDraw(Player player, HDC hdc);
 	void Init(HDC hdc, HINSTANCE _g_hInst);
