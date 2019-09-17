@@ -24,6 +24,7 @@ void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
 	ifstream inFile(fileName);
 
 	int count = 0;
+
 	while (inFile.peek() != EOF) {
 		// std::getline은 입력 스트림에서 string으로 한 줄을 읽습니다.
 		getline(inFile, buffer);
@@ -35,115 +36,102 @@ void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
 	{
 		for (int j = 0; j < TILE_WIDTH_NUM; j++)
 		{
-			judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
-			judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-			judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_EMPTY;
-			judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
-			
-			switch (mapTile[TILE_HEIGHT_NUM * i + j])
+			switch (mapTile[TILE_HEIGHT_NUM * i + j]) //1, 1 => 
 			{
 			case EMPTY:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
 			case BLICK_RIGHT:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BRICK;
 				break;
 			case BLICK_DOWN:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BRICK;
 				break;
 			case BLICK_LEFT:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BRICK;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
 			case BLICK_UP:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BRICK;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
 			case BLICK_FULL:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BRICK;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BRICK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BRICK;
 				break;
 			case IRON_RIGHT:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BLOCK;
 				break;
 			case IRON_DOWN:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BLOCK;
 				break;
 			case IRON_LEFT:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
 			case IRON_UP:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
 			case IRON_FULL:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BLOCK;
 				break;
 			case WATER:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_WATER;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_WATER;
-				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_WATER;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_WATER;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_WATER;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_WATER;
 				break;
 			case BUSH:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BUSH;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BUSH;
-				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_BUSH;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_BUSH;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BUSH;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BUSH;
 				break;
 			case ICE:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_STEEL;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_STEEL;
-				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_STEEL;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_STEEL;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_STEEL;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_STEEL;
 				break;
 			case BLOCKEGLE:
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
 				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
-				break;
-			default:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i + 1) * 2 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2) + 1 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
 			}
 		}
 	}
-
 }
-
 void GameManager::LoadMap(int* mapValues)
 {
 	for (int i = 0; i < TILE_HEIGHT_NUM; i++)
@@ -199,10 +187,11 @@ void GameManager::Draw(HDC hdc)
 		for (int j = 0; j < SMALL_TILE_WIDTH_NUM; j++)
 		{
 			DrawTile(hdc, judgeMapTile[i * SMALL_TILE_HEIGHT_NUM + j], j, i);
-			cout << judgeMapTile[i * SMALL_TILE_HEIGHT_NUM + j] << " ";
+			cout << judgeMapTile[i * SMALL_TILE_HEIGHT_NUM + j] << ", ";
+			cout << i << ", " << j << endl;
+
 		}
 	}
-	
 	BitBlt(hdc, 0, 0, 600, 600, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
 }
 void GameManager::DrawTile(HDC hdc, JUDGEBLOCKTYPE blockType, int x, int y)
