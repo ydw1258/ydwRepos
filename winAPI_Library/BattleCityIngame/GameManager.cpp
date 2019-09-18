@@ -9,8 +9,6 @@ void GameManager::Init(HDC hdc, HINSTANCE _g_hInst)
 	startPos.x = 5 * TileImageSizeX;
 	startPos.y = 13 * TileImageSizeY;
 
-	for (int i = 0; i < 10; i++)
-		Timer[i] = 0;
 	//player.Init(3); // playerSpeed
 	ResourceManager::GetInstance()->Init(hdc, _g_hInst);
 
@@ -42,11 +40,6 @@ void GameManager::LoadMap(int* mapValues)
 	{
 		for (int j = 0; j < TILE_WIDTH_NUM; j++)
 		{
-			cout << j * 2 << " " << i * 2 << endl;
-			cout << j * 2 << " " << i * 2 + 1 << endl;
-			cout << j * 2 + 1 << " " << i * 2 << endl;
-			cout << j * 2 + 1 << " " << i * 2 + 1 << endl;
-			cout << mapValues[TILE_HEIGHT_NUM * i + j] << endl;
 
 			switch (mapValues[TILE_HEIGHT_NUM * i + j]) //1, 1 => 3, 3  3, 4,  4,3  4,4
 			{
@@ -274,11 +267,82 @@ bool GameManager::CollisionCheck(Player& player)
 			}
 		}
 	}
-
+	CollisionCheckBullet();
 	return false;
+}
+void GameManager::CollisionCheckBullet()
+{
+
+	for (int i = 0; i < SMALL_TILE_HEIGHT_NUM; i++)
+	{
+		for (int j = 0; j < SMALL_TILE_WIDTH_NUM; j++)
+		{
+			if (judgeMapTile[i * SMALL_TILE_HEIGHT_NUM + j] == JUDGE_BRICK)
+			{
+				for (list<Bullet>::iterator it = bullets.begin(); it != bullets.end();)
+				{
+					RECT bulletRect;
+					bulletRect.top = it->y - TileImageSizeY / 2;
+					bulletRect.bottom = it->y + TileImageSizeY / 2;
+					bulletRect.left = it->x - TileImageSizeY / 2;
+					bulletRect.right = it->x + TileImageSizeY / 2;
+
+					RECT Rect;
+					Rect.top = i * TileImageSizeY / 2 + GameOffsetY;
+					Rect.bottom = (i + 1) * TileImageSizeY / 2 + GameOffsetY;
+					Rect.left = j * TileImageSizeX / 2 + GameOffsetX;
+					Rect.right = (j + 1) * TileImageSizeX / 2 + GameOffsetX;
+
+					if (Physics::GetInstance()->RECTbyRECTCollisionCheck(Rect, bulletRect))
+					{
+						it = bullets.erase(it);
+						CollisionBlockandBullet(bulletRect, j, i);
+					}
+					else
+					{
+						it++;
+					}
+						
+				}
+			}
+			else if (judgeMapTile[i * SMALL_TILE_HEIGHT_NUM + j] == JUDGE_BLOCK)
+			{
+				for (list<Bullet>::iterator it = bullets.begin(); it != bullets.end();)
+				{
+					RECT bulletRect;
+					bulletRect.top = it->y - TileImageSizeY / 4;
+					bulletRect.bottom = it->y + TileImageSizeY / 2;
+					bulletRect.left = it->x - TileImageSizeX / 4;
+					bulletRect.right = it->x + TileImageSizeX / 2;
+
+					RECT Rect;
+					Rect.top = i * TileImageSizeY / 2 + GameOffsetY;
+					Rect.bottom = (i + 1) * TileImageSizeY / 2 + GameOffsetY;
+					Rect.left = j * TileImageSizeX / 2 + GameOffsetX;
+					Rect.right = (j + 1) * TileImageSizeX / 2 + GameOffsetX;
+
+					if (Physics::GetInstance()->RECTbyRECTCollisionCheck(Rect, bulletRect))
+					{
+						it = bullets.erase(it);
+					}
+					else
+					{
+						it++;
+					}
+				}
+			}
+		}
+	}
+}
+void GameManager::CollisionBlockandBullet(RECT bulletRect, int colisionBlockX, int colisionBlockY)
+{
+	//ÃÑ¾ËÀÇ À§Ä¡, ºÎµúÈù º®µ¹ÀÇ À§Ä¡°ü°è
+	judgeMapTile[colisionBlockY * SMALL_TILE_HEIGHT_NUM + colisionBlockX] = JUDGE_EMPTY;
 }
 void GameManager::CollisionDraw(Player player, HDC hdc)
 {
+	if (!isCollisionViewOn)
+		return;
 	RECT playerRect;
 	playerRect.top = player.y;
 	playerRect.bottom = player.y + 32;
@@ -304,6 +368,16 @@ void GameManager::CollisionDraw(Player player, HDC hdc)
 				Rectangle(hdc, Rect.left, Rect.top, Rect.right, Rect.bottom);
 			}
 		}
+	}
+	for (list<Bullet>::iterator it = bullets.begin(); it != bullets.end();it++)
+	{
+		RECT bulletRect;
+		bulletRect.top = it->y - TileImageSizeY / 4;
+		bulletRect.bottom = it->y + TileImageSizeY / 2;
+		bulletRect.left = it->x - TileImageSizeX / 4;
+		bulletRect.right = it->x + TileImageSizeX / 2;
+
+		Rectangle(hdc, bulletRect.left, bulletRect.top, bulletRect.right, bulletRect.bottom);
 	}
 }
 void GameManager::DrawBlack()

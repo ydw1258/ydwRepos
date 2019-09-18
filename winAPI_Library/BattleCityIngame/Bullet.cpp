@@ -9,20 +9,20 @@ void Bullet::Init(int PlayerX, int PlayerY, DIRECTION _direction)
 	switch (direction)
 	{
 	case UP:
-		x = PlayerX + 8;
+		x = PlayerX + 12;
 		y = PlayerY;
 		break;
 	case DOWN:
-		x = PlayerX + 8;
+		x = PlayerX + 12;
 		y = PlayerY + 16;
 		break;
 	case LEFT:
 		x = PlayerX;
-		y = PlayerY + 8;
+		y = PlayerY + 12;
 		break;
 	case RIGHT:
 		x = PlayerX + 16;
-		y = PlayerY + 8;
+		y = PlayerY + 12;
 		break;
 	default:
 		break;

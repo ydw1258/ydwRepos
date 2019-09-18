@@ -31,7 +31,4 @@ public:
 	void Draw(HDC hdc, int offsetX, int offsetY);
 	void PlayerMove(DIRECTION direction);
 	void SpriteChange();
-	
-
 };
-

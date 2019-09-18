@@ -83,6 +83,13 @@ void GameFrameWork::OperateInput()
 		player.PlayerMove(DOWN);
 		return;
 	}
+	if (GetKeyState(VK_TAB) & 0x8000)
+	{
+		if(GameManager::GetInstance()->isCollisionViewOn)
+			GameManager::GetInstance()->isCollisionViewOn = false;
+		else
+			GameManager::GetInstance()->isCollisionViewOn = true;
+	}
 	
 }
 

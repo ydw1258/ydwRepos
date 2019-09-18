@@ -79,21 +79,19 @@ private:
 	Tile blocks[15];
 	static GameManager* mthis;
 	//FontManager TitleFont;
-	float Timer[10] = { 0 };
-	float TimerReset[10] = { 0 };
 	bool GameOverflag = false;
 	
-	stack<MapStackInfo> mapTileUndoStack;
-	stack<MapStackInfo> mapTileRedoStack;
 	JUDGEBLOCKTYPE judgeMapTile[SMALL_TILE_HEIGHT_NUM * SMALL_TILE_WIDTH_NUM];
 	list<Bullet> bullets;
+	list<Bullet> enemyBullets;
+	
 public:
 	const int GameOffsetX = 20;
 	const int GameOffsetY = 20;
 	const int TileImageSizeX = 32;
 	const int TileImageSizeY = 32;
 	bool isGameOver = false;
-
+	bool isCollisionViewOn = false;
 	//Scene scene = TITLE;
 	Scene scene = EDIT_MODE;
 
@@ -110,6 +108,8 @@ public:
 	void DrawBlack();
 	void DrawTile(HDC hdc, JUDGEBLOCKTYPE blockType, int x, int y);
 	bool CollisionCheck(Player& player);
+	void CollisionCheckBullet();
+	void CollisionBlockandBullet(RECT bulletRect, int colisionBlockX, int colisionBlockY);
 	void CollisionDraw(Player player, HDC hdc);
 	void Init(HDC hdc, HINSTANCE _g_hInst);
 	

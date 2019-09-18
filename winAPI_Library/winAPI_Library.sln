@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winAPI_Library", "winAPI_Library\winAPI_Library.vcxproj", "{364253A9-5202-4E7F-A071-A875BAE46FCD}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BattleCity_Editor", "BattleCity\BattleCity.vcxproj", "{D002DEDF-E6C9-4B06-860D-5D80B3E2C7D9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BattleCityIngame", "BattleCityIngame\BattleCityIngame.vcxproj", "{DA099B0C-215B-49C2-BEEF-20423BE4A330}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StaticWinApiLib", "StaticWinApiLib\StaticWinApiLib.vcxproj", "{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,14 @@ Global
 		{DA099B0C-215B-49C2-BEEF-20423BE4A330}.Release|x64.Build.0 = Release|x64
 		{DA099B0C-215B-49C2-BEEF-20423BE4A330}.Release|x86.ActiveCfg = Release|Win32
 		{DA099B0C-215B-49C2-BEEF-20423BE4A330}.Release|x86.Build.0 = Release|Win32
+		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Debug|x64.ActiveCfg = Debug|x64
+		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Debug|x64.Build.0 = Debug|x64
+		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Debug|x86.ActiveCfg = Debug|Win32
+		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Debug|x86.Build.0 = Debug|Win32
+		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Release|x64.ActiveCfg = Release|x64
+		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Release|x64.Build.0 = Release|x64
+		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Release|x86.ActiveCfg = Release|Win32
+		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
