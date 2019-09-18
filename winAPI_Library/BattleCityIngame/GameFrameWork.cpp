@@ -94,7 +94,7 @@ void GameFrameWork::Render()
 	GameManager::GetInstance()->Draw(ResourceManager::backBuffer->GetmemDC());
 
 	player.Draw(ResourceManager::backBuffer->GetmemDC(), 20, 20);
-	//GameManager::GetInstance()->CollisionDraw(player, ResourceManager::backBuffer->GetmemDC());
+	GameManager::GetInstance()->CollisionDraw(player, ResourceManager::backBuffer->GetmemDC());
 	GameManager::GetInstance()->DrawBullets(ResourceManager::backBuffer->GetmemDC());
 	BitBlt(hdc, 0, 0, 600, 600, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
 

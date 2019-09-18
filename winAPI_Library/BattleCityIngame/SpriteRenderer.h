@@ -20,7 +20,7 @@ public:
 	void Init(IMAGENUM _startSprite, int _AllSpriteNum, int _ImageSizeX, int _ImageSizeY, int objectX = 0, int objectY = 0);
 	SpriteRenderer();
 	~SpriteRenderer();
-	void DrawObject(HDC hdc, int playerX, int PlayerY);
+	void DrawObject(HDC hdc, int objectX, int objectY);
 	void SpriteChange();
 	void DrawBackground(HDC hdc, int objectX, int objectY, int repeatXNum, int repeatYNum);
 	void DrawMoveBackground(HDC hdc, int objectX, int objectY);

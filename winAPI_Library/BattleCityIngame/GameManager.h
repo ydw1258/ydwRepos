@@ -74,6 +74,8 @@ private:
 	int remains; //남은 플레이어 기회
 
 	SpriteRenderer backGround;
+	SpriteRenderer grayBackGround;
+
 	Tile blocks[15];
 	static GameManager* mthis;
 	//FontManager TitleFont;
@@ -83,7 +85,6 @@ private:
 	
 	stack<MapStackInfo> mapTileUndoStack;
 	stack<MapStackInfo> mapTileRedoStack;
-	BLOCKTYPE mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { EMPTY };
 	JUDGEBLOCKTYPE judgeMapTile[SMALL_TILE_HEIGHT_NUM * SMALL_TILE_WIDTH_NUM];
 	list<Bullet> bullets;
 public:
@@ -95,6 +96,7 @@ public:
 
 	//Scene scene = TITLE;
 	Scene scene = EDIT_MODE;
+
 	static GameManager* GetInstance()
 	{
 		if (mthis == nullptr)

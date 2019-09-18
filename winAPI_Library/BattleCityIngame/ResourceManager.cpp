@@ -28,7 +28,8 @@ void ResourceManager::Init(HDC hdc, HINSTANCE hInstance)
 							"BattleResource/__shield.bmp",
 							"BattleResource/__bullet.bmp",
 							"BattleResource/__explosion_big.bmp",
-							"BattleResource/__explosion_small.bmp"
+							"BattleResource/__explosion_small.bmp",
+							"BattleResource/gray.bmp"
 	};
 
 	bitmap = new BitMap[50];
