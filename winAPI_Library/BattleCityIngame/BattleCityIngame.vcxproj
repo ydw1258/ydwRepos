@@ -143,6 +143,7 @@
     <ClInclude Include="BlockType.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameFrameWork.h" />
     <ClInclude Include="GameManager.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="BitMap.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameFrameWork.cpp" />
     <ClCompile Include="GameManager.cpp" />

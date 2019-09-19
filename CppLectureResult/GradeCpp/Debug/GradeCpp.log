@@ -1,0 +1,12 @@
+﻿  Grade.cpp
+c:\svn\neopleacademy\gradecpp\grade.h(13): error C3646: 't': 알 수 없는 재정의 지정자입니다.
+c:\svn\neopleacademy\gradecpp\grade.h(13): error C2143: 구문 오류: ';'이(가) 'public' 앞에 없습니다.
+c:\svn\neopleacademy\gradecpp\grade.h(13): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+  main.cpp
+c:\svn\neopleacademy\gradecpp\grade.h(13): error C3646: 't': 알 수 없는 재정의 지정자입니다.
+c:\svn\neopleacademy\gradecpp\grade.h(13): error C2143: 구문 오류: ';'이(가) 'public' 앞에 없습니다.
+c:\svn\neopleacademy\gradecpp\grade.h(13): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+c:\svn\neopleacademy\gradecpp\main.cpp(32): error C2065: 'i': 선언되지 않은 식별자입니다.
+c:\svn\neopleacademy\gradecpp\main.cpp(35): error C2065: 'i': 선언되지 않은 식별자입니다.
+c:\svn\neopleacademy\gradecpp\main.cpp(38): error C2065: 'i': 선언되지 않은 식별자입니다.
+  코드를 생성하고 있습니다...
