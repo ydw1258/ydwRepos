@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29215.179
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "consoleTCPServer", "consoleServer\consoleServer.vcxproj", "{BFC2DA91-C676-46C0-B589-82F9E1143623}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "consoleUDPServer", "consoleUDPServer\consoleUDPServer.vcxproj", "{DEB018AB-3AB4-437E-904A-9D30F7048B40}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OmokMultiplay", "OmokMultiplay\OmokMultiplay.vcxproj", "{7023BA7A-1A6D-46D7-A3AC-FF425C0D60FB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StaticWinApiLib", "StaticWinApiLib\StaticWinApiLib.vcxproj", "{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StaticWinApiLib", "..\winAPI_Library\StaticWinApiLib\StaticWinApiLib.vcxproj", "{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OmokProject", "OmokProject\OmokProject.vcxproj", "{FB5E0974-F0E0-437A-A335-9FA47AFA6F1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,14 +35,6 @@ Global
 		{DEB018AB-3AB4-437E-904A-9D30F7048B40}.Release|x64.Build.0 = Release|x64
 		{DEB018AB-3AB4-437E-904A-9D30F7048B40}.Release|x86.ActiveCfg = Release|Win32
 		{DEB018AB-3AB4-437E-904A-9D30F7048B40}.Release|x86.Build.0 = Release|Win32
-		{7023BA7A-1A6D-46D7-A3AC-FF425C0D60FB}.Debug|x64.ActiveCfg = Debug|x64
-		{7023BA7A-1A6D-46D7-A3AC-FF425C0D60FB}.Debug|x64.Build.0 = Debug|x64
-		{7023BA7A-1A6D-46D7-A3AC-FF425C0D60FB}.Debug|x86.ActiveCfg = Debug|Win32
-		{7023BA7A-1A6D-46D7-A3AC-FF425C0D60FB}.Debug|x86.Build.0 = Debug|Win32
-		{7023BA7A-1A6D-46D7-A3AC-FF425C0D60FB}.Release|x64.ActiveCfg = Release|x64
-		{7023BA7A-1A6D-46D7-A3AC-FF425C0D60FB}.Release|x64.Build.0 = Release|x64
-		{7023BA7A-1A6D-46D7-A3AC-FF425C0D60FB}.Release|x86.ActiveCfg = Release|Win32
-		{7023BA7A-1A6D-46D7-A3AC-FF425C0D60FB}.Release|x86.Build.0 = Release|Win32
 		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Debug|x64.ActiveCfg = Debug|x64
 		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Debug|x64.Build.0 = Debug|x64
 		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Debug|x86.ActiveCfg = Debug|Win32
@@ -51,6 +43,14 @@ Global
 		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Release|x64.Build.0 = Release|x64
 		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Release|x86.ActiveCfg = Release|Win32
 		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}.Release|x86.Build.0 = Release|Win32
+		{FB5E0974-F0E0-437A-A335-9FA47AFA6F1E}.Debug|x64.ActiveCfg = Debug|x64
+		{FB5E0974-F0E0-437A-A335-9FA47AFA6F1E}.Debug|x64.Build.0 = Debug|x64
+		{FB5E0974-F0E0-437A-A335-9FA47AFA6F1E}.Debug|x86.ActiveCfg = Debug|Win32
+		{FB5E0974-F0E0-437A-A335-9FA47AFA6F1E}.Debug|x86.Build.0 = Debug|Win32
+		{FB5E0974-F0E0-437A-A335-9FA47AFA6F1E}.Release|x64.ActiveCfg = Release|x64
+		{FB5E0974-F0E0-437A-A335-9FA47AFA6F1E}.Release|x64.Build.0 = Release|x64
+		{FB5E0974-F0E0-437A-A335-9FA47AFA6F1E}.Release|x86.ActiveCfg = Release|Win32
+		{FB5E0974-F0E0-437A-A335-9FA47AFA6F1E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
