@@ -11,56 +11,36 @@ void FontManager::Init()
 	//SetBkColor(hdc, RGB(255, 255, 0));
 }
 
-void FontManager::Draw(int num, int x, int y, int scrollSpeedX, int scrollSpeedY)
+void FontManager::Draw(int num, int x, int y, string fontName) //숫자 출력
 {
 
 	char outText[7];
 	SetTextColor(ResourceManager::backBuffer->GetmemDC(), RGB(255, 255, 0));
 	//Font 설정
 	//글자 배경 투명하게
-	myFont = CreateFont(30, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, "godoMaum");
+	myFont = CreateFont(30, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, fontName.c_str());
 	oldFont = (HFONT)SelectObject(ResourceManager::backBuffer->GetmemDC(), myFont);
 
 	//Font 설정
 	SetBkMode(ResourceManager::backBuffer->GetmemDC(), TRANSPARENT);
 
 	wsprintf(outText, "%d", num);
-	//TextOut(ResourceManager::backBuffer->GetmemDC(), x - fontOffsetX - GameManager::GetInstance()->CameraX, y - fontOffsetY, outText, strlen(outText)); //strlen(szText)
-	fontOffsetX -= scrollSpeedX;
-	fontOffsetY -= scrollSpeedY;
-
-	//수정 예정
-	/*
-	if (x - fontOffsetX - resetX < 0)
-		fontOffsetX = 0;
-	if (x - fontOffsetY - resetY < 0)
-		fontOffsetY = 0;
-		*/
-
-
+	TextOut(ResourceManager::backBuffer->GetmemDC(), x, y, outText, strlen(outText)); //strlen(szText)
 }
-void FontManager::Draw(const char* str, int x, int y, int scrollSpeedX, int scrollSpeedY)
+void FontManager::Draw(string str, int x, int y, string fontName)//문자 출력
 {
 	SetTextColor(ResourceManager::backBuffer->GetmemDC(), RGB(255, 255, 0));
 
 	//Font 설정
 	//글자 배경 투명하게
-	myFont = CreateFont(30, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, "godoMaum");
+	myFont = CreateFont(30, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, fontName.c_str());
 	oldFont = (HFONT)SelectObject(ResourceManager::backBuffer->GetmemDC(), myFont);
 
 	//Font 설정
 	SetBkMode(ResourceManager::backBuffer->GetmemDC(), TRANSPARENT);
-	TextOut(ResourceManager::backBuffer->GetmemDC(), x + 150, y, str, strlen(str)); //strlen(szText)
+	TextOut(ResourceManager::backBuffer->GetmemDC(), x, y, str.c_str(), strlen(str.c_str())); //strlen(szText)
 }
 
-void FontManager::fontOffsetResetX()
-{
-	fontOffsetX = 0;
-}
-void FontManager::fontOffsetResetY()
-{
-	fontOffsetY = 0;
-}
 void FontManager::Release()
 {
 	SelectObject(ResourceManager::backBuffer->GetmemDC(), myFont);

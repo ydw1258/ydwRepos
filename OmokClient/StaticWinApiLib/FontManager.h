@@ -7,14 +7,8 @@ class FontManager
 private:
 	HFONT myFont;
 	HFONT oldFont;
-	int fontOffsetX = 0;
-	int fontOffsetY = 0;
 public:
-	void Init();
-	void Draw(int num, int x, int y, int scrollSpeedX = 0, int scrollSpeedY = 0);
-	void Draw(const char* str, int x, int y, int scrollSpeedX = 0, int scrollSpeedY = 0);
-	void fontOffsetResetX();
-	void fontOffsetResetY();
+	void Draw(string str, int x, int y, string fontDirName, COLORREF RGB);
+	void Draw(int num, int x, int y, string fontDirName, COLORREF RGB);
 	void Release();
-
 };

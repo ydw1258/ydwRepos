@@ -1,10 +1,12 @@
 #pragma once
 #include <map>
 #include "SpriteRenderer.h"
+#include "FontManager.h"
 
 #define WIDTH 19
 #define HEIGHT 19
 #define WM_SOCKET (WM_USER+1)
+#define BUFSIZE 512
 
 class GameManager
 {
@@ -13,13 +15,17 @@ private:
 	map<int, POINT> ptData; //플레이어, 전송데이터
 
 	//서버관련
-	int g_iIndex = 0;
+	int playerIndex= 3;
+	SOCKET g_sock;
+	WSADATA wsa;
+	SOCKADDR_IN serveraddr;
 public:
 	SpriteRenderer board;
 	SpriteRenderer blackStone;
 	SpriteRenderer whiteStone;
+	FontManager font;
 	HWND hwnd;
-	bool isMyTurn = false;
+	bool curTurn = 0;
 	bool Mystone;
 	int stoneSizeXY = 37;
 	int BoardInfo[HEIGHT * WIDTH] = { 0 };

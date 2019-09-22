@@ -17,9 +17,10 @@ struct PACKET_HEADER
 
 struct USER_DATA
 {
-	int iIndex;
+	int playerNum;
 	WORD wX;
 	WORD wY;
+	bool turn;
 };
 
 struct PACKET_LOGIN_RET

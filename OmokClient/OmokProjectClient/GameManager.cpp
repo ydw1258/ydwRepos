@@ -4,12 +4,11 @@
 #include "Physics.h"
 #include <string>
 #include <Windows.h>
-#include "..\..\Common\PACKET_HEADER.h"
+#include <PACKET_HEADER.h>
+#include<iostream>
 
 using namespace std;
 #define BUFSIZE 512
-
-SOCKET g_sock;
 
 GameManager* GameManager::mthis = nullptr;
 
@@ -18,59 +17,53 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 	hwnd = _hwnd;
 	string filename[3] = {"Resources\\board.bmp", "Resources\\blackstone.bmp", "Resources\\whitestone.bmp"};
 	ResourceManager::GetInstance()->Init(hdc, hInstance, filename, 3);
+	
 	board.Init(IMAGENUM_BOARD, 1, 722, 720);
 	blackStone.Init(IMAGENUM_BLACKSTONE, 1, stoneSizeXY, stoneSizeXY);
 	whiteStone.Init(IMAGENUM_WHITESTONE, 1, stoneSizeXY, stoneSizeXY);
 
 	//서버한테 데이터 받기
-	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
 		return;
 
 	g_sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (g_sock == INVALID_SOCKET)
 	{
-		//cout << "err on socket" << endl;
+		cout << "err on socket" << endl;
 		return;
 	}
-
-	SOCKADDR_IN serveraddr;
+	
 	ZeroMemory(&serveraddr, sizeof(serveraddr));
 	serveraddr.sin_family = AF_INET;
 	serveraddr.sin_port = htons(9000);
 	serveraddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	int retval = connect(g_sock, (sockaddr*)&serveraddr, sizeof(serveraddr));
+
+	int retval = connect(g_sock, (sockaddr*)& serveraddr, sizeof(serveraddr));
+
 	if (retval == SOCKET_ERROR)
 	{
-		//cout << "err on connect" << endl;
-		return;
+		exit(1);
 	}
 
 	retval = WSAAsyncSelect(g_sock, hwnd, WM_SOCKET, FD_READ | FD_CLOSE);
 	if (retval == SOCKET_ERROR)
 	{
-		return;
+		exit(1);
 	}
 
 	retval = WSAAsyncSelect(g_sock, hwnd, WM_SOCKET, FD_READ | FD_CLOSE);
+
 	if (retval == SOCKET_ERROR)
 	{
-		return;
+		exit(1);
 	}
-	closesocket(g_sock);
-	WSACleanup();
-
-	if (1)//받은 데이터 흑
-	{
-		isMyTurn = true;
-		Mystone = 0;
-	}
-	
 }
 
 void GameManager::Draw(HDC hdc)
 {
 	board.DrawObject(hdc, 0, 0);
+	font.Draw(playerIndex, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+
 	int a = 0;
 
 	for (int i = 0; i < HEIGHT; i++)
@@ -92,10 +85,24 @@ void GameManager::Draw(HDC hdc)
 		}
 	}
 }
-
+void GameManager::DrawRect(HDC hdc)
+{
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			RECT rect;
+			rect.top = i * stoneSizeXY;
+			rect.bottom = (i + 1) * stoneSizeXY;
+			rect.left = (j * stoneSizeXY);
+			rect.right = (j + 1) * stoneSizeXY;
+			Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
+		}
+	}
+}
 void GameManager::MouseButtonCheck(POINT pt)
 {
-	if (!isMyTurn)
+	if (curTurn == Mystone)
 		return;
 	
 	for (int i = 0; i < HEIGHT; i++)
@@ -144,14 +151,16 @@ void GameManager::GameOverCheck()
 		}
 	}
 }
+//서버
 void GameManager::SendPos(int x, int y)
 {
 	PACKET_SEND_POS packet;
 	packet.header.wIndex = PACKET_INDEX_SEND_POS;
 	packet.header.wLen = sizeof(packet);
-	packet.data.iIndex = g_iIndex;
+	packet.data.playerNum = playerIndex;
 	packet.data.wX = x;
 	packet.data.wY = y;
+	packet.data.turn = Mystone;
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
@@ -159,7 +168,6 @@ void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 {
 	int addrlen = 0;
 	int retval = 0;
-
 
 	if (WSAGETSELECTERROR(lParam))
 	{
@@ -188,6 +196,7 @@ void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 		closesocket(wParam);
 		break;
 	}
+	
 }
 void GameManager::ProcessPacket(char * szBuf, int len)
 {
@@ -202,7 +211,18 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		PACKET_LOGIN_RET packet;
 		memcpy(&packet, szBuf, header.wLen);
 
-		g_iIndex = packet.iIndex;
+		playerIndex = packet.iIndex;
+
+		if (playerIndex == 0)//받은 데이터 흑
+		{
+			Mystone = 0;
+			curTurn = Mystone;
+		}
+		else if (playerIndex == 1)
+		{
+			Mystone = 1;
+			curTurn = false;
+		}
 	}
 	break;
 	case PACKET_INDEX_USER_DATA:
@@ -215,29 +235,20 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 	{
 		PACKET_SEND_POS packet;
 		memcpy(&packet, szBuf, header.wLen);
+		BoardInfo[packet.data.wY * HEIGHT + packet.data.wX] = packet.data.turn + 1;
+
+		curTurn = packet.data.turn;
 	}
 	break;
 	}
 }
-void GameManager::DrawRect(HDC hdc)
-{
-	for (int i = 0; i < HEIGHT; i++)
-	{
-		for (int j = 0; j < WIDTH; j++)
-		{
-			RECT rect;
-			rect.top = i * stoneSizeXY;
-			rect.bottom = (i + 1) * stoneSizeXY;
-			rect.left = (j * stoneSizeXY);
-			rect.right = (j + 1) * stoneSizeXY;
-			Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
-		}
-	}
-}
+
 GameManager::GameManager()
 {
 }
 
 GameManager::~GameManager()
 {
+	closesocket(g_sock);
+	WSACleanup();
 }

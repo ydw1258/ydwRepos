@@ -11,8 +11,8 @@ void GameFrameWork::Init(HWND hWnd, HINSTANCE g_hInst)
 {
 	m_hWnd = hWnd;
 	HDC hdc = GetDC(hWnd);
-
 	GameManager::GetInstance()->Init(hdc, g_hInst, hWnd);
+	
 	ReleaseDC(hWnd, hdc);
 }
 
@@ -52,6 +52,24 @@ void GameFrameWork::OperateInput()
 {
 	if (GetKeyState(VK_SPACE) & 0x8000)
 	{
+
+	}
+	if (GetKeyState(VK_LEFT) & 0x8000)
+	{
+
+	}
+	if (GetKeyState(VK_RIGHT) & 0x8000)
+	{
+
+	}
+	if (GetKeyState(VK_UP) & 0x8000)
+	{
+
+
+	}
+	if (GetKeyState(VK_DOWN) & 0x8000)
+	{
+		GameManager::GetInstance()->SendPos(10, 10);
 	}
 }
 

@@ -4,19 +4,23 @@
 #include <fstream>
 #include "GameFrameWork.h"
 #include "ResourceManager.h"
+#include <PACKET_HEADER.h>
 
 using namespace std;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 HWND hWnd;
-LPCTSTR lpszClass = TEXT("Hello World!!");
+LPCTSTR lpszClass = TEXT("OmokClient");
 GameFrameWork g_GameFrame;
+SOCKET g_sock;
 
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #pragma comment(lib, "msimg32.lib")
 #pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "ws2_32")
 //#pragma comment(lib, "StaticWinApiLib.lib")
+
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -33,10 +37,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	WndClass.lpfnWndProc = WndProc;
 	WndClass.lpszClassName = lpszClass;
 	WndClass.lpszMenuName = NULL;
-	WndClass.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
+	WndClass.style = CS_HREDRAW | CS_VREDRAW;
 	RegisterClass(&WndClass);
 
-	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CW_USEDEFAULT, CW_USEDEFAULT,
+	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
 		CW_USEDEFAULT, CW_USEDEFAULT, NULL, (HMENU)NULL, hInstance, NULL);
 	ShowWindow(hWnd, nCmdShow);
 
@@ -45,11 +49,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	while (true)
 	{
 		/// 메시지큐에 메시지가 있으면 메시지 처리
+		//if(GetMessage(&Message, NULL, 0, 0))
 		if (PeekMessage(&Message, NULL, 0U, 0U, PM_REMOVE))
 		{
 			if (Message.message == WM_QUIT)
 				break;
-			
+						
 			TranslateMessage(&Message);
 			DispatchMessage(&Message);
 		}
@@ -58,8 +63,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 			g_GameFrame.Update();
 		}
 	}
+	
+	 g_GameFrame.Release();
 
-	g_GameFrame.Release();
+	closesocket(g_sock);
+	WSACleanup();
 
 	return (int)Message.wParam;
 }
@@ -75,7 +83,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		GameManager::GetInstance()->ProcessSocketMessage(hWnd, iMessage, wParam, lParam);
 		InvalidateRect(hWnd, NULL, true);
 		return 0;
-	}
 
-	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+	default:
+		return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+	}
 }

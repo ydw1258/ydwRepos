@@ -26,6 +26,7 @@ void ProcessSocketMessage(HWND, UINT, WPARAM, LPARAM);
 bool ProcessPacket(SOCKET sock , USER_INFO* pUser, char* szBuf, int& len);
 void err_display(int errcode);
 void err_display(char* szMsg);
+bool turn = 0;
 
 int main(int argc, char* argv[])
 {
@@ -164,6 +165,7 @@ void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		packet.header.wIndex = PACKET_INDEX_LOGIN_RET;
 		packet.header.wLen = sizeof(packet);
 		packet.iIndex = pInfo->index;
+		
 		send(client_sock, (const char*)&packet, packet.header.wLen, 0);
 
 		Sleep(500);
@@ -175,9 +177,11 @@ void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		int i = 0;
 		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++ , i++)
 		{
-			user_packet.data[i].iIndex = iter->second->index;
+			user_packet.data[i].playerNum = iter->second->index;
 			user_packet.data[i].wX = iter->second->x;
 			user_packet.data[i].wY = iter->second->y;
+			user_packet.data[i].turn = 0;
+
 		}
 
 		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++, i++)
@@ -219,6 +223,7 @@ void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case FD_CLOSE:
+		g_iIndex--;
 		closesocket(wParam);
 		break;
 	}
@@ -251,7 +256,8 @@ bool ProcessPacket(SOCKET sock , USER_INFO* pUser, char* szBuf, int& len)
 
 			g_mapUser[sock]->x = packet.data.wX;
 			g_mapUser[sock]->y = packet.data.wY;
-
+			
+			turn = !packet.data.turn;
 			for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
 			{
 				//if (iter->first == sock)

@@ -55,6 +55,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	serveraddr.sin_port = htons(9000);
 	serveraddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	int retval = connect(g_sock, (sockaddr*)&serveraddr, sizeof(serveraddr));
+
 	if (retval == SOCKET_ERROR)
 	{
 		//cout << "err on connect" << endl;
@@ -168,7 +169,6 @@ void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	SOCKADDR_IN clientaddr;
 	int addrlen = 0;
 	int retval = 0;
-
 
 	if (WSAGETSELECTERROR(lParam))
 	{
