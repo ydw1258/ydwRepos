@@ -64,8 +64,19 @@ void GameFrameWork::OperateInput()
 	}
 	if (GetKeyState(VK_UP) & 0x8000)
 	{
-
-
+	}
+	if (GetKeyState(VK_RETURN) & 0x8000)
+	{
+		if (!isKeydown)
+		{
+			isKeydown = true;
+			GameManager::GetInstance()->InputChatting();
+		}
+	}
+	else
+	{
+		if(isKeydown)
+			isKeydown = false;
 	}
 	if (GetKeyState(VK_DOWN) & 0x8000)
 	{
