@@ -21,6 +21,10 @@ void SpriteRenderer::DrawObject(HDC hdc, int objectX, int objectY)
 {
 	ResourceManager::GetInstance()->Draw(hdc, objectX, objectY, ImageSizeX, ImageSizeY, CurSprite);
 }
+void SpriteRenderer::DrawResizedObject(HDC hdc, int objectX, int objectY, int sizeX, int sizeY)
+{
+	ResourceManager::GetInstance()->Draw(hdc, objectX, objectY, sizeX, sizeY, CurSprite);
+}
 void SpriteRenderer::SpriteChange()
 {
 	if (CurSprite == startSprite + AllSpriteNum - 1)

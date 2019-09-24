@@ -31,6 +31,8 @@ struct USER_DATA
 	bool turn;
 	char chat[128];
 	int roomNum; //0Àº ·Îºñ
+	char ID[128];
+	char password[128];
 };
 struct PACKET_LOGIN_RET
 {

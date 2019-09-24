@@ -22,10 +22,17 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 	whiteStone.Init(IMAGENUM_WHITESTONE, 1, stoneSizeXY, stoneSizeXY);
 
 	InitConnection();
-
+	SceneInitiator();
+}
+void GameManager::SceneInitiator()
+{
 	switch (scene)
 	{
 	case LOGIN:
+		//DestroyWindow(chatInputBox);
+		LOGINInput[0] = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 300, 300, 300, 30, hwnd, (HMENU)0, hInstance, NULL);
+		LOGINInput[1] = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 300, 350, 300, 30, hwnd, (HMENU)0, hInstance, NULL);
+		Login();
 		break;
 	case INGAME:
 		chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
@@ -36,37 +43,33 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 		break;
 	}
 }
-
 void GameManager::Draw(HDC hdc)
 {
-	board.DrawObject(hdc, 0, 0);
-	font.Draw(playerIndex, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
-
-	int a = 0;
-
-	for (int i = 0; i < HEIGHT; i++)
-	{
-		for(int j = 0; j < WIDTH; j++)
-		{
-			switch (BoardInfo[HEIGHT * i + j])
-			{
-			case 0://비어있음.
-				a++;
-				break;
-			case 1://흑
-				blackStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
-				break;
-			case 2://백
-				whiteStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
-				break;
-			}
-		}
-	}
 	switch (scene)
 	{
 	case LOGIN:
 		break;
 	case INGAME:
+		board.DrawObject(hdc, 0, 0);
+		font.Draw(playerIndex, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+
+		for (int i = 0; i < HEIGHT; i++)
+		{
+			for (int j = 0; j < WIDTH; j++)
+			{
+				switch (BoardInfo[HEIGHT * i + j])
+				{
+				case 0://비어있음.
+					break;
+				case 1://흑
+					blackStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
+					break;
+				case 2://백
+					whiteStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
+					break;
+				}
+			}
+		}
 		DrawChatWindow(hdc);
 		break;
 	case LOBBY:
@@ -159,6 +162,17 @@ void GameManager::DrawCurUsers(HDC hdc)
 void GameManager::DrawRooms(HDC hdc)
 {
 }
+void GameManager::Login()
+{
+	PACKET_SEND_INGAME_DATA packet;
+	packet.header.wIndex = PACKET_INDEX_SEND_POS;
+	packet.header.wLen = sizeof(packet);
+	packet.data.playerNum = playerIndex;
+	packet.data.wX = x;
+	packet.data.wY = y;
+	packet.data.turn = Mystone;
+	send(g_sock, (const char*)&packet, sizeof(packet), 0);
+}
 //서버
 void GameManager::SendPos(int x, int y)
 {
@@ -219,6 +233,10 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 	{
 		PACKET_LOGIN_RET packet;
 		memcpy(&packet, szBuf, header.wLen);
+
+		//로그인 실패
+		//구현
+		//로그인 성공
 
 		playerIndex = packet.iIndex;
 

@@ -25,9 +25,10 @@ private:
 	WSADATA wsa;
 	SOCKADDR_IN serveraddr;
 	HWND chatInputBox;
+	HWND LOGINInput[2];
 	list<string> chatList;
 public:
-	Scene scene = INGAME;
+	Scene scene = LOGIN;
 	SpriteRenderer board;
 	SpriteRenderer blackStone;
 	SpriteRenderer whiteStone;
@@ -60,12 +61,14 @@ public:
 	void DrawCurUsers(HDC hdc);
 	void DrawRooms(HDC hdc);
 
+	void Login();
 	//서버 관련
 	void SendPos(int x, int y);
 	void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	void ProcessPacket(char* szBuf, int len);
 	void InitConnection();
 	void InputChatting(void);
+	void SceneInitiator();
 	GameManager();
 	~GameManager();
 };
