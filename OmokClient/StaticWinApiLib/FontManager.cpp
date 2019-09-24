@@ -9,14 +9,14 @@
 // 매개변수 DC의 글자배경을 투명하게 한다
 //SetBkColor(hdc, RGB(255, 255, 0));
 
-void FontManager::Draw(int num, int x, int y, string fontName, COLORREF RGB) //숫자 출력
+void FontManager::Draw(int num, int fontSize, int x, int y, string fontName, COLORREF RGB) //숫자 출력
 {
 
 	char outText[7];
 	SetTextColor(ResourceManager::backBuffer->GetmemDC(), RGB);
 	//Font 설정
 	//글자 배경 투명하게
-	myFont = CreateFont(30, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, fontName.c_str());
+	myFont = CreateFont(fontSize, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, fontName.c_str());
 	oldFont = (HFONT)SelectObject(ResourceManager::backBuffer->GetmemDC(), myFont);
 
 	//Font 설정
@@ -25,13 +25,13 @@ void FontManager::Draw(int num, int x, int y, string fontName, COLORREF RGB) //�
 	wsprintf(outText, "%d", num);
 	TextOut(ResourceManager::backBuffer->GetmemDC(), x, y, outText, strlen(outText)); //strlen(szText)
 }
-void FontManager::Draw(string str, int x, int y, string fontName, COLORREF RGB)//문자 출력 RGB(255, 255, 0) 형식으로 입력
+void FontManager::Draw(string str, int fontSize, int x, int y, string fontName, COLORREF RGB)//문자 출력 RGB(255, 255, 0) 형식으로 입력
 {
 	SetTextColor(ResourceManager::backBuffer->GetmemDC(), RGB);
 
 	//Font 설정
 	//글자 배경 투명하게
-	myFont = CreateFont(30, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, fontName.c_str());
+	myFont = CreateFont(fontSize, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, fontName.c_str());
 	oldFont = (HFONT)SelectObject(ResourceManager::backBuffer->GetmemDC(), myFont);
 
 	//Font 설정

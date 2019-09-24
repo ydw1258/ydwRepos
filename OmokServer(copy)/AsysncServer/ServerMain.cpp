@@ -274,7 +274,19 @@ bool ProcessPacket(SOCKET sock , USER_INFO* pUser, char* szBuf, int& len)
 		}
 		case PACKET_INDEX_SEND_CHATTING_INGAME:
 		{
+			PACKET_SEND_INGAME_DATA packet;
+			memcpy(&packet, szBuf, header.wLen);
+			char buf[128];
+			sprintf(buf, "%d : %s", packet.data.playerNum, packet.data.chat);
+			strcpy(packet.data.chat, buf);
 
+			for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
+			{
+				//if (iter->second == sock)
+					//continue;
+
+				send(iter->first, (const char*)&packet, header.wLen, 0);
+			}
 		}
 	break;
 	}

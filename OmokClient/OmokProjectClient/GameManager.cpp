@@ -40,7 +40,7 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 void GameManager::Draw(HDC hdc)
 {
 	board.DrawObject(hdc, 0, 0);
-	font.Draw(playerIndex, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+	font.Draw(playerIndex, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 
 	int a = 0;
 
@@ -61,6 +61,18 @@ void GameManager::Draw(HDC hdc)
 				break;
 			}
 		}
+	}
+	switch (scene)
+	{
+	case LOGIN:
+		break;
+	case INGAME:
+		DrawChatWindow(hdc);
+		break;
+	case LOBBY:
+		break;
+	default:
+		break;
 	}
 }
 void GameManager::DrawRect(HDC hdc)
@@ -131,6 +143,12 @@ void GameManager::GameOverCheck()
 }
 void GameManager::DrawChatWindow(HDC hdc)
 {
+	Rectangle(hdc, 750, 400, 950, 700);
+	int i = 0;
+	for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
+	{
+		font.Draw((*it), 15, 760, 680 - 30 *i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+	}
 }
 void GameManager::DrawLobbyChatWindow(HDC hdc)
 {
@@ -152,8 +170,9 @@ void GameManager::SendPos(int x, int y)
 	packet.data.wY = y;
 	packet.data.turn = Mystone;
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
-	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
+
+
 void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	int addrlen = 0;
@@ -226,7 +245,6 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		PACKET_SEND_INGAME_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
 		BoardInfo[packet.data.wY * HEIGHT + packet.data.wX] = packet.data.turn + 1;
-
 		curTurn = packet.data.turn;
 	}
 	break;
@@ -281,10 +299,18 @@ void GameManager::InputChatting(void)
 {
 	if (GetForegroundWindow() != hwnd)
 		return;
+	char str[128];
+	GetWindowText(chatInputBox, str, 128);
 
+	PACKET_SEND_INGAME_DATA packet;
+	packet.header.wIndex = PACKET_INDEX_SEND_CHATTING_INGAME;
+	packet.header.wLen = sizeof(packet);
+	packet.data.playerNum = playerIndex;
+	strcpy(packet.data.chat, str);
 
-	//chatList
-
+	send(g_sock, (const char*)&packet, sizeof(packet), 0);
+	
+	SetWindowText(chatInputBox, "");
 }
 
 GameManager::GameManager()

@@ -5,8 +5,9 @@
 enum Scene
 {
 	LOGIN,
+	LOBBY,
 	INGAME,
-	LOBBY
+	
 };
 enum PACKET_INDEX
 {
@@ -48,6 +49,7 @@ struct PACKET_SEND_INGAME_DATA
 {
 	PACKET_HEADER header;
 	USER_DATA data;
+	Scene scene;
 };
 
 #pragma pack()
