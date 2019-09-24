@@ -19,7 +19,7 @@ private:
 
 	int OffsetX = 20;
 	int OffsetY = 20;
-	bool isKeydown = false;
+
 	int mapTile[13 * 13];
 public:
 	GameFrameWork();

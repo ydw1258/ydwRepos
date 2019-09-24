@@ -12,22 +12,17 @@ using namespace std;
 
 GameManager* GameManager::mthis = nullptr;
 
-void GameManager::Init(HDC hdc, HINSTANCE _hInstance, HWND _hwnd)
+void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 {
 	hwnd = _hwnd;
-	hInstance = _hInstance;
 	string filename[3] = {"Resources\\board.bmp", "Resources\\blackstone.bmp", "Resources\\whitestone.bmp"};
-	ResourceManager::GetInstance()->Init(hdc, _hInstance, filename, 3);
+	ResourceManager::GetInstance()->Init(hdc, hInstance, filename, 3);
 	
 	board.Init(IMAGENUM_BOARD, 1, 722, 720);
 	blackStone.Init(IMAGENUM_BLACKSTONE, 1, stoneSizeXY, stoneSizeXY);
 	whiteStone.Init(IMAGENUM_WHITESTONE, 1, stoneSizeXY, stoneSizeXY);
-	
-	chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 730, 700, 250, 25, hwnd, (HMENU)100, hInstance, NULL);
-	//서버한테 데이터 받기
 
-	//로그인 시도시
-	
+	//서버한테 데이터 받기
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
 		return;
 
@@ -66,53 +61,29 @@ void GameManager::Init(HDC hdc, HINSTANCE _hInstance, HWND _hwnd)
 
 void GameManager::Draw(HDC hdc)
 {
-	switch (scene)
-	{
-	case LOGIN:
-		font.Draw("게임 로그인", 30, 400, 100, "Resources/oldgameFont.ttf", RGB(255, 255, 255));
-		break;
-	case LOBBY:
-		break;
-	case INGAME:
-		board.DrawObject(hdc, 0, 0);
-		font.Draw(playerIndex, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(0, 255, 255));
-		DrawChatWindow(hdc);
+	board.DrawObject(hdc, 0, 0);
+	font.Draw(playerIndex, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 
-		for (int i = 0; i < HEIGHT; i++)
+	int a = 0;
+
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for(int j = 0; j < WIDTH; j++)
 		{
-			for (int j = 0; j < WIDTH; j++)
+			switch (BoardInfo[HEIGHT * i + j])
 			{
-				switch (BoardInfo[HEIGHT * i + j])
-				{
-				case 0://비어있음.
-					break;
-				case 1://흑
-					blackStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
-					break;
-				case 2://백
-					whiteStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
-					break;
-				}
+			case 0://비어있음.
+				a++;
+				break;
+			case 1://흑
+				blackStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
+				break;
+			case 2://백
+				whiteStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
+				break;
 			}
 		}
-		break;
-	default:
-		break;
 	}
-	
-}
-void GameManager::DrawChatWindow(HDC hdc)
-{
-	Rectangle(hdc, 750, 300, 950, 600);
-
-	
-	int i = 0;
-	for (auto it = chatList.rbegin(); it != chatList.rend(); it++)
-	{
-		font.Draw(it->c_str(), 12, 750 , 560 - 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		i++;
-	}
-	
 }
 void GameManager::DrawRect(HDC hdc)
 {
@@ -180,7 +151,19 @@ void GameManager::GameOverCheck()
 		}
 	}
 }
-
+//서버
+void GameManager::SendPos(int x, int y)
+{
+	PACKET_SEND_POS packet;
+	packet.header.wIndex = PACKET_INDEX_SEND_POS;
+	packet.header.wLen = sizeof(packet);
+	packet.data.playerNum = playerIndex;
+	packet.data.wX = x;
+	packet.data.wY = y;
+	packet.data.turn = Mystone;
+	send(g_sock, (const char*)&packet, sizeof(packet), 0);
+	send(g_sock, (const char*)&packet, sizeof(packet), 0);
+}
 void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	int addrlen = 0;
@@ -213,8 +196,8 @@ void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 		closesocket(wParam);
 		break;
 	}
+	
 }
-//서버에게 받은 데이터 처리
 void GameManager::ProcessPacket(char * szBuf, int len)
 {
 	PACKET_HEADER header;
@@ -257,40 +240,7 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		curTurn = packet.data.turn;
 	}
 	break;
-	case PACKET_INDEX_SEND_CHATTING_INGAME:
-		PACKET_SEND_CHAT_MESSAGE packet;
-		memcpy(&packet, szBuf, header.wLen);
-		chatList.push_back(packet.chatMessage);
-	break;
 	}
-}
-//서버에 데이터보내기
-void GameManager::SendPos(int x, int y)
-{
-	PACKET_SEND_POS packet;
-	packet.header.wIndex = PACKET_INDEX_SEND_POS;
-	packet.header.wLen = sizeof(packet);
-	packet.data.playerNum = playerIndex;
-	packet.data.wX = x;
-	packet.data.wY = y;
-	packet.data.turn = Mystone;
-	send(g_sock, (const char*)&packet, sizeof(packet), 0);
-	//send(g_sock, (const char*)&packet, sizeof(packet), 0);
-}
-void GameManager::InputChatting(void)
-{
-	char buf[128];
-	
-	GetWindowText(chatInputBox, (LPSTR)buf, 128);
-
-	PACKET_SEND_CHAT_MESSAGE packet;
-	packet.header.wIndex = PACKET_INDEX_SEND_CHATTING_INGAME;
-	
-	packet.header.wLen = sizeof(packet);
-	packet.data.playerNum = playerIndex;
-	strcpy(packet.chatMessage, buf);
-	//SetWindowText(chatInputBox, "");
-	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
 
 GameManager::GameManager()

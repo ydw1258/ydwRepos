@@ -1,7 +1,13 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(AsysncServer.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
-  ServerManager.cpp
-c:\users\administrator\documents\github\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(120): warning C4267: '=': 'size_t'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(121): warning C4267: '=': 'size_t'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(243): warning C4477: 'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'LPVOID'입니다.
-c:\users\administrator\documents\github\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(252): warning C4477: 'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'LPVOID'입니다.
-  AsysncServer.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\OmokServer(copy)\Debug\OmokAsyncServer.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (AsysncServer.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  ServerMain.cpp
+D:\gitRepos\ydwRepos\OmokServer(copy)\AsysncServer\ServerMain.cpp(66,1): warning C4996:  'WSAAsyncSelect': Use WSAEventSelect() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\um\WinSock2.h(2679): message :  'WSAAsyncSelect' 선언을 참조하십시오.
+D:\gitRepos\ydwRepos\OmokServer(copy)\AsysncServer\ServerMain.cpp(175,104): warning C4267:  '=': 'size_t'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\gitRepos\ydwRepos\OmokServer(copy)\AsysncServer\ServerMain.cpp(176,40): warning C4267:  '=': 'size_t'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\gitRepos\ydwRepos\OmokServer(copy)\AsysncServer\ServerMain.cpp(149,1): warning C4996:  'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\um\WinSock2.h(1848): message :  'inet_ntoa' 선언을 참조하십시오.
+D:\gitRepos\ydwRepos\OmokServer(copy)\AsysncServer\ServerMain.cpp(151,1): warning C4996:  'WSAAsyncSelect': Use WSAEventSelect() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\um\WinSock2.h(2679): message :  'WSAAsyncSelect' 선언을 참조하십시오.
+D:\gitRepos\ydwRepos\OmokServer(copy)\AsysncServer\ServerMain.cpp(283,9): warning C4477:  'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'LPVOID'입니다.
+D:\gitRepos\ydwRepos\OmokServer(copy)\AsysncServer\ServerMain.cpp(292,9): warning C4477:  'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'LPVOID'입니다.
+  AsysncServer.vcxproj -> D:\gitRepos\ydwRepos\OmokServer(copy)\Debug\OmokAsyncServer.exe
