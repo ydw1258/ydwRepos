@@ -29,10 +29,8 @@ void GameManager::SceneInitiator()
 	switch (scene)
 	{
 	case LOGIN:
-		//DestroyWindow(chatInputBox);
 		LOGINInput[0] = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 300, 300, 300, 30, hwnd, (HMENU)0, hInstance, NULL);
 		LOGINInput[1] = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 300, 350, 300, 30, hwnd, (HMENU)0, hInstance, NULL);
-		Login();
 		break;
 	case INGAME:
 		chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
@@ -164,13 +162,18 @@ void GameManager::DrawRooms(HDC hdc)
 }
 void GameManager::Login()
 {
-	PACKET_SEND_INGAME_DATA packet;
-	packet.header.wIndex = PACKET_INDEX_SEND_POS;
+	char buf[128];
+
+	PACKET_TRY_LOGIN packet;
+	packet.header.wIndex = PACKET_INDEX_LOGIN_RET;
 	packet.header.wLen = sizeof(packet);
-	packet.data.playerNum = playerIndex;
-	packet.data.wX = x;
-	packet.data.wY = y;
-	packet.data.turn = Mystone;
+
+	
+	GetWindowText(LOGINInput[0], buf, 128);
+	strcpy(packet.ID, buf);
+	GetWindowText(LOGINInput[1], buf, 128);
+	strcpy(packet.password, buf);
+	
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
 //서버
@@ -185,7 +188,6 @@ void GameManager::SendPos(int x, int y)
 	packet.data.turn = Mystone;
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
-
 
 void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -256,6 +258,14 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 	{
 		PACKET_USER_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
+		if (packet.isLoginSuccess)
+		{
+			SceneChange();
+		}
+		else
+		{
+			SetWindowText(LOGINInput[0], "로그인 실패");
+		}
 	}
 	break;
 	case PACKET_INDEX_SEND_POS:
@@ -267,13 +277,33 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 	}
 	break;
 	case PACKET_INDEX_SEND_CHATTING_INGAME:
+	{
 		PACKET_SEND_INGAME_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
 		chatList.push_back(packet.data.chat);
-		break;
+	}
+		
+	break;
 	}
 }
-
+void GameManager::SceneChange()
+{
+	switch (scene)
+	{
+	case LOGIN:
+		scene = LOBBY;
+		DestroyWindow(LOGINInput[0]);
+		DestroyWindow(LOGINInput[1]);
+		break;
+	case LOBBY:
+		break;
+	case INGAME:
+		break;
+	default:
+		break;
+	}
+	
+}
 void GameManager::InitConnection()
 {
 	//서버한테 데이터 받기

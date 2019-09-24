@@ -34,6 +34,12 @@ struct USER_DATA
 	char ID[128];
 	char password[128];
 };
+struct PACKET_TRY_LOGIN
+{
+	PACKET_HEADER header;
+	char ID[128];
+	char password[128];
+};
 struct PACKET_LOGIN_RET
 {
 	PACKET_HEADER header;
@@ -42,6 +48,7 @@ struct PACKET_LOGIN_RET
 
 struct PACKET_USER_DATA
 {
+	bool isLoginSuccess = false;
 	PACKET_HEADER header;
 	WORD wCount;
 	USER_DATA data[20];

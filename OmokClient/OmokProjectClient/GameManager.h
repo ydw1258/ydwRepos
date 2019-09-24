@@ -69,6 +69,8 @@ public:
 	void InitConnection();
 	void InputChatting(void);
 	void SceneInitiator();
+	void SceneChange();
+
 	GameManager();
 	~GameManager();
 };

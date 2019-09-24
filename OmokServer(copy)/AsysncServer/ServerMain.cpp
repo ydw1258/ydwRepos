@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <iostream>
 #include <map>
+#include <fstream>
 #include "..\..\Common\PACKET_HEADER.h"
 using namespace std;
 
@@ -11,14 +12,14 @@ using namespace std;
 class USER_INFO
 {
 public:
-	int index;
+	//int index;
+	char userID[128];
 	char szBuf[BUFSIZE];
 	int len;
 	int x;
 	int y;
 };
 
-int g_iIndex = 0;
 map<SOCKET, USER_INFO*> g_mapUser;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -116,6 +117,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
+//연결 요청한 클라 받기
 void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	SOCKET client_sock;
@@ -128,10 +130,10 @@ void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		int err_code = WSAGETSELECTERROR(lParam);
 		err_display(WSAGETSELECTERROR(lParam));
 
-		if (WSAGETSELECTERROR(lParam) == 10053)
+		/*if (WSAGETSELECTERROR(lParam) == 10053)
 		{
 			g_iIndex--;
-		}
+		}*/
 
 		return;
 	}
@@ -160,11 +162,9 @@ void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			
 		}
 
+		/*
 		USER_INFO* pInfo = new USER_INFO();
-		pInfo->index = g_iIndex++;
-		pInfo->len = 0;
-		pInfo->x = rand() % 600;
-		pInfo->y = rand() % 400;
+		pInfo->userID = g_iIndex++;
 		g_mapUser.insert(make_pair(client_sock , pInfo));
 
 		PACKET_LOGIN_RET packet;
@@ -194,6 +194,7 @@ void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			send(iter->first, (const char*)&user_packet, user_packet.header.wLen, 0);
 		}
+		*/
 	}
 	break;
 	case FD_READ:
@@ -229,12 +230,12 @@ void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case FD_CLOSE:
-		g_iIndex--;
+		
 		closesocket(wParam);
 		break;
 	}
 }
-
+//클라가 보낸 패킷 읽기
 bool ProcessPacket(SOCKET sock , USER_INFO* pUser, char* szBuf, int& len)
 {
 	if (len > 0)
@@ -255,39 +256,57 @@ bool ProcessPacket(SOCKET sock , USER_INFO* pUser, char* szBuf, int& len)
 
 	switch (header.wIndex)
 	{
-		case PACKET_INDEX_SEND_POS:
-		{
-			PACKET_SEND_INGAME_DATA packet;
-			memcpy(&packet, szBuf, header.wLen);
+	case PACKET_INDEX_LOGIN_RET:
+	{
+		PACKET_TRY_LOGIN loginPacket;
+		memcpy(&loginPacket, szBuf, header.wLen);
+		PACKET_USER_DATA loginRetPacket;
+		
+		//로그인 성공확인 후
+		//g_mapUser.
+		loginRetPacket.isLoginSuccess = true;
+		loginRetPacket.header.wIndex = PACKET_INDEX_LOGIN_RET;
 
-			g_mapUser[sock]->x = packet.data.wX;
-			g_mapUser[sock]->y = packet.data.wY;
+		loginRetPacket.header.wLen = sizeof(loginRetPacket);
+		//send(loginRetPacket.data[loginRetPacket.data->ID].playerNum, (const char*)& loginPacket, header.wLen, 0);
+		break;
+		
+	}
+	break;
+	case PACKET_INDEX_SEND_POS:
+	{
+		PACKET_SEND_INGAME_DATA packet;
+		memcpy(&packet, szBuf, header.wLen);
+
+		g_mapUser[sock]->x = packet.data.wX;
+		g_mapUser[sock]->y = packet.data.wY;
 			
-			turn = !packet.data.turn;
-			for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
-			{
-				//if (iter->first == sock)
-					//continue;
-
-				send(iter->first, (const char*)&packet, header.wLen, 0);
-			}
-		}
-		case PACKET_INDEX_SEND_CHATTING_INGAME:
+		turn = !packet.data.turn;
+		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
 		{
-			PACKET_SEND_INGAME_DATA packet;
-			memcpy(&packet, szBuf, header.wLen);
-			char buf[128];
-			sprintf(buf, "%d : %s", packet.data.playerNum, packet.data.chat);
-			strcpy(packet.data.chat, buf);
+			//if (iter->first == sock)
+				//continue;
 
-			for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
-			{
-				//if (iter->second == sock)
-					//continue;
-
-				send(iter->first, (const char*)&packet, header.wLen, 0);
-			}
+			send(iter->first, (const char*)&packet, header.wLen, 0);
 		}
+	}
+	break;
+	case PACKET_INDEX_SEND_CHATTING_INGAME:
+	{
+		PACKET_SEND_INGAME_DATA packet;
+		memcpy(&packet, szBuf, header.wLen);
+		char buf[128];
+		sprintf(buf, "%d : %s", packet.data.playerNum, packet.data.chat);
+		strcpy(packet.data.chat, buf);
+
+		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
+		{
+			//if (iter->second == sock)
+				//continue;
+
+			send(iter->first, (const char*)&packet, header.wLen, 0);
+		}
+	}
 	break;
 	}
 

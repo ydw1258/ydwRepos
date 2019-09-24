@@ -80,13 +80,25 @@ void GameFrameWork::OperateInput()
 		GameManager::GetInstance()->SendPos(10, 10);
 	}
 
-
 	if (GetKeyState(VK_RETURN) & 0x8000)
 	{
 		if (!isKeydown)
 		{
+			switch (GameManager::GetInstance()->scene)
+			{
+			case LOGIN:
+				GameManager::GetInstance()->Login();
+				break;
+			case LOBBY:
+				GameManager::GetInstance()->InputChatting();
+				break;
+			case INGAME:
+				GameManager::GetInstance()->InputChatting();
+				break;
+			}
+			
 			isKeydown = true;
-			GameManager::GetInstance()->InputChatting();
+			
 		}
 	}
 	else
