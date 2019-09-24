@@ -2,6 +2,12 @@
 #include <Windows.h>
 #pragma pack(1)
 
+enum Scene
+{
+	LOGIN,
+	INGAME,
+	LOBBY
+};
 enum PACKET_INDEX
 {
 	PACKET_INDEX_LOGIN_RET = 1,

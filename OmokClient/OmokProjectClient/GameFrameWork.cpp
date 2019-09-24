@@ -24,18 +24,26 @@ void GameFrameWork::Update()
 {
 	if (GetKeyState(VK_LBUTTON) & 0x8000)
 	{
-		POINT pt;
-		GetCursorPos(&pt);
-		ScreenToClient(m_hWnd, &pt);
+		if (!isLButtonDown)
+		{
+			isLButtonDown = true;
+			POINT pt;
+			GetCursorPos(&pt);
+			ScreenToClient(m_hWnd, &pt);
 
-		HDC hdc = GetDC(m_hWnd);
+			HDC hdc = GetDC(m_hWnd);
 
-		//GameManager::GetInstance()->blackStone.DrawObject(hdc, pt.x, pt.y);
-		GameManager::GetInstance()->MouseButtonCheck(pt);
+			//GameManager::GetInstance()->blackStone.DrawObject(hdc, pt.x, pt.y);
+			GameManager::GetInstance()->MouseButtonCheck(pt);
 
-		ReleaseDC(m_hWnd, hdc);
-		
+			ReleaseDC(m_hWnd, hdc);
+		}
 	}
+	else
+	{
+		isLButtonDown = false;
+	}
+
 
 	std::chrono::duration<float> sec = std::chrono::system_clock::now() - m_LastTime;
 	/*if (sec.count() < (1 / FPS))
@@ -70,6 +78,21 @@ void GameFrameWork::OperateInput()
 	if (GetKeyState(VK_DOWN) & 0x8000)
 	{
 		GameManager::GetInstance()->SendPos(10, 10);
+	}
+
+
+	if (GetKeyState(VK_RETURN) & 0x8000)
+	{
+		if (!isKeydown)
+		{
+			isKeydown = true;
+			GameManager::GetInstance()->InputChatting();
+		}
+	}
+	else
+	{
+		if (isKeydown)
+			isKeydown = false;
 	}
 }
 

@@ -1,7 +1,12 @@
 #pragma once
 #include <map>
+#include<vector>
+#include<list>
 #include "SpriteRenderer.h"
 #include "FontManager.h"
+#include "..\Common\PACKET_HEADER.h"
+
+using namespace std;
 
 #define WIDTH 19
 #define HEIGHT 19
@@ -19,11 +24,15 @@ private:
 	SOCKET g_sock;
 	WSADATA wsa;
 	SOCKADDR_IN serveraddr;
+	HWND chatInputBox;
+	HWND hWndList;
 public:
+	Scene scene = INGAME;
 	SpriteRenderer board;
 	SpriteRenderer blackStone;
 	SpriteRenderer whiteStone;
 	FontManager font;
+	HINSTANCE hInstance;
 	HWND hwnd;
 	bool curTurn = 0;
 	bool Mystone;
@@ -44,11 +53,18 @@ public:
 	void DrawRect(HDC hdc);
 	void MouseButtonCheck(POINT pt);
 	void GameOverCheck();
+
+	void DrawChatWindow(HDC hdc);
+	void DrawLobbyChatWindow(HDC hdc);
+	void DrawCurUsers(HDC hdc);
+	void DrawRooms(HDC hdc);
+
 	//서버 관련
 	void SendPos(int x, int y);
 	void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	void ProcessPacket(char* szBuf, int len);
-
+	void InitConnection();
+	void InputChatting(void);
 	GameManager();
 	~GameManager();
 };

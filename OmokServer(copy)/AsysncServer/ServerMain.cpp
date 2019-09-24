@@ -152,6 +152,8 @@ void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (retval == SOCKET_ERROR)
 		{
 			cout << "err on WSAAsyncSelect!!" << endl;
+			if (retval == 10053)
+				g_iIndex--;
 		}
 
 		USER_INFO* pInfo = new USER_INFO();

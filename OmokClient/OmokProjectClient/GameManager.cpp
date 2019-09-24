@@ -4,7 +4,6 @@
 #include "Physics.h"
 #include <string>
 #include <Windows.h>
-#include <PACKET_HEADER.h>
 #include<iostream>
 
 using namespace std;
@@ -102,7 +101,7 @@ void GameManager::DrawRect(HDC hdc)
 }
 void GameManager::MouseButtonCheck(POINT pt)
 {
-	if (curTurn == Mystone)
+	if (curTurn == Mystone || GetForegroundWindow() != hwnd)
 		return;
 	
 	for (int i = 0; i < HEIGHT; i++)
@@ -150,6 +149,18 @@ void GameManager::GameOverCheck()
 			}
 		}
 	}
+}
+void GameManager::DrawChatWindow(HDC hdc)
+{
+}
+void GameManager::DrawLobbyChatWindow(HDC hdc)
+{
+}
+void GameManager::DrawCurUsers(HDC hdc)
+{
+}
+void GameManager::DrawRooms(HDC hdc)
+{
 }
 //¼­¹ö
 void GameManager::SendPos(int x, int y)
@@ -241,6 +252,16 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 	}
 	break;
 	}
+}
+
+void GameManager::InitConnection()
+{
+}
+
+void GameManager::InputChatting(void)
+{
+	if (GetForegroundWindow() != hwnd)
+		return;
 }
 
 GameManager::GameManager()
