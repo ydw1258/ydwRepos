@@ -21,40 +21,19 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 	blackStone.Init(IMAGENUM_BLACKSTONE, 1, stoneSizeXY, stoneSizeXY);
 	whiteStone.Init(IMAGENUM_WHITESTONE, 1, stoneSizeXY, stoneSizeXY);
 
-	//서버한테 데이터 받기
-	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
-		return;
+	InitConnection();
 
-	g_sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (g_sock == INVALID_SOCKET)
+	switch (scene)
 	{
-		cout << "err on socket" << endl;
-		return;
-	}
-	
-	ZeroMemory(&serveraddr, sizeof(serveraddr));
-	serveraddr.sin_family = AF_INET;
-	serveraddr.sin_port = htons(9000);
-	serveraddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-
-	int retval = connect(g_sock, (sockaddr*)& serveraddr, sizeof(serveraddr));
-
-	if (retval == SOCKET_ERROR)
-	{
-		exit(1);
-	}
-
-	retval = WSAAsyncSelect(g_sock, hwnd, WM_SOCKET, FD_READ | FD_CLOSE);
-	if (retval == SOCKET_ERROR)
-	{
-		exit(1);
-	}
-
-	retval = WSAAsyncSelect(g_sock, hwnd, WM_SOCKET, FD_READ | FD_CLOSE);
-
-	if (retval == SOCKET_ERROR)
-	{
-		exit(1);
+	case LOGIN:
+		break;
+	case INGAME:
+		chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
+		break;
+	case LOBBY:
+		break;
+	default:
+		break;
 	}
 }
 
@@ -165,7 +144,7 @@ void GameManager::DrawRooms(HDC hdc)
 //서버
 void GameManager::SendPos(int x, int y)
 {
-	PACKET_SEND_POS packet;
+	PACKET_SEND_INGAME_DATA packet;
 	packet.header.wIndex = PACKET_INDEX_SEND_POS;
 	packet.header.wLen = sizeof(packet);
 	packet.data.playerNum = playerIndex;
@@ -207,8 +186,8 @@ void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 		closesocket(wParam);
 		break;
 	}
-	
 }
+//서버로 부터 받은 데이터
 void GameManager::ProcessPacket(char * szBuf, int len)
 {
 	PACKET_HEADER header;
@@ -244,24 +223,68 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 	break;
 	case PACKET_INDEX_SEND_POS:
 	{
-		PACKET_SEND_POS packet;
+		PACKET_SEND_INGAME_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
 		BoardInfo[packet.data.wY * HEIGHT + packet.data.wX] = packet.data.turn + 1;
 
 		curTurn = packet.data.turn;
 	}
 	break;
+	case PACKET_INDEX_SEND_CHATTING_INGAME:
+		PACKET_SEND_INGAME_DATA packet;
+		memcpy(&packet, szBuf, header.wLen);
+		chatList.push_back(packet.data.chat);
+		break;
 	}
 }
 
 void GameManager::InitConnection()
 {
+	//서버한테 데이터 받기
+	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+		return;
+
+	g_sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (g_sock == INVALID_SOCKET)
+	{
+		cout << "err on socket" << endl;
+		return;
+	}
+
+	ZeroMemory(&serveraddr, sizeof(serveraddr));
+	serveraddr.sin_family = AF_INET;
+	serveraddr.sin_port = htons(9000);
+	serveraddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+	int retval = connect(g_sock, (sockaddr*)& serveraddr, sizeof(serveraddr));
+
+	if (retval == SOCKET_ERROR)
+	{
+		exit(1);
+	}
+
+	retval = WSAAsyncSelect(g_sock, hwnd, WM_SOCKET, FD_READ | FD_CLOSE);
+	if (retval == SOCKET_ERROR)
+	{
+		exit(1);
+	}
+
+	retval = WSAAsyncSelect(g_sock, hwnd, WM_SOCKET, FD_READ | FD_CLOSE);
+
+	if (retval == SOCKET_ERROR)
+	{
+		exit(1);
+	}
 }
 
 void GameManager::InputChatting(void)
 {
 	if (GetForegroundWindow() != hwnd)
 		return;
+
+
+	//chatList
+
 }
 
 GameManager::GameManager()

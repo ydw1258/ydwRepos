@@ -102,7 +102,7 @@ void GameFrameWork::Render()
 
 	GameManager::GetInstance()->Draw(ResourceManager::backBuffer->GetmemDC());
 	//GameManager::GetInstance()->DrawRect(ResourceManager::backBuffer->GetmemDC());
-	BitBlt(hdc, 0, 0, 1000, 1000, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
+	BitBlt(hdc, 0, 0, 1000, 800, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
 
 	ReleaseDC(m_hWnd, hdc);
 }

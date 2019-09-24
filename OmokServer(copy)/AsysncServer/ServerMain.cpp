@@ -123,11 +123,16 @@ void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	int addrlen = 0;
 	int retval = 0;
 
-
 	if (WSAGETSELECTERROR(lParam))
 	{
 		int err_code = WSAGETSELECTERROR(lParam);
 		err_display(WSAGETSELECTERROR(lParam));
+
+		if (WSAGETSELECTERROR(lParam) == 10053)
+		{
+			g_iIndex--;
+		}
+
 		return;
 	}
 
@@ -152,8 +157,7 @@ void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (retval == SOCKET_ERROR)
 		{
 			cout << "err on WSAAsyncSelect!!" << endl;
-			if (retval == 10053)
-				g_iIndex--;
+			
 		}
 
 		USER_INFO* pInfo = new USER_INFO();
@@ -253,7 +257,7 @@ bool ProcessPacket(SOCKET sock , USER_INFO* pUser, char* szBuf, int& len)
 	{
 		case PACKET_INDEX_SEND_POS:
 		{
-			PACKET_SEND_POS packet;
+			PACKET_SEND_INGAME_DATA packet;
 			memcpy(&packet, szBuf, header.wLen);
 
 			g_mapUser[sock]->x = packet.data.wX;
@@ -267,6 +271,10 @@ bool ProcessPacket(SOCKET sock , USER_INFO* pUser, char* szBuf, int& len)
 
 				send(iter->first, (const char*)&packet, header.wLen, 0);
 			}
+		}
+		case PACKET_INDEX_SEND_CHATTING_INGAME:
+		{
+
 		}
 	break;
 	}

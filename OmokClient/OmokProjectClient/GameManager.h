@@ -25,7 +25,7 @@ private:
 	WSADATA wsa;
 	SOCKADDR_IN serveraddr;
 	HWND chatInputBox;
-	HWND hWndList;
+	list<string> chatList;
 public:
 	Scene scene = INGAME;
 	SpriteRenderer board;
@@ -34,6 +34,7 @@ public:
 	FontManager font;
 	HINSTANCE hInstance;
 	HWND hwnd;
+
 	bool curTurn = 0;
 	bool Mystone;
 	int stoneSizeXY = 37;
