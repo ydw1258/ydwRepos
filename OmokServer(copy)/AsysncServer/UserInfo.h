@@ -11,4 +11,5 @@ public:
 	char szBuf[BUFSIZE];
 	int len;
 	Scene userCurScene;
+	int roomNum;
 };

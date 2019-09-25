@@ -18,8 +18,10 @@ class GameManager
 private:
 	static GameManager* mthis;
 	map<int, POINT> ptData; //플레이어, 전송데이터
-	int g_iIndex = 3;
+	
+	//int g_iIndex = 3;
 	//서버관련
+	char playerID[128];
 	int playerIndex= 3;
 	SOCKET g_sock;
 	WSADATA wsa;
@@ -32,6 +34,10 @@ public:
 	SpriteRenderer board;
 	SpriteRenderer blackStone;
 	SpriteRenderer whiteStone;
+	SpriteRenderer UIbutton;
+	SpriteRenderer memoImage;
+	SpriteRenderer lobbybackground;
+	SpriteRenderer blueBoard;
 	FontManager font;
 	HINSTANCE hInstance;
 	HWND hwnd;
@@ -57,7 +63,6 @@ public:
 	void GameOverCheck();
 
 	void DrawChatWindow(HDC hdc);
-	void DrawLobbyChatWindow(HDC hdc);
 	void DrawCurUsers(HDC hdc);
 	void DrawRooms(HDC hdc);
 
@@ -69,7 +74,7 @@ public:
 	void InitConnection();
 	void InputChatting(void);
 	void SceneInitiator();
-	void SceneChange();
+	void SceneChange(Scene _scene);
 
 	GameManager();
 	~GameManager();

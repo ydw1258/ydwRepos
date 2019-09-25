@@ -179,7 +179,6 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		memcpy(&loginPacket, szBuf, header.wLen);
 		PACKET_USER_DATA loginRetPacket;
 		
-		
 		cout << "입력된 ID : " << loginPacket.ID << ", " <<
 			"입력된 비밀번호 : "<< loginPacket.password << ", 실제비밀번호 : " << mapAccounts[loginPacket.ID] << endl;
 		if (mapAccounts.find(loginPacket.ID) == mapAccounts.end()) {
@@ -197,20 +196,22 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 			// 로그인 성공
 			else
 			{
+				USER_INFO user;
 				//g_mapUser[sock]->userID = ;
-				//loginRetPacket.isLoginSuccess = true;
-				//loginRetPacket.header.wIndex = PACKET_INDEX_LOGIN_RET;
-				//loginRetPacket.header.wLen = sizeof(loginRetPacket);
-				//loginRetPacket.data[].ID =
+				loginPacket.isLoginSuccess = true;
+				strcpy(user.userID, loginPacket.ID);
+				user.roomNum = 0;
+				user.userCurScene = LOBBY;
+				//로비에 유저 추가
+				// map<int, list<USER_INFO*>> g_RoomInfo; //0번 로비
+				g_RoomInfo[0].push_back(&user);
 				
 				cout << "로그인 성공" << endl;
 			}
 		}
-	
 		loginRetPacket.header.wLen = sizeof(loginRetPacket);
-		//send(loginRetPacket.data[loginRetPacket.data->ID].playerNum, (const char*)& loginPacket, header.wLen, 0);
-		break;
-
+		
+		send(sock, (const char*)& loginPacket, header.wLen, 0);
 	}
 	break;
 	case PACKET_INDEX_SEND_POS:
@@ -230,19 +231,18 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		}
 	}
 	break;
+	
 	case PACKET_INDEX_SEND_CHATTING_INGAME:
 	{
 		PACKET_SEND_INGAME_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
+
 		char buf[128];
-		sprintf(buf, "%d : %s", packet.data.playerNum, packet.data.chat);
+		sprintf(buf, "%s : %s", packet.data.ID, packet.data.chat);
 		strcpy(packet.data.chat, buf);
 
 		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
 		{
-			//if (iter->second == sock)
-				//continue;
-
 			send(iter->first, (const char*)&packet, header.wLen, 0);
 		}
 	}

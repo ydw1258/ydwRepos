@@ -38,6 +38,7 @@ struct USER_DATA
 struct PACKET_TRY_LOGIN
 {
 	PACKET_HEADER header;
+	int playerNum;
 	char ID[128];
 	char password[128];
 	bool isLoginSuccess = false;

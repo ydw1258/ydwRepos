@@ -7,17 +7,19 @@
 //#include <WinSock2.h>
 #include "..\..\Common\PACKET_HEADER.h"
 #include "UserInfo.h"
+#include <list>
 using namespace std;
 
 class ServerManager
 {
 private:
 	static ServerManager* mthis;
-	map<SOCKET, USER_INFO*> g_mapUser;
+	map<SOCKET, USER_INFO*> g_mapUser; //접속한 유저 정보들
 	map<string, string> mapAccounts;
 	bool turn = 0;
 	HWND hWnd;
 	int g_iIndex = 0;
+	map<int, list<USER_INFO*>> g_RoomInfo; //0번 로비
 public:
 	static ServerManager* GetInstance()
 	{

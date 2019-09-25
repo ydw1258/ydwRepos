@@ -14,13 +14,18 @@ GameManager* GameManager::mthis = nullptr;
 void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 {
 	hwnd = _hwnd;
-	string filename[3] = {"Resources\\board.bmp", "Resources\\blackstone.bmp", "Resources\\whitestone.bmp"};
-	ResourceManager::GetInstance()->Init(hdc, hInstance, filename, 3);
+	string filename[7] = { "Resources\\board.bmp", "Resources\\blackstone.bmp", "Resources\\whitestone.bmp",
+		"Resources\\UIButton.bmp", "Resources\\memo.bmp", "Resources\\lobbybackground.bmp", "Resources\\blueBoard.bmp"
+	};
+	ResourceManager::GetInstance()->Init(hdc, hInstance, filename, 7);
 	
 	board.Init(IMAGENUM_BOARD, 1, 722, 720);
 	blackStone.Init(IMAGENUM_BLACKSTONE, 1, stoneSizeXY, stoneSizeXY);
 	whiteStone.Init(IMAGENUM_WHITESTONE, 1, stoneSizeXY, stoneSizeXY);
-
+	UIbutton.Init(IMAGENUM_UIBUTTON, 1, 346, 173);
+	memoImage.Init(IMAGENUM_MEMO, 1, 400, 400);
+	lobbybackground.Init(IMAGENUM_LOBBYBACKGROUND, 1, 960, 640);
+	blueBoard.Init(IMAGENUM_CHATBOARD_LOBBY, 1, 300, 111);
 	InitConnection();
 	SceneInitiator();
 }
@@ -31,14 +36,17 @@ void GameManager::SceneInitiator()
 	case LOGIN:
 		LOGINInput[0] = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 300, 300, 300, 30, hwnd, (HMENU)0, hInstance, NULL);
 		LOGINInput[1] = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 300, 350, 300, 30, hwnd, (HMENU)0, hInstance, NULL);
+		
+		break;
+	case LOBBY:
+		chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
+			20, 730, 800, 30, hwnd, (HMENU)0, hInstance, NULL);
+		//chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
 		break;
 	case INGAME:
 		chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
 		break;
-	case LOBBY:
-		break;
-	default:
-		break;
+
 	}
 }
 void GameManager::Draw(HDC hdc)
@@ -46,6 +54,7 @@ void GameManager::Draw(HDC hdc)
 	switch (scene)
 	{
 	case LOGIN:
+		
 		break;
 	case INGAME:
 		board.DrawObject(hdc, 0, 0);
@@ -71,6 +80,16 @@ void GameManager::Draw(HDC hdc)
 		DrawChatWindow(hdc);
 		break;
 	case LOBBY:
+		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
+		memoImage.DrawResizedObject(hdc, 650, 10, 300, 400);
+		UIbutton.DrawResizedObject(hdc, 30, 30, 300, 150);
+		UIbutton.DrawResizedObject(hdc, 340, 30, 300, 150);
+		UIbutton.DrawResizedObject(hdc, 30, 200, 300, 150);
+		UIbutton.DrawResizedObject(hdc, 340, 200, 300, 150);
+		UIbutton.DrawResizedObject(hdc, 30, 370, 300, 150);
+		UIbutton.DrawResizedObject(hdc, 340, 370, 300, 150);
+		blueBoard.DrawResizedObject(hdc, 40, 520, 700, 200);
+		DrawChatWindow(hdc);
 		break;
 	default:
 		break;
@@ -144,16 +163,30 @@ void GameManager::GameOverCheck()
 }
 void GameManager::DrawChatWindow(HDC hdc)
 {
-	Rectangle(hdc, 750, 400, 950, 700);
 	int i = 0;
-	for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
+	switch (scene)
 	{
-		font.Draw((*it), 15, 760, 680 - 30 *i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+	case LOBBY:
+		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
+		{
+			font.Draw((*it), 15, 50, 680 - 30 * i, "Resources/oldgameFont.ttf", RGB(255, 255, 255));
+		}
+		break;
+	case INGAME:
+		Rectangle(hdc, 750, 400, 950, 700);
+
+		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
+		{
+			font.Draw((*it), 15, 760, 680 - 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		}
+		break;
+	default:
+		break;
 	}
+	
+
 }
-void GameManager::DrawLobbyChatWindow(HDC hdc)
-{
-}
+
 void GameManager::DrawCurUsers(HDC hdc)
 {
 }
@@ -175,7 +208,7 @@ void GameManager::Login()
 	
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
-//서버
+
 void GameManager::SendPos(int x, int y)
 {
 	PACKET_SEND_INGAME_DATA packet;
@@ -234,9 +267,9 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		PACKET_LOGIN_RET packet;
 		memcpy(&packet, szBuf, header.wLen);
 
-		g_iIndex = packet.iIndex;
+		playerIndex = packet.iIndex;
 		char temp[128];
-		itoa(g_iIndex, temp, 128);
+		itoa(playerIndex, temp, 128);
 	}
 	break;
 	case PACKET_INDEX_LOGIN_RET://로그인 시도
@@ -247,19 +280,18 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		//로그인 실패
 		//구현
 		//로그인 성공
-		/*
-		if (packet.)
+		
+		if (packet.isLoginSuccess)
 		{
-			SceneChange();
+			strcpy(playerID, packet.ID);
+			playerIndex = packet.playerNum;
+			SetWindowText(LOGINInput[0], "로그인 성공");
+			SceneChange(LOBBY);
 		}
 		else
 		{
 			SetWindowText(LOGINInput[0], "로그인 실패");
 		}
-
-		playerIndex = packet.iIndex;
-
-		*/
 
 		if (playerIndex == 0)//받은 데이터 흑
 		{
@@ -297,12 +329,11 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 	break;
 	}
 }
-void GameManager::SceneChange()
+void GameManager::SceneChange(Scene _scene)
 {
 	switch (scene)
 	{
 	case LOGIN:
-		scene = LOBBY;
 		DestroyWindow(LOGINInput[0]);
 		DestroyWindow(LOGINInput[1]);
 		break;
@@ -313,7 +344,8 @@ void GameManager::SceneChange()
 	default:
 		break;
 	}
-	
+	scene = _scene;
+	SceneInitiator();
 }
 void GameManager::InitConnection()
 {
@@ -366,6 +398,7 @@ void GameManager::InputChatting(void)
 	packet.header.wIndex = PACKET_INDEX_SEND_CHATTING_INGAME;
 	packet.header.wLen = sizeof(packet);
 	packet.data.playerNum = playerIndex;
+	strcpy(packet.data.ID, playerID);
 	strcpy(packet.data.chat, str);
 
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
