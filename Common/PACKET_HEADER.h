@@ -19,6 +19,7 @@ enum PACKET_INDEX
 	PACKET_INDEX_GET_PLAYER_INLOBBY,
 	PACKET_INDEX_SEND_CHATTING_INGAME,
 	PACKET_INDEX_GET_PLAYERS,
+	PACKET_INDEX_GET_ROOMS,
 };
 
 struct PACKET_HEADER
@@ -70,5 +71,13 @@ struct PACKET_USERSLIST
 	int playerNum;
 	int roomNum;
 	char playerIDs[5][10];
+};
+struct PACKET_ROOMLIST //여러번 보내는 걸로 변경 예정.
+{
+	PACKET_HEADER header;
+	int NumOfRoom;
+	int roomNum[10];
+	int playerNum[10];
+	bool isPlaying[10];
 };
 #pragma pack()

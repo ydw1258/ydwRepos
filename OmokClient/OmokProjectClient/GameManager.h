@@ -17,8 +17,8 @@ class GameManager
 {
 private:
 	static GameManager* mthis;
-	map<int, POINT> ptData; //플레이어, 전송데이터
-	
+	//map<int, POINT> ptData; //플레이어, 전송데이터
+	map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
 	//int g_iIndex = 3;
 	//서버관련
 	char playerID[128];
@@ -76,7 +76,8 @@ public:
 	void InputChatting(void);
 	void SceneInitiator();
 	void SceneChange(Scene _scene);
-	void GetPeopleInRoom(int roomNum); //로비포함 같은 방에 있는 사람 불러오기
+	void GetPlayersInRoom(int roomNum); //로비포함 같은 방에 있는 사람 불러오기
+	void GetRooms();
 
 	GameManager();
 	~GameManager();

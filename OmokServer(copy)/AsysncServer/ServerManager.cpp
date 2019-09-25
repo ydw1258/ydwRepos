@@ -77,7 +77,6 @@ void ServerManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 		if(WSAGETSELECTERROR(lParam) == 10053)
 		{ 
 			//강제종료 유저
-			/*
 			map<int, list<USER_INFO>> g_RoomInfo;
 
 			g_iIndex--;
@@ -88,7 +87,7 @@ void ServerManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 			}
 
 			g_mapUser.erase(wParam);
-			closesocket(wParam);*/
+			closesocket(wParam);
 		}
 		return;
 	}
@@ -218,8 +217,8 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 				strcpy(user->userID, loginPacket.ID);
 				user->roomNum = 0;
 				user->userCurScene = LOBBY;
-
 				g_mapUser[sock] = user;
+
 				//로비에 유저 추가
 				// map<int, list<USER_INFO*>> g_RoomInfo; //0번 로비
 				g_RoomInfo[0].push_back(user);
@@ -277,6 +276,30 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 			strcpy(packet.playerIDs[i], (*it)->userID);
 		}
 		packet.playerNum = i;
+		send(sock, (const char*)& packet, header.wLen, 0);
+	}
+	case PACKET_INDEX_GET_ROOMS:
+	{
+		PACKET_ROOMLIST packet;
+		memcpy(&packet, szBuf, header.wLen);
+
+		int i = 0;
+		//테스트 용 1번방
+		packet.roomNum[0] = 1;
+		packet.playerNum[0] = 0;
+		for (auto it = g_RoomInfo.begin(); it != g_RoomInfo.end(); it++)
+		{
+			if (it->first != 0)
+			{
+				packet.roomNum[i] = it->first;
+				packet.playerNum[i] = it->second.size();
+				i++;
+				//packet.isPlaying[i] =
+			}
+				
+		}
+		packet.NumOfRoom = i;
+		packet.NumOfRoom = 1; //테스트용
 		send(sock, (const char*)& packet, header.wLen, 0);
 	}
 	break;

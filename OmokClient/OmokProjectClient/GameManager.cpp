@@ -193,11 +193,19 @@ void GameManager::DrawCurUsers(HDC hdc)
 void GameManager::DrawRooms(HDC hdc)
 {
 	UIbutton.DrawResizedObject(hdc, 30, 30, 300, 150);
+	char buf[128];
+	
 	UIbutton.DrawResizedObject(hdc, 340, 30, 300, 150);
 	UIbutton.DrawResizedObject(hdc, 30, 200, 300, 150);
 	UIbutton.DrawResizedObject(hdc, 340, 200, 300, 150);
 	UIbutton.DrawResizedObject(hdc, 30, 370, 300, 150);
 	UIbutton.DrawResizedObject(hdc, 340, 370, 300, 150);
+	for (auto it = mapRoomPlayers.begin(); it != mapRoomPlayers.end(); it++)
+	{
+		sprintf(buf, "%d 번방 방제가 필요함.", mapRoomPlayers[0]);
+		font.Draw(buf, 15, 340, 30, "Resources/oldgameFont.ttf", RGB(255, 0, 255));
+	}
+
 }
 void GameManager::Login()
 {
@@ -290,7 +298,8 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 			playerIndex = packet.playerNum;
 			SceneChange(LOBBY);
 			
-			GetPeopleInRoom(0);
+			GetPlayersInRoom(0);
+			GetRooms();
 		}
 		else //로그인 실패
 		{
@@ -341,6 +350,17 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		}
 	}
 	break;
+	case PACKET_INDEX_GET_ROOMS:
+	{
+		PACKET_ROOMLIST packet;
+		memcpy(&packet, szBuf, header.wLen);
+
+		for (int i = 0; i < packet.NumOfRoom; i++)
+		{
+			mapRoomPlayers.insert(make_pair(packet.roomNum[i], packet.playerNum[i]));
+		}
+	}
+	break;
 	}
 }
 void GameManager::SceneChange(Scene _scene)
@@ -361,13 +381,21 @@ void GameManager::SceneChange(Scene _scene)
 	scene = _scene;
 	SceneInitiator();
 }
-void GameManager::GetPeopleInRoom(int roomNum)
+void GameManager::GetPlayersInRoom(int roomNum)
 {
 	PACKET_USERSLIST packet;
-	packet.header.wIndex = PACKET_INDEX_GET_PLAYERS;
+	packet.header.wIndex = PACKET_INDEX_GET_ROOMS;
 	packet.roomNum = roomNum;
 	packet.header.wLen = sizeof(packet);
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
+}
+void GameManager::GetRooms()
+{
+	PACKET_ROOMLIST packet;
+
+	packet.header.wIndex = PACKET_INDEX_GET_PLAYERS;
+	packet.header.wLen = sizeof(packet);
+	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
 void GameManager::InitConnection()
 {
