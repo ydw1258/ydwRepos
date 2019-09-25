@@ -231,7 +231,6 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		}
 	}
 	break;
-	
 	case PACKET_INDEX_SEND_CHATTING_INGAME:
 	{
 		PACKET_SEND_INGAME_DATA packet;
