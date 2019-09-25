@@ -167,7 +167,6 @@ void GameManager::Login()
 	PACKET_TRY_LOGIN packet;
 	packet.header.wIndex = PACKET_INDEX_LOGIN_RET;
 	packet.header.wLen = sizeof(packet);
-
 	
 	GetWindowText(LOGINInput[0], buf, 128);
 	strcpy(packet.ID, buf);
@@ -226,21 +225,41 @@ void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 void GameManager::ProcessPacket(char * szBuf, int len)
 {
 	PACKET_HEADER header;
-
 	memcpy(&header, szBuf, sizeof(header));
 
 	switch (header.wIndex)
 	{
-	case PACKET_INDEX_LOGIN_RET:
+	case PACKET_INDEX_FIRST_CONNECT://첫 연결(클라이언트 실행)
 	{
 		PACKET_LOGIN_RET packet;
+		memcpy(&packet, szBuf, header.wLen);
+
+		g_iIndex = packet.iIndex;
+		char temp[128];
+		itoa(g_iIndex, temp, 128);
+	}
+	break;
+	case PACKET_INDEX_LOGIN_RET://로그인 시도
+	{
+		PACKET_TRY_LOGIN packet;
 		memcpy(&packet, szBuf, header.wLen);
 
 		//로그인 실패
 		//구현
 		//로그인 성공
+		/*
+		if (packet.)
+		{
+			SceneChange();
+		}
+		else
+		{
+			SetWindowText(LOGINInput[0], "로그인 실패");
+		}
 
 		playerIndex = packet.iIndex;
+
+		*/
 
 		if (playerIndex == 0)//받은 데이터 흑
 		{
@@ -258,14 +277,6 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 	{
 		PACKET_USER_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
-		if (packet.isLoginSuccess)
-		{
-			SceneChange();
-		}
-		else
-		{
-			SetWindowText(LOGINInput[0], "로그인 실패");
-		}
 	}
 	break;
 	case PACKET_INDEX_SEND_POS:
@@ -341,6 +352,7 @@ void GameManager::InitConnection()
 	{
 		exit(1);
 	}
+
 }
 
 void GameManager::InputChatting(void)

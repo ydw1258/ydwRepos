@@ -145,9 +145,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ServerMain.cpp" />
+    <ClCompile Include="ServerManager.cpp" />
+    <ClCompile Include="UserInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Common\PACKET_HEADER.h" />
+    <ClInclude Include="ServerManager.h" />
+    <ClInclude Include="UserInfo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,9 +18,21 @@
     <ClCompile Include="ServerMain.cpp">
       <Filter>헤더 파일</Filter>
     </ClCompile>
+    <ClCompile Include="ServerManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInfo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Common\PACKET_HEADER.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInfo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

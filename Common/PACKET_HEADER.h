@@ -11,7 +11,8 @@ enum Scene
 };
 enum PACKET_INDEX
 {
-	PACKET_INDEX_LOGIN_RET = 1,
+	PACKET_INDEX_FIRST_CONNECT = 1,
+	PACKET_INDEX_LOGIN_RET,
 	PACKET_INDEX_USER_DATA,
 	PACKET_INDEX_SEND_POS,
 	PACKET_INDEX_SEND_CHATTING_INGAME,
@@ -39,6 +40,7 @@ struct PACKET_TRY_LOGIN
 	PACKET_HEADER header;
 	char ID[128];
 	char password[128];
+	bool isLoginSuccess = false;
 };
 struct PACKET_LOGIN_RET
 {
@@ -48,7 +50,6 @@ struct PACKET_LOGIN_RET
 
 struct PACKET_USER_DATA
 {
-	bool isLoginSuccess = false;
 	PACKET_HEADER header;
 	WORD wCount;
 	USER_DATA data[20];

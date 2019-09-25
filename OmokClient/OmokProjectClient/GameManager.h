@@ -18,7 +18,7 @@ class GameManager
 private:
 	static GameManager* mthis;
 	map<int, POINT> ptData; //플레이어, 전송데이터
-
+	int g_iIndex = 3;
 	//서버관련
 	int playerIndex= 3;
 	SOCKET g_sock;
