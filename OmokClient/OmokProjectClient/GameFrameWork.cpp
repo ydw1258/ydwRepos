@@ -44,7 +44,6 @@ void GameFrameWork::Update()
 		isLButtonDown = false;
 	}
 
-
 	std::chrono::duration<float> sec = std::chrono::system_clock::now() - m_LastTime;
 	/*if (sec.count() < (1 / FPS))
 		return;*/
@@ -98,7 +97,6 @@ void GameFrameWork::OperateInput()
 			}
 			
 			isKeydown = true;
-			
 		}
 	}
 	else

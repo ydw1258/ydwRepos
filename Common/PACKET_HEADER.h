@@ -18,7 +18,7 @@ enum PACKET_INDEX
 	PACKET_INDEX_SEND_CHATTING_LOBBY,
 	PACKET_INDEX_GET_PLAYER_INLOBBY,
 	PACKET_INDEX_SEND_CHATTING_INGAME,
-	
+	PACKET_INDEX_GET_PLAYERS,
 };
 
 struct PACKET_HEADER
@@ -64,8 +64,11 @@ struct PACKET_SEND_INGAME_DATA
 	USER_DATA data;
 	Scene scene;
 };
-struct PACKET_LOBBY_USERS
+struct PACKET_USERSLIST
 {
-	char str[128];
+	PACKET_HEADER header;
+	int playerNum;
+	int roomNum;
+	char playerIDs[5][10];
 };
 #pragma pack()

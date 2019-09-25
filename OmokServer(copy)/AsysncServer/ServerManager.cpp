@@ -74,7 +74,22 @@ void ServerManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 	{
 		int err_code = WSAGETSELECTERROR(lParam);
 		err_display(WSAGETSELECTERROR(lParam));
+		if(WSAGETSELECTERROR(lParam) == 10053)
+		{ 
+			//강제종료 유저
+			/*
+			map<int, list<USER_INFO>> g_RoomInfo;
 
+			g_iIndex--;
+			for (auto it = g_RoomInfo[g_mapUser[wParam]->roomNum].begin(); it != g_RoomInfo[g_mapUser[wParam]->roomNum].end(); it++)
+			{
+				if (it->userID == g_mapUser[wParam]->userID)
+					g_RoomInfo[g_mapUser[wParam]->roomNum].erase(it);
+			}
+
+			g_mapUser.erase(wParam);
+			closesocket(wParam);*/
+		}
 		return;
 	}
 
@@ -119,6 +134,7 @@ void ServerManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 	{
 		char szBuf[BUFSIZE];
 
+		//수신한 패킷의 바이트 수
 		retval = recv(wParam, szBuf, BUFSIZE, 0);
 		if (retval == SOCKET_ERROR)
 		{
@@ -196,17 +212,20 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 			// 로그인 성공
 			else
 			{
-				USER_INFO user;
+				USER_INFO *user = new USER_INFO();
 				//g_mapUser[sock]->userID = ;
 				loginPacket.isLoginSuccess = true;
-				strcpy(user.userID, loginPacket.ID);
-				user.roomNum = 0;
-				user.userCurScene = LOBBY;
+				strcpy(user->userID, loginPacket.ID);
+				user->roomNum = 0;
+				user->userCurScene = LOBBY;
+
+				g_mapUser[sock] = user;
 				//로비에 유저 추가
 				// map<int, list<USER_INFO*>> g_RoomInfo; //0번 로비
-				g_RoomInfo[0].push_back(&user);
-				
+				g_RoomInfo[0].push_back(user);
+
 				cout << "로그인 성공" << endl;
+
 			}
 		}
 		loginRetPacket.header.wLen = sizeof(loginRetPacket);
@@ -244,6 +263,21 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		{
 			send(iter->first, (const char*)&packet, header.wLen, 0);
 		}
+	}
+	break;
+	case PACKET_INDEX_GET_PLAYERS:
+	{
+		PACKET_USERSLIST packet;
+		memcpy(&packet, szBuf, header.wLen);
+
+		int i = 0;
+		
+		for (auto it = g_RoomInfo[packet.roomNum].begin(); it != g_RoomInfo[packet.roomNum].end(); it++, i++)
+		{
+			strcpy(packet.playerIDs[i], (*it)->userID);
+		}
+		packet.playerNum = i;
+		send(sock, (const char*)& packet, header.wLen, 0);
 	}
 	break;
 	}

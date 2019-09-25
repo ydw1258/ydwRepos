@@ -11,7 +11,7 @@ using namespace std;
 #define WIDTH 19
 #define HEIGHT 19
 #define WM_SOCKET (WM_USER+1)
-#define BUFSIZE 512
+#define BUFSIZE 1024
 
 class GameManager
 {
@@ -29,6 +29,7 @@ private:
 	HWND chatInputBox;
 	HWND LOGINInput[2];
 	list<string> chatList;
+	list<string> listPlayerID;
 public:
 	Scene scene = LOGIN;
 	SpriteRenderer board;
@@ -75,6 +76,7 @@ public:
 	void InputChatting(void);
 	void SceneInitiator();
 	void SceneChange(Scene _scene);
+	void GetPeopleInRoom(int roomNum); //로비포함 같은 방에 있는 사람 불러오기
 
 	GameManager();
 	~GameManager();

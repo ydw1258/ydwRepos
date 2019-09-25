@@ -1,6 +1,6 @@
 #pragma once
 
-#define BUFSIZE 512
+#define BUFSIZE 1024
 #define WM_SOCKET (WM_USER+1)
 
 class USER_INFO
