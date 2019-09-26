@@ -76,8 +76,6 @@ void GameFrameWork::OperateInput()
 				GameManager::GetInstance()->Login();
 				break;
 			case LOBBY:
-				GameManager::GetInstance()->InputChatting();
-				break;
 			case INGAME:
 				GameManager::GetInstance()->InputChatting();
 				break;

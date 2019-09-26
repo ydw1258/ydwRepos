@@ -26,7 +26,8 @@ private:
 	SOCKET g_sock;
 	WSADATA wsa;
 	SOCKADDR_IN serveraddr;
-	HWND chatInputBox;
+	HWND chatInputBoxLobby;
+	HWND chatInputBoxIngame;
 	HWND LOGINInput[2];
 	list<string> chatList;
 	list<string> listPlayerID;

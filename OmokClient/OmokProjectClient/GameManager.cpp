@@ -38,12 +38,12 @@ void GameManager::SceneInitiator()
 		LOGINInput[1] = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 300, 350, 300, 30, hwnd, (HMENU)0, hInstance, NULL);
 		break;
 	case LOBBY:
-		chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
+		chatInputBoxLobby = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
 			20, 750, 800, 30, hwnd, (HMENU)0, hInstance, NULL);
 		//chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
 		break;
 	case INGAME:
-		chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
+		chatInputBoxIngame = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
 		break;
 	}
 }
@@ -82,18 +82,11 @@ void GameManager::Draw(HDC hdc)
 	{
 		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
 		memoImage.DrawResizedObject(hdc, 650, 10, 300, 400);
-		
 		blueBoard.DrawResizedObject(hdc, 40, 520, 700, 200);
-		DrawChatWindow(hdc);
 
-		int i = 0;
+		DrawChatWindow(hdc);
 		DrawRooms(hdc);
-		
-		font.Draw("로비 플레이어 목록", 20, 710, 130, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
-		{
-			font.Draw((*it), 15, 710, 160 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		}
+		DrawCurUsers(hdc);
 	}
 	break;
 	}
@@ -190,6 +183,24 @@ void GameManager::DrawChatWindow(HDC hdc)
 
 void GameManager::DrawCurUsers(HDC hdc)
 {
+	int i = 0;
+	switch (scene)
+	{
+	case LOGIN:
+		break;
+	case LOBBY:
+		font.Draw("로비 플레이어 목록", 20, 710, 130, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
+		{
+			font.Draw((*it), 15, 710, 160 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		}
+		break;
+	case INGAME:
+		break;
+	default:
+		break;
+	}
+	
 }
 void GameManager::DrawRooms(HDC hdc)
 {
@@ -204,39 +215,46 @@ void GameManager::DrawRooms(HDC hdc)
 
 	//임시
 	RECT rect;
-	rect.top = 340;
+	rect.top = 30;
 	rect.left = 30;
-	rect.right = 640;
-	rect.bottom = 490;
+	rect.right = 330;
+	rect.bottom = 180;
+	//Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
+	roomButtons.push_back(rect);
 
 	for (auto it = mapRoomPlayers.begin(); it != mapRoomPlayers.end(); it++)
 	{
 		sprintf(buf, "%d 번 방 방제가 필요함.", mapRoomPlayers[0]);
 		font.Draw(buf, 15, 60, 50, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		//font.Draw(buf, 15, 370, 50, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		
 
 		roomButtons.push_back(rect);
 	}
 }
 void GameManager::EnterTheRoom(POINT pt)
 {
+	if (GetForegroundWindow() != hwnd)
+		return;
 	int i = 0;
 	bool flag = false;
+
 	//i번째에 있는 방번호
-	/*for (auto it = roomButtons.begin(); it != roomButtons.end(); it++, i++)
+	for (auto it = roomButtons.begin(); it != roomButtons.end(); it++, i++)
 	{
 		if (Physics::GetInstance()->RECTbyPointCollisionCheck(*it, pt))
 		{
 			flag = true;
 			break;
 		}
+		
 	}
+	
 	if (flag == false)
 		return;
 	
+	/*
 	auto iter = mapRoomPlayers.begin();
-
+	
 	for (int j = 0; j <= i; j++)
 	{
 		iter++;
@@ -252,6 +270,8 @@ void GameManager::EnterTheRoom(POINT pt)
 }
 void GameManager::Login()
 {
+	if (GetForegroundWindow() != hwnd)
+		return;
 	char buf[128];
 
 	PACKET_TRY_LOGIN packet;
@@ -425,9 +445,11 @@ void GameManager::SceneChange(Scene _scene)
 		DestroyWindow(LOGINInput[1]);
 		break;
 	case LOBBY:
-		DestroyWindow(chatInputBox);
+		DestroyWindow(chatInputBoxLobby);
 		break;
 	case INGAME:
+		DestroyWindow(chatInputBoxIngame);
+		//ShowWindow(chatInputBoxIngame, false);
 		break;
 	default:
 		break;
@@ -489,24 +511,37 @@ void GameManager::InitConnection()
 		exit(1);
 	}
 }
-
-void GameManager::InputChatting(void)
+void GameManager::InputChatting()
 {
 	if (GetForegroundWindow() != hwnd)
 		return;
 	char str[128];
-	GetWindowText(chatInputBox, str, 128);
 
-	PACKET_SEND_INGAME_DATA packet;
-	packet.header.wIndex = PACKET_INDEX_SEND_CHATTING_INGAME;
-	packet.header.wLen = sizeof(packet);
-	packet.data.playerNum = playerIndex;
-	strcpy(packet.data.ID, playerID);
-	strcpy(packet.data.chat, str);
+	switch (scene)
+	{
+	case LOBBY:
+	{
+		
+	}
+	break;
+	case INGAME:
+	{
+		PACKET_SEND_INGAME_DATA packet;
 
-	send(g_sock, (const char*)&packet, sizeof(packet), 0);
-	
-	SetWindowText(chatInputBox, "");
+		GetWindowText(chatInputBoxIngame, str, 128);
+		//GetWindowText(chatInputBoxLobby, str, 128);
+		packet.header.wIndex = PACKET_INDEX_SEND_CHATTING_INGAME;
+		packet.header.wLen = sizeof(packet);
+		packet.data.playerNum = playerIndex;
+
+		strcpy(packet.data.ID, playerID);
+		strcpy(packet.data.chat, str);
+
+		send(g_sock, (const char*)&packet, sizeof(packet), 0);
+		SetWindowText(chatInputBoxIngame, "");
+	}
+	break;
+	}
 }
 
 GameManager::GameManager(){}
