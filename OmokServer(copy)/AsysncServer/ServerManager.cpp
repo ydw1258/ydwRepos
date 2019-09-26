@@ -320,7 +320,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		packet.isSuccess = true;
 		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
 		{
-			if (iter->second->roomNum != i)
+			if (iter->second->roomNum != packet.roomNum)
 				continue;
 			send(iter->first, (const char*)&packet, header.wLen, 0);
 		}

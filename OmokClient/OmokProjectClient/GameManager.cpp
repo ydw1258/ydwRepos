@@ -156,7 +156,10 @@ void GameManager::GameOverCheck()
 					BoardInfo[i * HEIGHT + j] == BoardInfo[(i + 1) * HEIGHT + j + 1] && BoardInfo[(i + 2) * HEIGHT + j + 2] && BoardInfo[(i + 3) * HEIGHT + j + 3] && BoardInfo[(i + 4) * HEIGHT + j + 4] ||
 					j >= 4 && (BoardInfo[i * HEIGHT + j] == BoardInfo[(i + 1) * HEIGHT + j - 1] && BoardInfo[(i + 2) * HEIGHT + j - 2] && BoardInfo[(i + 3) * HEIGHT + j - 3] && BoardInfo[(i + 4) * HEIGHT + j - 4]))
 				{
-					MessageBox(hwnd, "»Ê¿Ã ¿Ã∞ÂΩ¿¥œ¥Ÿ.", "?", MB_OK);
+					if(BoardInfo[i * HEIGHT + j] == 0)
+						MessageBox(hwnd, "»Ê¿Ã ¿Ã∞ÂΩ¿¥œ¥Ÿ.", "?", MB_OK);
+					else
+						MessageBox(hwnd, "πÈ¿Ã ¿Ã∞ÂΩ¿¥œ¥Ÿ.", "?", MB_OK);
 				}
 			}
 		}
