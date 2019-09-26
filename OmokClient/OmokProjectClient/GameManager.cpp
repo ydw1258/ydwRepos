@@ -52,12 +52,27 @@ void GameManager::Draw(HDC hdc)
 	switch (scene)
 	{
 	case LOGIN:
-		
+		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
 		break;
+	case LOBBY:
+	{
+		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
+		memoImage.DrawResizedObject(hdc, 650, 10, 300, 400);
+		blueBoard.DrawResizedObject(hdc, 40, 520, 700, 200);
+
+		DrawChatWindow(hdc);
+		DrawRooms(hdc);
+		DrawCurUsers(hdc);
+	}
+	break;
 	case INGAME:
 		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
 		board.DrawObject(hdc, 0, 0);
 		font.Draw(playerID, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+
+		char buf[128];
+		sprintf(buf, "%d 번방", curRoomNum);
+		font.Draw(buf, 30, 800, 130, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 
 		for (int i = 0; i < HEIGHT; i++)
 		{
@@ -76,19 +91,9 @@ void GameManager::Draw(HDC hdc)
 				}
 			}
 		}
+		DrawCurUsers(hdc);
 		DrawChatWindow(hdc);
 		break;
-	case LOBBY:
-	{
-		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
-		memoImage.DrawResizedObject(hdc, 650, 10, 300, 400);
-		blueBoard.DrawResizedObject(hdc, 40, 520, 700, 200);
-
-		DrawChatWindow(hdc);
-		DrawRooms(hdc);
-		DrawCurUsers(hdc);
-	}
-	break;
 	}
 }
 void GameManager::DrawRect(HDC hdc)
@@ -196,6 +201,11 @@ void GameManager::DrawCurUsers(HDC hdc)
 		}
 		break;
 	case INGAME:
+		font.Draw("인게임 플레이어 목록", 20, 730, 200, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
+		{
+			font.Draw((*it), 15, 730, 230 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		}
 		break;
 	default:
 		break;
@@ -204,32 +214,32 @@ void GameManager::DrawCurUsers(HDC hdc)
 }
 void GameManager::DrawRooms(HDC hdc)
 {
-	UIbutton.DrawResizedObject(hdc, 30, 30, 300, 150);
 	char buf[128];
-	
+
+	UIbutton.DrawResizedObject(hdc, 30, 30, 300, 150);
 	UIbutton.DrawResizedObject(hdc, 340, 30, 300, 150);
 	UIbutton.DrawResizedObject(hdc, 30, 200, 300, 150);
 	UIbutton.DrawResizedObject(hdc, 340, 200, 300, 150);
 	UIbutton.DrawResizedObject(hdc, 30, 370, 300, 150);
 	UIbutton.DrawResizedObject(hdc, 340, 370, 300, 150);
 
-	//임시
-	RECT rect;
-	rect.top = 30;
-	rect.left = 30;
-	rect.right = 330;
-	rect.bottom = 180;
-	//Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
-	roomButtons.push_back(rect);
-
-	for (auto it = mapRoomPlayers.begin(); it != mapRoomPlayers.end(); it++)
+	RECT rect[6];
+	
+	for (int i = 0; i < 3; i++)
 	{
-		sprintf(buf, "%d 번 방 방제가 필요함.", mapRoomPlayers[0]);
-		font.Draw(buf, 15, 60, 50, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		//font.Draw(buf, 15, 370, 50, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		for (int j = 0; j < 2; j++)
+		{
+			rect[i * 2 + j].top = 30 + 170 * i;
+			rect[i * 2 + j].left = 30 + 310 * j;
+			rect[i * 2 + j].right = 330 + 310 * j;
+			rect[i * 2 + j].bottom = 180 + 170 * i;
+			roomButtons.push_back(rect[i * 2 + j]);
 
-		roomButtons.push_back(rect);
+			sprintf(buf, "%d 번 방 방제.", i * 2 + j + 1);
+			font.Draw(buf, 15, rect[i * 2 + j].left + 20, rect[i * 2 + j].top + 20, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		}
 	}
+	//Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
 }
 void GameManager::EnterTheRoom(POINT pt)
 {
@@ -246,26 +256,16 @@ void GameManager::EnterTheRoom(POINT pt)
 			flag = true;
 			break;
 		}
-		
 	}
-	
 	if (flag == false)
 		return;
-	
-	/*
-	auto iter = mapRoomPlayers.begin();
-	
-	for (int j = 0; j <= i; j++)
-	{
-		iter++;
-	}*/
 	char buf[128];
 
 	PACKET_TRY_ENTER_THE_ROOM packet;
 	packet.header.wIndex = PACKET_INDEX_ENTER_THE_ROOM;
 	packet.header.wLen = sizeof(packet);
-	strcpy(packet.ID, playerID);
-	packet.roomNum = 1; // iter->first;
+	strcpy(packet.playerID, playerID);
+	packet.roomNum = i + 1; 
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
 void GameManager::Login()
@@ -430,10 +430,17 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		memcpy(&packet, szBuf, header.wLen);
 		if (!packet.isSuccess)
 			return;
+		curRoomNum = packet.roomNum;
+
+		listPlayerID.clear();
+		for (int i = 0; i < packet.userNumInRoom; i++)
+		{
+			listPlayerID.push_back(packet.ID[i]);
+		}
 		SceneChange(INGAME);
 		SceneInitiator();
 	}
-		break;
+	break;
 	}
 }
 void GameManager::SceneChange(Scene _scene)

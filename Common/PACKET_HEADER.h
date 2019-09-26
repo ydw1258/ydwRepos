@@ -51,7 +51,9 @@ struct PACKET_TRY_ENTER_THE_ROOM
 {
 	PACKET_HEADER header;
 	int roomNum;
-	char ID[128];
+	int userNumInRoom;
+	char playerID[128]; //요청한 플레이어
+	char ID[4][128];
 	bool isSuccess = false;
 };
 struct PACKET_LOGIN_RET

@@ -20,6 +20,7 @@ void ServerManager::Init(HWND _hWnd)
 			mapAccounts.insert(make_pair(line.substr(0, idx), line.substr(idx + 1, line.length())));
 		}
 	}
+
 	//서버 소켓 생성
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
@@ -280,26 +281,15 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 	{
 		PACKET_ROOMLIST packet;
 		memcpy(&packet, szBuf, header.wLen);
-
-		int i = 0;
-		//테스트 용 1번방
-		packet.roomNum[0] = 1;
-		packet.playerNum[0] = 0;
-
-		for (auto it = g_RoomInfo.begin(); it != g_RoomInfo.end(); it++)
+		
+		//고정 방 6개
+		for (int i = 0; i < 6; i++)
 		{
-			if (it->first != 0)
-			{
-				packet.roomNum[i] = it->first;
-				packet.playerNum[i] = it->second.size();
-				i++;
-				//packet.isPlaying[i] =
-			}
-				
+			packet.roomNum[i] = i + 1;
+			packet.playerNum[i] = g_RoomInfo[i].size();
 		}
-		packet.NumOfRoom = i;
-		packet.NumOfRoom = 1; //테스트용
-		send(sock, (const char*)& packet, header.wLen, 0);
+		packet.NumOfRoom = 6; //테스트용
+		send(sock, (const char*)&packet, header.wLen, 0);
 	}
 	break;
 	case PACKET_INDEX_ENTER_THE_ROOM:
@@ -311,6 +301,14 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		g_mapUser[sock]->roomNum = packet.roomNum;
 		//방에추가
 		g_RoomInfo[packet.roomNum].push_back(g_mapUser[sock]);
+		int i = 0;
+
+		for (auto it = g_RoomInfo[packet.roomNum].begin(); it != g_RoomInfo[packet.roomNum].end(); it++, i++)
+		{
+			strcpy(packet.ID[i], (*it)->userID);
+		}
+		packet.userNumInRoom = i + 1;
+		
 		//로비에서 제거
 		/*
 		for (auto it = .begin(); it != g_RoomInfo[packet.roomNum].end(); it++)
@@ -320,7 +318,12 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		}*/
 		
 		packet.isSuccess = true;
-		send(sock, (const char*)& packet, header.wLen, 0);
+		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
+		{
+			if (iter->second->roomNum != i)
+				continue;
+			send(iter->first, (const char*)&packet, header.wLen, 0);
+		}
 	}
 	break;
 	}

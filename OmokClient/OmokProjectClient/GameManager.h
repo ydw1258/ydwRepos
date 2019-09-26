@@ -19,6 +19,7 @@ private:
 	static GameManager* mthis;
 	//map<int, POINT> ptData; //플레이어, 전송데이터
 	map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
+	int curRoomNum;
 	//int g_iIndex = 3;
 	//서버관련
 	char playerID[128];
