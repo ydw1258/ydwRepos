@@ -34,8 +34,17 @@ void GameFrameWork::Update()
 			HDC hdc = GetDC(m_hWnd);
 
 			//GameManager::GetInstance()->blackStone.DrawObject(hdc, pt.x, pt.y);
-			GameManager::GetInstance()->MouseButtonCheck(pt);
-
+			switch (GameManager::GetInstance()->scene)
+			{
+			case LOBBY:
+				GameManager::GetInstance()->EnterTheRoom(pt);
+				break;
+			case INGAME:
+				GameManager::GetInstance()->MouseButtonCheck(pt);
+				break;
+			}
+						
+			//GameManager::GetInstance()->
 			ReleaseDC(m_hWnd, hdc);
 		}
 	}
@@ -57,28 +66,6 @@ void GameFrameWork::Update()
 
 void GameFrameWork::OperateInput()
 {
-	if (GetKeyState(VK_SPACE) & 0x8000)
-	{
-
-	}
-	if (GetKeyState(VK_LEFT) & 0x8000)
-	{
-
-	}
-	if (GetKeyState(VK_RIGHT) & 0x8000)
-	{
-
-	}
-	if (GetKeyState(VK_UP) & 0x8000)
-	{
-
-
-	}
-	if (GetKeyState(VK_DOWN) & 0x8000)
-	{
-		GameManager::GetInstance()->SendPos(10, 10);
-	}
-
 	if (GetKeyState(VK_RETURN) & 0x8000)
 	{
 		if (!isKeydown)

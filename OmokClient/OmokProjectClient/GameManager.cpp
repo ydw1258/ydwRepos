@@ -55,8 +55,9 @@ void GameManager::Draw(HDC hdc)
 		
 		break;
 	case INGAME:
+		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
 		board.DrawObject(hdc, 0, 0);
-		font.Draw(playerIndex, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+		font.Draw(playerID, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 
 		for (int i = 0; i < HEIGHT; i++)
 		{
@@ -200,12 +201,54 @@ void GameManager::DrawRooms(HDC hdc)
 	UIbutton.DrawResizedObject(hdc, 340, 200, 300, 150);
 	UIbutton.DrawResizedObject(hdc, 30, 370, 300, 150);
 	UIbutton.DrawResizedObject(hdc, 340, 370, 300, 150);
+
+	//임시
+	RECT rect;
+	rect.top = 340;
+	rect.left = 30;
+	rect.right = 640;
+	rect.bottom = 490;
+
 	for (auto it = mapRoomPlayers.begin(); it != mapRoomPlayers.end(); it++)
 	{
-		sprintf(buf, "%d 번방 방제가 필요함.", mapRoomPlayers[0]);
-		font.Draw(buf, 15, 340, 30, "Resources/oldgameFont.ttf", RGB(255, 0, 255));
-	}
+		sprintf(buf, "%d 번 방 방제가 필요함.", mapRoomPlayers[0]);
+		font.Draw(buf, 15, 60, 50, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		//font.Draw(buf, 15, 370, 50, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		
 
+		roomButtons.push_back(rect);
+	}
+}
+void GameManager::EnterTheRoom(POINT pt)
+{
+	int i = 0;
+	bool flag = false;
+	//i번째에 있는 방번호
+	/*for (auto it = roomButtons.begin(); it != roomButtons.end(); it++, i++)
+	{
+		if (Physics::GetInstance()->RECTbyPointCollisionCheck(*it, pt))
+		{
+			flag = true;
+			break;
+		}
+	}
+	if (flag == false)
+		return;
+	
+	auto iter = mapRoomPlayers.begin();
+
+	for (int j = 0; j <= i; j++)
+	{
+		iter++;
+	}*/
+	char buf[128];
+
+	PACKET_TRY_ENTER_THE_ROOM packet;
+	packet.header.wIndex = PACKET_INDEX_ENTER_THE_ROOM;
+	packet.header.wLen = sizeof(packet);
+	strcpy(packet.ID, playerID);
+	packet.roomNum = 1; // iter->first;
+	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
 void GameManager::Login()
 {
@@ -361,6 +404,16 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		}
 	}
 	break;
+	case PACKET_INDEX_ENTER_THE_ROOM:
+	{
+		PACKET_TRY_ENTER_THE_ROOM packet;
+		memcpy(&packet, szBuf, header.wLen);
+		if (!packet.isSuccess)
+			return;
+		SceneChange(INGAME);
+		SceneInitiator();
+	}
+		break;
 	}
 }
 void GameManager::SceneChange(Scene _scene)
@@ -372,6 +425,7 @@ void GameManager::SceneChange(Scene _scene)
 		DestroyWindow(LOGINInput[1]);
 		break;
 	case LOBBY:
+		DestroyWindow(chatInputBox);
 		break;
 	case INGAME:
 		break;
@@ -384,7 +438,7 @@ void GameManager::SceneChange(Scene _scene)
 void GameManager::GetPlayersInRoom(int roomNum)
 {
 	PACKET_USERSLIST packet;
-	packet.header.wIndex = PACKET_INDEX_GET_ROOMS;
+	packet.header.wIndex = PACKET_INDEX_GET_PLAYERS;
 	packet.roomNum = roomNum;
 	packet.header.wLen = sizeof(packet);
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
@@ -393,7 +447,7 @@ void GameManager::GetRooms()
 {
 	PACKET_ROOMLIST packet;
 
-	packet.header.wIndex = PACKET_INDEX_GET_PLAYERS;
+	packet.header.wIndex = PACKET_INDEX_GET_ROOMS;
 	packet.header.wLen = sizeof(packet);
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }

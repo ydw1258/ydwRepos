@@ -30,6 +30,7 @@ private:
 	HWND LOGINInput[2];
 	list<string> chatList;
 	list<string> listPlayerID;
+	list<RECT> roomButtons;
 public:
 	Scene scene = LOGIN;
 	SpriteRenderer board;
@@ -77,6 +78,7 @@ public:
 	void SceneInitiator();
 	void SceneChange(Scene _scene);
 	void GetPlayersInRoom(int roomNum); //로비포함 같은 방에 있는 사람 불러오기
+	void EnterTheRoom(POINT pt);
 	void GetRooms();
 
 	GameManager();

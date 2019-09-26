@@ -1,13 +1,16 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v150\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(AsysncServer.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(AsysncServer.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
+  ServerMain.cpp
+c:\users\administrator\documents\github\ydwrepos\omokserver(copy)\asysncserver\servermain.cpp(9): warning C4101: 'retval' :참조되지 않은 지역 변수입니다.
   ServerManager.cpp
-d:\gitrepos\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(217): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(217): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(258): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(257): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: 'sprintf' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(259): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(258): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(276): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(274): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(319): warning C4477: 'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'LPVOID'입니다.
-d:\gitrepos\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(328): warning C4477: 'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'LPVOID'입니다.
-  AsysncServer.vcxproj -> D:\gitRepos\ydwRepos\OmokServer(copy)\Debug\OmokAsyncServer.exe
+c:\users\administrator\documents\github\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(339): warning C4477: 'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'LPVOID'입니다.
+c:\users\administrator\documents\github\ydwrepos\omokserver(copy)\asysncserver\servermanager.cpp(348): warning C4477: 'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'LPVOID'입니다.
+  코드를 생성하고 있습니다...
+  AsysncServer.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\OmokServer(copy)\Debug\OmokAsyncServer.exe

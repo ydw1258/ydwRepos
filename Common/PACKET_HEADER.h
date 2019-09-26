@@ -20,6 +20,7 @@ enum PACKET_INDEX
 	PACKET_INDEX_SEND_CHATTING_INGAME,
 	PACKET_INDEX_GET_PLAYERS,
 	PACKET_INDEX_GET_ROOMS,
+	PACKET_INDEX_ENTER_THE_ROOM,
 };
 
 struct PACKET_HEADER
@@ -45,6 +46,13 @@ struct PACKET_TRY_LOGIN
 	char ID[128];
 	char password[128];
 	bool isLoginSuccess = false;
+};
+struct PACKET_TRY_ENTER_THE_ROOM
+{
+	PACKET_HEADER header;
+	int roomNum;
+	char ID[128];
+	bool isSuccess = false;
 };
 struct PACKET_LOGIN_RET
 {

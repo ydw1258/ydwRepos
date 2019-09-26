@@ -8,6 +8,7 @@
 #include "..\..\Common\PACKET_HEADER.h"
 #include "UserInfo.h"
 #include <list>
+
 using namespace std;
 
 class ServerManager
@@ -35,6 +36,5 @@ public:
 	bool ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, int& len);
 	void err_display(int errcode);
 	void err_display(char* szMsg);
-	
 };
 

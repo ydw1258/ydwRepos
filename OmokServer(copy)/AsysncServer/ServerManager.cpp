@@ -224,7 +224,6 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 				g_RoomInfo[0].push_back(user);
 
 				cout << "로그인 성공" << endl;
-
 			}
 		}
 		loginRetPacket.header.wLen = sizeof(loginRetPacket);
@@ -270,7 +269,6 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		memcpy(&packet, szBuf, header.wLen);
 
 		int i = 0;
-		
 		for (auto it = g_RoomInfo[packet.roomNum].begin(); it != g_RoomInfo[packet.roomNum].end(); it++, i++)
 		{
 			strcpy(packet.playerIDs[i], (*it)->userID);
@@ -287,6 +285,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		//테스트 용 1번방
 		packet.roomNum[0] = 1;
 		packet.playerNum[0] = 0;
+
 		for (auto it = g_RoomInfo.begin(); it != g_RoomInfo.end(); it++)
 		{
 			if (it->first != 0)
@@ -300,6 +299,27 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		}
 		packet.NumOfRoom = i;
 		packet.NumOfRoom = 1; //테스트용
+		send(sock, (const char*)& packet, header.wLen, 0);
+	}
+	break;
+	case PACKET_INDEX_ENTER_THE_ROOM:
+	{
+		PACKET_TRY_ENTER_THE_ROOM packet;
+		memcpy(&packet, szBuf, header.wLen);
+
+		//유저정보 변경(room)
+		g_mapUser[sock]->roomNum = packet.roomNum;
+		//방에추가
+		g_RoomInfo[packet.roomNum].push_back(g_mapUser[sock]);
+		//로비에서 제거
+		/*
+		for (auto it = .begin(); it != g_RoomInfo[packet.roomNum].end(); it++)
+		{
+			if((*it)->)
+			it = g_RoomInfo[0].erase();
+		}*/
+		
+		packet.isSuccess = true;
 		send(sock, (const char*)& packet, header.wLen, 0);
 	}
 	break;
