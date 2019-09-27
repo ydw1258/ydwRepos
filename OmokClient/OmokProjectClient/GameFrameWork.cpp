@@ -40,7 +40,7 @@ void GameFrameWork::Update()
 				GameManager::GetInstance()->EnterTheRoom(pt);
 				break;
 			case INGAME:
-				GameManager::GetInstance()->MouseButtonCheck(pt);
+				GameManager::GetInstance()->MouseButtonCheckIngame(pt);
 				break;
 			}
 						

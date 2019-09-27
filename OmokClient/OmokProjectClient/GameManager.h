@@ -19,11 +19,12 @@ private:
 	static GameManager* mthis;
 	//map<int, POINT> ptData; //플레이어, 전송데이터
 	map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
-	int curRoomNum;
 	//int g_iIndex = 3;
 	//서버관련
 	char playerID[128];
 	int playerIndex= 3;
+	int userIndexInRoom;
+	int roomIndex;
 	SOCKET g_sock;
 	WSADATA wsa;
 	SOCKADDR_IN serveraddr;
@@ -33,6 +34,8 @@ private:
 	list<string> chatList;
 	list<string> listPlayerID;
 	list<RECT> roomButtons;
+	RECT exitButton;
+	RECT startButton;
 public:
 	Scene scene = LOGIN;
 	SpriteRenderer board;
@@ -63,7 +66,7 @@ public:
 	void Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd);
 	void Draw(HDC hdc);
 	void DrawRect(HDC hdc);
-	void MouseButtonCheck(POINT pt);
+	void MouseButtonCheckIngame(POINT pt);
 	void GameOverCheck();
 
 	void DrawChatWindow(HDC hdc);
@@ -81,6 +84,8 @@ public:
 	void SceneChange(Scene _scene);
 	void GetPlayersInRoom(int roomNum); //로비포함 같은 방에 있는 사람 불러오기
 	void EnterTheRoom(POINT pt);
+	void ExitTheRoom(POINT pt);
+	void GameStart(POINT pt);
 	void GetRooms();
 
 	GameManager();

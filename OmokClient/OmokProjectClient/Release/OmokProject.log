@@ -1,0 +1,12 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
+StaticWinApiLib.lib(ResourceManager.obj) : error LNK2038: '_ITERATOR_DEBUG_LEVEL'에 대해 불일치가 검색되었습니다. '2' 값이 '0'(GameFrameWork.obj에 위치) 값과 일치하지 않습니다.
+StaticWinApiLib.lib(ResourceManager.obj) : error LNK2038: 'RuntimeLibrary'에 대해 불일치가 검색되었습니다. 'MDd_DynamicDebug' 값이 'MD_DynamicRelease'(GameFrameWork.obj에 위치) 값과 일치하지 않습니다.
+StaticWinApiLib.lib(ResourceManager.obj) : warning LNK4075: '/EDITANDCONTINUE'이(가) '/OPT:ICF' 사양으로 인해 무시됩니다.
+StaticWinApiLib.lib(FontManager.obj) : error LNK2038: '_ITERATOR_DEBUG_LEVEL'에 대해 불일치가 검색되었습니다. '2' 값이 '0'(GameFrameWork.obj에 위치) 값과 일치하지 않습니다.
+StaticWinApiLib.lib(FontManager.obj) : error LNK2038: 'RuntimeLibrary'에 대해 불일치가 검색되었습니다. 'MDd_DynamicDebug' 값이 'MD_DynamicRelease'(GameFrameWork.obj에 위치) 값과 일치하지 않습니다.
+StaticWinApiLib.lib(SpriteRenderer.obj) : error LNK2038: '_ITERATOR_DEBUG_LEVEL'에 대해 불일치가 검색되었습니다. '2' 값이 '0'(GameFrameWork.obj에 위치) 값과 일치하지 않습니다.
+StaticWinApiLib.lib(SpriteRenderer.obj) : error LNK2038: 'RuntimeLibrary'에 대해 불일치가 검색되었습니다. 'MDd_DynamicDebug' 값이 'MD_DynamicRelease'(GameFrameWork.obj에 위치) 값과 일치하지 않습니다.
+LINK : warning LNK4098: 'MSVCRTD' defaultlib가 다른 라이브러리와 충돌합니다. /NODEFAULTLIB:library를 사용하십시오.
+StaticWinApiLib.lib(FontManager.obj) : error LNK2001: __imp___invalid_parameter 외부 기호를 확인할 수 없습니다.
+StaticWinApiLib.lib(FontManager.obj) : error LNK2001: __imp___CrtDbgReport 외부 기호를 확인할 수 없습니다.
+.\Release\OmokProjectClient.exe : fatal error LNK1120: 2개의 확인할 수 없는 외부 참조입니다.

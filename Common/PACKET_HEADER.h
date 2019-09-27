@@ -21,6 +21,8 @@ enum PACKET_INDEX
 	PACKET_INDEX_GET_PLAYERS,
 	PACKET_INDEX_GET_ROOMS,
 	PACKET_INDEX_ENTER_THE_ROOM,
+	PACKET_INDEX_EXIT_THE_ROOM,
+	PACKET_INDEX_GAMESTART,
 };
 
 struct PACKET_HEADER
@@ -46,15 +48,23 @@ struct PACKET_TRY_LOGIN
 	char ID[128];
 	char password[128];
 	bool isLoginSuccess = false;
+	int roomIndex;
 };
 struct PACKET_TRY_ENTER_THE_ROOM
 {
 	PACKET_HEADER header;
-	int roomNum;
-	int userNumInRoom;
+	int roomNum; //방갯수
+	int userIndexInRoom;
 	char playerID[128]; //요청한 플레이어
 	char ID[4][128];
+	int roomIndex;
 	bool isSuccess = false;
+};
+struct PACKET_TRY_EXIT_THE_ROOM //서버에서 EXIT를 받아서 TRY ENTER THE ROOM패킷으로 반환
+{
+	PACKET_HEADER header;
+	int roomIndex;
+	char playerID[128]; //요청한 플레이어
 };
 struct PACKET_LOGIN_RET
 {
@@ -89,5 +99,12 @@ struct PACKET_ROOMLIST //여러번 보내는 걸로 변경 예정.
 	int roomNum[10];
 	int playerNum[10];
 	bool isPlaying[10];
+};
+struct PACKET_GAMESTART
+{
+	PACKET_HEADER header;
+	bool MyStone; //0흑 1백
+	int roomIndex;
+	int userIndexInRoom;
 };
 #pragma pack()

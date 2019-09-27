@@ -7,9 +7,9 @@ class USER_INFO
 {
 public:
 	int index;
+	int roomIndex;
 	char userID[128];
 	char szBuf[BUFSIZE];
 	int len;
 	Scene userCurScene;
-	int roomNum;
 };
