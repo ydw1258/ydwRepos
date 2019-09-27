@@ -338,12 +338,12 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		packet.userIndexInRoom = i - 1;
 		
 		//로비에서 제거
-		/*
-		for (auto it = .begin(); it != g_RoomInfo[packet.roomNum].end(); it++)
+		
+		for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
 		{
-			if((*it)->)
+			
 			it = g_RoomInfo[0].erase();
-		}*/
+		}
 		
 		packet.isSuccess = true;
 		//userIndex는 한 명에게만
