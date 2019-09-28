@@ -508,39 +508,48 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		memcpy(&packet, szBuf, header.wLen);
 		if (!packet.isSuccess)
 			return;
-		userIndexInRoom = packet.userIndexInRoom;
+			
 		roomIndex = packet.roomIndex;
 		listPlayerID.clear();
-		listPlayerID.resize(0);
 		
-		for (int i = 0; i < packet.userIndexInRoom; i++)
+		for (int i = 0; i < packet.playerNum; i++)
 		{
 			listPlayerID.push_back(packet.ID[i]);
 		}
 		userIndexInRoom = packet.userIndexInRoom;
-		SceneChange(INGAME);
-		SceneInitiator();
+
+		if (!strcmp(packet.playerID, playerID))
+		{
+			userIndexInRoom = packet.userIndexInRoom;
+			SceneChange(INGAME);
+			SceneInitiator();
+		}
 	}
 	break;
 	case PACKET_INDEX_EXIT_THE_ROOM:
 	{
 		PACKET_TRY_EXIT_THE_ROOM packet;
 		memcpy(&packet, szBuf, header.wLen);
-
-		userIndexInRoom = 0;
-		
+		if (!packet.isSuccess)
+			return;
+		roomIndex = packet.roomIndex;
 		listPlayerID.clear();
-		listPlayerID.resize(0);
 
-		//로비 인원들
-		/*for (int i = 0; i < packet.roomNum; i++)
+		for (int i = 0; i < packet.playerNum; i++)
 		{
 			listPlayerID.push_back(packet.ID[i]);
-		}*/
-		fill_n(BoardInfo, HEIGHT * WIDTH, 0);
+		}
+		userIndexInRoom = 0;
 
-		SceneInitiator();
-		SceneChange(LOBBY);
+		//바둑판 초기화
+		fill_n(BoardInfo, HEIGHT* WIDTH, 0);
+
+		if (!strcmp(packet.playerID, playerID))
+		{
+			userIndexInRoom = packet.userIndexInRoom;
+			SceneChange(LOBBY);
+			SceneInitiator();
+		}
 	}
 	case PACKET_INDEX_GAMESTART:
 	{

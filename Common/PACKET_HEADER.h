@@ -55,16 +55,21 @@ struct PACKET_TRY_ENTER_THE_ROOM
 	PACKET_HEADER header;
 	int roomNum; //방갯수
 	int userIndexInRoom;
-	char playerID[128]; //요청한 플레이어
+	char playerID[128];
 	char ID[4][128];
 	int roomIndex;
 	bool isSuccess = false;
+	int playerNum;
 };
 struct PACKET_TRY_EXIT_THE_ROOM //서버에서 EXIT를 받아서 TRY ENTER THE ROOM패킷으로 반환
 {
 	PACKET_HEADER header;
 	int roomIndex;
 	char playerID[128]; //요청한 플레이어
+	char ID[4][128];
+	int userIndexInRoom;
+	bool isSuccess = false;
+	int playerNum;
 };
 struct PACKET_LOGIN_RET
 {

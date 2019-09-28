@@ -64,7 +64,6 @@ void ServerManager::Init(HWND _hWnd)
 	}
 }
 
-
 void ServerManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	SOCKET client_sock;
@@ -79,16 +78,34 @@ void ServerManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 		if(WSAGETSELECTERROR(lParam) == 10053)
 		{ 
 			//강제종료 유저
-			map<int, list<USER_INFO>> g_RoomInfo;
-
-			g_iIndex--;
-			for (auto it = g_RoomInfo[g_mapUser[wParam]->roomIndex].begin(); it != g_RoomInfo[g_mapUser[wParam]->roomIndex].end(); it++)
+			//g_iIndex--;
+			for (auto it = g_RoomInfo[g_mapUser[wParam]->roomIndex].begin(); it != g_RoomInfo[g_mapUser[wParam]->roomIndex].end();)
 			{
-				if (it->userID == g_mapUser[wParam]->userID)
-					g_RoomInfo[g_mapUser[wParam]->roomIndex].erase(it);
+				if ((*it)->userID == g_mapUser[wParam]->userID)
+					it = g_RoomInfo[g_mapUser[wParam]->roomIndex].erase(it);
+				else
+					it++;
 			}
 
+			PACKET_USERSLIST packet;
+			
+			packet.header.wIndex = PACKET_INDEX_GET_PLAYERS;
+			packet.header.wLen = sizeof(packet);
+
+			int i = 0;
+			for (auto it = g_RoomInfo[packet.roomNum].begin(); it != g_RoomInfo[packet.roomNum].end(); it++, i++)
+			{
+				strcpy(packet.playerIDs[i], (*it)->userID);
+			}
+			packet.playerNum = i;
 			g_mapUser.erase(wParam);
+			for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
+			{
+				if(it->second->roomIndex == g_mapUser[wParam]->roomIndex)
+					send(it->first, (const char*)& packet, packet.header.wLen, 0);
+			}
+
+			
 			closesocket(wParam);
 		}
 		return;
@@ -320,69 +337,126 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		send(sock, (const char*)&packet, header.wLen, 0);
 	}
 	break;
-	case PACKET_INDEX_ENTER_THE_ROOM:
+	case PACKET_INDEX_ENTER_THE_ROOM: //추후에 확인만하고 클라에서는 GET_PLAYERS 한번 더 호출하는 걸로.
 	{
-		PACKET_TRY_ENTER_THE_ROOM packet;
-		memcpy(&packet, szBuf, header.wLen);
+		PACKET_TRY_ENTER_THE_ROOM packetForLOBBY;
+		PACKET_TRY_ENTER_THE_ROOM packetForRoom;
+		memcpy(&packetForLOBBY, szBuf, header.wLen);
+		memcpy(&packetForRoom, szBuf, header.wLen);
 
 		//유저정보 변경(room)
-		g_mapUser[sock]->roomIndex = packet.roomIndex;
+		g_mapUser[sock]->roomIndex = packetForLOBBY.roomIndex;
 		//방에추가
-		g_RoomInfo[packet.roomIndex].push_back(g_mapUser[sock]);
+		g_RoomInfo[packetForLOBBY.roomIndex].push_back(g_mapUser[sock]);
+
 		int i = 0;
 
-		for (auto it = g_RoomInfo[packet.roomIndex].begin(); it != g_RoomInfo[packet.roomIndex].end(); it++, i++)
-		{
-			strcpy(packet.ID[i], (*it)->userID);
-		}
-		packet.userIndexInRoom = i - 1;
-		
 		//로비에서 제거
-		
-		for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
+		for(auto it = g_RoomInfo[0].begin(); it != g_RoomInfo[0].end();)
 		{
-			
-			it = g_RoomInfo[0].erase();
-		}
-		
-		packet.isSuccess = true;
-		//userIndex는 한 명에게만
-		send(sock, (const char*)&packet, header.wLen, 0);
-
-		
-		//유저정보는 따로 가져와야함
-		/*
-		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
-		{
-			if (iter->second->roomIndex != packet.roomIndex)
-				continue;
-			send(iter->first, (const char*)&packet, header.wLen, 0);
-		}
-		*/
-	}
-	break;
-	case PACKET_INDEX_EXIT_THE_ROOM:
-	{
-		PACKET_TRY_EXIT_THE_ROOM packet;
-		memcpy(&packet, szBuf, header.wLen);
-		
-		//retPacket.
-		//유저정보 변경(room)
-		g_mapUser[sock]->roomIndex = 0;
-		
-		//방에서 제거
-		for (auto it = g_RoomInfo[packet.roomIndex].begin(); it != g_RoomInfo[packet.roomIndex].end(); )
-		{
-			if(packet.playerID == (*it)->userID)
+			if (g_mapUser[sock]->userID == (*it)->userID)
 			{
-				it = g_RoomInfo[packet.roomIndex].erase(it);
+				it = g_RoomInfo[0].erase(it);
+				break;
 			}
-			else 
+			else
 				it++;
 		}
-		g_RoomInfo[0].push_back(g_mapUser[sock]);
+		//들어가는 방 유저목록
+		for (auto it = g_RoomInfo[packetForRoom.roomIndex].begin(); it != g_RoomInfo[packetForRoom.roomIndex].end(); it++, i++)
+		{
+			strcpy(packetForRoom.ID[i], (*it)->userID);
+		}
+		packetForRoom.userIndexInRoom = i - 1;
+		packetForRoom.playerNum = i;
 		
-		send(sock, (const char*)&packet, header.wLen, 0);
+		i = 0;
+		//로비 유저목록
+		for (auto it = g_RoomInfo[0].begin(); it != g_RoomInfo[0].end(); it++, i++)
+		{
+			strcpy(packetForLOBBY.ID[i], (*it)->userID);
+		}
+		packetForLOBBY.userIndexInRoom = 0;
+		packetForLOBBY.playerNum = i;
+
+		packetForLOBBY.isSuccess = true;
+		packetForRoom.isSuccess = true;
+		//지워진 곳에는 지워진 내용을, 새로들어가는 곳에는 새로
+		//로비 내용 지우고 보내기, 들어가는 방
+		for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
+		{
+			if (it->second->roomIndex == 0)
+			{
+				send(it->first, (const char*)&packetForLOBBY, header.wLen, 0);
+				//g_RoomInfo[0];
+			}
+			else if (it->second->roomIndex == packetForRoom.roomIndex)
+			{
+				send(it->first, (const char*)&packetForRoom, header.wLen, 0);
+			}
+		}
+	}
+	break;
+	case PACKET_INDEX_EXIT_THE_ROOM://추후에 확인만하고 클라에서는 GET_PLAYERS, GET_ROOMS 한번 더 호출하는 걸로.
+	{
+		PACKET_TRY_EXIT_THE_ROOM packetForLOBBY;
+		PACKET_TRY_EXIT_THE_ROOM packetForRoom;
+
+		memcpy(&packetForLOBBY, szBuf, header.wLen);
+		memcpy(&packetForRoom, szBuf, header.wLen);
+
+		
+		
+		int i = 0;
+
+		//방에서 제거
+		for (auto it = g_RoomInfo[packetForRoom.roomIndex].begin(); it != g_RoomInfo[packetForRoom.roomIndex].end();)
+		{
+			if (g_mapUser[sock]->userID == (*it)->userID)
+			{
+				it = g_RoomInfo[packetForRoom.roomIndex].erase(it);
+				break;
+			}
+			else
+				it++;
+		}
+		//유저정보 변경(room)
+		g_mapUser[sock]->roomIndex = 0;
+		//로비에추가
+		g_RoomInfo[0].push_back(g_mapUser[sock]);
+
+		//로비 유저목록
+		for (auto it = g_RoomInfo[0].begin(); it != g_RoomInfo[0].end(); it++, i++)
+		{
+			strcpy(packetForLOBBY.ID[i], (*it)->userID);
+		}
+		packetForLOBBY.userIndexInRoom = 0;
+		packetForLOBBY.playerNum = i;
+
+		i = 0;
+		//나온 방 유저목록
+		for (auto it = g_RoomInfo[packetForRoom.roomIndex].begin(); it != g_RoomInfo[packetForRoom.roomIndex].end(); it++, i++)
+		{
+			strcpy(packetForRoom.ID[i], (*it)->userID);
+		}
+		packetForRoom.userIndexInRoom = 0;
+		packetForRoom.playerNum = i;
+
+		packetForLOBBY.isSuccess = true;
+		packetForRoom.isSuccess = true;
+
+		for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
+		{
+			if (it->second->roomIndex == 0)
+			{
+				send(it->first, (const char*)& packetForLOBBY, header.wLen, 0);
+				//g_RoomInfo[0];
+			}
+			else if (it->second->roomIndex == packetForRoom.roomIndex)
+			{
+				send(it->first, (const char*)& packetForRoom, header.wLen, 0);
+			}
+		}
 	}
 	break;
 	case PACKET_INDEX_GAMESTART:
