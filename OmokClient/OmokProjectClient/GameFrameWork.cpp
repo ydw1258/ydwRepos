@@ -38,6 +38,7 @@ void GameFrameWork::Update()
 			{
 			case LOBBY:
 				GameManager::GetInstance()->EnterTheRoom(pt);
+				GameManager::GetInstance()->GameExit(pt);
 				break;
 			case INGAME:
 				GameManager::GetInstance()->MouseButtonCheckIngame(pt);

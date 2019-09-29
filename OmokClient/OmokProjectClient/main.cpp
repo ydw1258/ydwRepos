@@ -21,6 +21,22 @@ SOCKET g_sock;
 #pragma comment(lib, "ws2_32")
 //#pragma comment(lib, "StaticWinApiLib.lib")
 
+#if _DEBUG
+
+#if x64
+#pragma comment(lib, "StaticWinApiLibDebugx64")
+#else
+#pragma comment(lib, "StaticWinApiLibDebugWin32")
+#endif // x64
+#else
+
+#if x64
+#pragma comment(lib, "StaticWinApiLibReleasex64")
+#else
+#pragma comment(lib, "StaticWinApiLibReleaseWin32")
+#endif // x64
+
+#endif // _DEBUG
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {

@@ -23,6 +23,7 @@ enum PACKET_INDEX
 	PACKET_INDEX_ENTER_THE_ROOM,
 	PACKET_INDEX_EXIT_THE_ROOM,
 	PACKET_INDEX_GAMESTART,
+	PACKET_INDEX_GAMEEXIT,
 };
 
 struct PACKET_HEADER
@@ -51,6 +52,17 @@ struct PACKET_TRY_LOGIN
 	int roomIndex;
 };
 struct PACKET_TRY_ENTER_THE_ROOM
+{
+	PACKET_HEADER header;
+	int roomNum; //방갯수
+	int userIndexInRoom;
+	char playerID[128];
+	char ID[4][128];
+	int roomIndex;
+	bool isSuccess = false;
+	int playerNum;
+};
+struct PACKET_GAMEEXIT
 {
 	PACKET_HEADER header;
 	int roomNum; //방갯수
@@ -108,6 +120,7 @@ struct PACKET_ROOMLIST //여러번 보내는 걸로 변경 예정.
 struct PACKET_GAMESTART
 {
 	PACKET_HEADER header;
+	char playerID[128]; //요청한 플레이어
 	bool MyStone; //0흑 1백
 	int roomIndex;
 	int userIndexInRoom;

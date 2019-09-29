@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OmokProjectClient", "OmokProjectClient\OmokProject.vcxproj", "{FB5E0974-F0E0-437A-A335-9FA47AFA6F1E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43} = {74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StaticWinApiLib", "StaticWinApiLib\StaticWinApiLib.vcxproj", "{74AF9E77-4BD5-4AEC-BF5C-63CA2A61EE43}"
 EndProject

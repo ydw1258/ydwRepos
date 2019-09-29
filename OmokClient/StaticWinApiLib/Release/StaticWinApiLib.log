@@ -1,13 +1,7 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
-  BitMap.cpp
-c:\users\administrator\documents\github\ydwrepos\omokclient\staticwinapilib\bitmap.cpp(49): fatal error C1010: 미리 컴파일된 헤더를 찾는 동안 예기치 않은 파일의 끝이 나타났습니다. '#include "pch.h"'을(를) 소스에 추가하시겠습니까?
+﻿  BitMap.cpp
   FontManager.cpp
-c:\users\administrator\documents\github\ydwrepos\omokclient\staticwinapilib\fontmanager.cpp(47): fatal error C1010: 미리 컴파일된 헤더를 찾는 동안 예기치 않은 파일의 끝이 나타났습니다. '#include "pch.h"'을(를) 소스에 추가하시겠습니까?
   Physics.cpp
-c:\users\administrator\documents\github\ydwrepos\omokclient\staticwinapilib\physics.cpp(48): fatal error C1010: 미리 컴파일된 헤더를 찾는 동안 예기치 않은 파일의 끝이 나타났습니다. '#include "pch.h"'을(를) 소스에 추가하시겠습니까?
   ResourceManager.cpp
-c:\users\administrator\documents\github\ydwrepos\omokclient\staticwinapilib\resourcemanager.cpp(34): fatal error C1010: 미리 컴파일된 헤더를 찾는 동안 예기치 않은 파일의 끝이 나타났습니다. '#include "pch.h"'을(를) 소스에 추가하시겠습니까?
   SpriteRenderer.cpp
-c:\users\administrator\documents\github\ydwrepos\omokclient\staticwinapilib\spriterenderer.cpp(78): fatal error C1010: 미리 컴파일된 헤더를 찾는 동안 예기치 않은 파일의 끝이 나타났습니다. '#include "pch.h"'을(를) 소스에 추가하시겠습니까?
   Tile.cpp
-c:\users\administrator\documents\github\ydwrepos\omokclient\staticwinapilib\tile.cpp(35): fatal error C1010: 미리 컴파일된 헤더를 찾는 동안 예기치 않은 파일의 끝이 나타났습니다. '#include "pch.h"'을(를) 소스에 추가하시겠습니까?
+  StaticWinApiLib.vcxproj -> D:\gitRepos\ydwRepos\OmokClient\StaticWinApiLib\.\lib\StaticWinApiLibReleaseWin32.lib

@@ -62,224 +62,55 @@ void GameManager::Draw(HDC hdc)
 		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
 		memoImage.DrawResizedObject(hdc, 650, 10, 300, 400);
 		blueBoard.DrawResizedObject(hdc, 40, 520, 700, 200);
+		blueBoard.DrawResizedObject(hdc, 750, 550, 130, 50);
+
+		font.Draw("게임 종료", 20, 780, 570, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 
 		DrawChatWindow(hdc);
 		DrawRooms(hdc);
 		DrawCurUsers(hdc);
-
-		font.Draw(userIndexInRoom, 30, 600, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 	}
 	break;
 	case INGAME:
+	{
 		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
-		board.DrawObject(hdc, 0, 0);
-		font.Draw(playerID, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
-		
-		char buf[128];
-		sprintf(buf, "%d 번방", userIndexInRoom);
-		font.Draw(buf, 30, 800, 130, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+		BoardDraw(hdc);
+		//font.Draw(playerID, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 
-		for (int i = 0; i < HEIGHT; i++)
-		{
-			for (int j = 0; j < WIDTH; j++)
-			{
-				switch (BoardInfo[HEIGHT * i + j])
-				{
-				case 0://비어있음.
-					break;
-				case 1://흑
-					blackStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
-					break;
-				case 2://백
-					whiteStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
-					break;
-				}
-			}
-		}
 		DrawCurUsers(hdc);
 		DrawChatWindow(hdc);
 
-		font.Draw(userIndexInRoom, 30, 600, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+		char buf[128];
+		sprintf(buf, "%d 번방 %d번째 유저", roomIndex, userIndexInRoom);
+		font.Draw(buf, 30, 720, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 		blueBoard.DrawResizedObject(hdc, 500, 720, 150, 30);
 		font.Draw("나가기", 20, 550, 730, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		blueBoard.DrawResizedObject(hdc, 300, 720, 150, 30);
 		font.Draw("게임 시작", 20, 350, 730, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		//Rectangle(hdc, startButton.left, startButton.top, startButton.right, startButton.bottom);
-		break;
+	}
+	break;
 	}
 }
-
-void GameManager::DrawRect(HDC hdc)
+void GameManager::GameExit(POINT pt)
 {
-	for (int i = 0; i < HEIGHT; i++)
-	{
-		for (int j = 0; j < WIDTH; j++)
-		{
-			RECT rect;
-			rect.top = i * stoneSizeXY;
-			rect.bottom = (i + 1) * stoneSizeXY;
-			rect.left = (j * stoneSizeXY);
-			rect.right = (j + 1) * stoneSizeXY;
-			Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
-		}
-	}
-}
-void GameManager::MouseButtonCheckIngame(POINT pt)
-{
-	ExitTheRoom(pt);
-	GameStart(pt);
-
 	if (GetForegroundWindow() != hwnd)
 		return;
 
-	if (curTurn != Mystone)
+	int i = 0;
+
+	if (!Physics::GetInstance()->RECTbyPointCollisionCheck(gameExitButton, pt))
+	{
 		return;
-	
-	for (int i = 0; i < HEIGHT; i++)
-	{
-		for (int j = 0; j < WIDTH; j++)
-		{
-			RECT rect;
-			rect.top = i * stoneSizeXY;
-			rect.bottom = (i + 1) * stoneSizeXY;
-			rect.left = (j * stoneSizeXY);
-			rect.right = (j + 1) * stoneSizeXY;
-
-			if (Physics::GetInstance()->RECTbyPointCollisionCheck(rect, pt))
-			{
-				if (BoardInfo[i * HEIGHT + j] == 0)
-				{
-					if (Mystone)
-						BoardInfo[i * HEIGHT + j] = 0; //흑
-					else
-						BoardInfo[i * HEIGHT + j] = 1; //백
-					SendPos(j, i);
-					GameOverCheck();
-				}
-				return;
-			}
-		}
 	}
-	
-}
-void GameManager::GameOverCheck()
-{
-	for (int i = 0; i < HEIGHT; i++)
-	{
-		for (int j = 0; j < WIDTH; j++)
-		{
-			if (BoardInfo[i * HEIGHT + j] != 0)
-			{
-				//오른쪽, 아래, 오른쪽대각선, 왼쪽 대각선 확인
-				if (BoardInfo[i * HEIGHT + j] == BoardInfo[i * HEIGHT + j + 1]		  &&	BoardInfo[i * HEIGHT + j + 2]		&&	BoardInfo[i * HEIGHT + j + 3] && BoardInfo[i * HEIGHT + j + 4] ||
-					BoardInfo[i * HEIGHT + j] == BoardInfo[(i + 1) * HEIGHT + j] && BoardInfo[(i + 2) * HEIGHT + j] && BoardInfo[(i + 3) * HEIGHT + j] && BoardInfo[(i + 4) * HEIGHT + j] ||
-					BoardInfo[i * HEIGHT + j] == BoardInfo[(i + 1) * HEIGHT + j + 1] && BoardInfo[(i + 2) * HEIGHT + j + 2] && BoardInfo[(i + 3) * HEIGHT + j + 3] && BoardInfo[(i + 4) * HEIGHT + j + 4] ||
-					j >= 4 && (BoardInfo[i * HEIGHT + j] == BoardInfo[(i + 1) * HEIGHT + j - 1] && BoardInfo[(i + 2) * HEIGHT + j - 2] && BoardInfo[(i + 3) * HEIGHT + j - 3] && BoardInfo[(i + 4) * HEIGHT + j - 4]))
-				{
-					if(BoardInfo[i * HEIGHT + j] == 0)
-						MessageBox(hwnd, "흑이 이겼습니다.", "?", MB_OK);
-					else
-						MessageBox(hwnd, "백이 이겼습니다.", "?", MB_OK);
-				}
-			}
-		}
-	}
-}
-void GameManager::DrawChatWindow(HDC hdc)
-{
-	int i = 0;
-
-	switch (scene)
-	{
-	case LOBBY:
-		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
-		{
-			font.Draw((*it), 15, 50, 680 - 30 * i, "Resources/oldgameFont.ttf", RGB(255, 255, 255));
-		}
-		break;
-	case INGAME:
-		Rectangle(hdc, 750, 400, 950, 700);
-
-		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
-		{
-			font.Draw((*it), 15, 760, 680 - 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		}
-		break;
-	}
-}
-
-void GameManager::DrawCurUsers(HDC hdc)
-{
-	int i = 0;
-	switch (scene)
-	{
-	case LOGIN:
-		break;
-	case LOBBY:
-		font.Draw("로비 플레이어 목록", 20, 710, 130, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
-		{
-			font.Draw((*it), 15, 710, 160 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		}
-		break;
-	case INGAME:
-		font.Draw("인게임 플레이어 목록", 20, 730, 200, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
-		{
-			font.Draw((*it), 15, 730, 230 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		}
-		break;
-	default:
-		break;
-	}
-	
-}
-void GameManager::DrawRooms(HDC hdc)
-{
 	char buf[128];
 
-	UIbutton.DrawResizedObject(hdc, 30, 30, 300, 150);
-	UIbutton.DrawResizedObject(hdc, 340, 30, 300, 150);
-	UIbutton.DrawResizedObject(hdc, 30, 200, 300, 150);
-	UIbutton.DrawResizedObject(hdc, 340, 200, 300, 150);
-	UIbutton.DrawResizedObject(hdc, 30, 370, 300, 150);
-	UIbutton.DrawResizedObject(hdc, 340, 370, 300, 150);
+	PACKET_GAMEEXIT packet;
+	packet.header.wIndex = PACKET_INDEX_GAMEEXIT;
+	packet.header.wLen = sizeof(packet);
+	strcpy(packet.playerID, playerID);
+	packet.roomIndex = i + 1;
 
-	RECT rect[6];
-	
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 2; j++)
-		{
-			rect[i * 2 + j].top = 30 + 170 * i;
-			rect[i * 2 + j].left = 30 + 310 * j;
-			rect[i * 2 + j].right = 330 + 310 * j;
-			rect[i * 2 + j].bottom = 180 + 170 * i;
-			roomButtons.push_back(rect[i * 2 + j]);
-
-			sprintf(buf, "%d 번 방 방제.", i * 2 + j + 1);
-			font.Draw(buf, 15, rect[i * 2 + j].left + 20, rect[i * 2 + j].top + 20, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		}
-	}
-	blueBoard.DrawResizedObject(hdc, 500, 740, 150, 30);
-	RECT exitRect;
-
-	exitRect.top = 720;
-	exitRect.bottom = 770;
-	exitRect.left = 500;
-	exitRect.right = 650;
-
-	exitButton = exitRect;
-
-	RECT startRect;
-	//blueBoard.DrawResizedObject(hdc, 300, 720, 150, 30);
-	startRect.top = 720;
-	startRect.bottom = 750;
-	startRect.left = 300;
-	startRect.right = 450;
-
-	startButton = startRect;
-	//Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
+	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
 void GameManager::EnterTheRoom(POINT pt)
 {
@@ -317,7 +148,7 @@ void GameManager::ExitTheRoom(POINT pt)
 	int i = 0;
 
 	//i번째에 있는 방번호
-	if (!Physics::GetInstance()->RECTbyPointCollisionCheck(exitButton, pt))
+	if (!Physics::GetInstance()->RECTbyPointCollisionCheck(roomExitButton, pt))
 	{
 		return;
 	}
@@ -334,8 +165,8 @@ void GameManager::ExitTheRoom(POINT pt)
 }
 void GameManager::GameStart(POINT pt)
 {
-	//if (listPlayerID.size() < 2)
-	//		return;
+	if (listPlayerID.size() < 2)
+		return;
 	if (Physics::GetInstance()->RECTbyPointCollisionCheck(startButton, pt))
 	{
 		//packet
@@ -393,6 +224,7 @@ void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 	switch (WSAGETSELECTEVENT(lParam))
 	{
 	case FD_READ:
+	{
 		char szBuf[BUFSIZE];
 
 		retval = recv(wParam, szBuf, BUFSIZE, 0);
@@ -404,18 +236,54 @@ void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 			}
 		}
 
-		ProcessPacket(szBuf, retval);
+		//구조체 선언
+		USER_INFO_STRING userInfo = { 0, };
+
+		while (true)
+		{
+			if (!ProcessPacket(szBuf, userInfo, retval))
+			{
+				Sleep(100);
+				//SendMessage(`hWnd, uMsg, wParam, lParam);
+				break;
+			}
+			else
+			{
+				if (userInfo.len < sizeof(PACKET_HEADER))
+					break;
+			}
+		}
+	}
 	break;
 	case FD_CLOSE:
 		closesocket(wParam);
+		exit(1);
 		break;
 	}
 }
 //서버로 부터 받은 데이터
-void GameManager::ProcessPacket(char * szBuf, int len)
+bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int len)
 {
+	if (len > 0)
+	{
+		memcpy(&userinfo.szBuf[userinfo.len], szBuf, len);
+		userinfo.len += len;
+		len = 0;
+	}
+
+	if (userinfo.len < sizeof(PACKET_HEADER))
+		return false;
+
 	PACKET_HEADER header;
-	memcpy(&header, szBuf, sizeof(header));
+	memcpy(&header, userinfo.szBuf, sizeof(header));
+
+	if (userinfo.len < header.wLen)
+		return false;
+
+	memcpy(&userinfo.szBuf, &userinfo.szBuf[header.wLen], userinfo.len - header.wLen);
+	userinfo.len -= header.wLen;
+
+
 
 	switch (header.wIndex)
 	{
@@ -507,7 +375,7 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		PACKET_TRY_ENTER_THE_ROOM packet;
 		memcpy(&packet, szBuf, header.wLen);
 		if (!packet.isSuccess)
-			return;
+			return true;
 			
 		roomIndex = packet.roomIndex;
 		listPlayerID.clear();
@@ -516,13 +384,11 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		{
 			listPlayerID.push_back(packet.ID[i]);
 		}
-		userIndexInRoom = packet.userIndexInRoom;
 
 		if (!strcmp(packet.playerID, playerID))
 		{
 			userIndexInRoom = packet.userIndexInRoom;
 			SceneChange(INGAME);
-			SceneInitiator();
 		}
 	}
 	break;
@@ -531,7 +397,7 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		PACKET_TRY_EXIT_THE_ROOM packet;
 		memcpy(&packet, szBuf, header.wLen);
 		if (!packet.isSuccess)
-			return;
+			return true;
 		roomIndex = packet.roomIndex;
 		listPlayerID.clear();
 
@@ -548,7 +414,6 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 		{
 			userIndexInRoom = packet.userIndexInRoom;
 			SceneChange(LOBBY);
-			SceneInitiator();
 		}
 	}
 	case PACKET_INDEX_GAMESTART:
@@ -569,6 +434,8 @@ void GameManager::ProcessPacket(char * szBuf, int len)
 	}
 	break;
 	}
+
+	return true;
 }
 void GameManager::SceneChange(Scene _scene)
 {
@@ -591,22 +458,7 @@ void GameManager::SceneChange(Scene _scene)
 	scene = _scene;
 	SceneInitiator();
 }
-void GameManager::GetPlayersInRoom(int roomNum)
-{
-	PACKET_USERSLIST packet;
-	packet.header.wIndex = PACKET_INDEX_GET_PLAYERS;
-	packet.roomNum = roomNum;
-	packet.header.wLen = sizeof(packet);
-	send(g_sock, (const char*)&packet, sizeof(packet), 0);
-}
-void GameManager::GetRooms()
-{
-	PACKET_ROOMLIST packet;
 
-	packet.header.wIndex = PACKET_INDEX_GET_ROOMS;
-	packet.header.wLen = sizeof(packet);
-	send(g_sock, (const char*)& packet, sizeof(packet), 0);
-}
 void GameManager::InitConnection()
 {
 	//서버한테 데이터 받기
@@ -665,7 +517,7 @@ void GameManager::InputChatting()
 		strcpy(packet.data.ID, playerID);
 		strcpy(packet.data.chat, str);
 
-		send(g_sock, (const char*)&packet, sizeof(packet), 0);
+		send(g_sock, (const char*)& packet, sizeof(packet), 0);
 		SetWindowText(chatInputBoxLobby, "");
 	}
 	break;
@@ -681,13 +533,237 @@ void GameManager::InputChatting()
 		strcpy(packet.data.ID, playerID);
 		strcpy(packet.data.chat, str);
 
-		send(g_sock, (const char*)&packet, sizeof(packet), 0);
+		send(g_sock, (const char*)& packet, sizeof(packet), 0);
 		SetWindowText(chatInputBoxIngame, "");
 	}
 	break;
 	}
 }
+void GameManager::MouseButtonCheckIngame(POINT pt)
+{
+	ExitTheRoom(pt);
+	GameStart(pt);
 
+	if (GetForegroundWindow() != hwnd)
+		return;
+
+	if (curTurn != Mystone)
+		return;
+
+	BoardInputCheck(pt);
+}
+void GameManager::GameOverCheck()
+{
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			if (BoardInfo[i * HEIGHT + j] != 0)
+			{
+				//오른쪽, 아래, 오른쪽대각선, 왼쪽 대각선 확인
+				if (BoardInfo[i * HEIGHT + j] == BoardInfo[i * HEIGHT + j + 1] && BoardInfo[i * HEIGHT + j + 2] && BoardInfo[i * HEIGHT + j + 3] && BoardInfo[i * HEIGHT + j + 4] ||
+					BoardInfo[i * HEIGHT + j] == BoardInfo[(i + 1) * HEIGHT + j] && BoardInfo[(i + 2) * HEIGHT + j] && BoardInfo[(i + 3) * HEIGHT + j] && BoardInfo[(i + 4) * HEIGHT + j] ||
+					BoardInfo[i * HEIGHT + j] == BoardInfo[(i + 1) * HEIGHT + j + 1] && BoardInfo[(i + 2) * HEIGHT + j + 2] && BoardInfo[(i + 3) * HEIGHT + j + 3] && BoardInfo[(i + 4) * HEIGHT + j + 4] ||
+					j >= 4 && (BoardInfo[i * HEIGHT + j] == BoardInfo[(i + 1) * HEIGHT + j - 1] && BoardInfo[(i + 2) * HEIGHT + j - 2] && BoardInfo[(i + 3) * HEIGHT + j - 3] && BoardInfo[(i + 4) * HEIGHT + j - 4]))
+				{
+					if (BoardInfo[i * HEIGHT + j] == 0)
+						MessageBox(hwnd, "흑이 이겼습니다.", "?", MB_OK);
+					else
+						MessageBox(hwnd, "백이 이겼습니다.", "?", MB_OK);
+				}
+			}
+		}
+	}
+}
+void GameManager::DrawChatWindow(HDC hdc)
+{
+	int i = 0;
+
+	switch (scene)
+	{
+	case LOBBY:
+		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
+		{
+			font.Draw((*it), 15, 50, 680 - 30 * i, "Resources/oldgameFont.ttf", RGB(255, 255, 255));
+		}
+		break;
+	case INGAME:
+		Rectangle(hdc, 750, 400, 950, 700);
+
+		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
+		{
+			font.Draw((*it), 15, 760, 680 - 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		}
+		break;
+	}
+}
+
+void GameManager::DrawCurUsers(HDC hdc)
+{
+	int i = 0;
+	switch (scene)
+	{
+	case LOGIN:
+		break;
+	case LOBBY:
+		font.Draw("로비 플레이어 목록", 20, 710, 130, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
+		{
+			font.Draw((*it), 15, 710, 160 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		}
+		break;
+	case INGAME:
+		font.Draw("인게임 플레이어 목록", 20, 730, 200, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
+		{
+			font.Draw((*it), 15, 730, 230 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		}
+		break;
+	default:
+		break;
+	}
+
+}
+void GameManager::DrawRooms(HDC hdc)
+{
+	char buf[128];
+
+	UIbutton.DrawResizedObject(hdc, 30, 30, 300, 150);
+	UIbutton.DrawResizedObject(hdc, 340, 30, 300, 150);
+	UIbutton.DrawResizedObject(hdc, 30, 200, 300, 150);
+	UIbutton.DrawResizedObject(hdc, 340, 200, 300, 150);
+	UIbutton.DrawResizedObject(hdc, 30, 370, 300, 150);
+	UIbutton.DrawResizedObject(hdc, 340, 370, 300, 150);
+	
+	RECT rect[6];
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			rect[i * 2 + j].top = 30 + 170 * i;
+			rect[i * 2 + j].left = 30 + 310 * j;
+			rect[i * 2 + j].right = 330 + 310 * j;
+			rect[i * 2 + j].bottom = 180 + 170 * i;
+			roomButtons.push_back(rect[i * 2 + j]);
+
+			sprintf(buf, "%d 번 방 방제.", i * 2 + j + 1);
+			font.Draw(buf, 15, rect[i * 2 + j].left + 20, rect[i * 2 + j].top + 20, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		}
+	}
+	
+	
+	RECT gameexitRect;
+
+	gameexitRect.top = 550;
+	gameexitRect.bottom = 600;
+	gameexitRect.left = 750;
+	gameexitRect.right = 880;
+
+	gameExitButton = gameexitRect;
+	//Rectangle(hdc, gameexitRect.left, gameexitRect.top, gameexitRect.right, gameexitRect.bottom);
+	
+	RECT exitRect;
+
+	exitRect.top = 720;
+	exitRect.bottom = 770;
+	exitRect.left = 500;
+	exitRect.right = 650;
+
+	roomExitButton = exitRect;
+
+	RECT startRect;
+	//blueBoard.DrawResizedObject(hdc, 300, 720, 150, 30);
+	startRect.top = 720;
+	startRect.bottom = 750;
+	startRect.left = 300;
+	startRect.right = 450;
+
+	startButton = startRect;
+	//Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
+}
+void GameManager::BoardDraw(HDC hdc)
+{
+	board.DrawObject(hdc, 0, 0);
+
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			switch (BoardInfo[HEIGHT * i + j])
+			{
+			case 0://비어있음.
+				break;
+			case 1://흑
+				blackStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
+				break;
+			case 2://백
+				whiteStone.DrawObject(hdc, j * stoneSizeXY + 8, i * stoneSizeXY + 8);
+				break;
+			}
+		}
+	}
+}
+
+void GameManager::DrawRect(HDC hdc)
+{
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			RECT rect;
+			rect.top = i * stoneSizeXY;
+			rect.bottom = (i + 1) * stoneSizeXY;
+			rect.left = (j * stoneSizeXY);
+			rect.right = (j + 1) * stoneSizeXY;
+			Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
+		}
+	}
+}
+void GameManager::BoardInputCheck(POINT pt)
+{
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			RECT rect;
+			rect.top = i * stoneSizeXY;
+			rect.bottom = (i + 1) * stoneSizeXY;
+			rect.left = (j * stoneSizeXY);
+			rect.right = (j + 1) * stoneSizeXY;
+
+			if (Physics::GetInstance()->RECTbyPointCollisionCheck(rect, pt))
+			{
+				if (BoardInfo[i * HEIGHT + j] == 0)
+				{
+					if (Mystone)
+						BoardInfo[i * HEIGHT + j] = 0; //흑
+					else
+						BoardInfo[i * HEIGHT + j] = 1; //백
+					SendPos(j, i);
+					GameOverCheck();
+				}
+				return;
+			}
+		}
+	}
+}
+void GameManager::GetPlayersInRoom(int roomNum)
+{
+	PACKET_USERSLIST packet;
+	packet.header.wIndex = PACKET_INDEX_GET_PLAYERS;
+	packet.roomNum = roomNum;
+	packet.header.wLen = sizeof(packet);
+	send(g_sock, (const char*)& packet, sizeof(packet), 0);
+}
+void GameManager::GetRooms()
+{
+	PACKET_ROOMLIST packet;
+
+	packet.header.wIndex = PACKET_INDEX_GET_ROOMS;
+	packet.header.wLen = sizeof(packet);
+	send(g_sock, (const char*)& packet, sizeof(packet), 0);
+}
 GameManager::GameManager(){}
 
 GameManager::~GameManager()

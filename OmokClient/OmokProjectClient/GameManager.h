@@ -13,6 +13,11 @@ using namespace std;
 #define WM_SOCKET (WM_USER+1)
 #define BUFSIZE 1024
 
+struct USER_INFO_STRING
+{
+	char szBuf[BUFSIZE];
+	int len;
+};
 class GameManager
 {
 private:
@@ -34,8 +39,9 @@ private:
 	list<string> chatList;
 	list<string> listPlayerID;
 	list<RECT> roomButtons;
-	RECT exitButton;
+	RECT roomExitButton;
 	RECT startButton;
+	RECT gameExitButton;
 public:
 	Scene scene = LOGIN;
 	SpriteRenderer board;
@@ -77,8 +83,9 @@ public:
 	//서버 관련
 	void SendPos(int x, int y);
 	void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-	void ProcessPacket(char* szBuf, int len);
+	bool ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int len);
 	void InitConnection();
+	void BoardDraw(HDC hdc);
 	void InputChatting(void);
 	void SceneInitiator();
 	void SceneChange(Scene _scene);
@@ -86,7 +93,9 @@ public:
 	void EnterTheRoom(POINT pt);
 	void ExitTheRoom(POINT pt);
 	void GameStart(POINT pt);
+	void GameExit(POINT pt);
 	void GetRooms();
+	void BoardInputCheck(POINT pt);
 
 	GameManager();
 	~GameManager();
