@@ -38,7 +38,7 @@ struct USER_DATA
 	WORD wY;
 	bool turn;
 	char chat[128];
-	int roomNum; //0은 로비
+	int roomIndex; //0은 로비
 	char ID[128];
 	char password[128];
 };

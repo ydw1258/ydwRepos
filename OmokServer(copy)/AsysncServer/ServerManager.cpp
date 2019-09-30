@@ -274,10 +274,10 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 
 		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
 		{
-			//if (iter->first == sock)
-				//continue;
-
-			send(iter->first, (const char*)&packet, header.wLen, 0);
+			if (iter->second->roomIndex == packet.data.roomIndex)
+			{
+				send(iter->first, (const char*)&packet, header.wLen, 0);
+			}
 		}
 	}
 	break;
@@ -488,18 +488,17 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		whitestonePacket.userIndexInRoom = 1;
 		
 		//방에있는 플레이어 들에게 게임시작 보내기
-		//0번 유저
+		//0번 유저에게 흑돌 할당
 		send(sock, (const char*)&blackstonePacket, header.wLen, 0);
 		
 		//방에서 1번 유저 찾기
 		auto it = g_RoomInfo[g_mapUser[sock]->roomIndex].begin();
 		it++;
 
-		//1번 유저에게 백돌 할당 후 시작
-		//현재 못받음
+		//백돌 1번 유저에게 할당
 		for (auto it2 = g_mapUser.begin(); it2 != g_mapUser.end(); it2++)
 		{
-			if (!strcpy((*it)->userID, it2->second->userID))
+			if (!strcmp((*it)->userID, it2->second->userID))
 			{
 				send(it2->first, (const char*)&whitestonePacket, header.wLen, 0);
 				break;

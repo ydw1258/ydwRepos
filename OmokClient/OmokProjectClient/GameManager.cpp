@@ -186,7 +186,14 @@ void GameManager::GameStart(POINT pt)
 			MessageBox(hwnd, "0번 유저만 시작 가능.", "?", MB_OK);
 			return;
 		}
-
+		if (isGameStart)
+		{
+			return;
+		}
+		else
+		{
+			isGameStart = true;
+		}
 		//packet
 		PACKET_GAMESTART packet;
 		packet.header.wIndex = PACKET_INDEX_GAMESTART;
@@ -223,7 +230,9 @@ void GameManager::SendPos(int x, int y)
 	packet.data.playerNum = playerIndex;
 	packet.data.wX = x;
 	packet.data.wY = y;
+	packet.data.roomIndex = roomIndex;
 	packet.data.turn = Mystone;
+	
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
 
@@ -450,7 +459,7 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 		else //1
 		{
 			Mystone = 1;
-			curTurn = 1;
+			curTurn = 0;
 		}
 		MessageBox(hwnd, "게임 시작", "?", MB_OK);
 	}
@@ -650,6 +659,16 @@ void GameManager::DrawCurUsers(HDC hdc)
 		break;
 	case INGAME:
 		font.Draw("인게임 플레이어 목록", 20, 730, 200, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		if (isGameStart)
+		{
+			font.Draw("게임 진행 중", 20, 730, 250, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		}
+		else
+		{
+			font.Draw("대기 중", 20, 730, 250, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		}
+			
+		
 		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
 		{
 			font.Draw((*it), 15, 730, 230 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
@@ -760,6 +779,8 @@ void GameManager::BoardInputCheck(POINT pt)
 {
 	if (!isGameStart)
 		return;
+	if (Mystone != curTurn)
+		return;
 	for (int i = 0; i < HEIGHT; i++)
 	{
 		for (int j = 0; j < WIDTH; j++)
@@ -785,6 +806,7 @@ void GameManager::BoardInputCheck(POINT pt)
 			}
 		}
 	}
+	curTurn = !Mystone;
 }
 void GameManager::GetPlayersInRoom(int roomNum)
 {
