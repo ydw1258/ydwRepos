@@ -83,10 +83,15 @@ void GameManager::Draw(HDC hdc)
 		char buf[128];
 		sprintf(buf, "%d 번방 %d번째 유저", roomIndex, userIndexInRoom);
 		font.Draw(buf, 30, 720, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
-		blueBoard.DrawResizedObject(hdc, 500, 720, 150, 30);
+		blueBoard.DrawResizedObject(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right - gameExitButton.left
+			, gameExitButton.bottom - gameExitButton.top);
 		font.Draw("나가기", 20, 550, 730, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-		blueBoard.DrawResizedObject(hdc, 300, 720, 150, 30);
+		blueBoard.DrawResizedObject(hdc, startButton.left, startButton.top, startButton.right - startButton.left
+			, startButton.bottom - startButton.top);
 		font.Draw("게임 시작", 20, 350, 730, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		
+		//Rectangle(hdc, startButton.left, startButton.top, startButton.right, startButton.bottom);
+		//Rectangle(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right, gameExitButton.bottom);
 	}
 	break;
 	}
@@ -167,8 +172,21 @@ void GameManager::GameStart(POINT pt)
 {
 	if (listPlayerID.size() < 2)
 		return;
+	/*if (!isGameStart)
+	{
+		isGameStart = true;
+	}
+	else
+		return;*/
+	
 	if (Physics::GetInstance()->RECTbyPointCollisionCheck(startButton, pt))
 	{
+		if (userIndexInRoom != 0)
+		{
+			MessageBox(hwnd, "0번 유저만 시작 가능.", "?", MB_OK);
+			return;
+		}
+
 		//packet
 		PACKET_GAMESTART packet;
 		packet.header.wIndex = PACKET_INDEX_GAMESTART;
@@ -237,7 +255,7 @@ void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 		}
 
 		//구조체 선언
-		USER_INFO_STRING userInfo = { 0, };
+		USER_INFO_STRING userInfo = { 0 };
 
 		while (true)
 		{
@@ -283,8 +301,6 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 	memcpy(&userinfo.szBuf, &userinfo.szBuf[header.wLen], userinfo.len - header.wLen);
 	userinfo.len -= header.wLen;
 
-
-
 	switch (header.wIndex)
 	{
 	case PACKET_INDEX_FIRST_CONNECT://첫 연결(클라이언트 실행)
@@ -311,7 +327,6 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 			SceneChange(LOBBY);
 			userIndexInRoom = 0;
 			GetPlayersInRoom(0);
-			GetRooms();
 		}
 		else //로그인 실패
 		{
@@ -339,13 +354,14 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 		memcpy(&packet, szBuf, header.wLen);
 		chatList.push_back(packet.data.chat);
 	}
-		break;
+	break;
 	case PACKET_INDEX_SEND_CHATTING_INGAME:
 	{
 		PACKET_SEND_INGAME_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
 		chatList.push_back(packet.data.chat);
 	}
+	break;
 	case PACKET_INDEX_GET_PLAYERS:
 	{
 		PACKET_USERSLIST packet;
@@ -357,6 +373,7 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 		{
 			listPlayerID.push_back(packet.playerIDs[i]);
 		}
+		GetRooms();
 	}
 	break;
 	case PACKET_INDEX_GET_ROOMS:
@@ -395,9 +412,11 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 	case PACKET_INDEX_EXIT_THE_ROOM:
 	{
 		PACKET_TRY_EXIT_THE_ROOM packet;
+
 		memcpy(&packet, szBuf, header.wLen);
 		if (!packet.isSuccess)
 			return true;
+
 		roomIndex = packet.roomIndex;
 		listPlayerID.clear();
 
@@ -408,7 +427,7 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 		userIndexInRoom = 0;
 
 		//바둑판 초기화
-		fill_n(BoardInfo, HEIGHT* WIDTH, 0);
+		fill_n(BoardInfo, HEIGHT * WIDTH, 0);
 
 		if (!strcmp(packet.playerID, playerID))
 		{
@@ -416,10 +435,12 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 			SceneChange(LOBBY);
 		}
 	}
+	break;
 	case PACKET_INDEX_GAMESTART:
 	{
 		PACKET_GAMESTART packet;
 		memcpy(&packet, szBuf, header.wLen);
+		isGameStart = true;
 
 		if (packet.MyStone == 0)
 		{
@@ -430,6 +451,21 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 		{
 			Mystone = 1;
 			curTurn = 1;
+		}
+		MessageBox(hwnd, "게임 시작", "?", MB_OK);
+	}
+	break;
+	case PACKET_INDEX_GAMEEXIT:
+	{
+		PACKET_USERSLIST packet;
+		memcpy(&packet, szBuf, header.wLen);
+
+		listPlayerID.clear();
+		listPlayerID.resize(0);
+
+		for (int i = 0; i < packet.playerNum; i++)
+		{
+			listPlayerID.push_back(packet.playerIDs[i]);
 		}
 	}
 	break;
@@ -546,10 +582,10 @@ void GameManager::MouseButtonCheckIngame(POINT pt)
 
 	if (GetForegroundWindow() != hwnd)
 		return;
-
 	if (curTurn != Mystone)
 		return;
 
+	
 	BoardInputCheck(pt);
 }
 void GameManager::GameOverCheck()
@@ -655,10 +691,10 @@ void GameManager::DrawRooms(HDC hdc)
 	
 	RECT gameexitRect;
 
-	gameexitRect.top = 550;
-	gameexitRect.bottom = 600;
-	gameexitRect.left = 750;
-	gameexitRect.right = 880;
+	gameexitRect.top = 720;
+	gameexitRect.bottom = 750;
+	gameexitRect.left = 500;
+	gameexitRect.right = 650;
 
 	gameExitButton = gameexitRect;
 	//Rectangle(hdc, gameexitRect.left, gameexitRect.top, gameexitRect.right, gameexitRect.bottom);
@@ -722,6 +758,8 @@ void GameManager::DrawRect(HDC hdc)
 }
 void GameManager::BoardInputCheck(POINT pt)
 {
+	if (!isGameStart)
+		return;
 	for (int i = 0; i < HEIGHT; i++)
 	{
 		for (int j = 0; j < WIDTH; j++)
@@ -752,7 +790,7 @@ void GameManager::GetPlayersInRoom(int roomNum)
 {
 	PACKET_USERSLIST packet;
 	packet.header.wIndex = PACKET_INDEX_GET_PLAYERS;
-	packet.roomNum = roomNum;
+	packet.roomIndex = roomNum;
 	packet.header.wLen = sizeof(packet);
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }

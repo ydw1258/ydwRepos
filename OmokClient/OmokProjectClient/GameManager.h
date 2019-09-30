@@ -29,6 +29,7 @@ private:
 	char playerID[128];
 	int playerIndex= 3;
 	int userIndexInRoom;
+	bool isGameStart = false;
 	int roomIndex;
 	SOCKET g_sock;
 	WSADATA wsa;

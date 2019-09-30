@@ -106,7 +106,7 @@ struct PACKET_USERSLIST
 {
 	PACKET_HEADER header;
 	int playerNum;
-	int roomNum;
+	int roomIndex;
 	char playerIDs[5][10];
 };
 struct PACKET_ROOMLIST //여러번 보내는 걸로 변경 예정.

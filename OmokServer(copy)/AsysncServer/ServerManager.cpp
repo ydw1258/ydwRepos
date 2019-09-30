@@ -8,6 +8,7 @@ void ServerManager::Init(HWND _hWnd)
 {
 	hWnd = _hWnd;
 	
+
 	//메모장에 저장된 계정정보 읽어오기
 	ifstream openFile("accounts.txt");
 	if (openFile.is_open())
@@ -79,33 +80,37 @@ void ServerManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 		{ 
 			//강제종료 유저
 			//g_iIndex--;
-			for (auto it = g_RoomInfo[g_mapUser[wParam]->roomIndex].begin(); it != g_RoomInfo[g_mapUser[wParam]->roomIndex].end();)
+			PACKET_USERSLIST packet;
+			packet.header.wIndex = PACKET_INDEX_GAMEEXIT;
+			packet.header.wLen = sizeof(packet);
+			packet.roomIndex = g_mapUser[wParam]->roomIndex;
+			
+			//해당 방에서 제거
+			for (auto it = g_RoomInfo[g_mapUser[wParam]->roomIndex].begin(); it != g_RoomInfo[g_mapUser[wParam]->roomIndex].end(); it++)
 			{
-				if ((*it)->userID == g_mapUser[wParam]->userID)
-					it = g_RoomInfo[g_mapUser[wParam]->roomIndex].erase(it);
-				else
-					it++;
+				if (!strcmp((*it)->userID, g_mapUser[wParam]->userID))
+				{
+					g_RoomInfo[g_mapUser[wParam]->roomIndex].erase(it);
+					break;
+				}
 			}
 
-			PACKET_USERSLIST packet;
-			
-			packet.header.wIndex = PACKET_INDEX_GET_PLAYERS;
-			packet.header.wLen = sizeof(packet);
-
 			int i = 0;
-			for (auto it = g_RoomInfo[packet.roomNum].begin(); it != g_RoomInfo[packet.roomNum].end(); it++, i++)
+			for (auto it = g_RoomInfo[g_mapUser[wParam]->roomIndex].begin(); it != g_RoomInfo[g_mapUser[wParam]->roomIndex].end(); it++, i++)
 			{
 				strcpy(packet.playerIDs[i], (*it)->userID);
 			}
 			packet.playerNum = i;
-			g_mapUser.erase(wParam);
+
 			for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
 			{
-				if(it->second->roomIndex == g_mapUser[wParam]->roomIndex)
+				if (it->second->roomIndex == g_mapUser[wParam]->roomIndex)
+				{
 					send(it->first, (const char*)& packet, packet.header.wLen, 0);
+				}
 			}
-
-			
+			//유저맵에서 제거
+			g_mapUser.erase(wParam);
 			closesocket(wParam);
 		}
 		return;
@@ -318,7 +323,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		memcpy(&packet, szBuf, header.wLen);
 
 		int i = 0;
-		for (auto it = g_RoomInfo[packet.roomNum].begin(); it != g_RoomInfo[packet.roomNum].end(); it++, i++)
+		for (auto it = g_RoomInfo[packet.roomIndex].begin(); it != g_RoomInfo[packet.roomIndex].end(); it++, i++)
 		{
 			strcpy(packet.playerIDs[i], (*it)->userID);
 		}
@@ -326,7 +331,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 
 		for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++, i++)
 		{
-			if(it->second->roomIndex == packet.roomNum)
+			if(it->second->roomIndex == packet.roomIndex)
 				send(it->first, (const char*)& packet, header.wLen, 0);
 		}
 	}
@@ -439,24 +444,18 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		{
 			strcpy(packetForLOBBY.ID[i], (*it)->userID);
 		}
-		//방유저 목록
-		for (auto it = g_RoomInfo[packetForRoom.roomIndex].begin(); it != g_RoomInfo[packetForRoom.roomIndex].end(); it++, i++)
-		{
-			strcpy(packetForLOBBY.ID[i], (*it)->userID);
-		}
-
-		packetForLOBBY.userIndexInRoom = 0;
+		packetForLOBBY.userIndexInRoom = i;
 		packetForLOBBY.playerNum = i;
 
 		i = 0;
-		//나온 방 유저목록
+		//방유저 목록
 		for (auto it = g_RoomInfo[packetForRoom.roomIndex].begin(); it != g_RoomInfo[packetForRoom.roomIndex].end(); it++, i++)
 		{
 			strcpy(packetForRoom.ID[i], (*it)->userID);
 		}
-		packetForRoom.userIndexInRoom = 0;
+		packetForRoom.userIndexInRoom = i;
 		packetForRoom.playerNum = i;
-
+		
 		packetForLOBBY.isSuccess = true;
 		packetForRoom.isSuccess = true;
 
@@ -476,32 +475,39 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 	break;
 	case PACKET_INDEX_GAMESTART:
 	{
-		PACKET_GAMESTART packet;
-		memcpy(&packet, szBuf, header.wLen);
-		//retPacket.
-		//유저정보 변경(room)
-		g_mapUser[sock]->roomIndex = 0;
+		PACKET_GAMESTART blackstonePacket;
+		PACKET_GAMESTART whitestonePacket;
 		
-		if (packet.userIndexInRoom == 0)
-		{
-			packet.MyStone = 0;
-		}
-		else if (packet.userIndexInRoom == 1)
-		{
-			packet.MyStone = 1;
-		}
-			
+		memcpy(&blackstonePacket, szBuf, header.wLen);
+		memcpy(&whitestonePacket, szBuf, header.wLen);
+		//retPacket.
+
+		blackstonePacket.MyStone = 0;
+		blackstonePacket.userIndexInRoom = 0;
+		whitestonePacket.MyStone = 1;
+		whitestonePacket.userIndexInRoom = 1;
+		
 		//방에있는 플레이어 들에게 게임시작 보내기
-		//플레이어 0, 1에게만 보내도록 수정
-		for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
+		//0번 유저
+		send(sock, (const char*)&blackstonePacket, header.wLen, 0);
+		
+		//방에서 1번 유저 찾기
+		auto it = g_RoomInfo[g_mapUser[sock]->roomIndex].begin();
+		it++;
+
+		//1번 유저에게 백돌 할당 후 시작
+		//현재 못받음
+		for (auto it2 = g_mapUser.begin(); it2 != g_mapUser.end(); it2++)
 		{
-			if (it->second->roomIndex == g_mapUser[sock]->roomIndex)
+			if (!strcpy((*it)->userID, it2->second->userID))
 			{
-				send(it->first, (const char*)&packet, header.wLen, 0);
+				send(it2->first, (const char*)&whitestonePacket, header.wLen, 0);
+				break;
 			}
 		}
-		//send(sock, (const char*)&packet, header.wLen, 0);
+		cout << g_mapUser[sock]->roomIndex << "번 방 게임 시작" << endl;
 	}
+	break;
 	case PACKET_INDEX_GAMEEXIT:
 	{
 		PACKET_GAMEEXIT packet;
@@ -523,7 +529,6 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 				break;
 			}
 		}
-
 
 		int i = 0;
 		for (auto it = g_RoomInfo[0].begin(); it != g_RoomInfo[0].end(); it++, i++)

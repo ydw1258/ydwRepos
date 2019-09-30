@@ -1,8 +1,2 @@
-﻿  BitMap.cpp
-  FontManager.cpp
-  Physics.cpp
-  ResourceManager.cpp
-  SpriteRenderer.cpp
-  Tile.cpp
-  코드를 생성하고 있습니다...
-  StaticWinApiLib.vcxproj -> D:\gitRepos\ydwRepos\OmokClient\StaticWinApiLib\.\lib\StaticWinApiLibDebugWin32.lib
+﻿  FontManager.cpp
+  StaticWinApiLib.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\OmokClient\StaticWinApiLib\.\lib\StaticWinApiLibDebugWin32.lib
