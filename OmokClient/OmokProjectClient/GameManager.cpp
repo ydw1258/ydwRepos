@@ -163,7 +163,7 @@ void GameManager::ExitTheRoom(POINT pt)
 
 	packet.header.wIndex = PACKET_INDEX_EXIT_THE_ROOM;
 	packet.header.wLen = sizeof(packet);
-	packet.roomIndex = userIndexInRoom;
+	packet.roomIndex = roomIndex;
 
 	strcpy(packet.playerID, playerID);
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
@@ -355,6 +355,7 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 		memcpy(&packet, szBuf, header.wLen);
 		BoardInfo[packet.data.wY * HEIGHT + packet.data.wX] = packet.data.turn + 1;
 		curTurn = packet.data.turn;
+		GameOverCheck();
 	}
 	break;
 	case PACKET_INDEX_SEND_CHATTING_LOBBY:
@@ -593,7 +594,6 @@ void GameManager::MouseButtonCheckIngame(POINT pt)
 		return;
 	if (curTurn != Mystone)
 		return;
-
 	
 	BoardInputCheck(pt);
 }
@@ -611,10 +611,12 @@ void GameManager::GameOverCheck()
 					BoardInfo[i * HEIGHT + j] == BoardInfo[(i + 1) * HEIGHT + j + 1] && BoardInfo[(i + 2) * HEIGHT + j + 2] && BoardInfo[(i + 3) * HEIGHT + j + 3] && BoardInfo[(i + 4) * HEIGHT + j + 4] ||
 					j >= 4 && (BoardInfo[i * HEIGHT + j] == BoardInfo[(i + 1) * HEIGHT + j - 1] && BoardInfo[(i + 2) * HEIGHT + j - 2] && BoardInfo[(i + 3) * HEIGHT + j - 3] && BoardInfo[(i + 4) * HEIGHT + j - 4]))
 				{
-					if (BoardInfo[i * HEIGHT + j] == 0)
+					if (BoardInfo[i * HEIGHT + j] == 1)
 						MessageBox(hwnd, "흑이 이겼습니다.", "?", MB_OK);
-					else
+					else if(BoardInfo[i * HEIGHT + j] == 2)
 						MessageBox(hwnd, "백이 이겼습니다.", "?", MB_OK);
+					isGameStart = false;
+					fill_n(BoardInfo, HEIGHT * WIDTH, 0);
 				}
 			}
 		}
@@ -661,11 +663,11 @@ void GameManager::DrawCurUsers(HDC hdc)
 		font.Draw("인게임 플레이어 목록", 20, 730, 200, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		if (isGameStart)
 		{
-			font.Draw("게임 진행 중", 20, 730, 250, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+			font.Draw("게임 진행 중", 20, 730, 150, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 		else
 		{
-			font.Draw("대기 중", 20, 730, 250, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+			font.Draw("대기 중", 20, 730, 150, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 			
 		
@@ -702,11 +704,10 @@ void GameManager::DrawRooms(HDC hdc)
 			rect[i * 2 + j].bottom = 180 + 170 * i;
 			roomButtons.push_back(rect[i * 2 + j]);
 
-			sprintf(buf, "%d 번 방 방제.", i * 2 + j + 1);
+			sprintf(buf, "%d 번 방 재밌는 오목 %d / %d", i * 2 + j + 1, mapRoomPlayers[i * 2 + j], 4);
 			font.Draw(buf, 15, rect[i * 2 + j].left + 20, rect[i * 2 + j].top + 20, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 	}
-	
 	
 	RECT gameexitRect;
 
@@ -793,20 +794,17 @@ void GameManager::BoardInputCheck(POINT pt)
 
 			if (Physics::GetInstance()->RECTbyPointCollisionCheck(rect, pt))
 			{
+				curTurn = !Mystone;
+
 				if (BoardInfo[i * HEIGHT + j] == 0)
 				{
-					if (Mystone)
-						BoardInfo[i * HEIGHT + j] = 0; //흑
-					else
-						BoardInfo[i * HEIGHT + j] = 1; //백
 					SendPos(j, i);
-					GameOverCheck();
 				}
 				return;
 			}
 		}
 	}
-	curTurn = !Mystone;
+	
 }
 void GameManager::GetPlayersInRoom(int roomNum)
 {

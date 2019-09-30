@@ -270,7 +270,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		memcpy(&packet, szBuf, header.wLen);
 
 		//g_mapUser[sock]->
-		turn = !packet.data.turn;
+		packet.data.turn = !packet.data.turn;
 
 		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
 		{
