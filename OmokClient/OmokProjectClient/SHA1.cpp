@@ -36,13 +36,11 @@ SHA1::SHA1()
 	reset();
 }
 
-
 void SHA1::update(const std::string &s)
 {
 	std::istringstream is(s);
 	update(is);
 }
-
 
 void SHA1::update(std::istream &is)
 {

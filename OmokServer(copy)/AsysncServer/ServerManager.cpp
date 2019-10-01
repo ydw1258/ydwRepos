@@ -7,7 +7,6 @@ ServerManager::~ServerManager(){}
 void ServerManager::Init(HWND _hWnd)
 {
 	hWnd = _hWnd;
-	
 
 	//메모장에 저장된 계정정보 읽어오기
 	ifstream openFile("accounts.txt");
@@ -79,7 +78,6 @@ void ServerManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 		if(WSAGETSELECTERROR(lParam) == 10053)
 		{ 
 			//강제종료 유저
-			//g_iIndex--;
 			PACKET_USERSLIST packet;
 			packet.header.wIndex = PACKET_INDEX_GAMEEXIT;
 			packet.header.wLen = sizeof(packet);
@@ -107,6 +105,27 @@ void ServerManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 				if (it->second->roomIndex == g_mapUser[wParam]->roomIndex)
 				{
 					send(it->first, (const char*)& packet, packet.header.wLen, 0);
+				}
+			}
+			
+			//방 에서 유저 강종
+			if (g_mapUser[wParam]->roomIndex != 0)
+			{
+				PACKET_ROOMLIST packet;
+				packet.header.wIndex = PACKET_INDEX_GET_ROOMS;
+				packet.header.wLen = sizeof(packet);
+				//고정 방 6개
+				for (int i = 0; i < 6; i++)
+				{
+					packet.roomNum[i] = i;
+					packet.playerNum[i] = g_RoomInfo[i + 1].size();
+				}
+				packet.NumOfRoom = 6; //테스트용
+
+				for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
+				{
+					if (it->second->roomIndex == 0)
+						send(it->first, (const char*)&packet, packet.header.wLen, 0);
 				}
 			}
 			//유저맵에서 제거

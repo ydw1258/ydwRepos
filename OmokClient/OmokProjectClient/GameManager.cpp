@@ -2,6 +2,7 @@
 #include "ResourceManager.h"
 #include "IMAGENUM.h"
 #include "Physics.h"
+#include "SHA1.h"
 #include <string>
 #include <Windows.h>
 #include<iostream>
@@ -153,7 +154,7 @@ void GameManager::ExitTheRoom(POINT pt)
 	int i = 0;
 
 	//i번째에 있는 방번호
-	if (!Physics::GetInstance()->RECTbyPointCollisionCheck(roomExitButton, pt))
+	if (!Physics::GetInstance()->RECTbyPointCollisionCheck(roomExitButton, pt) || isGameStart)
 	{
 		return;
 	}
@@ -217,8 +218,10 @@ void GameManager::Login()
 	GetWindowText(LOGINInput[0], buf, 128);
 	strcpy(packet.ID, buf);
 	GetWindowText(LOGINInput[1], buf, 128);
-	strcpy(packet.password, buf);
-	
+	char hash[128];
+	strcpy(hash, sha1(buf).c_str());
+	strcpy(packet.password, hash);
+
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
 
@@ -618,9 +621,9 @@ void GameManager::GameOverCheck()
 					j >= 4 && (BoardInfo[i * HEIGHT + j] == BoardInfo[(i + 1) * HEIGHT + j - 1] && BoardInfo[(i + 2) * HEIGHT + j - 2] && BoardInfo[(i + 3) * HEIGHT + j - 3] && BoardInfo[(i + 4) * HEIGHT + j - 4]))
 				{
 					if (BoardInfo[i * HEIGHT + j] == 1)
-						MessageBox(hwnd, "흑이 이겼습니다.", "?", MB_OK);
-					else if(BoardInfo[i * HEIGHT + j] == 2)
 						MessageBox(hwnd, "백이 이겼습니다.", "?", MB_OK);
+					else if(BoardInfo[i * HEIGHT + j] == 2)
+						MessageBox(hwnd, "흑이 이겼습니다.", "?", MB_OK);
 					isGameStart = false;
 					fill_n(BoardInfo, HEIGHT * WIDTH, 0);
 				}
@@ -800,10 +803,9 @@ void GameManager::BoardInputCheck(POINT pt)
 
 			if (Physics::GetInstance()->RECTbyPointCollisionCheck(rect, pt))
 			{
-				curTurn = !Mystone;
-
 				if (BoardInfo[i * HEIGHT + j] == 0)
 				{
+					curTurn = !Mystone;
 					SendPos(j, i);
 				}
 				return;
