@@ -64,7 +64,7 @@ void GameManager::Draw(HDC hdc)
 		blueBoard.DrawResizedObject(hdc, 40, 520, 700, 200);
 		blueBoard.DrawResizedObject(hdc, 750, 550, 130, 50);
 
-		font.Draw("게임 종료", 20, 780, 570, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+		buttonFont.Draw("게임 종료", 20, 780, 570, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 
 		DrawChatWindow(hdc);
 		DrawRooms(hdc);
@@ -82,13 +82,13 @@ void GameManager::Draw(HDC hdc)
 
 		char buf[128];
 		sprintf(buf, "%d 번방 %d번째 유저", roomIndex, userIndexInRoom);
-		font.Draw(buf, 30, 720, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+		playerInfoFont.Draw(buf, 30, 720, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 		blueBoard.DrawResizedObject(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right - gameExitButton.left
 			, gameExitButton.bottom - gameExitButton.top);
-		font.Draw("나가기", 20, 550, 730, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		roomexitFont.Draw("나가기", 20, 550, 730, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		blueBoard.DrawResizedObject(hdc, startButton.left, startButton.top, startButton.right - startButton.left
 			, startButton.bottom - startButton.top);
-		font.Draw("게임 시작", 20, 350, 730, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		gamestartFont.Draw("게임 시작", 20, 350, 730, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		
 		//Rectangle(hdc, startButton.left, startButton.top, startButton.right, startButton.bottom);
 		//Rectangle(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right, gameExitButton.bottom);
@@ -332,10 +332,9 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 		{
 			strcpy(playerID, packet.ID);
 			playerIndex = packet.playerNum;
-			userIndexInRoom = packet.roomIndex;
-			SceneChange(LOBBY);
 			userIndexInRoom = 0;
-			GetRooms();
+			SceneChange(LOBBY);
+			GetPlayersInRoom(0);
 		}
 		else //로그인 실패
 		{
@@ -383,6 +382,10 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 		{
 			listPlayerID.push_back(packet.playerIDs[i]);
 		}
+		
+		//로그인 패킷을 보낸 유저만 서버로 발송
+		if(!strcmp(packet.userID, playerID))
+			GetRooms();
 	}
 	break;
 	case PACKET_INDEX_GET_ROOMS:
@@ -471,7 +474,7 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 
 		listPlayerID.clear();
 		listPlayerID.resize(0);
-
+		strcpy(packet.userID, playerID);
 		for (int i = 0; i < packet.playerNum; i++)
 		{
 			listPlayerID.push_back(packet.playerIDs[i]);
@@ -630,7 +633,7 @@ void GameManager::DrawChatWindow(HDC hdc)
 	case LOBBY:
 		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
 		{
-			font.Draw((*it), 15, 50, 680 - 30 * i, "Resources/oldgameFont.ttf", RGB(255, 255, 255));
+			normalFont.Draw((*it), 15, 50, 680 - 30 * i, "Resources/oldgameFont.ttf", RGB(255, 255, 255));
 		}
 		break;
 	case INGAME:
@@ -638,7 +641,7 @@ void GameManager::DrawChatWindow(HDC hdc)
 
 		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
 		{
-			font.Draw((*it), 15, 760, 680 - 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+			normalFont.Draw((*it), 15, 760, 680 - 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 		break;
 	}
@@ -652,27 +655,27 @@ void GameManager::DrawCurUsers(HDC hdc)
 	case LOGIN:
 		break;
 	case LOBBY:
-		font.Draw("로비 플레이어 목록", 20, 710, 130, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		buttonFont.Draw("로비 플레이어 목록", 20, 710, 130, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
 		{
-			font.Draw((*it), 15, 710, 160 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+			buttonFont.Draw((*it), 15, 710, 160 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 		break;
 	case INGAME:
-		font.Draw("인게임 플레이어 목록", 20, 730, 200, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		buttonFont.Draw("인게임 플레이어 목록", 20, 730, 200, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		if (isGameStart)
 		{
-			font.Draw("게임 진행 중", 20, 730, 150, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+			buttonFont.Draw("게임 진행 중", 20, 730, 150, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 		else
 		{
-			font.Draw("대기 중", 20, 730, 150, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+			buttonFont.Draw("대기 중", 20, 730, 150, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 			
 		
 		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
 		{
-			font.Draw((*it), 15, 730, 230 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+			normalFont.Draw((*it), 15, 730, 230 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 		break;
 	default:
@@ -704,7 +707,7 @@ void GameManager::DrawRooms(HDC hdc)
 			roomButtons.push_back(rect[i * 2 + j]);
 
 			sprintf(buf, "%d 번 방 재밌는 오목 %d / %d", i * 2 + j + 1, mapRoomPlayers[i * 2 + j], 4);
-			font.Draw(buf, 15, rect[i * 2 + j].left + 20, rect[i * 2 + j].top + 20, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+			normalFont.Draw(buf, 15, rect[i * 2 + j].left + 20, rect[i * 2 + j].top + 20, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 	}
 	
@@ -803,7 +806,6 @@ void GameManager::BoardInputCheck(POINT pt)
 			}
 		}
 	}
-	
 }
 void GameManager::GetPlayersInRoom(int roomNum)
 {
@@ -811,6 +813,7 @@ void GameManager::GetPlayersInRoom(int roomNum)
 	packet.header.wIndex = PACKET_INDEX_GET_PLAYERS;
 	packet.roomIndex = roomNum;
 	packet.header.wLen = sizeof(packet);
+	strcpy(packet.userID, playerID);
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
 void GameManager::GetRooms()

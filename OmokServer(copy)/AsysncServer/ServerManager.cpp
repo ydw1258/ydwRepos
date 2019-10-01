@@ -328,7 +328,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 			strcpy(packet.playerIDs[i], (*it)->userID);
 		}
 		packet.playerNum = i;
-
+		
 		for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++, i++)
 		{
 			if(it->second->roomIndex == packet.roomIndex)

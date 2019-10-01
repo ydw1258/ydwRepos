@@ -163,12 +163,18 @@
     <ClCompile Include="GameFrameWork.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SHA1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Common\PACKET_HEADER.h" />
     <ClInclude Include="GameFrameWork.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="IMAGENUM.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="SHA1.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OmokProjectClient.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

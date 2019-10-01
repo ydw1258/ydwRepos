@@ -108,6 +108,7 @@ struct PACKET_USERSLIST
 	int playerNum;
 	int roomIndex;
 	char playerIDs[5][10];
+	char userID[10];
 };
 struct PACKET_ROOMLIST //여러번 보내는 걸로 변경 예정.
 {

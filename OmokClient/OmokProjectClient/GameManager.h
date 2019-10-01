@@ -24,7 +24,7 @@ private:
 	static GameManager* mthis;
 	//map<int, POINT> ptData; //플레이어, 전송데이터
 	map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
-	//int g_iIndex = 3;
+
 	//서버관련
 	char playerID[128];
 	int playerIndex= 3;
@@ -52,7 +52,12 @@ public:
 	SpriteRenderer memoImage;
 	SpriteRenderer lobbybackground;
 	SpriteRenderer blueBoard;
-	FontManager font;
+	FontManager buttonFont;
+	FontManager playerInfoFont;
+	FontManager gamestartFont;
+	FontManager roomexitFont;
+	FontManager normalFont;
+	
 	HINSTANCE hInstance;
 	HWND hwnd;
 
