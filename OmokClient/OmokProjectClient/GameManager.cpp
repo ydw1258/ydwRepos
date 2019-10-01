@@ -395,7 +395,7 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 
 		for (int i = 0; i < packet.NumOfRoom; i++)
 		{
-			mapRoomPlayers.insert(make_pair(packet.roomNum[i], packet.playerNum[i]));
+			mapRoomPlayers[packet.roomNum[i]] = packet.playerNum[i];
 		}
 	}
 	break;
@@ -419,6 +419,8 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 			userIndexInRoom = packet.userIndexInRoom;
 			SceneChange(INGAME);
 		}
+		if (!strcmp(packet.playerID, playerID))
+			GetRooms();
 	}
 	break;
 	case PACKET_INDEX_EXIT_THE_ROOM:
@@ -446,6 +448,8 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 			userIndexInRoom = packet.userIndexInRoom;
 			SceneChange(LOBBY);
 		}
+		if (!strcmp(packet.playerID, playerID))
+			GetRooms();
 	}
 	break;
 	case PACKET_INDEX_GAMESTART:
@@ -706,7 +710,7 @@ void GameManager::DrawRooms(HDC hdc)
 			rect[i * 2 + j].bottom = 180 + 170 * i;
 			roomButtons.push_back(rect[i * 2 + j]);
 
-			sprintf(buf, "%d 번 방 재밌는 오목 %d / %d", i * 2 + j + 1, mapRoomPlayers[i * 2 + j], 4);
+			sprintf(buf, "%d 번 방 재밌는 오목 %d / %d", i * 2 + j, mapRoomPlayers[i * 2 + j], 4);
 			normalFont.Draw(buf, 15, rect[i * 2 + j].left + 20, rect[i * 2 + j].top + 20, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 	}
