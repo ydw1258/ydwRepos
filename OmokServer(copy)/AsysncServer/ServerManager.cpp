@@ -117,7 +117,7 @@ void ServerManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 				//고정 방 6개
 				for (int i = 0; i < 6; i++)
 				{
-					packet.roomNum[i] = i;
+					packet.roomIndex[i] = i;
 					packet.playerNum[i] = g_RoomInfo[i + 1].size();
 				}
 				packet.NumOfRoom = 6; //테스트용
@@ -363,7 +363,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		//고정 방 6개
 		for (int i = 0; i < 6; i++)
 		{
-			packet.roomNum[i] = i;
+			packet.roomIndex[i] = i;
 			packet.playerNum[i] = g_RoomInfo[i + 1].size();
 		}
 		packet.NumOfRoom = 6; //테스트용
@@ -519,6 +519,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		auto it = g_RoomInfo[g_mapUser[sock]->roomIndex].begin();
 		it++;
 
+		g_isGameplaying[g_mapUser[sock]->roomIndex] = true;
 		//백돌 1번 유저에게 할당
 		for (auto it2 = g_mapUser.begin(); it2 != g_mapUser.end(); it2++)
 		{
@@ -527,8 +528,15 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 				send(it2->first, (const char*)&whitestonePacket, header.wLen, 0);
 				break;
 			}
+			//로비 유저들에게 플레이 중 임을 알리기
+			if ((*it)->roomIndex == 0)
+			{
+				send(it2->first, (const char*)&whitestonePacket, header.wLen, 0);
+			}
 		}
 		cout << g_mapUser[sock]->roomIndex << "번 방 게임 시작" << endl;
+		//게임 중인 방으로 변경
+		
 	}
 	break;
 	case PACKET_INDEX_GAMEEXIT:

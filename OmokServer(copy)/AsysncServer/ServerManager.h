@@ -21,6 +21,7 @@ private:
 	HWND hWnd;
 	int g_iIndex = 0;
 	map<int, list<USER_INFO*>> g_RoomInfo; //0¹ø ·Îºñ
+	map<int, bool> g_isGameplaying;
 	int roomIndexes[7] = { 0 };
 public:
 	static ServerManager* GetInstance()

@@ -114,9 +114,10 @@ struct PACKET_ROOMLIST //여러번 보내는 걸로 변경 예정.
 {
 	PACKET_HEADER header;
 	int NumOfRoom;
-	int roomNum[10];
+	int roomIndex[10];
 	int playerNum[10];
 	bool isPlaying[10];
+	char roomName[128];
 };
 struct PACKET_GAMESTART
 {

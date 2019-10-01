@@ -11,5 +11,6 @@ public:
 	char userID[128];
 	char szBuf[BUFSIZE];
 	int len;
+	bool isPlaying = false;
 	Scene userCurScene;
 };

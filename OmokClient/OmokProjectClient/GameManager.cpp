@@ -398,7 +398,7 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 
 		for (int i = 0; i < packet.NumOfRoom; i++)
 		{
-			mapRoomPlayers[packet.roomNum[i]] = packet.playerNum[i];
+			mapRoomPlayers[packet.roomIndex[i]] = packet.playerNum[i];
 		}
 	}
 	break;
@@ -530,7 +530,7 @@ void GameManager::InitConnection()
 	ZeroMemory(&serveraddr, sizeof(serveraddr));
 	serveraddr.sin_family = AF_INET;
 	serveraddr.sin_port = htons(9000);
-	serveraddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	serveraddr.sin_addr.s_addr = inet_addr("10.30.10.215");
 
 	int retval = connect(g_sock, (sockaddr*)& serveraddr, sizeof(serveraddr));
 
