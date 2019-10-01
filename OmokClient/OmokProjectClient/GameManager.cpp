@@ -335,7 +335,7 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 			userIndexInRoom = packet.roomIndex;
 			SceneChange(LOBBY);
 			userIndexInRoom = 0;
-			GetPlayersInRoom(0);
+			GetRooms();
 		}
 		else //로그인 실패
 		{
@@ -383,7 +383,6 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 		{
 			listPlayerID.push_back(packet.playerIDs[i]);
 		}
-		GetRooms();
 	}
 	break;
 	case PACKET_INDEX_GET_ROOMS:

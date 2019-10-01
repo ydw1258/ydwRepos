@@ -344,11 +344,16 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 		//고정 방 6개
 		for (int i = 0; i < 6; i++)
 		{
-			packet.roomNum[i] = i + 1;
-			packet.playerNum[i] = g_RoomInfo[i].size();
+			packet.roomNum[i] = i;
+			packet.playerNum[i] = g_RoomInfo[i + 1].size();
 		}
 		packet.NumOfRoom = 6; //테스트용
-		send(sock, (const char*)&packet, header.wLen, 0);
+
+		for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
+		{
+			if(it->second->roomIndex == 0)
+				send(it->first, (const char*)&packet, header.wLen, 0);
+		}
 	}
 	break;
 	case PACKET_INDEX_ENTER_THE_ROOM: //추후에 확인만하고 클라에서는 GET_PLAYERS 한번 더 호출하는 걸로.

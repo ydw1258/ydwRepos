@@ -1,32 +1,32 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v150\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(OmokProject.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(OmokProject.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
   GameManager.cpp
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(84): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(84): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: 'sprintf' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(115): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(115): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(110): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(144): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(110): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(144): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(139): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(168): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(139): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(168): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(160): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(218): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(160): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(218): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(220): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(220): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(322): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(322): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdlib.h(1334): note: 'itoa' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(333): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(333): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(563): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(562): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(564): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(563): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(579): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(578): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(580): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(579): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
-d:\gitrepos\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(707): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\administrator\documents\github\ydwrepos\omokclient\omokprojectclient\gamemanager.cpp(706): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: 'sprintf' 선언을 참조하십시오.
-  OmokProject.vcxproj -> D:\gitRepos\ydwRepos\OmokClient\OmokProjectClient\.\Debug\OmokProjectClient.exe
+  OmokProject.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\OmokClient\OmokProjectClient\.\Debug\OmokProjectClient.exe
