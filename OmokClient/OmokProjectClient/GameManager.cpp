@@ -9,6 +9,8 @@
 
 using namespace std;
 #define BUFSIZE 1024
+#define IP_ADDRESS "127.0.0.1"
+//"10.30.10.215"
 
 GameManager* GameManager::mthis = nullptr;
 
@@ -63,10 +65,11 @@ void GameManager::Draw(HDC hdc)
 		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
 		memoImage.DrawResizedObject(hdc, 650, 10, 300, 400);
 		blueBoard.DrawResizedObject(hdc, 40, 520, 700, 200);
-		blueBoard.DrawResizedObject(hdc, 750, 550, 130, 50);
+		blueBoard.DrawResizedObject(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right - gameExitButton.left
+			, gameExitButton.bottom - gameExitButton.top);
 
 		buttonFont.Draw("게임 종료", 20, 780, 570, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
-
+		//Rectangle(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right, gameExitButton.bottom);
 		DrawChatWindow(hdc);
 		DrawRooms(hdc);
 		DrawCurUsers(hdc);
@@ -84,8 +87,8 @@ void GameManager::Draw(HDC hdc)
 		char buf[128];
 		sprintf(buf, "%d 번방 %d번째 유저", roomIndex, userIndexInRoom);
 		playerInfoFont.Draw(buf, 30, 720, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
-		blueBoard.DrawResizedObject(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right - gameExitButton.left
-			, gameExitButton.bottom - gameExitButton.top);
+		blueBoard.DrawResizedObject(hdc, RoomExitButton.left, RoomExitButton.top, RoomExitButton.right - RoomExitButton.left
+			, RoomExitButton.bottom - RoomExitButton.top);
 		roomexitFont.Draw("나가기", 20, 550, 730, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		blueBoard.DrawResizedObject(hdc, startButton.left, startButton.top, startButton.right - startButton.left
 			, startButton.bottom - startButton.top);
@@ -104,11 +107,11 @@ void GameManager::GameExit(POINT pt)
 
 	int i = 0;
 
-	if (!Physics::GetInstance()->RECTbyPointCollisionCheck(gameExitButton, pt))
+	if (!Physics::GetInstance()->RECTbyPointCollisionCheck(RoomExitButton, pt))
 	{
 		return;
 	}
-	char buf[128];
+	char buf[10];
 
 	PACKET_GAMEEXIT packet;
 	packet.header.wIndex = PACKET_INDEX_GAMEEXIT;
@@ -135,9 +138,9 @@ void GameManager::EnterTheRoom(POINT pt)
 			break;
 		}
 	}
-	if (flag == false)
+	if (flag == false || mapRoomPlayers[i] == 4)
 		return;
-	char buf[128];
+	char buf[10];
 
 	PACKET_TRY_ENTER_THE_ROOM packet;
 	packet.header.wIndex = PACKET_INDEX_ENTER_THE_ROOM;
@@ -158,7 +161,7 @@ void GameManager::ExitTheRoom(POINT pt)
 	{
 		return;
 	}
-	char buf[128];
+	char buf[10];
 
 	PACKET_TRY_EXIT_THE_ROOM packet;
 
@@ -209,17 +212,17 @@ void GameManager::Login()
 {
 	if (GetForegroundWindow() != hwnd)
 		return;
-	char buf[128];
+	char buf[10];
 
 	PACKET_TRY_LOGIN packet;
 	packet.header.wIndex = PACKET_INDEX_LOGIN_RET;
 	packet.header.wLen = sizeof(packet);
 	
-	GetWindowText(LOGINInput[0], buf, 128);
+	GetWindowText(LOGINInput[0], buf, 10);
 	strcpy(packet.ID, buf);
-	GetWindowText(LOGINInput[1], buf, 128);
-	char hash[128];
-	strcpy(hash, sha1(buf).c_str());
+	GetWindowText(LOGINInput[1], buf, 10);
+	char hash[11];
+	strcpy(hash, sha1(buf).substr(0, 10).c_str());
 	strcpy(packet.password, hash);
 
 	send(g_sock, (const char*)&packet, sizeof(packet), 0);
@@ -271,7 +274,7 @@ void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 
 		while (true)
 		{
-			if (!ProcessPacket(szBuf, userInfo, retval))
+			if (!ProcessPacket(szBuf, userInfo, retval, wParam))
 			{
 				Sleep(100);
 				//SendMessage(`hWnd, uMsg, wParam, lParam);
@@ -292,7 +295,7 @@ void GameManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 	}
 }
 //서버로 부터 받은 데이터
-bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int len)
+bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int len, WPARAM wParam)
 {
 	if (len > 0)
 	{
@@ -486,6 +489,7 @@ bool GameManager::ProcessPacket(char * szBuf, USER_INFO_STRING& userinfo, int le
 		{
 			listPlayerID.push_back(packet.playerIDs[i]);
 		}
+		closesocket(wParam);
 	}
 	break;
 	}
@@ -530,7 +534,7 @@ void GameManager::InitConnection()
 	ZeroMemory(&serveraddr, sizeof(serveraddr));
 	serveraddr.sin_family = AF_INET;
 	serveraddr.sin_port = htons(9000);
-	serveraddr.sin_addr.s_addr = inet_addr("10.30.10.215");
+	serveraddr.sin_addr.s_addr = inet_addr(IP_ADDRESS);
 
 	int retval = connect(g_sock, (sockaddr*)& serveraddr, sizeof(serveraddr));
 
@@ -718,14 +722,14 @@ void GameManager::DrawRooms(HDC hdc)
 		}
 	}
 	
-	RECT gameexitRect;
+	RECT roomexitRect;
 
-	gameexitRect.top = 720;
-	gameexitRect.bottom = 750;
-	gameexitRect.left = 500;
-	gameexitRect.right = 650;
+	roomexitRect.top = 720;
+	roomexitRect.bottom = 750;
+	roomexitRect.left = 500;
+	roomexitRect.right = 650;
 
-	gameExitButton = gameexitRect;
+	RoomExitButton = roomexitRect;
 	//Rectangle(hdc, gameexitRect.left, gameexitRect.top, gameexitRect.right, gameexitRect.bottom);
 	
 	RECT exitRect;
@@ -746,6 +750,16 @@ void GameManager::DrawRooms(HDC hdc)
 
 	startButton = startRect;
 	//Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
+	RECT gameexitRect;
+
+	//blueBoard.DrawResizedObject(hdc, 750, 550, 130, 50);
+
+	gameexitRect.top = 550;
+	gameexitRect.bottom = 600;
+	gameexitRect.left = 750;
+	gameexitRect.right = 880;
+
+	gameExitButton = gameexitRect;
 }
 void GameManager::BoardDraw(HDC hdc)
 {

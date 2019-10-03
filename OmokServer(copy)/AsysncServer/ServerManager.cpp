@@ -529,14 +529,13 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 				break;
 			}
 			//로비 유저들에게 플레이 중 임을 알리기
-			if ((*it)->roomIndex == 0)
+			/*if ((*it)->roomIndex == 0)
 			{
 				send(it2->first, (const char*)&whitestonePacket, header.wLen, 0);
-			}
+			}*/
 		}
 		cout << g_mapUser[sock]->roomIndex << "번 방 게임 시작" << endl;
 		//게임 중인 방으로 변경
-		
 	}
 	break;
 	case PACKET_INDEX_GAMEEXIT:
