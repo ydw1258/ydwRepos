@@ -33,97 +33,56 @@ struct PACKET_HEADER
 };
 struct USER_DATA
 {
-	WORD playerNum;
+	WORD playerNumInRoom;
 	WORD wX;
 	WORD wY;
-	bool turn;
-	char chat[128];
 	WORD roomIndex; //0은 로비
 	char ID[10];
 	char password[10];
 };
+struct ROOM_INFO
+{
+	int roomIndex; //0번 로비
+	char ID[10]; //요청한 플레이어
+	int playerNum; //방 내의 플레이어 수
+	char ID[20][10];
+};
+//char chat[128];
 struct PACKET_TRY_LOGIN
 {
 	PACKET_HEADER header;
-	int playerNum;
-	char ID[10];
-	char password[10];
-	bool isLoginSuccess = false;
-	int roomIndex;
+	//로비의 플레이어 숫자
+	ROOM_INFO roomInfo;
 };
 struct PACKET_TRY_ENTER_THE_ROOM
 {
 	PACKET_HEADER header;
-	int roomNum; //방갯수
 	int userIndexInRoom;
-	char playerID[10];
-	char ID[4][10];
-	int roomIndex;
-	bool isSuccess = false;
-	int playerNum;
+	int roomNum;//방갯수
+	ROOM_INFO roomInfo;
 };
 struct PACKET_GAMEEXIT
 {
 	PACKET_HEADER header;
 	int roomNum; //방갯수
 	int userIndexInRoom;
-	char playerID[10];
-	char ID[20][10];
-	int roomIndex;
-	bool isSuccess = false;
-	int playerNum;
+	ROOM_INFO roomInfo;
 };
 struct PACKET_TRY_EXIT_THE_ROOM //서버에서 EXIT를 받아서 TRY ENTER THE ROOM패킷으로 반환
 {
 	PACKET_HEADER header;
-	int roomIndex;
-	char playerID[10]; //요청한 플레이어
-	char ID[20][10];
 	int userIndexInRoom;
-	bool isSuccess = false;
-	int playerNum;
+	ROOM_INFO roomInfo;
 };
 struct PACKET_LOGIN_RET
 {
 	PACKET_HEADER header;
-	int iIndex;
 };
 
-struct PACKET_USER_DATA
-{
-	PACKET_HEADER header;
-	WORD wCount;
-	USER_DATA data[20];
-};
-
-struct PACKET_SEND_INGAME_DATA
-{
-	PACKET_HEADER header;
-	USER_DATA data;
-	SERVERMANAGER_SCENE scene;
-};
-struct PACKET_USERSLIST
-{
-	PACKET_HEADER header;
-	int playerNum;
-	int roomIndex;
-	char playerIDs[20][10];
-	char userID[10];
-};
-struct PACKET_ROOMLIST //여러번 보내는 걸로 변경 예정.
-{
-	PACKET_HEADER header;
-	int NumOfRoom;
-	int roomIndex[10];
-	int playerNum[10];
-	bool isPlaying[10];
-	char roomName[10];
-};
 struct PACKET_GAMESTART
 {
 	PACKET_HEADER header;
 	char playerID[10]; //요청한 플레이어
-	bool MyStone; //0흑 1백
 	int roomIndex;
 	int userIndexInRoom;
 };
