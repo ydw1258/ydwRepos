@@ -42,7 +42,6 @@ private:
 	list<RECT> roomButtons;
 	RECT roomExitButton;
 	RECT startButton;
-	RECT RoomExitButton;
 	RECT gameExitButton;
 public:
 	Scene scene = LOGIN;
@@ -57,7 +56,6 @@ public:
 	FontManager playerInfoFont;
 	FontManager gamestartFont;
 	FontManager roomexitFont;
-	FontManager gameexitFont;
 	FontManager normalFont;
 	
 	HINSTANCE hInstance;
@@ -91,7 +89,7 @@ public:
 	//서버 관련
 	void SendPos(int x, int y);
 	void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-	bool ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int len, WPARAM wParam);
+	bool ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int len);
 	void InitConnection();
 	void BoardDraw(HDC hdc);
 	void InputChatting(void);

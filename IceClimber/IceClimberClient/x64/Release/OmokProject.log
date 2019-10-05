@@ -1,2 +1,0 @@
-﻿LINK : fatal error C1047: 개체 또는 라이브러리 파일 '..\StaticWinApiLib\lib\StaticWinApiLibReleasex64.lib'은(는) 다른 개체에 사용한 컴파일러보다 이전 컴파일러로 만들어졌습니다. 해당 개체 및 라이브러리를 다시 빌드하십시오.
-LINK : fatal error LNK1257: 코드를 생성하지 못했습니다.
