@@ -1,0 +1,9 @@
+﻿  BitMap.cpp
+  FontManager.cpp
+d:\gitrepos\ydwrepos\omokclient\staticwinapilib\fontmanager.cpp(26): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\gitrepos\ydwrepos\omokclient\staticwinapilib\fontmanager.cpp(39): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Physics.cpp
+  ResourceManager.cpp
+  SpriteRenderer.cpp
+  Tile.cpp
+  StaticWinApiLib.vcxproj -> D:\gitRepos\ydwRepos\OmokClient\StaticWinApiLib\.\lib\StaticWinApiLibReleasex64.lib

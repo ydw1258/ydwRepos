@@ -1,0 +1,8 @@
+﻿  main.cpp
+D:\gitRepos\ydwRepos\CppLectureResult\SnakeGame\main.cpp(30,1): warning C4996:  'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\conio.h(459): message :  'kbhit' 선언을 참조하십시오.
+D:\gitRepos\ydwRepos\CppLectureResult\SnakeGame\main.cpp(31,1): warning C4996:  'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+  Map.cpp
+  코드를 생성하고 있습니다...
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\conio.h(453): message :  'getch' 선언을 참조하십시오.
+  SnakeGame.vcxproj -> D:\gitRepos\ydwRepos\CppLectureResult\x64\Debug\SnakeGame.exe

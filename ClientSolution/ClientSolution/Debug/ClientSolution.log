@@ -1,4 +1,0 @@
-﻿  UDPClient.cpp
-c:\users\administrator\documents\github\ydwrepos\clientsolution\clientsolution\udpclient.cpp(44): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
-  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\winsock2.h(1830): note: 'inet_addr' 선언을 참조하십시오.
-  ClientSolution.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\ClientSolution\Debug\ClientSolution.exe

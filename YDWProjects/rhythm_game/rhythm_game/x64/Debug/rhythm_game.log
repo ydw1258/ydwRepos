@@ -1,0 +1,10 @@
+﻿  Winproc.cpp
+c:\users\ydw\desktop\rhythm_game\rhythm_game\winproc.cpp(17): fatal error C1083: 포함 파일을 열 수 없습니다. 'my_global.h': No such file or directory
+  WinMain.cpp
+c:\users\ydw\desktop\rhythm_game\rhythm_game\winmain.cpp(26): error C2440: '=': 'LPSTR'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+  c:\users\ydw\desktop\rhythm_game\rhythm_game\winmain.cpp(26): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+c:\users\ydw\desktop\rhythm_game\rhythm_game\winmain.cpp(38): error C2664: 'HWND CreateWindowExW(DWORD,LPCWSTR,LPCWSTR,DWORD,int,int,int,int,HWND,HMENU,HINSTANCE,LPVOID)': 인수 2을(를) 'const char [12]'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+  c:\users\ydw\desktop\rhythm_game\rhythm_game\winmain.cpp(38): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+c:\users\ydw\desktop\rhythm_game\rhythm_game\winmain.cpp(51): warning C4244: 'return': 'WPARAM'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MadenClass.cpp
+  코드를 생성하고 있습니다...

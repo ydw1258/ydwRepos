@@ -1,0 +1,14 @@
+﻿  baseball_game.cpp
+  CppFileIO.cpp
+D:\YDWProjects\Cpp\baseball_game.cpp(12,2): warning C4091:  'static ': 변수를 선언하지 않으면 'JUDGE' 왼쪽은 무시됩니다.
+  CppOmok.cpp
+D:\YDWProjects\Cpp\CppFileIO.cpp(26,7): warning C4101:  'str' :참조되지 않은 지역 변수입니다.
+D:\YDWProjects\Cpp\CppOmok.cpp(92,1): error C4996:  'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+  csv_parsing.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\conio.h(452): message :  'getch' 선언을 참조하십시오.
+D:\YDWProjects\Cpp\csv_parsing.cpp(19,45): warning C4244:  '인수': 'uint64_t'에서 'const unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\YDWProjects\Cpp\csv_parsing.cpp(26,47): warning C4244:  '인수': 'uint64_t'에서 'const unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\YDWProjects\Cpp\csv_parsing.cpp(26,25): warning C4244:  '인수': 'uint64_t'에서 'const unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\YDWProjects\Cpp\csv_parsing.cpp(30,46): warning C4244:  '인수': 'uint64_t'에서 'const unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+D:\YDWProjects\Cpp\csv_parsing.cpp(30,24): warning C4244:  '인수': 'uint64_t'에서 'const unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
