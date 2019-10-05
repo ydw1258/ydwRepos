@@ -2,12 +2,12 @@
 #include <Windows.h>
 #pragma pack(1)
 
-enum Scene
+enum SERVERMANAGER_SCENE
 {
 	LOGIN,
 	LOBBY,
-	INGAME,
-	
+	ROOM_WAIT,
+	PLAYING,
 };
 enum PACKET_INDEX
 {
@@ -33,21 +33,21 @@ struct PACKET_HEADER
 };
 struct USER_DATA
 {
-	int playerNum;
+	WORD playerNum;
 	WORD wX;
 	WORD wY;
 	bool turn;
 	char chat[128];
-	int roomIndex; //0은 로비
-	char ID[128];
-	char password[128];
+	WORD roomIndex; //0은 로비
+	char ID[10];
+	char password[10];
 };
 struct PACKET_TRY_LOGIN
 {
 	PACKET_HEADER header;
 	int playerNum;
-	char ID[128];
-	char password[128];
+	char ID[10];
+	char password[10];
 	bool isLoginSuccess = false;
 	int roomIndex;
 };
@@ -56,8 +56,8 @@ struct PACKET_TRY_ENTER_THE_ROOM
 	PACKET_HEADER header;
 	int roomNum; //방갯수
 	int userIndexInRoom;
-	char playerID[128];
-	char ID[4][128];
+	char playerID[10];
+	char ID[4][10];
 	int roomIndex;
 	bool isSuccess = false;
 	int playerNum;
@@ -67,8 +67,8 @@ struct PACKET_GAMEEXIT
 	PACKET_HEADER header;
 	int roomNum; //방갯수
 	int userIndexInRoom;
-	char playerID[128];
-	char ID[4][128];
+	char playerID[10];
+	char ID[20][10];
 	int roomIndex;
 	bool isSuccess = false;
 	int playerNum;
@@ -77,8 +77,8 @@ struct PACKET_TRY_EXIT_THE_ROOM //서버에서 EXIT를 받아서 TRY ENTER THE ROOM패킷�
 {
 	PACKET_HEADER header;
 	int roomIndex;
-	char playerID[128]; //요청한 플레이어
-	char ID[4][128];
+	char playerID[10]; //요청한 플레이어
+	char ID[20][10];
 	int userIndexInRoom;
 	bool isSuccess = false;
 	int playerNum;
@@ -100,14 +100,14 @@ struct PACKET_SEND_INGAME_DATA
 {
 	PACKET_HEADER header;
 	USER_DATA data;
-	Scene scene;
+	SERVERMANAGER_SCENE scene;
 };
 struct PACKET_USERSLIST
 {
 	PACKET_HEADER header;
 	int playerNum;
 	int roomIndex;
-	char playerIDs[5][10];
+	char playerIDs[20][10];
 	char userID[10];
 };
 struct PACKET_ROOMLIST //여러번 보내는 걸로 변경 예정.
@@ -117,12 +117,12 @@ struct PACKET_ROOMLIST //여러번 보내는 걸로 변경 예정.
 	int roomIndex[10];
 	int playerNum[10];
 	bool isPlaying[10];
-	char roomName[128];
+	char roomName[10];
 };
 struct PACKET_GAMESTART
 {
 	PACKET_HEADER header;
-	char playerID[128]; //요청한 플레이어
+	char playerID[10]; //요청한 플레이어
 	bool MyStone; //0흑 1백
 	int roomIndex;
 	int userIndexInRoom;
