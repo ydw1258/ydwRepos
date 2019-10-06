@@ -1,0 +1,167 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v150\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(OmokProjectClient.vcxproj, OmokProject.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
+  GameFrameWork.cpp
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(44): error C3646: 'overlapped': 알 수 없는 재정의 지정자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(44): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(49): error C3646: 'wsabuf': 알 수 없는 재정의 지정자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(49): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.h(13): error C2011: 'USER_INFO_STRING': 'struct' 형식 재정의
+  d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.h(14): note: 'USER_INFO_STRING' 선언을 참조하십시오.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gameframework.cpp(61): error C2065: 'INGAME': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gameframework.cpp(61): error C2131: 식이 상수로 계산되지 않았습니다.
+  d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gameframework.cpp(61): note: 상수가 아닌 식 또는 부분식이 있습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gameframework.cpp(61): error C2051: case 식이 상수가 아닙니다.
+  GameManager.cpp
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(44): error C3646: 'overlapped': 알 수 없는 재정의 지정자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(44): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(49): error C3646: 'wsabuf': 알 수 없는 재정의 지정자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(49): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.h(13): error C2011: 'USER_INFO_STRING': 'struct' 형식 재정의
+  d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.h(14): note: 'USER_INFO_STRING' 선언을 참조하십시오.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(34): warning C4473: 'sprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+  d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(34): note: 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+  d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(34): note: 누락된 variadic 인수 1이(가) 서식 문자열 '%d'에 필요합니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(34): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: 'sprintf' 선언을 참조하십시오.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(238): error C2065: 'playerIndex': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(239): error C2065: 'playerID': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(242): error C2065: 'g_sock': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(254): error C2065: 'playerIndex': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(255): error C2065: 'playerID': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(258): error C2065: 'g_sock': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(240): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(256): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(335): error C2039: 'roomIndex': 'PACKET_USERSLIST'의 멤버가 아닙니다.
+  d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(125): note: 'PACKET_USERSLIST' 선언을 참조하십시오.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(337): error C2039: 'userID': 'PACKET_USERSLIST'의 멤버가 아닙니다.
+  d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(125): note: 'PACKET_USERSLIST' 선언을 참조하십시오.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(337): error C2065: 'playerID': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(338): error C2065: 'g_sock': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(346): error C2065: 'g_sock': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.cpp(352): error C2065: 'g_sock': 선언되지 않은 식별자입니다.
+  main.cpp
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(44): error C3646: 'overlapped': 알 수 없는 재정의 지정자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(44): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(49): error C3646: 'wsabuf': 알 수 없는 재정의 지정자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\common\packet_header.h(49): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\gamemanager.h(13): error C2011: 'USER_INFO_STRING': 'struct' 형식 재정의
+  d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.h(14): note: 'USER_INFO_STRING' 선언을 참조하십시오.
+  Player.cpp
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\player.cpp(23): error C2511: 'void Player::Jump(DIRECTION)': 오버로드된 멤버 함수가 'Player'에 없습니다.
+  d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\player.h(9): note: 'Player' 선언을 참조하십시오.
+  PacketManager.cpp
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\servermanager.h(37): error C3646: 'scene': 알 수 없는 재정의 지정자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\servermanager.h(37): error C2059: 구문 오류: '='
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\servermanager.h(37): error C2238: ';' 앞에 예기치 않은 토큰이 있습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(33): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winsock2.h(1830): note: 'inet_addr' 선언을 참조하십시오.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(42): warning C4996: 'WSAAsyncSelect': Use WSAEventSelect() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winsock2.h(2679): note: 'WSAAsyncSelect' 선언을 참조하십시오.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(48): warning C4996: 'WSAAsyncSelect': Use WSAEventSelect() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\winsock2.h(2679): note: 'WSAAsyncSelect' 선언을 참조하십시오.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(61): error C2065: 'scene': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(62): error C2050: switch 식이 정수 계열이 아닙니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(63): error C2065: 'LOBBY': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(63): error C2131: 식이 상수로 계산되지 않았습니다.
+  d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(63): note: 상수가 아닌 식 또는 부분식이 있습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(65): error C2065: 'PACKET_SEND_INGAME_DATA': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(65): error C2146: 구문 오류: ';'이(가) 'packet' 식별자 앞에 없습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(65): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(67): error C2065: 'chatInputBoxLobby': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(69): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(69): error C2065: 'PACKET_INDEX_SEND_CHATTING_LOBBY': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(70): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(71): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(72): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(73): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(75): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(76): error C2065: 'chatInputBoxLobby': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(79): error C2065: 'ROOM_WAIT': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(79): error C2131: 식이 상수로 계산되지 않았습니다.
+  d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(79): note: 상수가 아닌 식 또는 부분식이 있습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(81): error C2065: 'PACKET_SEND_INGAME_DATA': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(81): error C2146: 구문 오류: ';'이(가) 'packet' 식별자 앞에 없습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(81): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(82): error C2065: 'chatInputBoxLobby': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(83): error C2065: 'chatInputBoxIngame': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(85): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(85): error C2065: 'PACKET_INDEX_SEND_CHATTING_INGAME': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(86): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(87): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(88): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(89): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(91): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(92): error C2065: 'chatInputBoxIngame': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(63): error C2051: case 식이 상수가 아닙니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(79): error C2051: case 식이 상수가 아닙니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(95): warning C4060: switch문에 'case' 또는 'default' 레이블이 없습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(105): error C2065: 'RoomExitButton': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(111): error C2065: 'PACKET_GAMEEXIT': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(111): error C2146: 구문 오류: ';'이(가) 'packet' 식별자 앞에 없습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(111): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(112): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(112): error C2065: 'PACKET_INDEX_GAMEEXIT': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(113): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(114): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(115): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(117): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(128): error C2065: 'roomButtons': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(128): error C3536: 'it': 초기화되기 전에 사용할 수 없습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(130): error C2100: 간접 참조가 잘못되었습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(140): error C2065: 'PACKET_TRY_ENTER_THE_ROOM': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(140): error C2146: 구문 오류: ';'이(가) 'packet' 식별자 앞에 없습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(140): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(141): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(141): error C2065: 'PACKET_INDEX_ENTER_THE_ROOM': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(142): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(143): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(144): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(146): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(155): error C2065: 'roomExitButton': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(161): error C2065: 'PACKET_TRY_EXIT_THE_ROOM': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(161): error C2146: 구문 오류: ';'이(가) 'packet' 식별자 앞에 없습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(161): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(163): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(163): error C2065: 'PACKET_INDEX_EXIT_THE_ROOM': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(164): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(165): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(167): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(168): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(172): error C2065: 'listPlayerID': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(181): error C2065: 'startButton': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(197): error C2065: 'PACKET_GAMESTART': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(197): error C2146: 구문 오류: ';'이(가) 'packet' 식별자 앞에 없습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(197): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(198): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(198): error C2065: 'PACKET_INDEX_GAMESTART': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(199): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(200): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(201): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(203): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(212): error C2065: 'PACKET_TRY_LOGIN': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(212): error C2146: 구문 오류: ';'이(가) 'packet' 식별자 앞에 없습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(212): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(213): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(213): error C2065: 'PACKET_INDEX_LOGIN_RET': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(214): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(216): error C2065: 'LOGINInput': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(217): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(218): error C2065: 'LOGINInput': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(221): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(223): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(220): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(228): error C2065: 'PACKET_GAMEEXIT': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(228): error C2146: 구문 오류: ';'이(가) 'packet' 식별자 앞에 없습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(228): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(230): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(230): error C2065: 'PACKET_INDEX_GAMEEXIT': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(231): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(232): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(233): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(235): error C2065: 'packet': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(240): error C2065: 'PACKET_TRY_ENTER_THE_ROOM': 선언되지 않은 식별자입니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(240): error C2146: 구문 오류: ';'이(가) 'packet' 식별자 앞에 없습니다.
+d:\gitrepos\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\packetmanager.cpp(240): fatal error C1003: 오류 수가 100개를 초과했습니다. 컴파일을 중지합니다.
+  코드를 생성하고 있습니다...

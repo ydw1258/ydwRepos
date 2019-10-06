@@ -1,7 +1,4 @@
 #pragma once
-#include <winsock2.h>
-#include <Windows.h>
-#pragma comment(lib, "ws2_32")
 #pragma pack(1)
 
 #define SERVERPORT 9000
@@ -9,6 +6,10 @@
 #define WM_SOCKET (WM_USER+1)
 #define ROOMNUM 20
 #define MAX_PLAYERNUM_INROOM 4
+
+#define _WINSOCKAPI_
+#include <Windows.h>
+#pragma comment(lib, "ws2_32")
 
 enum SERVERMANAGER_SCENE
 {

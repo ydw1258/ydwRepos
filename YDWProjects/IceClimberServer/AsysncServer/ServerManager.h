@@ -19,7 +19,6 @@ private:
 	map<int, list<USER_INFO*>> g_RoomInfo; //0¹ø ·Îºñ
 	map<int, bool> g_isGameplaying;
 	int roomIndexes[ROOMNUM] = { 0 };
-
 	//
 	SOCKET client_sock;
 	SOCKADDR_IN clientaddr;

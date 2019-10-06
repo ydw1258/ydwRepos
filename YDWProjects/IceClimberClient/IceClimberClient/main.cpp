@@ -1,10 +1,8 @@
-#include <Windows.h>
 #include <crtdbg.h>
 #include <iostream>
 #include <fstream>
 #include "GameFrameWork.h"
 #include "ResourceManager.h"
-
 
 using namespace std;
 
@@ -96,7 +94,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);
 		return 0;
 	case WM_SOCKET:
-		GameManager::GetInstance()->ProcessSocketMessage(hWnd, iMessage, wParam, lParam);
+		PacketManager::GetInstance()->ProcessSocketMessage(hWnd, iMessage, wParam, lParam);
 		InvalidateRect(hWnd, NULL, false);
 		return 0;
 

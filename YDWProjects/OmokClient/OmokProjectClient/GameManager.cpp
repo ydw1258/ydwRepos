@@ -20,7 +20,7 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 	};
 	ResourceManager::GetInstance()->Init(hdc, hInstance, filename, 7);
 	
-	board.Init(IMAGENUM_BOARD, 1, 722, 720);
+	blueboard.Init(IMAGENUM_BOARD, 1, 722, 720);
 	blackStone.Init(IMAGENUM_BLACKSTONE, 1, stoneSizeXY, stoneSizeXY);
 	whiteStone.Init(IMAGENUM_WHITESTONE, 1, stoneSizeXY, stoneSizeXY);
 	UIbutton.Init(IMAGENUM_UIBUTTON, 1, 346, 173);
@@ -749,7 +749,7 @@ void GameManager::DrawRooms(HDC hdc)
 }
 void GameManager::BoardDraw(HDC hdc)
 {
-	board.DrawObject(hdc, 0, 0);
+	blueboard.DrawObject(hdc, 0, 0);
 
 	for (int i = 0; i < HEIGHT; i++)
 	{

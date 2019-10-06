@@ -25,6 +25,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="UIButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\winAPI_Library\winAPI_Library\Singleton.h" />
@@ -34,6 +35,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="UIButton.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

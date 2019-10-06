@@ -73,13 +73,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\StaticWinApiLib;$(VC_IncludePath);$(WindowsSDK_IncludePath);..\StaticWinApiLib;</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\StaticWinApiLib</IncludePath>
     <LibraryPath>..\StaticWinApiLib\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;..\StaticWinApiLib.lib;</LibraryPath>
     <OutDir>.\Debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\StaticWinApiLib;$(VC_IncludePath);$(WindowsSDK_IncludePath);..\StaticWinApiLib;</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\StaticWinApiLib</IncludePath>
     <LibraryPath>..\StaticWinApiLib\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;..\StaticWinApiLib.lib;</LibraryPath>
     <OutDir>.\Debug\</OutDir>
   </PropertyGroup>
@@ -164,7 +164,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="ServerManager.cpp" />
+    <ClCompile Include="PacketManager.cpp" />
     <ClCompile Include="SHA1.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,11 +174,16 @@
     <ClInclude Include="IMAGENUM.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="ServerManager.h" />
+    <ClInclude Include="PacketManager.h" />
     <ClInclude Include="SHA1.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OmokProjectClient.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\StaticWinApiLib\StaticWinApiLib.vcxproj">
+      <Project>{74af9e77-4bd5-4aec-bf5c-63ca2a61ee43}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

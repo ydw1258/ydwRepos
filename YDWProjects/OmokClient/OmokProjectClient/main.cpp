@@ -1,10 +1,8 @@
-#include <Windows.h>
 #include <crtdbg.h>
 #include <iostream>
 #include <fstream>
 #include "GameFrameWork.h"
 #include "ResourceManager.h"
-
 
 using namespace std;
 

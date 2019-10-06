@@ -45,7 +45,7 @@ private:
 	RECT gameExitButton;
 public:
 	Scene scene = LOGIN;
-	SpriteRenderer board;
+	SpriteRenderer blueboard;
 	SpriteRenderer blackStone;
 	SpriteRenderer whiteStone;
 	SpriteRenderer UIbutton;
