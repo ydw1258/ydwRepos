@@ -20,6 +20,8 @@ void ServerManager::Init()
 			mapAccounts.insert(make_pair(line.substr(0, idx), line.substr(idx + 1, line.length())));
 		}
 	}
+	for (int i = 0; i < ROOMNUM; i++)
+		roomIndexes[i] = 0;
 
 	int retval;
 
@@ -136,52 +138,50 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 	{
 		PACKET_TRY_LOGIN loginPacket;
 		memcpy(&loginPacket, szBuf, header.wLen);
-		PACKET_USER_DATA loginRetPacket;
 
 		cout << "입력된 ID : " << loginPacket.ID << ", " <<
 			"입력된 비밀번호 : "<< loginPacket.password << ", 실제비밀번호 : " << mapAccounts[loginPacket.ID] << endl;
 		if (mapAccounts.find(loginPacket.ID) == mapAccounts.end()) {
 			//로그인 실패
-			loginRetPacket.data->userIndexInRoom = 99;
+			loginPacket.playerIndexInroom = 99;
 			cout << "로그인 실패" << endl;
 		}
 		else {
 			//비번 틀림
 			if (strcmp(mapAccounts[loginPacket.ID].substr(0, 10).c_str(), loginPacket.password))
 			{
-				//loginRetPacket.isLoginSuccess = false;
-				//loginRetPacket.header.wIndex = PACKET_INDEX_LOGIN_RET;
-				loginRetPacket.data->userIndexInRoom = 99;
+				loginPacket.playerIndexInroom = 99;
 				cout << "비밀번호 틀림" << endl;
 			}
-			// 로그인 성공
 			else
 			{
 				for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
 				{
 					if (!strcmp(loginPacket.ID, (const char*)it->second->playerID))
 					{
-						loginRetPacket.data->userIndexInRoom = 99;
+						loginPacket.playerIndexInroom = 99;
 						cout << "이미 로그인 중" << endl;
-						loginRetPacket.header.wLen = sizeof(loginRetPacket);
+						
 						send(sock, (const char*)& loginPacket, header.wLen, 0);
 						return false;
 					}
 				}
+				// 로그인 성공
 				USER_INFO *user = new USER_INFO();
 				//g_mapUser[sock]->userID = ;
 				strcpy(user->playerID, loginPacket.ID);
+				strcpy(loginPacket.ID, loginPacket.ID);
 				user->roomIndex = 0;
 				g_mapUser[sock] = user;
-
+				
 				//로비에 유저 추가
 				// map<int, list<USER_INFO*>> g_RoomInfo; //0번 로비
 				g_RoomInfo[0].push_back(user);
-				loginRetPacket.data->userIndexInRoom = roomIndexes[0]++;
+				loginPacket.playerIndexInroom = roomIndexes[0]++;
 				cout << "로그인 성공" << endl;
 			}
 		}
-		loginRetPacket.header.wLen = sizeof(loginRetPacket);
+		//loginPacket.header.wLen = sizeof(loginPacket);
 		send(sock, (const char*)& loginPacket, header.wLen, 0);
 	}
 	break;

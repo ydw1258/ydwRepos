@@ -69,7 +69,7 @@ public:
 struct PACKET_TRY_LOGIN
 {
 	PACKET_HEADER header;
-	WORD playerIndex;
+	WORD playerIndexInroom;
 	WORD playerNum;
 	char ID[10];
 	char password[11];

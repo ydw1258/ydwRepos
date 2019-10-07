@@ -122,7 +122,7 @@ void PacketManager::SendLogin(char* ID, char* password)
 	PACKET_TRY_LOGIN packet;
 	packet.header.wIndex = PACKET_INDEX_LOGIN_RET;
 	packet.header.wLen = sizeof(packet);
-
+	
 	strcpy(packet.ID, ID);
 	
 	char hash[11];
@@ -280,16 +280,14 @@ bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int l
 	break;
 	case PACKET_INDEX_LOGIN_RET:
 	{
-		PACKET_USER_DATA packet;
+		PACKET_TRY_LOGIN packet;
 		memcpy(&packet, szBuf, header.wLen);
 		
 		//로그인 성공
-		if (packet.data->userIndexInRoom != 99)
+		if (packet.playerIndexInroom != 99)
 		{
-			strcpy(playerID, packet.data->ID);
-			playerIndex = packet.data->playerNum;
-			userIndexInRoom = packet.data->userIndexInRoom;
-			//IceClimberGameManager::GetInstance()->SceneChange(LOBBY);
+			strcpy(playerID, packet.ID);
+			userIndexInRoom = packet.playerIndexInroom;
 			GetPlayersInRoom(0);
 			GameManager::GetInstance()->SceneChange(LOBBY);
 		}
@@ -303,19 +301,19 @@ bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int l
 	{
 		PACKET_SEND_INGAME_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
-		//IceClimberGameManager::GetInstance()->chatList.push_back(packet.data.chat);
+		GameManager::GetInstance()->chatList.push_back(packet.data.chat);
 	}
 	break;
 	case PACKET_INDEX_GET_PLAYERS:
 	{
 		PACKET_USERSLIST packet;
 		memcpy(&packet, szBuf, header.wLen);
-		//IceClimberGameManager::GetInstance()->listPlayerID.clear();
-		//IceClimberGameManager::GetInstance()->listPlayerID.resize(0);
+		GameManager::GetInstance()->listPlayerID.clear();
+		GameManager::GetInstance()->listPlayerID.resize(0);
 
 		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			//IceClimberGameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
+			GameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 
 		//로그인 패킷을 보낸 유저만 서버로 발송
@@ -329,12 +327,12 @@ bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int l
 		PACKET_USERSLIST packet;
 		memcpy(&packet, szBuf, header.wLen);
 
-		//IceClimberGameManager::GetInstance()->listPlayerID.clear();
-		//IceClimberGameManager::GetInstance()->listPlayerID.resize(0);
+		GameManager::GetInstance()->listPlayerID.clear();
+		GameManager::GetInstance()->listPlayerID.resize(0);
 		strcpy(packet.playerID, playerID);
 		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			//IceClimberGameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
+			GameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 		closesocket(wParam);
 	}
@@ -345,17 +343,17 @@ bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int l
 		memcpy(&packet, szBuf, header.wLen);
 
 		roomIndex = packet.roomInfo.roomIndex;
-		//IceClimberGameManager::GetInstance()->listPlayerID.clear();
+		GameManager::GetInstance()->listPlayerID.clear();
 
 		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			//IceClimberGameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
+			GameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 
 		if (!strcmp(packet.playerID, playerID))
 		{
 			userIndexInRoom = packet.userIndexInRoom;
-			//IceClimberGameManager::GetInstance()->SceneChange(ROOM_WAIT);
+			GameManager::GetInstance()->SceneChange(ROOM_WAIT);
 		}
 		if (!strcmp(packet.playerID, playerID))
 			GetRooms();
@@ -368,20 +366,18 @@ bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int l
 		memcpy(&packet, szBuf, header.wLen);
 
 		roomIndex = packet.roomInfo.roomIndex;
-		//IceClimberGameManager::GetInstance()->listPlayerID.clear();
+		GameManager::GetInstance()->listPlayerID.clear();
 
 		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			//IceClimberGameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
+			GameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 		userIndexInRoom = 0;
-
-		//fill_n(BoardInfo, HEIGHT * WIDTH, 0);
 
 		if (!strcmp(packet.playerID, playerID))
 		{
 			userIndexInRoom = packet.userIndexInRoom;
-			//IceClimberGameManager::GetInstance()->SceneChange(LOBBY);
+			GameManager::GetInstance()->SceneChange(LOBBY);
 		}
 		if (!strcmp(packet.playerID, playerID))
 			GetRooms();
@@ -392,14 +388,14 @@ bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int l
 	return true;
 }
 
-void PacketManager::GetPlayersInRoom(int roomNum)
+void PacketManager::GetPlayersInRoom(int roomIndex)
 {
 	PACKET_USERSLIST packet;
 	packet.header.wIndex = PACKET_INDEX_GET_PLAYERS;
-	packet.roomInfo.roomIndex = roomNum;
+	packet.roomInfo.roomIndex = 0;
 	packet.header.wLen = sizeof(packet);
 	strcpy(packet.playerID, playerID);
-	send(g_sock, (const char*)& packet, sizeof(packet), 0);
+	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
 void PacketManager::GetRooms()
 {

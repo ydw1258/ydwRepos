@@ -17,5 +17,6 @@ protected:
 public:
 	void Init(int buttonImageNum, int _x, int _y, int _sizeX, int _sizeY, char* _label);
 	void Draw(HDC hdc, char* fontdir);
+	void DrawRect(HDC hdc);
 	bool isButtonClick(POINT pt);
 };

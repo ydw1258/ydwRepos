@@ -17,17 +17,21 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 
 	blueboard.Init(IMAGENUM_BLUEBOARD, 1, 300, 111);
 	lobbybackground.Init(IMAGENUM_LOBBYBACKGROUND, 1, 1200, 1000);
-	memoImage.Init(IMAGENUM_MEMO, 1, 960, 640);
+	memoImage.Init(IMAGENUM_MEMO, 1, 600, 1000);
 	ButtonImage.Init(IMAGENUM_UIBUTTON, 1, 346, 173);
 
 	//방버튼
-	for (int i = 0; i < ROOMNUM; i++)
+	for (int i = 0; i < 2; i++)
 	{
-		UIButton button;
-		char buf[128];
-		sprintf(buf, "방번호 %d");
-		button.Init(IMAGENUM_BLUEBOARD, 200, 200 + i * 400, 400, 400, buf);
-		roomButtons.push_back(button);
+		for (int j = 0; j < ROOMNUM / 2; j++)
+		{
+			UIButton button;
+			char buf[128];
+			sprintf(buf, "방번호 %d", i * ROOMNUM / 2 + j);
+			button.Init(IMAGENUM_BLUEBOARD, 10 + j * 80, 10 + i * 80, 80, 80, buf);
+			roomButtons.push_back(button);
+		}
+		
 	}
 	gameExitButton.Init(IMAGENUM_BLUEBOARD, 800, 800, 400, 200, (char *)"게임 종료");
 	startButton.Init(IMAGENUM_BLUEBOARD, 700, 700, 400, 200, (char *)"게임 시작");
@@ -70,7 +74,7 @@ void GameManager::Draw(HDC hdc)
 	{
 		//Draw UI, Images
 		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
-		memoImage.DrawResizedObject(hdc, 650, 10, 300, 400);
+		memoImage.DrawResizedObject(hdc, 600, 80, 400, 600);
 
 		//Rectangle(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right, gameExitButton.bottom);
 		DrawChatWindow(hdc);
@@ -235,13 +239,10 @@ void GameManager::InputChatting()
 	break;
 	}
 }
-void GameManager::MouseButtonCheckIngame(POINT pt)
+void GameManager::MouseButtonCheckInRoom(POINT pt)
 {
 	ExitTheRoom(pt);
 	GameStart(pt);
-
-	if (GetForegroundWindow() != hwnd)
-		return;
 }
 
 void GameManager::DrawChatWindow(HDC hdc)
@@ -275,10 +276,11 @@ void GameManager::DrawCurUsers(HDC hdc)
 	case LOGIN:
 		break;
 	case LOBBY:
-		playerInfoFont.Draw("로비 플레이어 목록", 20, 710, 130, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		playerInfoFont.Draw("로비 플레이어 목록", 20, 700, 260, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+
 		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
 		{
-			playerInfoFont.Draw((*it), 15, 710, 160 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+			playerInfoFont.Draw((*it), 15, 710, 300 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 		break;
 	case ROOM_WAIT:

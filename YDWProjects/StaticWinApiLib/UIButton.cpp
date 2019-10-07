@@ -14,7 +14,12 @@ void UIButton::Draw(HDC hdc, char* fontdir)
 {
 	sprite.DrawObject(hdc, x, y);
 	//default 가운데 정렬
-	font.Draw(label, 10, x + sizeX / 2, y + sizeY / 2, fontdir, RGB(255, 255, 255));
+	font.Draw(label, 10, x, y, fontdir, RGB(0, 0, 0));
+}
+
+void UIButton::DrawRect(HDC hdc)
+{
+	Rectangle(hdc, x, y, x + sizeX, y + sizeY);
 }
 
 bool UIButton::isButtonClick(POINT pt)
@@ -23,7 +28,9 @@ bool UIButton::isButtonClick(POINT pt)
 	rect.left = x;
 	rect.right = x + sizeX;
 	rect.top = y;
-	rect.top = y + sizeY;
-	Physics::GetInstance()->RECTbyPointCollisionCheck(rect, pt);
-	return false;
+	rect.bottom = y + sizeY;
+	if (Physics::GetInstance()->RECTbyPointCollisionCheck(rect, pt))
+		return true;
+	else
+		return false;
 }

@@ -55,7 +55,7 @@ public:
 	}
 	void Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd);
 	void Draw(HDC hdc);
-	void MouseButtonCheckIngame(POINT pt);
+	void MouseButtonCheckInRoom(POINT pt);
 
 	void DrawChatWindow(HDC hdc);
 	void DrawCurUsers(HDC hdc);

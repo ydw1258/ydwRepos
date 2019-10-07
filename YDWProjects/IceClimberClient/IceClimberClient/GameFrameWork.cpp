@@ -26,7 +26,26 @@ void GameFrameWork::Update()
 	{
 		if (!isLButtonDown)
 		{
-			//
+			isLButtonDown = true;
+			POINT pt;
+			GetCursorPos(&pt);
+			ScreenToClient(m_hWnd, &pt);
+
+			HDC hdc = GetDC(m_hWnd);
+
+			//GameManager::GetInstance()->blackStone.DrawObject(hdc, pt.x, pt.y);
+			switch (GameManager::GetInstance()->scene)
+			{
+			case LOBBY:
+				GameManager::GetInstance()->EnterTheRoom(pt);
+				//GameManager::GetInstance()->GameExit(pt);
+				break;
+			case ROOM_WAIT:
+				GameManager::GetInstance()->MouseButtonCheckInRoom(pt);
+				break;
+			}
+
+			ReleaseDC(m_hWnd, hdc);
 		}
 	}
 	else

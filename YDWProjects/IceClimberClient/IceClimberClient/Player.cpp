@@ -10,8 +10,6 @@ void Player::Move(DIRECTION dir)
 		break;
 	case RIGHT:
 		break;
-	default:
-		break;
 	}
 }
 
