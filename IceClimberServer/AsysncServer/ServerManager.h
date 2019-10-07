@@ -57,6 +57,7 @@ public:
 
 	bool ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, int& len);
 	void ClientExit(SOCKET sock);
+	void InitUser(SOCKET sock);
 	ServerManager();
 	~ServerManager();
 };

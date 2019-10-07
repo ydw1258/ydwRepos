@@ -117,7 +117,7 @@ void PacketManager::SendGameStart()
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
 
-void PacketManager::SendLogin(char ID[10], char password[10])
+void PacketManager::SendLogin(char* ID, char* password)
 {
 	PACKET_TRY_LOGIN packet;
 	packet.header.wIndex = PACKET_INDEX_LOGIN_RET;
@@ -128,8 +128,8 @@ void PacketManager::SendLogin(char ID[10], char password[10])
 	char hash[11];
 	strcpy(hash, sha1(password).substr(0, 10).c_str());
 	strcpy(packet.password, hash);
-
-	send(g_sock, (const char*)& packet, sizeof(packet), 0);
+	packet.playerNum = 99;
+	send(g_sock, (const char*)&packet, sizeof(packet), 0);
 }
 
 void PacketManager::SendPos(int x, int y)
@@ -278,23 +278,24 @@ bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int l
 		isGameStart = true;
 	}
 	break;
-	case PACKET_INDEX_LOGIN_RET://로그인 시도
+	case PACKET_INDEX_LOGIN_RET:
 	{
-		PACKET_TRY_LOGIN packet;
+		PACKET_USER_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
-
+		
 		//로그인 성공
-		if (playerIndex != 99)
+		if (packet.data->userIndexInRoom != 99)
 		{
-			strcpy(playerID, packet.ID);
-			playerIndex = packet.playerNum;
-			userIndexInRoom = 0;
+			strcpy(playerID, packet.data->ID);
+			playerIndex = packet.data->playerNum;
+			userIndexInRoom = packet.data->userIndexInRoom;
 			//IceClimberGameManager::GetInstance()->SceneChange(LOBBY);
 			GetPlayersInRoom(0);
+			GameManager::GetInstance()->SceneChange(LOBBY);
 		}
 		else //로그인 실패
 		{
-			//MessageBox(, "로그인 실패", );
+			MessageBox(hwnd, "고오","로그인 실패", MB_OK);
 		}
 	}
 	break;

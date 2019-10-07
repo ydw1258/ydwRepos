@@ -79,7 +79,7 @@ bool ServerManager::Update()
 	}
 	printf("[TCP서버] 클라이언트 접속: IP주소=%s, 포트번호=%d\n",
 		inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
-
+	
 	//소켓과 입출력 완료 포트 연결
 	CreateIoCompletionPort((HANDLE)client_sock, hcp, client_sock, 0);
 
@@ -93,6 +93,7 @@ bool ServerManager::Update()
 	ptr->recvbytes = ptr->sendbytes = 0;
 	ptr->wsabuf.buf = ptr->buf;
 	ptr->wsabuf.len = BUFSIZE;
+	ServerManager::GetInstance()->InitUser(ptr->sock);
 
 	// 비동기 입출력 시작
 	flags = 0;
@@ -141,14 +142,16 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 			"입력된 비밀번호 : "<< loginPacket.password << ", 실제비밀번호 : " << mapAccounts[loginPacket.ID] << endl;
 		if (mapAccounts.find(loginPacket.ID) == mapAccounts.end()) {
 			//로그인 실패
+			loginRetPacket.data->userIndexInRoom = 99;
 			cout << "로그인 실패" << endl;
 		}
 		else {
 			//비번 틀림
-			if (strcmp(mapAccounts[loginPacket.ID].c_str(), loginPacket.password))
+			if (strcmp(mapAccounts[loginPacket.ID].substr(0, 10).c_str(), loginPacket.password))
 			{
 				//loginRetPacket.isLoginSuccess = false;
 				//loginRetPacket.header.wIndex = PACKET_INDEX_LOGIN_RET;
+				loginRetPacket.data->userIndexInRoom = 99;
 				cout << "비밀번호 틀림" << endl;
 			}
 			// 로그인 성공
@@ -158,6 +161,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 				{
 					if (!strcmp(loginPacket.ID, (const char*)it->second->playerID))
 					{
+						loginRetPacket.data->userIndexInRoom = 99;
 						cout << "이미 로그인 중" << endl;
 						loginRetPacket.header.wLen = sizeof(loginRetPacket);
 						send(sock, (const char*)& loginPacket, header.wLen, 0);
@@ -173,7 +177,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 				//로비에 유저 추가
 				// map<int, list<USER_INFO*>> g_RoomInfo; //0번 로비
 				g_RoomInfo[0].push_back(user);
-				roomIndexes[0]++;
+				loginRetPacket.data->userIndexInRoom = roomIndexes[0]++;
 				cout << "로그인 성공" << endl;
 			}
 		}
@@ -488,6 +492,16 @@ void ServerManager::ClientExit(SOCKET sock)
 	closesocket(sock);
 }
 
+void ServerManager::InitUser(SOCKET sock)
+{
+	USER_INFO* userInfo = new USER_INFO();
+	userInfo->len = 0;
+	strcpy(userInfo->playerID, "?");
+	
+	g_mapUser[sock] = userInfo;
+	//sdg_mapUser[sock]->szBuf = '\0';
+}
+
 DWORD WINAPI WorkerThread(LPVOID arg)
 {
 	ServerManager::GetInstance()->hcp = (HANDLE)arg;
@@ -505,7 +519,7 @@ DWORD WINAPI WorkerThread(LPVOID arg)
 		SOCKADDR_IN clientaddr;
 		int addrlen = sizeof(clientaddr);
 		getpeername(ptr->sock, (SOCKADDR*)& clientaddr, &addrlen);
-
+		
 		//비동기 입출력 결과 확인
 		if (ServerManager::GetInstance()->retval == 0 || cbTransferred == 0) {
 			if (ServerManager::GetInstance()->retval == 0) {
@@ -515,8 +529,7 @@ DWORD WINAPI WorkerThread(LPVOID arg)
 			}
 			//클라이언트 강제 종료
 			ServerManager::GetInstance()->ClientExit(ptr->sock);
-			printf("[TCP 서버] 클라이언트 종료: IP 주소=%s, 포트번호=%d\n",
-				inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
+			printf("[TCP 서버] 클라이언트 종료: IP 주소=%s, 포트번호=%d\n",inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
 			
 			delete ptr;
 			continue;

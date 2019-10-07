@@ -48,6 +48,7 @@ struct USER_DATA
 	WORD roomIndex; //0Àº ·Îºñ
 	char ID[10];
 	char password[10];
+	int userIndexInRoom;
 };
 class USER_INFO
 {
@@ -68,9 +69,10 @@ public:
 struct PACKET_TRY_LOGIN
 {
 	PACKET_HEADER header;
-	int playerNum;
+	WORD playerIndex;
+	WORD playerNum;
 	char ID[10];
-	char password[10];
+	char password[11];
 };
 struct PACKET_TRY_ENTER_THE_ROOM
 {

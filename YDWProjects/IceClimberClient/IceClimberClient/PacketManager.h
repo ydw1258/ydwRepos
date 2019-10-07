@@ -52,7 +52,7 @@ public:
 	void SendEnterTheRoomPacket(int roomIndex);
 	void SendExitTheRoom();
 	void SendGameStart();
-	void SendLogin(char ID[10], char password[10]);
+	void SendLogin(char* ID, char* password);
 	void SendPos(int x, int y);
 	void SendChattingData(char* str);
 
