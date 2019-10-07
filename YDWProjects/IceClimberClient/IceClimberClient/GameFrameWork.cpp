@@ -1,5 +1,5 @@
 #include "GameFrameWork.h"
-#include"GameManager.h"
+#include "IceClimberGameManager.h"
 
 GameFrameWork::GameFrameWork()
 {
@@ -58,7 +58,7 @@ void GameFrameWork::OperateInput()
 				GameManager::GetInstance()->Login();
 				break;
 			case LOBBY:
-			case INGAME:
+			case ROOM_WAIT:
 				GameManager::GetInstance()->InputChatting();
 				break;
 			}

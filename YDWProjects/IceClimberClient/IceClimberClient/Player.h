@@ -17,6 +17,6 @@ public:
 
 	void Move(DIRECTION dir);
 	void Attack();
-	void Jump();
+	void Jump(DIRECTION dir);
 };
 

@@ -1,0 +1,13 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(x64\Debug\)에 다른 프로젝트(OmokProjectClient.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
+  IceClimberGameManager.cpp
+c:\users\administrator\documents\github\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\iceclimbergamemanager.cpp(28): warning C4473: 'sprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+  c:\users\administrator\documents\github\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\iceclimbergamemanager.cpp(28): note: 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+  c:\users\administrator\documents\github\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\iceclimbergamemanager.cpp(28): note: 누락된 variadic 인수 1이(가) 서식 문자열 '%d'에 필요합니다.
+c:\users\administrator\documents\github\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\iceclimbergamemanager.cpp(28): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(1774): note: 'sprintf' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\iceclimbergamemanager.cpp(91): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(1774): note: 'sprintf' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\iceclimbergamemanager.cpp(113): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\documents\github\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\iceclimbergamemanager.cpp(136): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\documents\github\ydwrepos\ydwprojects\iceclimberclient\iceclimberclient\iceclimbergamemanager.cpp(151): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
+  IceClimberClient.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\YDWProjects\IceClimberClient\IceClimberClient\.\Debug\IceClimberClient.exe

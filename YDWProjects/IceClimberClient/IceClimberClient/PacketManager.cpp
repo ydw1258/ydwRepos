@@ -1,10 +1,5 @@
-#include "ServerManager.h"
-#include "ResourceManager.h"
-#include "IMAGENUM.h"
-#include "Physics.h"
-#include "SHA1.h"
-#include <string>
-#include<iostream>
+#include "PacketManager.h"
+#include "IceClimberGameManager.h"
 
 using namespace std;
 #define BUFSIZE 1024
@@ -14,7 +9,7 @@ using namespace std;
 PacketManager* PacketManager::mthis = nullptr;
 
 //여기 부터 서버구조 바뀌면 변경해야할 부분
-void PacketManager::InitConnection()
+void PacketManager::InitConnection(HWND hwnd)
 {
 	//서버한테 데이터 받기
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
@@ -52,51 +47,10 @@ void PacketManager::InitConnection()
 		exit(1);
 	}
 }
-void PacketManager::InputChatting()
+/*
+void PacketManager::ClientExit(POINT pt)//게임 종료 버튼 (보류)
 {
-	if (GetForegroundWindow() != hwnd)
-		return;
-	char str[128];
-
-	switch (scene)
-	{
-	case LOBBY:
-	{
-		PACKET_SEND_INGAME_DATA packet;
-
-		GetWindowText(chatInputBoxLobby, str, 128);
-		//GetWindowText(chatInputBoxLobby, str, 128);
-		packet.header.wIndex = PACKET_INDEX_SEND_CHATTING_LOBBY;
-		packet.header.wLen = sizeof(packet);
-		packet.data.playerNum = playerIndex;
-		strcpy(packet.data.ID, playerID);
-		strcpy(packet.data.chat, str);
-
-		send(g_sock, (const char*)& packet, sizeof(packet), 0);
-		SetWindowText(chatInputBoxLobby, "");
-	}
-	break;
-	case ROOM_WAIT:
-	{
-		PACKET_SEND_INGAME_DATA packet;
-		GetWindowText(chatInputBoxLobby, str, 128);
-		GetWindowText(chatInputBoxIngame, str, 128);
-		//GetWindowText(chatInputBoxLobby, str, 128);
-		packet.header.wIndex = PACKET_INDEX_SEND_CHATTING_INGAME;
-		packet.header.wLen = sizeof(packet);
-		packet.data.playerNum = playerIndex;
-		strcpy(packet.data.ID, playerID);
-		strcpy(packet.data.chat, str);
-
-		send(g_sock, (const char*)& packet, sizeof(packet), 0);
-		SetWindowText(chatInputBoxIngame, "");
-	}
-	break;
-	}
-}
-
-void PacketManager::ClientExit(POINT pt)
-{
+	
 	if (GetForegroundWindow() != hwnd)
 		return;
 
@@ -116,113 +70,7 @@ void PacketManager::ClientExit(POINT pt)
 
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
-void PacketManager::EnterTheRoom(POINT pt)
-{
-	if (GetForegroundWindow() != hwnd)
-		return;
-
-	int i = 0;
-	bool flag = false;
-
-	//i번째에 있는 방번호
-	for (auto it = roomButtons.begin(); it != roomButtons.end(); it++, i++)
-	{
-		if (Physics::GetInstance()->RECTbyPointCollisionCheck(*it, pt))
-		{
-			flag = true;
-			break;
-		}
-	}
-	if (flag == false || mapRoomPlayers[i] == 4)
-		return;
-	char buf[10];
-
-	PACKET_TRY_ENTER_THE_ROOM packet;
-	packet.header.wIndex = PACKET_INDEX_ENTER_THE_ROOM;
-	packet.header.wLen = sizeof(packet);
-	strcpy(packet.playerID, playerID);
-	packet.roomIndex = i + 1;
-
-	send(g_sock, (const char*)& packet, sizeof(packet), 0);
-}
-void PacketManager::ExitTheRoom(POINT pt)
-{
-	if (GetForegroundWindow() != hwnd)
-		return;
-	int i = 0;
-
-	//i번째에 있는 방번호
-	if (!Physics::GetInstance()->RECTbyPointCollisionCheck(roomExitButton, pt) || isGameStart)
-	{
-		return;
-	}
-	char buf[10];
-
-	PACKET_TRY_EXIT_THE_ROOM packet;
-
-	packet.header.wIndex = PACKET_INDEX_EXIT_THE_ROOM;
-	packet.header.wLen = sizeof(packet);
-	packet.roomIndex = roomIndex;
-
-	strcpy(packet.playerID, playerID);
-	send(g_sock, (const char*)& packet, sizeof(packet), 0);
-}
-void PacketManager::GameStart(POINT pt)
-{
-	if (listPlayerID.size() < 2)
-		return;
-	/*if (!isGameStart)
-	{
-		isGameStart = true;
-	}
-	else
-		return;*/
-
-	if (Physics::GetInstance()->RECTbyPointCollisionCheck(startButton, pt))
-	{
-		if (userIndexInRoom != 0)
-		{
-			MessageBox(hwnd, "0번 유저만 시작 가능.", "?", MB_OK);
-			return;
-		}
-		if (isGameStart)
-		{
-			return;
-		}
-		else
-		{
-			isGameStart = true;
-		}
-		//packet
-		PACKET_GAMESTART packet;
-		packet.header.wIndex = PACKET_INDEX_GAMESTART;
-		packet.header.wLen = sizeof(packet);
-		packet.userIndexInRoom = userIndexInRoom;
-		packet.roomIndex = roomIndex;
-
-		send(g_sock, (const char*)& packet, sizeof(packet), 0);
-	}
-}
-void PacketManager::Login()
-{
-	if (GetForegroundWindow() != hwnd)
-		return;
-	char buf[10];
-
-	PACKET_TRY_LOGIN packet;
-	packet.header.wIndex = PACKET_INDEX_LOGIN_RET;
-	packet.header.wLen = sizeof(packet);
-
-	GetWindowText(LOGINInput[0], buf, 10);
-	strcpy(packet.ID, buf);
-	GetWindowText(LOGINInput[1], buf, 10);
-	char hash[11];
-	strcpy(hash, sha1(buf).substr(0, 10).c_str());
-	strcpy(packet.password, hash);
-
-	send(g_sock, (const char*)& packet, sizeof(packet), 0);
-}
-
+*/
 void PacketManager::SendGameExit(int roomIndex)
 {
 	PACKET_GAMEEXIT packet;
@@ -293,6 +141,19 @@ void PacketManager::SendPos(int x, int y)
 	packet.data.wX = x;
 	packet.data.wY = y;
 	packet.data.roomIndex = roomIndex;
+
+	send(g_sock, (const char*)& packet, sizeof(packet), 0);
+}
+
+void PacketManager::SendChattingData(char * str)
+{
+	PACKET_SEND_INGAME_DATA packet;
+
+	packet.header.wIndex = PACKET_INDEX_SEND_CHATTING;
+	packet.header.wLen = sizeof(packet);
+	packet.data.playerNum = playerIndex;
+	strcpy(packet.data.ID, playerID);
+	strcpy(packet.data.chat, str);
 
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
@@ -385,26 +246,6 @@ bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int l
 		itoa(playerIndex, temp, 128);
 	}
 	break;
-	case PACKET_INDEX_LOGIN_RET://로그인 시도
-	{
-		PACKET_TRY_LOGIN packet;
-		memcpy(&packet, szBuf, header.wLen);
-
-		//로그인 성공
-		if (playerIndex != 99)
-		{
-			strcpy(playerID, packet.ID);
-			playerIndex = packet.playerNum;
-			userIndexInRoom = 0;
-			SceneChange(LOBBY);
-			GetPlayersInRoom(0);
-		}
-		else //로그인 실패
-		{
-			//MessageBox(, "로그인 실패", );
-		}
-	}
-	break;
 	case PACKET_INDEX_USER_DATA:
 	{
 		PACKET_USER_DATA packet;
@@ -437,100 +278,83 @@ bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int l
 		isGameStart = true;
 	}
 	break;
-	}
-
-	return true;
-}
-
-//수정 요망
-void func()
-{
-	//리턴 값이 필요한 헤더 함수
-	switch (header.wIndex)
+	case PACKET_INDEX_LOGIN_RET://로그인 시도
 	{
+		PACKET_TRY_LOGIN packet;
+		memcpy(&packet, szBuf, header.wLen);
 
-		break;
+		//로그인 성공
+		if (playerIndex != 99)
+		{
+			strcpy(playerID, packet.ID);
+			playerIndex = packet.playerNum;
+			userIndexInRoom = 0;
+			//IceClimberGameManager::GetInstance()->SceneChange(LOBBY);
+			GetPlayersInRoom(0);
+		}
+		else //로그인 실패
+		{
+			//MessageBox(, "로그인 실패", );
+		}
+	}
+	break;
 	case PACKET_INDEX_SEND_CHATTING:
 	{
 		PACKET_SEND_INGAME_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
-		chatList.push_back(packet.data.chat);
+		//IceClimberGameManager::GetInstance()->chatList.push_back(packet.data.chat);
 	}
 	break;
 	case PACKET_INDEX_GET_PLAYERS:
 	{
 		PACKET_USERSLIST packet;
 		memcpy(&packet, szBuf, header.wLen);
-		listPlayerID.clear();
-		listPlayerID.resize(0);
+		//IceClimberGameManager::GetInstance()->listPlayerID.clear();
+		//IceClimberGameManager::GetInstance()->listPlayerID.resize(0);
 
-		for (int i = 0; i < packet.playerNum; i++)
+		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			listPlayerID.push_back(packet.playerIDs[i]);
+			//IceClimberGameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 
 		//로그인 패킷을 보낸 유저만 서버로 발송
-		if (!strcmp(packet.userID, playerID))
-			GetRooms();
-	}
-	break;
-	case PACKET_INDEX_ENTER_THE_ROOM:
-	{
-		PACKET_TRY_ENTER_THE_ROOM packet;
-		memcpy(&packet, szBuf, header.wLen);
-		if (!packet.isSuccess)
-			return true;
-
-		roomIndex = packet.roomInfo.roomIndex;
-		listPlayerID.clear();
-
-		for (int i = 0; i < packet.playerNum; i++)
-		{
-			listPlayerID.push_back(packet.ID[i]);
-		}
-
-		if (!strcmp(packet.playerID, playerID))
-		{
-			userIndexInRoom = packet.userIndexInRoom;
-			SceneChange(ROOM_WAIT);
-		}
 		if (!strcmp(packet.playerID, playerID))
 			GetRooms();
 	}
 	break;
+	
 	case PACKET_INDEX_GAMEEXIT:
 	{
 		PACKET_USERSLIST packet;
 		memcpy(&packet, szBuf, header.wLen);
 
-		listPlayerID.clear();
-		listPlayerID.resize(0);
-		strcpy(packet.userID, playerID);
-		for (int i = 0; i < packet.playerNum; i++)
+		//IceClimberGameManager::GetInstance()->listPlayerID.clear();
+		//IceClimberGameManager::GetInstance()->listPlayerID.resize(0);
+		strcpy(packet.playerID, playerID);
+		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			listPlayerID.push_back(packet.playerIDs[i]);
+			//IceClimberGameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 		closesocket(wParam);
 	}
+	break;
 	case PACKET_INDEX_ENTER_THE_ROOM:
 	{
 		PACKET_TRY_ENTER_THE_ROOM packet;
 		memcpy(&packet, szBuf, header.wLen);
-		if (!packet.isSuccess)
-			return true;
 
 		roomIndex = packet.roomInfo.roomIndex;
-		listPlayerID.clear();
+		//IceClimberGameManager::GetInstance()->listPlayerID.clear();
 
-		for (int i = 0; i < packet.playerNum; i++)
+		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			listPlayerID.push_back(packet.ID[i]);
+			//IceClimberGameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 
 		if (!strcmp(packet.playerID, playerID))
 		{
 			userIndexInRoom = packet.userIndexInRoom;
-			SceneChange(ROOM_WAIT);
+			//IceClimberGameManager::GetInstance()->SceneChange(ROOM_WAIT);
 		}
 		if (!strcmp(packet.playerID, playerID))
 			GetRooms();
@@ -542,12 +366,12 @@ void func()
 
 		memcpy(&packet, szBuf, header.wLen);
 
-		roomIndex = packet.roomIndex;
-		listPlayerID.clear();
+		roomIndex = packet.roomInfo.roomIndex;
+		//IceClimberGameManager::GetInstance()->listPlayerID.clear();
 
-		for (int i = 0; i < packet.playerNum; i++)
+		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			listPlayerID.push_back(packet.ID[i]);
+			//IceClimberGameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 		userIndexInRoom = 0;
 
@@ -556,37 +380,15 @@ void func()
 		if (!strcmp(packet.playerID, playerID))
 		{
 			userIndexInRoom = packet.userIndexInRoom;
-			SceneChange(LOBBY);
+			//IceClimberGameManager::GetInstance()->SceneChange(LOBBY);
 		}
 		if (!strcmp(packet.playerID, playerID))
 			GetRooms();
 	}
 	break;
-	case PACKET_INDEX_SEND_CHATTING:
-	{
-		PACKET_SEND_INGAME_DATA packet;
-		memcpy(&packet, szBuf, header.wLen);
-		chatList.push_back(packet.data.chat);
 	}
-	break;
-	case PACKET_INDEX_GET_PLAYERS:
-	{
-		PACKET_USERSLIST packet;
-		memcpy(&packet, szBuf, header.wLen);
-		listPlayerID.clear();
-		listPlayerID.resize(0);
 
-		for (int i = 0; i < packet.playerNum; i++)
-		{
-			listPlayerID.push_back(packet.playerIDs[i]);
-		}
-
-		//로그인 패킷을 보낸 유저만 서버로 발송
-		if (!strcmp(packet.userID, playerID))
-			GetRooms();
-	}
-	break;
-	}
+	return true;
 }
 
 void PacketManager::GetPlayersInRoom(int roomNum)
@@ -606,8 +408,8 @@ void PacketManager::GetRooms()
 	packet.header.wLen = sizeof(packet);
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
-PacketManager::PacketManager() {}
 
+PacketManager::PacketManager() {}
 PacketManager::~PacketManager()
 {
 	closesocket(g_sock);

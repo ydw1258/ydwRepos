@@ -3,7 +3,7 @@
 #include <fstream>
 #include "GameFrameWork.h"
 #include "ResourceManager.h"
-
+#include "PacketManager.h"
 using namespace std;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
