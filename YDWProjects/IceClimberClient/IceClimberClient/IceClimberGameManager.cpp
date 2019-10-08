@@ -14,7 +14,7 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 		"Resources\\UI\\UIButton.bmp",
 	};
 	ResourceManager::GetInstance()->Init(hdc, hInstance, filename, 7);
-
+	FontManager::Init();
 	blueboard.Init(IMAGENUM_BLUEBOARD, 1, 300, 111);
 	lobbybackground.Init(IMAGENUM_LOBBYBACKGROUND, 1, 1200, 1000);
 	memoImage.Init(IMAGENUM_MEMO, 1, 600, 1000);
@@ -27,7 +27,7 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 		{
 			UIButton button;
 			char buf[128];
-			sprintf(buf, "방번호 %d", i * ROOMNUM / 2 + j + 1);
+			sprintf(buf, "방번호 %d \n %d / %d", i * ROOMNUM / 2 + j + 1, PacketManager::GetInstance()->mapRoomPlayers[i * ROOMNUM / 2 + j + 1], 4);
 			button.Init(IMAGENUM_BLUEBOARD, 10 + j * 80, 10 + i * 80, 80, 80, buf);
 			roomButtons.push_back(button);
 		}
@@ -91,7 +91,6 @@ void GameManager::Draw(HDC hdc)
 		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
 		//font.Draw(playerID, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 
-		DrawCurUsers(hdc);
 		DrawChatWindow(hdc);
 
 		char buf[128];
@@ -101,7 +100,7 @@ void GameManager::Draw(HDC hdc)
 		playerInfoFont.Draw(buf, 30, 720, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 		roomExitButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
 		startButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
-		
+		DrawCurUsers(hdc);
 		//Rectangle(hdc, startButton.left, startButton.top, startButton.right, startButton.bottom);
 		//Rectangle(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right, gameExitButton.bottom);
 	}
@@ -146,6 +145,20 @@ void GameManager::GameExit(POINT pt)
 
 	PacketManager::GetInstance()->SendGameExit(i + 1);
 }
+void GameManager::RoomButtonUpdate()
+{
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < ROOMNUM / 2; j++)
+		{
+			UIButton button;
+			char buf[128];
+			sprintf(buf, "방번호 %d \n %d / %d", i * ROOMNUM / 2 + j + 1, PacketManager::GetInstance()->mapRoomPlayers[i * ROOMNUM / 2 + j], 4);
+			button.Init(IMAGENUM_BLUEBOARD, 10 + j * 80, 10 + i * 80, 80, 80, buf);
+			roomButtons.push_back(button);
+		}
+	}
+}
 void GameManager::EnterTheRoom(POINT pt)
 {
 	if (GetForegroundWindow() != hwnd)
@@ -163,7 +176,7 @@ void GameManager::EnterTheRoom(POINT pt)
 			break;
 		}
 	}
-	if (flag == false || mapRoomPlayers[i] == 4)
+	if (flag == false || PacketManager::GetInstance()->mapRoomPlayers[i] == 4)
 		return;
 	char buf[10];
 
@@ -281,7 +294,7 @@ void GameManager::DrawChatWindow(HDC hdc)
 	case LOBBY:
 		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
 		{
-			ChattingFont.Draw((*it), 15, 50, 680 - 30 * i, "Resources\\DungGeunMo.ttf", RGB(255, 255, 255));
+			ChattingFont.Draw((*it), 15, 50, 680 - 30 * i, "Resources/DungGeunMo.ttf", RGB(255, 255, 255));
 		}
 		break;
 	case ROOM_WAIT:
@@ -289,7 +302,7 @@ void GameManager::DrawChatWindow(HDC hdc)
 
 		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
 		{
-			ChattingFont.Draw((*it), 15, 760, 680 - 30 * i, "Resources\\DungGeunMo.ttf", RGB(0, 0, 0));
+			ChattingFont.Draw((*it), 15, 760, 680 - 30 * i, "Resources/DungGeunMo.ttf", RGB(0, 0, 0));
 		}
 		break;
 	}
@@ -311,11 +324,12 @@ void GameManager::DrawCurUsers(HDC hdc)
 		}
 		break;
 	case ROOM_WAIT:
-		playerInfoFont.Draw("인게임 플레이어 목록", 20, 730, 200, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
-
+		playerInfoFont.Draw("인게임 플레이어 목록", 20, 730, 150, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		
 		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
 		{
-			playerInfoFont.Draw((*it), 15, 730, 230 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+			//if(it->)
+				playerInfoFont.Draw((*it), 15, 730, 180 + 30 * i, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
 		}
 		break;
 	default:

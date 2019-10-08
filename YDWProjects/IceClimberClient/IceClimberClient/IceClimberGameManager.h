@@ -26,7 +26,7 @@ class GameManager
 {
 private:
 	static GameManager* mthis;
-	map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
+	//map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
 
 	//Lobby
 	list<UIButton> roomButtons;
@@ -54,6 +54,7 @@ public:
 	HINSTANCE hInstance;
 	HWND hwnd;
 	RECT whiteBoard;
+
 	static GameManager* GetInstance()
 	{
 		if (mthis == nullptr)
@@ -78,4 +79,6 @@ public:
 	void ExitTheRoom(POINT pt);
 	void GameStart(POINT pt);
 	void GameExit(POINT pt);
+
+	void RoomButtonUpdate();
 };

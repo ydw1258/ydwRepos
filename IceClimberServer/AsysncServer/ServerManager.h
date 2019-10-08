@@ -1,7 +1,7 @@
 #pragma once
 #include<Winsock2.h>
 #include<Windows.h>
-
+#include<vector>
 #include <iostream>
 #include <string>
 #include <map>
@@ -44,6 +44,9 @@ private:
 
 	SOCKET listen_sock;
 	SOCKADDR_IN serveraddr;
+
+	vector<string> answer;
+	int curTurn = 0;
 public:
 	static ServerManager* GetInstance()
 	{

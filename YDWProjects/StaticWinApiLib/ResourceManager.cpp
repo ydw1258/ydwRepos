@@ -1,4 +1,5 @@
 #include "ResourceManager.h"
+
 #include<iostream>
 using namespace std;
 
@@ -12,7 +13,7 @@ void ResourceManager::Init(HDC hdc, HINSTANCE hInstance, string* fileNames, int 
 
 	backBuffer = bitmap[0].Create(hdc, 1200, 1000);
 	//backBuffer = bitmap[0].Init(hdc, hInstance, blackBackStr.c_str());
-
+	
 	for (int i = 0; i < fileNameCount; i++)
 	{
 		bitmap[i + 1].Init(hdc, hInstance, fileNames[i].c_str());

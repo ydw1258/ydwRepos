@@ -103,10 +103,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		InvalidateRect(hWnd, NULL, false);
 		return 0;
 	case WM_MOUSEMOVE:
-		if (GameManager::GetInstance()->scene != PLAYING)
-			return 0;
-
 		if (bnowDraw == TRUE) {
+			if (GameManager::GetInstance()->scene != PLAYING || !PacketManager::GetInstance()->isMyTurn())
+				return 0;
 			hdc = GetDC(hWnd);
 			DRAWPT pt;
 			pt.startX = x;

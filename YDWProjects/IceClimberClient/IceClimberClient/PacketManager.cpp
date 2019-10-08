@@ -148,12 +148,14 @@ void PacketManager::SendPos(int x, int y)
 void PacketManager::SendChattingData(char * str)
 {
 	PACKET_SEND_INGAME_DATA packet;
-
+	
 	packet.header.wIndex = PACKET_INDEX_SEND_CHATTING;
 	packet.header.wLen = sizeof(packet);
 	packet.data.playerNum = playerIndex;
-	strcpy(packet.data.ID, playerID);
-	strcpy(packet.data.chat, str);
+	//strcpy(packet.data.ID, playerID);
+	memcpy(packet.data.ID, playerID, sizeof(packet.data.ID));
+	//strcpy(packet.data.chat, str);
+	memcpy(packet.data.chat, str, sizeof(packet.data.chat));
 
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
@@ -200,7 +202,6 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 {
 	memcpy(&packetBuf[myLen], szBuf, len);
 	myLen += len;
-
 	cout << "패킷받음." << len << endl;
 
 	// 짧음
@@ -211,8 +212,8 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 	}
 
 	PACKET_HEADER header;
-	memcpy(&header, packetBuf, sizeof(header));
-
+	memcpy(&header, szBuf, sizeof(header));
+	
 	if (myLen < header.wLen)
 	{
 		cout << "패킷받음. header.wLen보다 짧음" << endl;
@@ -227,11 +228,13 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 			<< "header.wIndex: " << header.wIndex << endl;
 	}
 
-	//
-	
+	//왜인지 모르지만 사용
+	//PACKET_USER_DATA packet;
+	//memcpy(&packet, szBuf, header.wLen);
+
 	switch (header.wIndex)
 	{
-	case PACKET_INDEX_FIRST_CONNECT://첫 연결(클라이언트 실행)
+	/*case PACKET_INDEX_FIRST_CONNECT://첫 연결(클라이언트 실행)
 	{
 		PACKET_LOGIN_RET packet;
 		memcpy(&packet, szBuf, header.wLen);
@@ -240,7 +243,7 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		char temp[128];
 		itoa(playerIndex, temp, 128);
 	}
-	break;
+	break;*/
 	case PACKET_INDEX_USER_DATA:
 	{
 		PACKET_USER_DATA packet;
@@ -263,7 +266,9 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		for (int i = 0; i < packet.NumOfRoom; i++)
 		{
 			mapRoomPlayers[packet.roomIndex[i]] = packet.playerNum[i];
+			//방버튼
 		}
+		GameManager::GetInstance()->RoomButtonUpdate();
 	}
 	break;
 	case PACKET_INDEX_GAMESTART:
@@ -271,6 +276,7 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		PACKET_GAMESTART packet;
 		memcpy(&packet, szBuf, header.wLen);
 		isGameStart = true;
+		curTurn = 0;
 		GameManager::GetInstance()->SceneChange(PLAYING);
 	}
 	break;
@@ -351,8 +357,6 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 			userIndexInRoom = packet.userIndexInRoom;
 			GameManager::GetInstance()->SceneChange(ROOM_WAIT);
 		}
-		if (!strcmp(packet.playerID, playerID))
-			GetRooms();
 	}
 	break;
 	case PACKET_INDEX_EXIT_THE_ROOM:
@@ -380,7 +384,7 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 	}
 	break;
 	}
-
+	myLen -= len;
 	return true;
 }
 
@@ -400,6 +404,13 @@ void PacketManager::GetRooms()
 	packet.header.wIndex = PACKET_INDEX_GET_ROOMS;
 	packet.header.wLen = sizeof(packet);
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
+}
+
+bool PacketManager::isMyTurn()
+{
+	if (curTurn == playerIndex)
+		return true;
+	return false;
 }
 
 PacketManager::PacketManager() {}

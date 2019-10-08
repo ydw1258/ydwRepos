@@ -18,20 +18,20 @@ class PacketManager
 {
 private:
 	static PacketManager* mthis;
-	map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
 
 	//서버관련
 	char packetBuf[BUFSIZE];
 	int myLen = 0;
-
-
 
 	int playerIndex = 99;
 	char playerID[10];
 	WSADATA wsa;
 	SOCKADDR_IN serveraddr;
 	SOCKET g_sock;
+	
 public:
+	int curTurn;
+	map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
 	bool isGameStart = false;
 	
 	int userIndexInRoom;
@@ -63,7 +63,7 @@ public:
 	void GetPlayersInRoom(int roomNum); //로비포함 같은 방에 있는 사람 불러오기
 	//void ClientExit(POINT pt);
 	void GetRooms();
-
+	bool isMyTurn();
 	PacketManager();
 	~PacketManager();
 };

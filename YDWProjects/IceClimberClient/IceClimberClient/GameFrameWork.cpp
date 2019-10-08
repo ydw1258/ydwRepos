@@ -37,7 +37,6 @@ void GameFrameWork::Update()
 			switch (GameManager::GetInstance()->scene)
 			{
 			case LOGIN:
-				//GameManager::GetInstance()->Login();
 				break;
 			case LOBBY:
 				GameManager::GetInstance()->EnterTheRoom(pt);
@@ -95,19 +94,7 @@ void GameFrameWork::OperateInput()
 		if (isKeydown)
 			isKeydown = false;
 	}
-	//플레이어 이동, 공격 점프
-	if (GetKeyState(VK_LEFT) & 0x8000)
-	{
-		
-	}
-	if (GetKeyState(VK_RIGHT) & 0x8000)
-	{
-
-	}
-	if (GetKeyState(VK_SPACE) & 0x8000)
-	{
-
-	}
+	
 }
 
 void GameFrameWork::Render()
