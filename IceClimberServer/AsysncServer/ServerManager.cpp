@@ -9,6 +9,7 @@ DWORD WINAPI WorkerThread(LPVOID arg);
 void ServerManager::Init()
 {
 	//메모장에 저장된 계정정보 읽어오기
+	deltaTimeInit();
 	ifstream openFile("accounts.txt");
 	if (openFile.is_open())
 	{
@@ -87,6 +88,9 @@ bool ServerManager::Update()
 {
 	//accept()
 	addrlen = sizeof(clientaddr);
+	//멀티쓰레드로 구현
+
+	//여기서 무한 대기 해버림
 	client_sock = accept(listen_sock, (SOCKADDR*)& clientaddr, &addrlen);
 	if (client_sock == INVALID_SOCKET) {
 		cout << "accept()" <<endl;
@@ -122,6 +126,34 @@ bool ServerManager::Update()
 	}
 	return false;
 }
+void ServerManager::TimerCheck()
+{
+	PACKET_TIMER packet;
+	for (int i = 0; i < ROOMNUM; i++)
+	{
+		if (g_isGameplaying[i])
+		{
+			Timer[i] -= deltaTime;
+			packet.header.wIndex = PACKET_INDEX_TIMER;
+			packet.header.wLen = sizeof(packet);
+			packet.RemainTime = Timer[i];
+			
+			if (Timer[i] < 0)
+			{
+				curTurn++;
+				Timer[i] = TIME_LIMIT;
+			}
+			packet.CurTurn = curTurn;
+			for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
+			{
+				if(it->second->roomIndex == i + 1)
+					send(it->first, (const char*)&packet, packet.header.wLen, 0);
+			}
+		}
+			
+	}
+		
+}
 USER_INFO* ServerManager::GetUserInfo(SOCKETINFO* sock)
 {
 	return g_mapUser[sock->sock];
@@ -144,7 +176,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO_STRING* pUser, char* sz
 
 	if (pUser->len < header.wLen)
 		return false;
-	answer.begin();
+
 	switch (header.wIndex)
 	{
 
@@ -401,7 +433,7 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO_STRING* pUser, char* sz
 		PACKET_GAMESTART packet;
 
 		memcpy(&packet, szBuf, header.wLen);
-		
+		g_isGameplaying[packet.roomInfo.roomIndex] = true;
 		for (auto it2 = g_mapUser.begin(); it2 != g_mapUser.end(); it2++)
 		{
 			send(it2->first, (const char*)& packet, header.wLen, 0);
@@ -523,6 +555,14 @@ void ServerManager::InitUser(SOCKET sock)
 	
 	g_mapUser[sock] = userInfo;
 	//sdg_mapUser[sock]->szBuf = '\0';
+}
+
+void ServerManager::deltaTimeInit()
+{
+	DWORD curTime = timeGetTime();      //현재 시간
+	//deltaTime = 0.015f;
+	deltaTime = (curTime - lastTime) * 0.001f;
+	lastTime = curTime;
 }
 
 DWORD WINAPI WorkerThread(LPVOID arg)

@@ -8,6 +8,7 @@
 #include <fstream>
 #include "..\..\Common\PACKET_HEADER.h"
 #include <list>
+#pragma comment(lib, "winmm.lib")
 using namespace std;
 
 struct USER_INFO_STRING
@@ -24,7 +25,7 @@ struct SOCKETINFO
 	int sendbytes;
 	WSABUF wsabuf;
 };
-
+#define TIME_LIMIT 50
 class ServerManager
 {
 private:
@@ -34,7 +35,9 @@ private:
 	HWND hWnd;
 	int g_iIndex = 0;
 	map<int, list<USER_INFO*>> g_RoomInfo; //0번 로비
-	map<int, bool> g_isGameplaying;
+	map<int, bool> g_isGameplaying; // 0번이 1번방
+	float Timer[ROOMNUM] = { TIME_LIMIT };
+
 	int roomIndexes[ROOMNUM] = { 0 };
 	//
 	SOCKET client_sock;
@@ -47,6 +50,8 @@ private:
 
 	vector<string> answer;
 	int curTurn = 0;
+	DWORD lastTime = timeGetTime();   //마지막 시간(temp변수)
+
 public:
 	static ServerManager* GetInstance()
 	{
@@ -60,12 +65,17 @@ public:
 	
 	
 	bool Update();
+	void TimerCheck();
 	USER_INFO* GetUserInfo(SOCKETINFO* sock);
 
 	bool ProcessPacket(SOCKET sock, USER_INFO_STRING* pUser, char* szBuf, int& len);
 	void ClientExit(SOCKET sock);
 	void InitUser(SOCKET sock);
+
+	float deltaTime; //단위 초
+	void deltaTimeInit();
+	// 델타타임을 구한다.
+	
 	ServerManager();
 	~ServerManager();
 };
-

@@ -23,17 +23,16 @@ private:
 	char packetBuf[BUFSIZE];
 	int myLen = 0;
 
-	int playerIndex = 99;
 	char playerID[10];
 	WSADATA wsa;
 	SOCKADDR_IN serveraddr;
 	SOCKET g_sock;
-	
 public:
+	
 	int curTurn;
 	map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
 	bool isGameStart = false;
-	
+	float remainTime = 99;
 	int userIndexInRoom;
 	int roomIndex;
 	SERVERMANAGER_SCENE scene = LOGIN;
@@ -54,7 +53,7 @@ public:
 	void SendExitTheRoom();
 	void SendGameStart();
 	void SendLogin(char* ID, char* password);
-	void SendPos(int x, int y);
+	void SendPos(DRAWPT pt);
 	void SendChattingData(char* str);
 
 	void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

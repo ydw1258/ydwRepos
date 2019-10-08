@@ -122,6 +122,11 @@ void GameManager::Draw(HDC hdc)
 		roomExitButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
 		startButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
 		
+		FontManager remainTimeFont;
+		int remainTime = PacketManager::GetInstance()->remainTime;
+		sprintf(buf, "남은 시간 : %d", remainTime);
+		remainTimeFont.Draw(buf, 20, 90, 90, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+		cout << buf << endl;
 		Rectangle(hdc, 10, 10, 600, 600);
 		for (auto it = mousepointList.begin(); it != mousepointList.end(); it++)
 		{

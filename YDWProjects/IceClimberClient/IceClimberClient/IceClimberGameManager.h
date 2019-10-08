@@ -14,13 +14,7 @@
 #include "..\..\Common\PACKET_HEADER.h"
 
 using namespace std;
-struct DRAWPT
-{
-	int startX;
-	int startY;
-	int endX;
-	int endY;
-};
+
 
 class GameManager
 {

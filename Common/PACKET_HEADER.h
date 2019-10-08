@@ -10,6 +10,14 @@
 #include <Windows.h>
 #pragma comment(lib, "ws2_32")
 
+struct DRAWPT
+{
+	int startX;
+	int startY;
+	int endX;
+	int endY;
+};
+
 enum SERVERMANAGER_SCENE
 {
 	LOGIN,
@@ -31,6 +39,7 @@ enum PACKET_INDEX
 	PACKET_INDEX_EXIT_THE_ROOM,
 	PACKET_INDEX_GAMESTART,
 	PACKET_INDEX_GAMEEXIT,
+	PACKET_INDEX_TIMER,
 };
 
 struct PACKET_HEADER
@@ -42,8 +51,7 @@ struct PACKET_HEADER
 struct USER_DATA
 {
 	WORD playerNum;
-	WORD wX;
-	WORD wY;
+	DRAWPT DrawPt;
 	char chat[128];
 	WORD roomIndex; //0은 로비
 	char ID[10];
@@ -137,5 +145,11 @@ struct PACKET_GAMESTART
 	ROOM_INFO roomInfo;
 	char playerID[10]; //요청한 플레이어
 	int userIndexInRoom;
+};
+struct PACKET_TIMER
+{
+	PACKET_HEADER header;
+	float RemainTime;
+	WORD CurTurn;
 };
 #pragma pack()
