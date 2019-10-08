@@ -167,7 +167,6 @@
     <ClCompile Include="GameFrameWork.cpp" />
     <ClCompile Include="IceClimberGameManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PacketManager.cpp" />
     <ClCompile Include="SHA1.cpp" />
   </ItemGroup>
@@ -176,7 +175,6 @@
     <ClInclude Include="GameFrameWork.h" />
     <ClInclude Include="IceClimberGameManager.h" />
     <ClInclude Include="IMAGENUM.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="PacketManager.h" />
     <ClInclude Include="SHA1.h" />

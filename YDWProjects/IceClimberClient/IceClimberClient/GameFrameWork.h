@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 #include "IMAGENUM.h"
-#include<Windows.h>
+#include <Windows.h>
 #include "IceClimberGameManager.h"
 
 using namespace std;

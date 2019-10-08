@@ -88,6 +88,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
+	HDC hdc;
+	static int x;
+	static int y;
+	static BOOL bnowDraw = FALSE;
+
 	switch (iMessage)
 	{
 	case WM_DESTROY:
@@ -97,7 +102,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		PacketManager::GetInstance()->ProcessSocketMessage(hWnd, iMessage, wParam, lParam);
 		InvalidateRect(hWnd, NULL, false);
 		return 0;
+	case WM_MOUSEMOVE:
+		if (GameManager::GetInstance()->scene != PLAYING)
+			return 0;
 
+		if (bnowDraw == TRUE) {
+			hdc = GetDC(hWnd);
+			DRAWPT pt;
+			pt.startX = x;
+			pt.startY = y;
+			
+			x = LOWORD(lParam);
+			y = HIWORD(lParam);
+			pt.endX = x;
+			pt.endY = y;
+			POINT checkPt; checkPt.x = x; checkPt.y = y;
+			if(Physics::GetInstance()->RECTbyPointCollisionCheck(GameManager::GetInstance()->whiteBoard, checkPt))
+				GameManager::GetInstance()->mousepointList.push_back(pt);
+			ReleaseDC(hWnd, hdc);
+		}
+		return 0;
+	case WM_LBUTTONUP:
+		bnowDraw = FALSE;
+		return 0;
+	case WM_LBUTTONDOWN:
+		x = LOWORD(lParam);
+		y = HIWORD(lParam);
+		bnowDraw = TRUE;
+		return 0;
 	default:
 		return(DefWindowProc(hWnd, iMessage, wParam, lParam));
 	}

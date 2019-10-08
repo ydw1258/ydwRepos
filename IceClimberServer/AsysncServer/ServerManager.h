@@ -10,7 +10,11 @@
 #include <list>
 using namespace std;
 
-
+struct USER_INFO_STRING
+{
+	char szBuf[BUFSIZE];
+	int len;
+};
 struct SOCKETINFO
 {
 	WSAOVERLAPPED overlapped;
@@ -55,7 +59,7 @@ public:
 	bool Update();
 	USER_INFO* GetUserInfo(SOCKETINFO* sock);
 
-	bool ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, int& len);
+	bool ProcessPacket(SOCKET sock, USER_INFO_STRING* pUser, char* szBuf, int& len);
 	void ClientExit(SOCKET sock);
 	void InitUser(SOCKET sock);
 	ServerManager();

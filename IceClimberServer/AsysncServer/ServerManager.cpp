@@ -114,7 +114,7 @@ USER_INFO* ServerManager::GetUserInfo(SOCKETINFO* sock)
 	return g_mapUser[sock->sock];
 }
 //클라가 보낸 패킷 읽기
-bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, int& len)
+bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO_STRING* pUser, char* szBuf, int& len)
 {
 	if (len > 0)
 	{
@@ -134,23 +134,24 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 
 	switch (header.wIndex)
 	{
+
 	case PACKET_INDEX_LOGIN_RET:
 	{
 		PACKET_TRY_LOGIN loginPacket;
 		memcpy(&loginPacket, szBuf, header.wLen);
-
+		
 		cout << "입력된 ID : " << loginPacket.ID << ", " <<
 			"입력된 비밀번호 : "<< loginPacket.password << ", 실제비밀번호 : " << mapAccounts[loginPacket.ID] << endl;
 		if (mapAccounts.find(loginPacket.ID) == mapAccounts.end()) {
 			//로그인 실패
-			loginPacket.playerIndexInroom = 99;
+			loginPacket.isSuccess = false;
 			cout << "로그인 실패" << endl;
 		}
 		else {
 			//비번 틀림
 			if (strcmp(mapAccounts[loginPacket.ID].substr(0, 10).c_str(), loginPacket.password))
 			{
-				loginPacket.playerIndexInroom = 99;
+				loginPacket.isSuccess = false;
 				cout << "비밀번호 틀림" << endl;
 			}
 			else
@@ -159,10 +160,10 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 				{
 					if (!strcmp(loginPacket.ID, (const char*)it->second->playerID))
 					{
-						loginPacket.playerIndexInroom = 99;
+						loginPacket.isSuccess = false;
 						cout << "이미 로그인 중" << endl;
 						
-						send(sock, (const char*)& loginPacket, header.wLen, 0);
+						send(sock, (const char*)&loginPacket, header.wLen, 0);
 						return false;
 					}
 				}
@@ -170,14 +171,20 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO* pUser, char* szBuf, in
 				USER_INFO *user = new USER_INFO();
 				//g_mapUser[sock]->userID = ;
 				strcpy(user->playerID, loginPacket.ID);
-				strcpy(loginPacket.ID, loginPacket.ID);
 				user->roomIndex = 0;
 				g_mapUser[sock] = user;
 				
 				//로비에 유저 추가
-				// map<int, list<USER_INFO*>> g_RoomInfo; //0번 로비
 				g_RoomInfo[0].push_back(user);
 				loginPacket.playerIndexInroom = roomIndexes[0]++;
+				
+				/*int i = 0;
+				for (auto it = g_RoomInfo[0].begin(); it != g_RoomInfo[0].end(); it++, i++)
+				{
+					strcpy(loginPacket.IDs[i], (char*)(*it)->playerID);
+				}
+				loginPacket.playerNum = i;*/
+				loginPacket.isSuccess = true;
 				cout << "로그인 성공" << endl;
 			}
 		}
@@ -496,6 +503,7 @@ void ServerManager::InitUser(SOCKET sock)
 {
 	USER_INFO* userInfo = new USER_INFO();
 	userInfo->len = 0;
+	userInfo->roomIndex = 99;
 	strcpy(userInfo->playerID, "?");
 	
 	g_mapUser[sock] = userInfo;
@@ -545,8 +553,8 @@ DWORD WINAPI WorkerThread(LPVOID arg)
 			printf("[TCP/%s:%d] %s\n", inet_ntoa(clientaddr.sin_addr),
 				ntohs(clientaddr.sin_port), ptr->buf);
 
-			USER_INFO* pUser = ServerManager::GetInstance()->GetUserInfo(ptr);
-			ServerManager::GetInstance()->ProcessPacket(ptr->sock, pUser, ptr->buf, ptr->recvbytes);
+			USER_INFO_STRING pUser = { 0 };
+			ServerManager::GetInstance()->ProcessPacket(ptr->sock, &pUser, ptr->buf, ptr->recvbytes);
 		}
 		else {
 			ptr->sendbytes += cbTransferred;

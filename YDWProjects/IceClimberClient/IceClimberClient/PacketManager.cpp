@@ -177,6 +177,7 @@ void PacketManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 		char szBuf[BUFSIZE];
 
 		retval = recv(wParam, szBuf, BUFSIZE, 0);
+
 		if (retval == SOCKET_ERROR)
 		{
 			if (WSAGetLastError() != WSAEWOULDBLOCK)
@@ -185,23 +186,7 @@ void PacketManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 			}
 		}
 
-		//구조체 선언
-		USER_INFO_STRING userInfo = { 0 };
-
-		while (true)
-		{
-			if (!ProcessPacket(szBuf, userInfo, retval, wParam))
-			{
-				Sleep(100);
-				//SendMessage(`hWnd, uMsg, wParam, lParam);
-				break;
-			}
-			else
-			{
-				if (userInfo.len < sizeof(PACKET_HEADER))
-					break;
-			}
-		}
+		PacketManager::GetInstance()->ProcessPacket(szBuf, retval, wParam);
 	}
 	break;
 	case FD_CLOSE:
@@ -211,29 +196,39 @@ void PacketManager::ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 	}
 }
 //서버로 부터 받은 데이터
-
-//헤더 리턴 없는거
-bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int len, WPARAM wParam)
+bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 {
-	if (len > 0)
+	memcpy(&packetBuf[myLen], szBuf, len);
+	myLen += len;
+
+	cout << "패킷받음." << len << endl;
+
+	// 짧음
+	if (myLen < sizeof(PACKET_HEADER))
 	{
-		memcpy(&userinfo.szBuf[userinfo.len], szBuf, len);
-		userinfo.len += len;
-		len = 0;
+		cout << "패킷받음. 헤더보다 짧음" << endl;
+		return false;
 	}
 
-	if (userinfo.len < sizeof(PACKET_HEADER))
-		return false;
-
 	PACKET_HEADER header;
-	memcpy(&header, userinfo.szBuf, sizeof(header));
+	memcpy(&header, packetBuf, sizeof(header));
 
-	if (userinfo.len < header.wLen)
+	if (myLen < header.wLen)
+	{
+		cout << "패킷받음. header.wLen보다 짧음" << endl;
 		return false;
+	}
 
-	memcpy(&userinfo.szBuf, &userinfo.szBuf[header.wLen], userinfo.len - header.wLen);
-	userinfo.len -= header.wLen;
+	// 긺
+	if (myLen > header.wLen)
+	{
+		cout << "패킷받음. header.wLen보다 김." << endl;
+		cout << "myLen: " << myLen << " / header.wLen: " << header.wLen
+			<< "header.wIndex: " << header.wIndex << endl;
+	}
 
+	//
+	
 	switch (header.wIndex)
 	{
 	case PACKET_INDEX_FIRST_CONNECT://첫 연결(클라이언트 실행)
@@ -276,6 +271,7 @@ bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int l
 		PACKET_GAMESTART packet;
 		memcpy(&packet, szBuf, header.wLen);
 		isGameStart = true;
+		GameManager::GetInstance()->SceneChange(PLAYING);
 	}
 	break;
 	case PACKET_INDEX_LOGIN_RET:
@@ -284,7 +280,7 @@ bool PacketManager::ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int l
 		memcpy(&packet, szBuf, header.wLen);
 		
 		//로그인 성공
-		if (packet.playerIndexInroom != 99)
+		if (packet.isSuccess)
 		{
 			strcpy(playerID, packet.ID);
 			userIndexInRoom = packet.playerIndexInroom;

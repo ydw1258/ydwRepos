@@ -27,16 +27,18 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 		{
 			UIButton button;
 			char buf[128];
-			sprintf(buf, "방번호 %d", i * ROOMNUM / 2 + j);
+			sprintf(buf, "방번호 %d", i * ROOMNUM / 2 + j + 1);
 			button.Init(IMAGENUM_BLUEBOARD, 10 + j * 80, 10 + i * 80, 80, 80, buf);
 			roomButtons.push_back(button);
 		}
-		
 	}
 	gameExitButton.Init(IMAGENUM_BLUEBOARD, 800, 800, 400, 200, (char *)"게임 종료");
-	startButton.Init(IMAGENUM_BLUEBOARD, 700, 700, 400, 200, (char *)"게임 시작");
-	roomExitButton.Init(IMAGENUM_BLUEBOARD, 600, 600, 400, 200, (char *)"나가기");
-
+	startButton.Init(IMAGENUM_BLUEBOARD, 30, 700, 150, 50, (char *)"게임 시작");
+	roomExitButton.Init(IMAGENUM_BLUEBOARD, 230, 700, 150, 50, (char *)"나가기");
+	whiteBoard.left =10;
+	whiteBoard.top = 10;
+	whiteBoard.right = 600;
+	whiteBoard.bottom = 600;
 	PacketManager::GetInstance()->InitConnection(hwnd);
 	SceneInitiator();
 }
@@ -75,15 +77,17 @@ void GameManager::Draw(HDC hdc)
 		//Draw UI, Images
 		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
 		memoImage.DrawResizedObject(hdc, 600, 80, 400, 600);
-
+		blueboard.DrawResizedObject(hdc, 10, 530, 700, 200);
 		//Rectangle(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right, gameExitButton.bottom);
 		DrawChatWindow(hdc);
 		DrawRooms(hdc);
 		DrawCurUsers(hdc);
+
 	}
 	break;
 	case ROOM_WAIT:
 	{
+		FontManager playerInfoFont;
 		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
 		//font.Draw(playerID, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 
@@ -92,6 +96,7 @@ void GameManager::Draw(HDC hdc)
 
 		char buf[128];
 		PacketManager::GetInstance()->roomIndex;
+		memoImage.DrawResizedObject(hdc, 640, 0, 400, 400);
 		sprintf(buf, "%d 번방 %d번째 유저", PacketManager::GetInstance()->roomIndex, PacketManager::GetInstance()->userIndexInRoom);
 		playerInfoFont.Draw(buf, 30, 720, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 		roomExitButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
@@ -101,13 +106,36 @@ void GameManager::Draw(HDC hdc)
 		//Rectangle(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right, gameExitButton.bottom);
 	}
 	break;
+	case PLAYING:
+	{
+		FontManager playerInfoFont;
+		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
+		//font.Draw(playerID, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+
+		DrawCurUsers(hdc);
+		DrawChatWindow(hdc);
+
+		char buf[128];
+		PacketManager::GetInstance()->roomIndex;
+		memoImage.DrawResizedObject(hdc, 640, 0, 400, 400);
+		sprintf(buf, "%d 번방 %d번째 유저", PacketManager::GetInstance()->roomIndex, PacketManager::GetInstance()->userIndexInRoom);
+		playerInfoFont.Draw(buf, 30, 720, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+		roomExitButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
+		startButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
+		
+		Rectangle(hdc, 10, 10, 600, 600);
+		for (auto it = mousepointList.begin(); it != mousepointList.end(); it++)
+		{
+			MoveToEx(hdc, it->startX, it->startY, NULL);
+			LineTo(hdc, it->endX, it->endY);
+		}
+			
+	}
+	break;
 	}
 }
 void GameManager::GameExit(POINT pt)
 {
-	if (GetForegroundWindow() != hwnd)
-		return;
-
 	int i = 0;
 
 	if (roomExitButton.isButtonClick(pt))
@@ -143,18 +171,14 @@ void GameManager::EnterTheRoom(POINT pt)
 }
 void GameManager::ExitTheRoom(POINT pt)
 {
-	if (GetForegroundWindow() != hwnd)
-		return;
 	int i = 0;
 
 	//i번째에 있는 방번호
 	if (roomExitButton.isButtonClick(pt))
 	{
-		return;
+		PacketManager::GetInstance()->SendExitTheRoom();
 	}
 	char buf[10];
-
-	PacketManager::GetInstance()->SendExitTheRoom();
 }
 void GameManager::GameStart(POINT pt)
 {
@@ -241,14 +265,17 @@ void GameManager::InputChatting()
 }
 void GameManager::MouseButtonCheckInRoom(POINT pt)
 {
+	if (GetForegroundWindow() != hwnd)
+		return;
+
 	ExitTheRoom(pt);
 	GameStart(pt);
+	//MouseDrawInGame(pt);
 }
 
 void GameManager::DrawChatWindow(HDC hdc)
 {
 	int i = 0;
-
 	switch (scene)
 	{
 	case LOBBY:
@@ -302,4 +329,10 @@ void GameManager::DrawRooms(HDC hdc)
 	{
 		it->Draw(hdc, (char*)"Resources\\DungGeunMo.ttf");
 	}
+}
+
+void GameManager::MouseDrawInGame(HDC hdc, POINT pt)
+{
+	MoveToEx(hdc, pt.x, pt.y, NULL);
+
 }

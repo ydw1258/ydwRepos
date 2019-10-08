@@ -53,8 +53,8 @@ struct USER_DATA
 class USER_INFO
 {
 public:
-	WORD playerIndexInRoom;
-	WORD roomIndex;
+	int playerIndexInRoom;
+	int roomIndex;
 	char playerID[10];
 	char szBuf[BUFSIZE];
 	int len;
@@ -71,7 +71,9 @@ struct PACKET_TRY_LOGIN
 	PACKET_HEADER header;
 	WORD playerIndexInroom;
 	WORD playerNum;
+	bool isSuccess;
 	char ID[10];
+	char IDs[20][10];
 	char password[11];
 };
 struct PACKET_TRY_ENTER_THE_ROOM
@@ -124,6 +126,7 @@ struct PACKET_ROOMLIST //여러번 보내는 걸로 변경 예정.
 {
 	PACKET_HEADER header;
 	int NumOfRoom;
+
 	int roomIndex[ROOMNUM];
 	int playerNum[ROOMNUM];
 	bool isPlaying[ROOMNUM];

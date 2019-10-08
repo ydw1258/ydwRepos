@@ -1,5 +1,12 @@
 #include "Player.h"
 
+void Player::Init()
+{
+
+
+	CurSprite = rightStop;
+}
+
 void Player::Move(DIRECTION dir)
 {
 	switch (dir)

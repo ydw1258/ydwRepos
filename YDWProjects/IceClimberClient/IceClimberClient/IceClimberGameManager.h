@@ -14,6 +14,13 @@
 #include "..\..\Common\PACKET_HEADER.h"
 
 using namespace std;
+struct DRAWPT
+{
+	int startX;
+	int startY;
+	int endX;
+	int endY;
+};
 
 class GameManager
 {
@@ -24,7 +31,7 @@ private:
 	//Lobby
 	list<UIButton> roomButtons;
 	UIButton gameExitButton;
-
+	
 	//Room
 	UIButton startButton;
 	UIButton roomExitButton;
@@ -37,7 +44,7 @@ public:
 	//UI
 	list<string> chatList;
 	list<string> listPlayerID;
-
+	list<DRAWPT> mousepointList;
 	SERVERMANAGER_SCENE scene = LOGIN;
 	SpriteRenderer memoImage;
 	SpriteRenderer lobbybackground;
@@ -46,7 +53,7 @@ public:
 	FontManager ChattingFont;
 	HINSTANCE hInstance;
 	HWND hwnd;
-
+	RECT whiteBoard;
 	static GameManager* GetInstance()
 	{
 		if (mthis == nullptr)
@@ -60,7 +67,7 @@ public:
 	void DrawChatWindow(HDC hdc);
 	void DrawCurUsers(HDC hdc);
 	void DrawRooms(HDC hdc);
-
+	void MouseDrawInGame(HDC hdc, POINT pt);
 	void Login();
 	//서버 관련
 	

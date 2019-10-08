@@ -36,6 +36,9 @@ void GameFrameWork::Update()
 			//GameManager::GetInstance()->blackStone.DrawObject(hdc, pt.x, pt.y);
 			switch (GameManager::GetInstance()->scene)
 			{
+			case LOGIN:
+				//GameManager::GetInstance()->Login();
+				break;
 			case LOBBY:
 				GameManager::GetInstance()->EnterTheRoom(pt);
 				//GameManager::GetInstance()->GameExit(pt);
@@ -80,6 +83,8 @@ void GameFrameWork::OperateInput()
 			case ROOM_WAIT:
 				GameManager::GetInstance()->InputChatting();
 				break;
+			case PLAYING:
+				break;
 			}
 			
 			isKeydown = true;
@@ -93,13 +98,13 @@ void GameFrameWork::OperateInput()
 	//플레이어 이동, 공격 점프
 	if (GetKeyState(VK_LEFT) & 0x8000)
 	{
-
+		
 	}
-	if (GetKeyState(VK_LEFT) & 0x8000)
+	if (GetKeyState(VK_RIGHT) & 0x8000)
 	{
 
 	}
-	if (GetKeyState(VK_RIGHT) & 0x8000)
+	if (GetKeyState(VK_SPACE) & 0x8000)
 	{
 
 	}

@@ -13,11 +13,7 @@
 
 using namespace std;
 
-struct USER_INFO_STRING
-{
-	char szBuf[BUFSIZE];
-	int len;
-};
+
 class PacketManager
 {
 private:
@@ -25,6 +21,11 @@ private:
 	map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
 
 	//서버관련
+	char packetBuf[BUFSIZE];
+	int myLen = 0;
+
+
+
 	int playerIndex = 99;
 	char playerID[10];
 	WSADATA wsa;
@@ -57,7 +58,7 @@ public:
 	void SendChattingData(char* str);
 
 	void ProcessSocketMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-	bool ProcessPacket(char* szBuf, USER_INFO_STRING& userinfo, int len, WPARAM wParam);
+	bool ProcessPacket(char* szBuf, int len, WPARAM wParam);
 	void InitConnection(HWND hwnd);
 	void GetPlayersInRoom(int roomNum); //로비포함 같은 방에 있는 사람 불러오기
 	//void ClientExit(POINT pt);
