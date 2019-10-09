@@ -21,7 +21,7 @@ public:
 	}
 
 	void Release();
-	void Init(HDC hdc, HINSTANCE hInstance, string* fileNames, int fileNameCount);
+	void Init(HDC hdc, string* fileNames, int fileNameCount);
 	void Draw(HDC hdc, int x, int y, int cx, int cy, int imageNum);
 	ResourceManager();
 	~ResourceManager();

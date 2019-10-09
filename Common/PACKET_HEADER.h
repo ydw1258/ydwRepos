@@ -122,7 +122,7 @@ struct PACKET_SEND_INGAME_DATA
 {
 	PACKET_HEADER header;
 	USER_DATA data;
-	SERVERMANAGER_SCENE scene;
+	bool answerIsCorrect;
 };
 struct PACKET_USERSLIST
 {
@@ -145,11 +145,15 @@ struct PACKET_GAMESTART
 	ROOM_INFO roomInfo;
 	char playerID[10]; //요청한 플레이어
 	int userIndexInRoom;
+	char answer[10];
 };
 struct PACKET_TIMER
 {
 	PACKET_HEADER header;
 	float RemainTime;
 	WORD CurTurn;
+	bool isNextTurn;
+	char answer[10];
+	bool isGameOver;
 };
 #pragma pack()

@@ -54,14 +54,17 @@ void GameFrameWork::Update()
 	{
 		isLButtonDown = false;
 	}
-
+	if (PacketManager::GetInstance()->isGameStart)
+	{
+		GameManager::GetInstance()->TimeCheck(m_fElapseTime);
+	}
 	std::chrono::duration<float> sec = std::chrono::system_clock::now() - m_LastTime;
 	/*if (sec.count() < (1 / FPS))
 		return;*/
 
 	m_fElapseTime = sec.count();
 	m_LastTime = std::chrono::system_clock::now();
-
+	
 	OperateInput();
 	Render();
 }

@@ -7,13 +7,30 @@ using namespace std;
 
 GameManager * GameManager::mthis = nullptr;
 
+void GameManager::whiteBoardDraw(DRAWPT drawPt)
+{
+	//이후 rgb도 받아서 처리 해야 함
+	HPEN pen, oPen;
+
+	//pen = CreatePen(PS_SOLID, width, RGB(r, g, b));
+	pen = CreatePen(PS_SOLID, 10, RGB(0, 0, 0));
+	
+	oPen = (HPEN)SelectObject(whiteBoardImage.GetmemDC(), pen);
+
+	MoveToEx(whiteBoardImage.GetmemDC(), drawPt.startX, drawPt.startY, NULL);
+	LineTo(whiteBoardImage.GetmemDC(), drawPt.endX, drawPt.endY);
+
+	SelectObject(whiteBoardImage.GetmemDC(), oPen);
+	DeleteObject(pen);
+}
+
 void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 {
 	hwnd = _hwnd;
 	string filename[7] = { "Resources\\UI\\blueBoard.bmp","Resources\\UI\\lobbybackground.bmp","Resources\\UI\\memo.bmp",
 		"Resources\\UI\\UIButton.bmp",
 	};
-	ResourceManager::GetInstance()->Init(hdc, hInstance, filename, 7);
+	ResourceManager::GetInstance()->Init(hdc, filename, 7);
 	FontManager::Init();
 	blueboard.Init(IMAGENUM_BLUEBOARD, 1, 300, 111);
 	lobbybackground.Init(IMAGENUM_LOBBYBACKGROUND, 1, 1200, 1000);
@@ -39,7 +56,20 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 	whiteBoard.top = 10;
 	whiteBoard.right = 600;
 	whiteBoard.bottom = 600;
+
+	whiteBoardImage.Init(hdc, 600, 600);
+	/*PAINTSTRUCT ps;
+	HBRUSH MyBrush, OldBrush;
+
+	hdc = BeginPaint(hwnd, &ps);
+	MyBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	OldBrush = (HBRUSH)SelectObject(hdc, MyBrush);
+	SelectObject(hdc, OldBrush);
+
+	EndPaint(hwnd, &ps);*/
+
 	PacketManager::GetInstance()->InitConnection(hwnd);
+
 	SceneInitiator();
 }
 //씬 전환시 UI들 재배치
@@ -78,7 +108,7 @@ void GameManager::Draw(HDC hdc)
 		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
 		memoImage.DrawResizedObject(hdc, 600, 80, 400, 600);
 		blueboard.DrawResizedObject(hdc, 10, 530, 700, 200);
-		//Rectangle(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right, gameExitButton.bottom);
+
 		DrawChatWindow(hdc);
 		DrawRooms(hdc);
 		DrawCurUsers(hdc);
@@ -118,25 +148,33 @@ void GameManager::Draw(HDC hdc)
 		PacketManager::GetInstance()->roomIndex;
 		memoImage.DrawResizedObject(hdc, 640, 0, 400, 400);
 		sprintf(buf, "%d 번방 %d번째 유저", PacketManager::GetInstance()->roomIndex, PacketManager::GetInstance()->userIndexInRoom);
-		playerInfoFont.Draw(buf, 30, 720, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+		playerInfoFont.Draw(buf, 30, 720, 100, "Resources/DungGeunMo.ttf", RGB(255, 0, 0));
 		roomExitButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
 		startButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
-		
-		FontManager remainTimeFont;
-		int remainTime = PacketManager::GetInstance()->remainTime;
-		sprintf(buf, "남은 시간 : %d", remainTime);
-		remainTimeFont.Draw(buf, 20, 90, 90, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
-		cout << buf << endl;
 		Rectangle(hdc, 10, 10, 600, 600);
+
+		FontManager remainTimeFont;
+		
+		sprintf(buf, "남은 시간 : %f", remainTime);
+		remainTimeFont.Draw(buf, 20, 30, 30, "Resources/DungGeunMo.ttf", RGB(255, 0, 0));
+
+		cout << buf << endl;
+		whiteBoardImage.Draw(hdc, 10, 10, 600, 600);
+		
+		/*
 		for (auto it = mousepointList.begin(); it != mousepointList.end(); it++)
 		{
 			MoveToEx(hdc, it->startX, it->startY, NULL);
 			LineTo(hdc, it->endX, it->endY);
 		}
-			
+		*/
 	}
 	break;
 	}
+}
+void GameManager::TimeCheck(float deltaTime)
+{
+	remainTime -= deltaTime;
 }
 void GameManager::GameExit(POINT pt)
 {
@@ -200,8 +238,8 @@ void GameManager::ExitTheRoom(POINT pt)
 }
 void GameManager::GameStart(POINT pt)
 {
-	//if (listPlayerID.size() < 2)
-	//		return;
+//	if (listPlayerID.size() < 2)
+		//return;
 	
 	if (startButton.isButtonClick(pt))
 	{

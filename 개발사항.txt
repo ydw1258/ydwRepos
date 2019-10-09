@@ -1,0 +1,93 @@
+//강제종료 유저
+			PACKET_USERSLIST packet;
+			packet.header.wIndex = PACKET_INDEX_GAMEEXIT;
+			packet.header.wLen = sizeof(packet);
+			packet.roomIndex = g_mapUser[wParam]->roomIndex;
+			
+			//해당 방에서 제거
+			for (auto it = g_RoomInfo[g_mapUser[wParam]->roomIndex].begin(); it != g_RoomInfo[g_mapUser[wParam]->roomIndex].end(); it++)
+			{
+				if (!strcmp((*it)->userID, g_mapUser[wParam]->userID))
+				{
+					g_RoomInfo[g_mapUser[wParam]->roomIndex].erase(it);
+					break;
+				}
+			}
+
+			int i = 0;
+			for (auto it = g_RoomInfo[g_mapUser[wParam]->roomIndex].begin(); it != g_RoomInfo[g_mapUser[wParam]->roomIndex].end(); it++, i++)
+			{
+				strcpy(packet.playerIDs[i], (*it)->userID);
+			}
+			packet.playerNum = i;
+
+			for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
+			{
+				if (it->second->roomIndex == g_mapUser[wParam]->roomIndex)
+				{
+					send(it->first, (const char*)& packet, packet.header.wLen, 0);
+				}
+			}
+			
+			//방 에서 유저 강종
+			if (g_mapUser[wParam]->roomIndex != 0)
+			{
+				PACKET_ROOMLIST packet;
+				packet.header.wIndex = PACKET_INDEX_GET_ROOMS;
+				packet.header.wLen = sizeof(packet);
+				//고정 방 6개
+				for (int i = 0; i < 6; i++)
+				{
+					packet.roomIndex[i] = i;
+					packet.playerNum[i] = g_RoomInfo[i + 1].size();
+				}
+				packet.NumOfRoom = 6; //테스트용
+
+				for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
+				{
+					if (it->second->roomIndex == 0)
+						send(it->first, (const char*)&packet, packet.header.wLen, 0);
+				}
+			}
+			//유저맵에서 제거
+			g_mapUser.erase(wParam);
+			closesocket(wParam);
+
+
+
+
+
+
+//연결 요청한 클라 받기
+
+addrlen = sizeof(clientaddr);
+		client_sock = accept(wParam, (SOCKADDR*)&clientaddr, &addrlen);
+
+		if (client_sock == INVALID_SOCKET)
+		{
+			int err_code = WSAGetLastError();
+			if (err_code != WSAEWOULDBLOCK)
+			{
+				err_display("err on accept");
+			}
+			return;
+		}
+		printf("[TCP 서버] 클라이언트 접속 : IP 주소 = %s , 포트번호 = %d\n", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
+
+		retval = WSAAsyncSelect(client_sock, hWnd, WM_SOCKET, FD_READ | FD_CLOSE);
+		if (retval == SOCKET_ERROR)
+		{
+			cout << "err on WSAAsyncSelect!!" << endl;
+		}
+		//연결 시도한 클라에게 index할당
+		USER_INFO* pInfo = new USER_INFO();
+		pInfo->index = g_iIndex++;
+		pInfo->len = 0;
+		g_mapUser.insert(make_pair(client_sock, pInfo));
+
+		PACKET_LOGIN_RET packet;
+		packet.header.wIndex = PACKET_INDEX_FIRST_CONNECT;
+		packet.header.wLen = sizeof(packet);
+		packet.iIndex = pInfo->index;
+		send(client_sock, (const char*)&packet, packet.header.wLen, 0);
+

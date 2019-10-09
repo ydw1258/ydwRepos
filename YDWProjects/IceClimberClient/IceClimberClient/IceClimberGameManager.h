@@ -14,14 +14,14 @@
 #include "..\..\Common\PACKET_HEADER.h"
 
 using namespace std;
-
+#define TIME_LIMIT 30
 
 class GameManager
 {
 private:
 	static GameManager* mthis;
 	//map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
-
+	float remainTime = TIME_LIMIT;
 	//Lobby
 	list<UIButton> roomButtons;
 	UIButton gameExitButton;
@@ -34,11 +34,13 @@ private:
 	HWND chatInputBoxInRoom;
 	HWND LOGINInput[2];
 	SpriteRenderer blueboard;
+	
 public:
+	BitMap whiteBoardImage;
 	//UI
 	list<string> chatList;
 	list<string> listPlayerID;
-	list<DRAWPT> mousepointList;
+	//list<DRAWPT> mousepointList;
 	SERVERMANAGER_SCENE scene = LOGIN;
 	SpriteRenderer memoImage;
 	SpriteRenderer lobbybackground;
@@ -47,7 +49,9 @@ public:
 	FontManager ChattingFont;
 	HINSTANCE hInstance;
 	HWND hwnd;
-	RECT whiteBoard;
+	RECT whiteBoard;//
+
+	void whiteBoardDraw(DRAWPT drawPt);
 
 	static GameManager* GetInstance()
 	{
@@ -56,6 +60,7 @@ public:
 		return mthis;
 	}
 	void Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd);
+	
 	void Draw(HDC hdc);
 	void MouseButtonCheckInRoom(POINT pt);
 
@@ -75,4 +80,6 @@ public:
 	void GameExit(POINT pt);
 
 	void RoomButtonUpdate();
+
+	void TimeCheck(float deltaTime);
 };

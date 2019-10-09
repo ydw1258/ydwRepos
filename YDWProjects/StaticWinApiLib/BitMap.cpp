@@ -6,7 +6,33 @@ BitMap::~BitMap()
 	Release();
 }
 
-void BitMap::Init(HDC hdc, HINSTANCE hInst, LPCSTR path)
+void BitMap::Init(HDC hdc, int cx, int cy)
+{
+	memDC = CreateCompatibleDC(hdc);
+	hBitmap = CreateCompatibleBitmap(hdc, cx, cy);
+	hOldBitMap = (HBITMAP)SelectObject(memDC, hBitmap);
+
+	BITMAP bitmap;
+	GetObject(hBitmap, sizeof(bitmap), &bitmap);
+	bitmapSize.cx = bitmap.bmWidth;
+	bitmapSize.cy = bitmap.bmHeight;
+	
+	//흰색으로 초기화
+	HPEN pen, oPen;
+
+	//pen = CreatePen(PS_SOLID, width, RGB(r, g, b));
+	pen = CreatePen(PS_SOLID, 3000, RGB(255, 255, 255));
+
+	oPen = (HPEN)SelectObject(GetmemDC(), pen);
+
+	MoveToEx(GetmemDC(),0, 0, NULL);
+	LineTo(GetmemDC(), 1, 1);
+
+	SelectObject(GetmemDC(), oPen);
+	DeleteObject(pen);
+}
+
+void BitMap::Init(HDC hdc, LPCSTR path)
 {
 	memDC = CreateCompatibleDC(hdc);
 	//m_hBitMap = LoadBitmap(hInst, MAKEINTRESOURCE(id));

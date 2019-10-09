@@ -1,15 +1,19 @@
 #include "ServerManager.h"
+#include <time.h>
+
 ServerManager* ServerManager::mthis = nullptr;
 
 ServerManager::ServerManager(){}
 ServerManager::~ServerManager(){}
 DWORD WINAPI WorkerThread(LPVOID arg);
+
 #define _WINSOCKAPI_
 
 void ServerManager::Init()
 {
+	srand(time(NULL));
+
 	//메모장에 저장된 계정정보 읽어오기
-	deltaTimeInit();
 	ifstream openFile("accounts.txt");
 	if (openFile.is_open())
 	{
@@ -62,11 +66,18 @@ void ServerManager::Init()
 			return;
 		CloseHandle(hThread);
 	}
+	
 
 	//socket()
 	listen_sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (listen_sock == INVALID_SOCKET)
 		cout << "socket()" << endl;
+
+	//
+	u_long on = 1;
+	retval = ioctlsocket(listen_sock, FIONBIO, &on);
+	if (retval == SOCKET_ERROR)
+		cout << "ioctlsocket()" << endl;
 
 	//bind()
 	serveraddr;
@@ -86,14 +97,17 @@ void ServerManager::Init()
 
 bool ServerManager::Update()
 {
+ACCEPT_AGAIN:
+	TimerCheck();
 	//accept()
 	addrlen = sizeof(clientaddr);
-	//멀티쓰레드로 구현
-
-	//여기서 무한 대기 해버림
+	
+	//비동기로 구현됨
 	client_sock = accept(listen_sock, (SOCKADDR*)& clientaddr, &addrlen);
 	if (client_sock == INVALID_SOCKET) {
-		cout << "accept()" <<endl;
+		//cout << "accept()" <<endl;
+		if (WSAGetLastError() == WSAEWOULDBLOCK)
+			goto ACCEPT_AGAIN;
 		return true;
 	}
 	printf("[TCP서버] 클라이언트 접속: IP주소=%s, 포트번호=%d\n",
@@ -126,33 +140,65 @@ bool ServerManager::Update()
 	}
 	return false;
 }
+
 void ServerManager::TimerCheck()
 {
+	
+	//timer Update
+	std::chrono::duration<float> sec = std::chrono::system_clock::now() - m_LastTime;
+	
+	m_fElapseTime = sec.count();
+	m_LastTime = std::chrono::system_clock::now();
+
+
 	PACKET_TIMER packet;
+
 	for (int i = 0; i < ROOMNUM; i++)
 	{
 		if (g_isGameplaying[i])
 		{
-			Timer[i] -= deltaTime;
+			Timer[i] -= m_fElapseTime;
 			packet.header.wIndex = PACKET_INDEX_TIMER;
 			packet.header.wLen = sizeof(packet);
 			packet.RemainTime = Timer[i];
-			
+			packet.isNextTurn = false;
+			packet.isGameOver = false;
 			if (Timer[i] < 0)
 			{
-				curTurn++;
+				ROTATION++;
+				if (ROTATION == MAX_ROTATION)
+				{
+					packet.isGameOver = true;
+					g_isGameplaying[i] = false;
+					return;
+				}
+					
+				if (curTurn == g_RoomInfo.size())
+					curTurn = 0;
+				else
+					curTurn++;
 				Timer[i] = TIME_LIMIT;
-			}
-			packet.CurTurn = curTurn;
-			for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
-			{
-				if(it->second->roomIndex == i + 1)
-					send(it->first, (const char*)&packet, packet.header.wLen, 0);
+				packet.isNextTurn = true;
+
+				int answerIndex = rand() % answer.size();
+				auto it = answer.begin();
+
+				for (int i = 0; i < answerIndex; i++)
+				{
+					it++;
+				}
+				
+				strcpy(packet.answer, it->c_str());
+				packet.CurTurn = curTurn;
+
+				for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
+				{
+					if (it->second->roomIndex == i + 1)
+						send(it->first, (const char*)& packet, packet.header.wLen, 0);
+				}
 			}
 		}
-			
 	}
-		
 }
 USER_INFO* ServerManager::GetUserInfo(SOCKETINFO* sock)
 {
@@ -262,7 +308,15 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO_STRING* pUser, char* sz
 		
 		cout << packet.data.chat << "온거" << endl;
 		cout << packet.data.ID << "온거" << endl;
-
+		//채팅한 유저의 방이 플레이 중이면
+		if (g_isGameplaying[packet.data.roomIndex])
+		{
+			//정답체크
+			if (strcmp(packet.data.chat, curAnswer))
+			{
+				packet.answerIsCorrect = true;
+			}
+		}
 		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
 		{
 			if (iter->second->roomIndex != g_mapUser[sock]->roomIndex)
@@ -557,14 +611,6 @@ void ServerManager::InitUser(SOCKET sock)
 	//sdg_mapUser[sock]->szBuf = '\0';
 }
 
-void ServerManager::deltaTimeInit()
-{
-	DWORD curTime = timeGetTime();      //현재 시간
-	//deltaTime = 0.015f;
-	deltaTime = (curTime - lastTime) * 0.001f;
-	lastTime = curTime;
-}
-
 DWORD WINAPI WorkerThread(LPVOID arg)
 {
 	ServerManager::GetInstance()->hcp = (HANDLE)arg;
@@ -602,7 +648,7 @@ DWORD WINAPI WorkerThread(LPVOID arg)
 		if (ptr->recvbytes == 0) {
 			ptr->recvbytes = cbTransferred;
 			ptr->sendbytes = 0;
-
+			
 			//받은 데이터 출력
 			ptr->buf[ptr->recvbytes] = '\0';
 			printf("[TCP/%s:%d] %s\n", inet_ntoa(clientaddr.sin_addr),

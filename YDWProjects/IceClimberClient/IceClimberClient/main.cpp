@@ -11,7 +11,6 @@ HINSTANCE g_hInst;
 HWND hWnd;
 LPCTSTR lpszClass = TEXT("OmokClient");
 GameFrameWork g_GameFrame;
-SOCKET g_sock;
 
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #pragma comment(lib, "msimg32.lib")
@@ -80,7 +79,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	
 	 g_GameFrame.Release();
 
-	closesocket(g_sock);
+	//closesocket();
 	WSACleanup();
 
 	return (int)Message.wParam;
@@ -106,6 +105,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		if (bnowDraw == TRUE) {
 			if (GameManager::GetInstance()->scene != PLAYING || !PacketManager::GetInstance()->isMyTurn())
 				return 0;
+			
 			hdc = GetDC(hWnd);
 			DRAWPT pt;
 			pt.startX = x;
@@ -116,8 +116,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			pt.endX = x;
 			pt.endY = y;
 			POINT checkPt; checkPt.x = x; checkPt.y = y;
-			if(Physics::GetInstance()->RECTbyPointCollisionCheck(GameManager::GetInstance()->whiteBoard, checkPt))
-				GameManager::GetInstance()->mousepointList.push_back(pt);
+			if (Physics::GetInstance()->RECTbyPointCollisionCheck(GameManager::GetInstance()->whiteBoard, checkPt))
+			{
+				PacketManager::GetInstance()->SendPos(pt);
+			}
 			ReleaseDC(hWnd, hdc);
 		}
 		return 0;

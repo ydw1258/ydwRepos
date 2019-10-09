@@ -101,7 +101,7 @@ void PacketManager::SendExitTheRoom()
 	packet.header.wIndex = PACKET_INDEX_EXIT_THE_ROOM;
 	packet.header.wLen = sizeof(packet);
 	packet.roomInfo.roomIndex = roomIndex;
-
+	
 	strcpy(packet.playerID, playerID);
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
@@ -114,6 +114,8 @@ void PacketManager::SendGameStart()
 	packet.userIndexInRoom = userIndexInRoom;
 	packet.roomInfo.roomIndex = roomIndex;
 
+	if (userIndexInRoom == 0)
+		strcpy(answer, packet.answer);
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
 
@@ -154,7 +156,7 @@ void PacketManager::SendChattingData(char *str)
 	memcpy(packet.data.ID, playerID, sizeof(packet.data.ID));
 	//strcpy(packet.data.chat, str);
 	memcpy(packet.data.chat, str, sizeof(packet.data.chat));
-
+	
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
 
@@ -243,7 +245,9 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		PACKET_SEND_INGAME_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
 		
-		GameManager::GetInstance()->mousepointList.push_back(packet.data.DrawPt);
+		//GameManager::GetInstance()->mousepointList.push_back(packet.data.DrawPt);
+		
+		GameManager::GetInstance()->whiteBoardDraw(packet.data.DrawPt); // r, g, b, width //아직 rgb없이
 	}
 	break;
 	case PACKET_INDEX_GET_ROOMS:
@@ -265,6 +269,7 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		memcpy(&packet, szBuf, header.wLen);
 		isGameStart = true;
 		curTurn = 0;
+		score = 0;
 		GameManager::GetInstance()->SceneChange(PLAYING);
 	}
 	break;
@@ -283,7 +288,7 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		}
 		else //로그인 실패
 		{
-			MessageBox(hwnd, "고오","로그인 실패", MB_OK);
+			MessageBox(hwnd, "?","로그인 실패", MB_OK);
 		}
 	}
 	break;
@@ -292,6 +297,12 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		PACKET_SEND_INGAME_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
 		GameManager::GetInstance()->chatList.push_back(packet.data.chat);
+
+		if (packet.answerIsCorrect && !strcmp(packet.data.ID, playerID))
+		{
+			//정답자
+			score++;
+		}
 	}
 	break;
 	case PACKET_INDEX_GET_PLAYERS:
@@ -320,6 +331,7 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		GameManager::GetInstance()->listPlayerID.clear();
 		GameManager::GetInstance()->listPlayerID.resize(0);
 		strcpy(packet.playerID, playerID);
+
 		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
 			GameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
@@ -378,7 +390,6 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		PACKET_TIMER packet;
 		memcpy(&packet, szBuf, header.wLen);
 		curTurn = packet.CurTurn;
-		remainTime = packet.RemainTime;
 	}
 	break;
 	}

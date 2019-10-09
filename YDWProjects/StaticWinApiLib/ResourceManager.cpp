@@ -6,7 +6,7 @@ using namespace std;
 ResourceManager* ResourceManager::mthis = nullptr;
 BitMap* ResourceManager::backBuffer = nullptr;
 
-void ResourceManager::Init(HDC hdc, HINSTANCE hInstance, string* fileNames, int fileNameCount)
+void ResourceManager::Init(HDC hdc, string* fileNames, int fileNameCount)
 {
 	//"BattleResource/__empty.bmp",
 	bitmap = new BitMap[50];
@@ -16,7 +16,7 @@ void ResourceManager::Init(HDC hdc, HINSTANCE hInstance, string* fileNames, int 
 	
 	for (int i = 0; i < fileNameCount; i++)
 	{
-		bitmap[i + 1].Init(hdc, hInstance, fileNames[i].c_str());
+		bitmap[i + 1].Init(hdc, fileNames[i].c_str());
 	}
 }
 

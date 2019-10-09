@@ -13,26 +13,24 @@
 
 using namespace std;
 
-
 class PacketManager
 {
 private:
 	static PacketManager* mthis;
 
 	//서버관련
+	int score = 0;
 	char packetBuf[BUFSIZE];
 	int myLen = 0;
-
+	char answer[10];
 	char playerID[10];
 	WSADATA wsa;
 	SOCKADDR_IN serveraddr;
 	SOCKET g_sock;
 public:
-	
 	int curTurn;
 	map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
 	bool isGameStart = false;
-	float remainTime = 99;
 	int userIndexInRoom;
 	int roomIndex;
 	SERVERMANAGER_SCENE scene = LOGIN;
