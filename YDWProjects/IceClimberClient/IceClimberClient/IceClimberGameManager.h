@@ -38,6 +38,7 @@ private:
 	HPEN pen, oPen;
 	PenInfo penInfo[PENCOLORNUM]; //rgb만 사용
 	vector<RECT> lcolorPen;
+
 	//17개
 	/*blackPen;
 	whitePen;

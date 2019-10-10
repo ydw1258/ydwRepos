@@ -14,6 +14,8 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 		"Resources\\UI\\UIButton.bmp",
 	};
 	ResourceManager::GetInstance()->Init(hdc, filename, 7);
+
+
 	FontManager::Init();
 	blueboard.Init(IMAGENUM_BLUEBOARD, 1, 300, 111);
 	lobbybackground.Init(IMAGENUM_LOBBYBACKGROUND, 1, 1200, 1000);
@@ -35,18 +37,9 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 	gameExitButton.Init(IMAGENUM_BLUEBOARD, 800, 800, 400, 200, (char *)"게임 종료");
 	startButton.Init(IMAGENUM_BLUEBOARD, 30, 700, 150, 50, (char *)"게임 시작");
 	roomExitButton.Init(IMAGENUM_BLUEBOARD, 230, 700, 150, 50, (char *)"나가기");
-	whiteBoard= { 10, 10, 600, 600 };
+	whiteBoard = { 10, 10, 600, 600 };
 
 	whiteBoardImage.Init(hdc, 600, 600);
-	/*PAINTSTRUCT ps;
-	HBRUSH MyBrush, OldBrush;
-
-	hdc = BeginPaint(hwnd, &ps);
-	MyBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	OldBrush = (HBRUSH)SelectObject(hdc, MyBrush);
-	SelectObject(hdc, OldBrush);
-
-	EndPaint(hwnd, &ps);*/
 	PenInit();
 	
 	PacketManager::GetInstance()->InitConnection(hwnd);
@@ -371,7 +364,7 @@ void GameManager::DrawChatWindow(HDC hdc)
 	case LOBBY:
 		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
 		{
-			ChattingFont.Draw(hdc, (*it), 15, 50, 680 - 30 * i, "Resources/DungGeunMo.ttf", RGB(255, 255, 255));
+			ChattingFont.Draw(hdc, (*it), 15, 50, 680 - 30 * i, "Resource\DungGeunMo.ttf", RGB(255, 255, 255));
 		}
 		break;
 	case ROOM_WAIT:
@@ -379,7 +372,7 @@ void GameManager::DrawChatWindow(HDC hdc)
 
 		for (auto it = chatList.rbegin(); it != chatList.rend(); it++, i++)
 		{
-			ChattingFont.Draw(hdc, (*it), 15, 760, 680 - 30 * i, "Resources/DungGeunMo.ttf", RGB(0, 0, 0));
+			ChattingFont.Draw(hdc, (*it), 15, 760, 680 - 30 * i, "Resource\DungGeunMo.ttf", RGB(0, 0, 0));
 		}
 		break;
 	}
@@ -393,7 +386,7 @@ void GameManager::DrawCurUsers(HDC hdc)
 	case LOGIN:
 		break;
 	case LOBBY:
-		playerInfoFont.Draw(hdc, "로비 플레이어 목록", 20, 700, 260, "Resources/oldgameFont.ttf", RGB(0, 0, 0));
+		playerInfoFont.Draw(hdc, "로비 플레이어 목록", 20, 700, 260, "Resource\\DungGeunMo.ttf", RGB(0, 0, 0));
 
 		for (auto it = listPlayerID.begin(); it != listPlayerID.end(); it++, i++)
 		{
