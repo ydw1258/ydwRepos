@@ -17,6 +17,13 @@ struct DRAWPT
 	int endX;
 	int endY;
 };
+struct PenInfo
+{
+	WORD penSize;
+	WORD r;
+	WORD g;
+	WORD b;
+};
 
 enum SERVERMANAGER_SCENE
 {
@@ -52,6 +59,7 @@ struct USER_DATA
 {
 	WORD playerNum;
 	DRAWPT DrawPt;
+	PenInfo penInfo;
 	char chat[128];
 	WORD roomIndex; //0은 로비
 	char ID[10];
@@ -147,12 +155,10 @@ struct PACKET_GAMESTART
 	int userIndexInRoom;
 	char answer[10];
 };
-struct PACKET_TIMER
+struct PACKET_TIMER //타이머 종료시 발송
 {
 	PACKET_HEADER header;
-	float RemainTime;
 	WORD CurTurn;
-	bool isNextTurn;
 	char answer[10];
 	bool isGameOver;
 };

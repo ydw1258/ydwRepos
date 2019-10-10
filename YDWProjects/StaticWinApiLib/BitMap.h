@@ -16,7 +16,6 @@ public:
 	HDC GetmemDC();
 	BitMap* Create(HDC hdc, int sizeX, int sizeY);
 
-
 	BitMap();
 	~BitMap();
 };

@@ -7,23 +7,6 @@ using namespace std;
 
 GameManager * GameManager::mthis = nullptr;
 
-void GameManager::whiteBoardDraw(DRAWPT drawPt)
-{
-	//이후 rgb도 받아서 처리 해야 함
-	HPEN pen, oPen;
-
-	//pen = CreatePen(PS_SOLID, width, RGB(r, g, b));
-	pen = CreatePen(PS_SOLID, 10, RGB(0, 0, 0));
-	
-	oPen = (HPEN)SelectObject(whiteBoardImage.GetmemDC(), pen);
-
-	MoveToEx(whiteBoardImage.GetmemDC(), drawPt.startX, drawPt.startY, NULL);
-	LineTo(whiteBoardImage.GetmemDC(), drawPt.endX, drawPt.endY);
-
-	SelectObject(whiteBoardImage.GetmemDC(), oPen);
-	DeleteObject(pen);
-}
-
 void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 {
 	hwnd = _hwnd;
@@ -52,10 +35,7 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 	gameExitButton.Init(IMAGENUM_BLUEBOARD, 800, 800, 400, 200, (char *)"게임 종료");
 	startButton.Init(IMAGENUM_BLUEBOARD, 30, 700, 150, 50, (char *)"게임 시작");
 	roomExitButton.Init(IMAGENUM_BLUEBOARD, 230, 700, 150, 50, (char *)"나가기");
-	whiteBoard.left =10;
-	whiteBoard.top = 10;
-	whiteBoard.right = 600;
-	whiteBoard.bottom = 600;
+	whiteBoard= { 10, 10, 600, 600 };
 
 	whiteBoardImage.Init(hdc, 600, 600);
 	/*PAINTSTRUCT ps;
@@ -67,7 +47,8 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 	SelectObject(hdc, OldBrush);
 
 	EndPaint(hwnd, &ps);*/
-
+	PenInit();
+	
 	PacketManager::GetInstance()->InitConnection(hwnd);
 
 	SceneInitiator();
@@ -124,13 +105,14 @@ void GameManager::Draw(HDC hdc)
 		DrawChatWindow(hdc);
 
 		char buf[128];
-		PacketManager::GetInstance()->roomIndex;
+		PacketManager::GetInstance()->userIndexInRoom;
 		memoImage.DrawResizedObject(hdc, 640, 0, 400, 400);
-		sprintf(buf, "%d 번방 %d번째 유저", PacketManager::GetInstance()->roomIndex, PacketManager::GetInstance()->userIndexInRoom);
+		sprintf(buf, "%d 번방 %d번째 유저", PacketManager::GetInstance()->userIndexInRoom, PacketManager::GetInstance()->userIndexInRoom);
 		playerInfoFont.Draw(buf, 30, 720, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
 		roomExitButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
 		startButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
 		DrawCurUsers(hdc);
+		DrawPenColorsButton(hdc);
 		//Rectangle(hdc, startButton.left, startButton.top, startButton.right, startButton.bottom);
 		//Rectangle(hdc, gameExitButton.left, gameExitButton.top, gameExitButton.right, gameExitButton.bottom);
 	}
@@ -140,34 +122,37 @@ void GameManager::Draw(HDC hdc)
 		FontManager playerInfoFont;
 		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
 		//font.Draw(playerID, 30, 800, 100, "Resources/oldgameFont.ttf", RGB(255, 0, 0));
+		memoImage.DrawResizedObject(hdc, 640, 0, 400, 400);
 
 		DrawCurUsers(hdc);
 		DrawChatWindow(hdc);
-
+		
 		char buf[128];
-		PacketManager::GetInstance()->roomIndex;
-		memoImage.DrawResizedObject(hdc, 640, 0, 400, 400);
-		sprintf(buf, "%d 번방 %d번째 유저", PacketManager::GetInstance()->roomIndex, PacketManager::GetInstance()->userIndexInRoom);
+		PacketManager::GetInstance()->userIndexInRoom;
+		
+		sprintf(buf, "%d 번방 %d번째 유저", PacketManager::GetInstance()->userIndexInRoom, PacketManager::GetInstance()->userIndexInRoom);
 		playerInfoFont.Draw(buf, 30, 720, 100, "Resources/DungGeunMo.ttf", RGB(255, 0, 0));
 		roomExitButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
 		startButton.Draw(hdc, (char *)"Resources/DungGeunMo.ttf");
 		Rectangle(hdc, 10, 10, 600, 600);
 
 		FontManager remainTimeFont;
-		
-		sprintf(buf, "남은 시간 : %f", remainTime);
+		whiteBoardImage.Draw(hdc, 10, 10, 600, 600);
+
+		if(remainTime > 0)
+			sprintf(buf, "남은 시간 : %d", (int)remainTime);
+		else
+		{
+			sprintf(buf, "서버 응답 대기중");
+			//내 턴이면 그리기 막기
+		}
+
 		remainTimeFont.Draw(buf, 20, 30, 30, "Resources/DungGeunMo.ttf", RGB(255, 0, 0));
 
-		cout << buf << endl;
-		whiteBoardImage.Draw(hdc, 10, 10, 600, 600);
-		
-		/*
-		for (auto it = mousepointList.begin(); it != mousepointList.end(); it++)
-		{
-			MoveToEx(hdc, it->startX, it->startY, NULL);
-			LineTo(hdc, it->endX, it->endY);
-		}
-		*/
+		FontManager CurTurnFont;
+		sprintf(buf, "현재 그림 플레이어 번호 %d", PacketManager::GetInstance()->curTurn);
+		remainTimeFont.Draw(buf, 60, 30, 30, "Resources/DungGeunMo.ttf", RGB(255, 0, 0));
+		DrawPenColorsButton(hdc);
 	}
 	break;
 	}
@@ -175,6 +160,10 @@ void GameManager::Draw(HDC hdc)
 void GameManager::TimeCheck(float deltaTime)
 {
 	remainTime -= deltaTime;
+}
+void GameManager::TimeOver()
+{
+	remainTime = TIME_LIMIT;
 }
 void GameManager::GameExit(POINT pt)
 {
@@ -187,6 +176,11 @@ void GameManager::GameExit(POINT pt)
 	char buf[10];
 
 	PacketManager::GetInstance()->SendGameExit(i + 1);
+}
+void GameManager::GameOver()
+{
+	//결과 화면.
+	//개인 별 스코어 등등
 }
 void GameManager::RoomButtonUpdate()
 {
@@ -201,6 +195,47 @@ void GameManager::RoomButtonUpdate()
 			roomButtons.push_back(button);
 		}
 	}
+}
+void GameManager::PenInit()
+{
+	for (int i = 0; i < PENCOLORNUM / 2 + 1; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			RECT pen = { 650 + 30 * j, 360 + i * 30 ,670 + 30 * j, 380 + i * 30 };
+			lcolorPen.push_back(pen);
+		}
+	}
+	penInfo[0] = { 0, 0, 0, 0 };     //blackPen;  
+	penInfo[1] = { 0, 255, 255, 255 };   //whitePen;
+	penInfo[2] = { 0, 255, 0, 0 };   //redPen;
+	penInfo[3] = { 0, 0, 0, 255 };   //bluePen;
+	penInfo[4] = { 0, 0, 255, 0 };   //greenPen;
+	penInfo[5] = { 0, 255, 0, 255 };   //yellowPen;
+	penInfo[6] = { 0, 0, 0, 128 };  //NavyPen;
+	penInfo[7] = { 0, 0, 128, 128 };  //darkCyanPen;
+	penInfo[8] = { 0, 128, 0, 0 };  //maroonPen;
+	penInfo[9] = { 0, 128, 0, 128 };  	  //purplePen;
+	penInfo[10] = { 0, 128, 128, 0 }; 	  //olivePen;
+	penInfo[11] = { 0, 192, 192, 192 }; 	  //lightGreyPen;
+	penInfo[12] = { 0, 128, 128, 128 }; 	  //darkGreyPen;
+	penInfo[13] = { 0, 0, 255, 255 }; 	  //cyanPen;
+	penInfo[14] = { 0, 0, 128, 0 }; 	  //darkGreenPen;
+	penInfo[15] = { 0, 255, 165, 0 }; 	  //orangePen;
+	penInfo[16] = { 0, 173,255,47 }; 	  //greenYellowPen;
+}
+void GameManager::PenColorButtonClickedCheck(POINT pt)
+{
+	int i = 0;
+	for (auto it = lcolorPen.begin(); it != lcolorPen.end(); it++, i++)
+	{
+		if (Physics::GetInstance()->RECTbyPointCollisionCheck(*it, pt))
+		{
+			curPenInfo = penInfo[i];
+			return;
+		}
+	}
+	
 }
 void GameManager::EnterTheRoom(POINT pt)
 {
@@ -387,9 +422,33 @@ void GameManager::DrawRooms(HDC hdc)
 		it->Draw(hdc, (char*)"Resources\\DungGeunMo.ttf");
 	}
 }
-
-void GameManager::MouseDrawInGame(HDC hdc, POINT pt)
+void GameManager::whiteBoardDraw(DRAWPT drawPt, PenInfo penInfo)
 {
-	MoveToEx(hdc, pt.x, pt.y, NULL);
+	//이후 rgb도 받아서 처리 해야 함
+	pen = CreatePen(PS_SOLID, penInfo.penSize, RGB(penInfo.r, penInfo.g, penInfo.b));
+	oPen = (HPEN)SelectObject(whiteBoardImage.GetmemDC(), pen);
 
+	MoveToEx(whiteBoardImage.GetmemDC(), drawPt.startX, drawPt.startY, NULL);
+	LineTo(whiteBoardImage.GetmemDC(), drawPt.endX, drawPt.endY);
+
+	SelectObject(whiteBoardImage.GetmemDC(), oPen);
+	DeleteObject(pen);
+}
+
+void GameManager::DrawPenColorsButton(HDC hdc)
+{
+	HBRUSH tempBrush, tempOBrush;
+
+	for (int i = 0; i < PENCOLORNUM ; i++)
+	{
+		tempBrush = CreateSolidBrush(RGB(penInfo[i].r, penInfo[i].g, penInfo[i].b));
+		tempOBrush = (HBRUSH)SelectObject(hdc, tempBrush);
+		Rectangle(hdc, lcolorPen.at(i).left, lcolorPen.at(i).top, lcolorPen.at(i).right, lcolorPen.at(i).bottom);
+	}
+	tempBrush = CreateSolidBrush(RGB(curPenInfo.r, curPenInfo.g, curPenInfo.b));
+	tempOBrush = (HBRUSH)SelectObject(hdc, tempBrush);
+	Rectangle(hdc, 700, 700, 750, 750);
+
+	SelectObject(hdc, tempOBrush);
+	DeleteObject(tempBrush);
 }

@@ -93,6 +93,13 @@ void ServerManager::Init()
 	retval = listen(listen_sock, SOMAXCONN);
 	if (retval == SOCKET_ERROR)
 		cout << "listen()" << endl;
+
+	//TimerInit
+	for (int i = 0; i < ROOMNUM; i++)
+	{
+		Timer[i] = TIME_LIMIT;
+	}
+	
 }
 
 bool ServerManager::Update()
@@ -150,7 +157,6 @@ void ServerManager::TimerCheck()
 	m_fElapseTime = sec.count();
 	m_LastTime = std::chrono::system_clock::now();
 
-
 	PACKET_TIMER packet;
 
 	for (int i = 0; i < ROOMNUM; i++)
@@ -158,37 +164,27 @@ void ServerManager::TimerCheck()
 		if (g_isGameplaying[i])
 		{
 			Timer[i] -= m_fElapseTime;
-			packet.header.wIndex = PACKET_INDEX_TIMER;
-			packet.header.wLen = sizeof(packet);
-			packet.RemainTime = Timer[i];
-			packet.isNextTurn = false;
-			packet.isGameOver = false;
+
 			if (Timer[i] < 0)
 			{
+				packet.header.wIndex = PACKET_INDEX_TIMER;
+				packet.header.wLen = sizeof(packet);
+				packet.isGameOver = false;
 				ROTATION++;
+
 				if (ROTATION == MAX_ROTATION)
 				{
 					packet.isGameOver = true;
 					g_isGameplaying[i] = false;
-					return;
 				}
-					
-				if (curTurn == g_RoomInfo.size())
+				Timer[i] = TIME_LIMIT;
+				if (curTurn == g_RoomInfo[i].size())
 					curTurn = 0;
 				else
 					curTurn++;
-				Timer[i] = TIME_LIMIT;
-				packet.isNextTurn = true;
-
-				int answerIndex = rand() % answer.size();
-				auto it = answer.begin();
-
-				for (int i = 0; i < answerIndex; i++)
-				{
-					it++;
-				}
 				
-				strcpy(packet.answer, it->c_str());
+				int answerIndex = rand() % answer.size();
+				strcpy(packet.answer, answer[answerIndex].c_str());
 				packet.CurTurn = curTurn;
 
 				for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
@@ -487,10 +483,10 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO_STRING* pUser, char* sz
 		PACKET_GAMESTART packet;
 
 		memcpy(&packet, szBuf, header.wLen);
-		g_isGameplaying[packet.roomInfo.roomIndex] = true;
-		for (auto it2 = g_mapUser.begin(); it2 != g_mapUser.end(); it2++)
+		g_isGameplaying[packet.roomInfo.roomIndex - 1] = true;
+		for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
 		{
-			send(it2->first, (const char*)& packet, header.wLen, 0);
+			send(it->first, (const char*)& packet, header.wLen, 0);
 		}
 		cout << g_mapUser[sock]->roomIndex << "번 방 게임 시작" << endl;
 	}

@@ -26,7 +26,7 @@ struct SOCKETINFO
 	int sendbytes;
 	WSABUF wsabuf;
 };
-#define TIME_LIMIT 30
+#define TIME_LIMIT 5
 #define MAX_ROTATION 2 //전체유저가 출제할 최대 정답
 
 class ServerManager

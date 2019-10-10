@@ -45,6 +45,9 @@ void GameFrameWork::Update()
 			case ROOM_WAIT:
 				GameManager::GetInstance()->MouseButtonCheckInRoom(pt);
 				break;
+			case PLAYING:
+				GameManager::GetInstance()->PenColorButtonClickedCheck(pt);
+				break;
 			}
 
 			ReleaseDC(m_hWnd, hdc);

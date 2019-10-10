@@ -15,7 +15,7 @@
 
 using namespace std;
 #define TIME_LIMIT 30
-
+#define PENCOLORNUM 17
 class GameManager
 {
 private:
@@ -35,7 +35,30 @@ private:
 	HWND LOGINInput[2];
 	SpriteRenderer blueboard;
 	
+	HPEN pen, oPen;
+	PenInfo penInfo[PENCOLORNUM]; //rgb만 사용
+	vector<RECT> lcolorPen;
+	//17개
+	/*blackPen;
+	whitePen;
+	redPen;
+	bluePen;
+	greenPen;
+	yellowPen;
+	NavyPen;
+	darkCyanPen;
+	maroonPen;
+	purplePen;
+	olivePen;
+	lightGreyPen;
+	darkGreyPen;
+	cyanPen;
+	darkGreenPen;
+	orangePen;
+	greenYellowPen;
+	*/
 public:
+	PenInfo curPenInfo;
 	BitMap whiteBoardImage;
 	//UI
 	list<string> chatList;
@@ -49,9 +72,12 @@ public:
 	FontManager ChattingFont;
 	HINSTANCE hInstance;
 	HWND hwnd;
-	RECT whiteBoard;//
+	RECT whiteBoard;
 
-	void whiteBoardDraw(DRAWPT drawPt);
+	
+	UIButton DumpAll; //전체를 펜 색상으로 칠하기
+	
+	void whiteBoardDraw(DRAWPT drawPt, PenInfo penInfo);
 
 	static GameManager* GetInstance()
 	{
@@ -67,7 +93,6 @@ public:
 	void DrawChatWindow(HDC hdc);
 	void DrawCurUsers(HDC hdc);
 	void DrawRooms(HDC hdc);
-	void MouseDrawInGame(HDC hdc, POINT pt);
 	void Login();
 	//서버 관련
 	
@@ -78,8 +103,12 @@ public:
 	void ExitTheRoom(POINT pt);
 	void GameStart(POINT pt);
 	void GameExit(POINT pt);
-
+	void GameOver();
+	void DrawPenColorsButton(HDC hdc);
 	void RoomButtonUpdate();
-
+	void PenInit();
+	void PenColorButtonClickedCheck(POINT pt);
 	void TimeCheck(float deltaTime);
+	void TimeOver();
+	
 };
