@@ -13,6 +13,7 @@ using namespace std;
 class GameFrameWork
 {
 private:
+	HDC memDC;
 	HWND		m_hWnd;
 	chrono::system_clock::time_point m_LastTime;
 	float		m_fElapseTime;

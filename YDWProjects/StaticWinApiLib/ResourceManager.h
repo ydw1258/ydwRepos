@@ -10,8 +10,11 @@ class ResourceManager
 private:
 	static ResourceManager* mthis;
 	BitMap* bitmap;
+
+	HDC hdc;
+	HINSTANCE hInstance;
 public:
-	static BitMap* backBuffer;
+	//static BitMap* backBuffer;
 
 	static ResourceManager* GetInstance()
 	{
@@ -23,6 +26,7 @@ public:
 	void Release();
 	void Init(HDC hdc, string* fileNames, int fileNameCount);
 	void Draw(HDC hdc, int x, int y, int cx, int cy, int imageNum);
+
 	ResourceManager();
 	~ResourceManager();
 };

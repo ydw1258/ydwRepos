@@ -11,7 +11,7 @@ void GameFrameWork::Init(HWND hWnd, HINSTANCE g_hInst)
 {
 	m_hWnd = hWnd;
 	HDC hdc = GetDC(hWnd);
-	GameManager::GetInstance()->Init(hdc, g_hInst, hWnd);
+	GameManager::GetInstance()->Init(memDC, g_hInst, hWnd);
 	
 	ReleaseDC(hWnd, hdc);
 }
@@ -107,9 +107,9 @@ void GameFrameWork::Render()
 {
 	HDC hdc = GetDC(m_hWnd);
 
-	GameManager::GetInstance()->Draw(ResourceManager::backBuffer->GetmemDC());
+	GameManager::GetInstance()->Draw(memDC);
 	//GameManager::GetInstance()->DrawRect(ResourceManager::backBuffer->GetmemDC());
-	BitBlt(hdc, 0, 0, 1000, 800, ResourceManager::backBuffer->GetmemDC(), 0, 0, SRCCOPY);
+	BitBlt(hdc, 0, 0, 1000, 800, memDC, 0, 0, SRCCOPY);
 
 	ReleaseDC(m_hWnd, hdc);
 }

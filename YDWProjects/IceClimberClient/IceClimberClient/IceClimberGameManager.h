@@ -110,5 +110,4 @@ public:
 	void PenColorButtonClickedCheck(POINT pt);
 	void TimeCheck(float deltaTime);
 	void TimeOver();
-	
 };

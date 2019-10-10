@@ -14,7 +14,7 @@ void UIButton::Draw(HDC hdc, char* fontdir)
 {
 	sprite.DrawObject(hdc, x, y);
 	//default 가운데 정렬
-	font.Draw(label, 10, x, y, fontdir, RGB(0, 0, 0));
+	font.Draw(hdc, label, 10, x, y, fontdir, RGB(0, 0, 0));
 }
 
 void UIButton::DrawRect(HDC hdc)
