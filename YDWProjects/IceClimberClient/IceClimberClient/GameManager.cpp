@@ -10,39 +10,17 @@ GameManager * GameManager::mthis = nullptr;
 void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 {
 	hwnd = _hwnd;
-	string filename[7] = { "Resources\\UI\\blueBoard.bmp","Resources\\UI\\lobbybackground.bmp","Resources\\UI\\memo.bmp",
-		"Resources\\UI\\UIButton.bmp",
+	string filename[7] = { "Resources\\UI\\blueBoard.bmp",
+							"Resources\\UI\\lobbybackground.bmp",
+							"Resources\\UI\\memo.bmp",
+							"Resources\\UI\\UIButton.bmp",
 	};
 	ResourceManager::GetInstance()->Init(hdc, filename, 7);
-
 	FontManager::Init();
-	blueboard.Init(IMAGENUM_BLUEBOARD, 1, 300, 111);
-	lobbybackground.Init(IMAGENUM_LOBBYBACKGROUND, 1, 1200, 1000);
-	memoImage.Init(IMAGENUM_MEMO, 1, 600, 1000);
-	ButtonImage.Init(IMAGENUM_UIBUTTON, 1, 346, 173);
-
-	//방버튼
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < ROOMNUM / 2; j++)
-		{
-			UIButton button;
-			char buf[128];
-			sprintf(buf, "방번호 %d \n %d / %d", i * ROOMNUM / 2 + j + 1, PacketManager::GetInstance()->mapRoomPlayers[i * ROOMNUM / 2 + j + 1], 4);
-			button.Init(IMAGENUM_BLUEBOARD, 10 + j * 80, 10 + i * 80, 80, 80, buf);
-			roomButtons.push_back(button);
-		}
-	}
-	gameExitButton.Init(IMAGENUM_BLUEBOARD, 800, 800, 400, 200, (char *)"게임 종료");
-	startButton.Init(IMAGENUM_BLUEBOARD, 30, 700, 150, 50, (char *)"게임 시작");
-	roomExitButton.Init(IMAGENUM_BLUEBOARD, 230, 700, 150, 50, (char *)"나가기");
-	whiteBoard = { 10, 10, 600, 600 };
-
-	whiteBoardImage.Init(hdc, 600, 600);
+	UIInit(hdc);
+	RoomButtonsInit();
 	PenInit();
-	
 	PacketManager::GetInstance()->InitConnection(hwnd);
-
 	SceneInitiator();
 }
 //씬 전환시 UI들 재배치
@@ -74,18 +52,11 @@ void GameManager::SceneInitiator()
 //수정해야될 UI들
 void GameManager::Draw(HDC hdc)
 {
+	DrawUI(hdc);
 	switch (scene)
 	{
-	case LOGIN:
-		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
-		break;
 	case LOBBY:
 	{
-		//Draw UI, Images
-		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
-		memoImage.DrawResizedObject(hdc, 600, 80, 400, 600);
-		blueboard.DrawResizedObject(hdc, 10, 530, 700, 200);
-
 		DrawChatWindow(hdc);
 		DrawRooms(hdc);
 		DrawCurUsers(hdc);
@@ -93,63 +64,15 @@ void GameManager::Draw(HDC hdc)
 	break;
 	case ROOM_WAIT:
 	{
-		FontManager playerInfoFont;
-		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
-		memoImage.DrawResizedObject(hdc, 640, 0, 400, 400);
 		DrawCurUsers(hdc);
 		DrawChatWindow(hdc);
-		
-		char buf[128];
-		PacketManager::GetInstance()->userIndexInRoom;
-		
-		sprintf(buf, "%d 번방 %d번째 유저", PacketManager::GetInstance()->roomIndex, PacketManager::GetInstance()->userIndexInRoom);
-		playerInfoFont.Draw(hdc, buf, 30, 720, 100, "DungGeunMo", RGB(255, 0, 0));
-		roomExitButton.Draw(hdc, (char *)"DungGeunMo");
-		startButton.Draw(hdc, (char *)"DungGeunMo");
-		
 		DrawPenColorsButton(hdc);
 	}
 	break;
 	case PLAYING:
 	{
-		FontManager playerInfoFont;
-		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
-		memoImage.DrawResizedObject(hdc, 640, 0, 400, 400);
-
 		DrawCurUsers(hdc);
 		DrawChatWindow(hdc);
-		
-		char buf[128];
-		PacketManager::GetInstance()->userIndexInRoom;
-		
-		sprintf(buf, "%d 번방 %d번째 유저", PacketManager::GetInstance()->roomIndex, PacketManager::GetInstance()->userIndexInRoom);
-		playerInfoFont.Draw(hdc, buf, 30, 720, 100, "DungGeunMo", RGB(255, 0, 0));
-		roomExitButton.Draw(hdc, (char *)"DungGeunMo");
-		startButton.Draw(hdc, (char *)"DungGeunMo");
-
-		FontManager remainTimeFont;
-		whiteBoardImage.Draw(hdc, 10, 10, 600, 600);
-
-		if(remainTime > 0)
-			sprintf(buf, "남은 시간 : %d", (int)remainTime);
-		else
-		{
-			sprintf(buf, "서버 응답 대기중");
-			
-			//내 턴이면 그리기 막기
-		}
-
-		remainTimeFont.Draw(hdc, buf, 20, 30, 30, "DungGeunMo", RGB(255, 0, 0));
-
-		FontManager CurTurnFont;
-		sprintf(buf, "현재 턴 : %d 내 점수 : %d", PacketManager::GetInstance()->curTurn);
-	
-		//vecPlayerID.at(PacketManager::GetInstance()->curTurn)
-		remainTimeFont.Draw(hdc, buf, 15, 200, 30, "DungGeunMo", RGB(255, 0, 0));
-
-		sprintf(buf, "정답 : %s", PacketManager::GetInstance()->score, PacketManager::GetInstance()->answer);
-		remainTimeFont.Draw(hdc, buf, 15, 500, 30, "DungGeunMo", RGB(255, 0, 0));
-
 		DrawPenColorsButton(hdc);
 	}
 	break;
@@ -166,37 +89,39 @@ void GameManager::TimeOver(HDC hdc)
 	whiteBoardImage.Init(hdc, 600, 600);
 }
 
-void GameManager::Release()
+void GameManager::ReceiveChatStr(char* str)
 {
-	lcolorPen.clear();
-	chatList.clear();
-	vecPlayerID.clear();
-	roomButtons.clear();
-	PacketManager::GetInstance()->Release();
-	ResourceManager::GetInstance()->Release();
-
-	delete this;
+	chatList.push_back(str);
 }
-void GameManager::GameExit(POINT pt)
-{
-	int i = 0;
 
-	if (roomExitButton.isButtonClick(pt))
+void GameManager::RoomListInit(int NumOfRoom, int* playerNum)
+{
+	for (int i = 0; i < NumOfRoom; i++)
 	{
-		return;
+		mapRoomPlayers[i] = playerNum[i];
 	}
-	char buf[10];
-
-	PacketManager::GetInstance()->SendGameExit(i + 1);
 }
-void GameManager::GameOver()
+void GameManager::PlayerInit(int playerNum, char IDs[][10])
 {
-	FontManager font;
-	
-	//결과 화면.
-	//개인 별 스코어 등등
-	SceneChange(ROOM_WAIT);
-	MessageBox(hwnd, "게임 끝~", "><", MB_OK);
+	vecPlayerID.clear();
+	for (int i = 0; i < playerNum; i++)
+	{
+		vecPlayerID.push_back(IDs[i]);
+	}
+}
+void GameManager::RoomButtonsInit()
+{
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < ROOMNUM / 2; j++)
+		{
+			UIButton button;
+			char buf[128];
+			sprintf(buf, "방 번호 %d \n %d / %d", i * ROOMNUM / 2 + j + 1, mapRoomPlayers[i * ROOMNUM / 2 + j + 1], 4);
+			button.Init(IMAGENUM_BLUEBOARD, 10 + j * 80, 10 + i * 80, 80, 80, buf);
+			roomButtons.push_back(button);
+		}
+	}
 }
 void GameManager::RoomButtonUpdate()
 {
@@ -206,12 +131,47 @@ void GameManager::RoomButtonUpdate()
 		{
 			UIButton button;
 			char buf[128];
-			sprintf(buf, "방번호 %d \n %d / %d", i * ROOMNUM / 2 + j + 1, PacketManager::GetInstance()->mapRoomPlayers[i * ROOMNUM / 2 + j], 4);
+			sprintf(buf, "방번호 %d \n %d / %d", i * ROOMNUM / 2 + j + 1, mapRoomPlayers[i * ROOMNUM / 2 + j], 4);
 			button.Init(IMAGENUM_BLUEBOARD, 10 + j * 80, 10 + i * 80, 80, 80, buf);
 			roomButtons.push_back(button);
 		}
 	}
 }
+void GameManager::UIInit(HDC hdc)
+{
+	blueboard.Init(IMAGENUM_BLUEBOARD, 1, 300, 111);
+	lobbybackground.Init(IMAGENUM_LOBBYBACKGROUND, 1, 1200, 1000);
+	memoImage.Init(IMAGENUM_MEMO, 1, 600, 1000);
+	ButtonImage.Init(IMAGENUM_UIBUTTON, 1, 346, 173);
+	startButton.Init(IMAGENUM_BLUEBOARD, 30, 700, 150, 50, (char *)"게임 시작");
+	roomExitButton.Init(IMAGENUM_BLUEBOARD, 230, 700, 150, 50, (char *)"나가기");
+	//gameExitButton.Init(IMAGENUM_BLUEBOARD, 800, 800, 400, 200, (char *)"게임 종료");
+	whiteBoard = { 10, 10, 600, 600 };
+	whiteBoardImage.Init(hdc, 600, 600);
+}
+void GameManager::GameOver()
+{
+	FontManager font;
+
+	//결과 화면.
+	//개인 별 스코어 등등
+	SceneChange(ROOM_WAIT);
+	MessageBox(hwnd, "게임 끝~", "><", MB_OK);
+}
+
+void GameManager::Release()
+{
+	lcolorPen.clear();
+	chatList.clear();
+	vecPlayerID.clear();
+	roomButtons.clear();
+	mapRoomPlayers.clear();
+	PacketManager::GetInstance()->Release();
+	ResourceManager::GetInstance()->Release();
+
+	delete this;
+}
+
 void GameManager::PenInit()
 {
 	for (int i = 0; i < PENCOLORNUM / 2 + 1; i++)
@@ -274,7 +234,7 @@ void GameManager::EnterTheRoom(POINT pt)
 			break;
 		}
 	}
-	if (flag == false || PacketManager::GetInstance()->mapRoomPlayers[i] == 4)
+	if (flag == false || mapRoomPlayers[i] == 4)
 		return;
 	char buf[10];
 
@@ -410,6 +370,79 @@ void GameManager::DrawChatWindow(HDC hdc)
 	}
 }
 
+void GameManager::DrawUI(HDC hdc)
+{
+	switch (scene)
+	{
+	case LOGIN:
+		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
+		break;
+	case LOBBY:
+	{
+		//Draw UI, Images
+		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
+		memoImage.DrawResizedObject(hdc, 600, 80, 400, 600);
+		blueboard.DrawResizedObject(hdc, 10, 530, 700, 200);
+	}
+	break;
+	case ROOM_WAIT:
+	{
+		FontManager playerInfoFont;
+		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
+		memoImage.DrawResizedObject(hdc, 640, 0, 400, 400);
+
+		char buf[128];
+		PacketManager::GetInstance()->userIndexInRoom;
+
+		sprintf(buf, "%d 번방 %d번째 유저", PacketManager::GetInstance()->roomIndex, PacketManager::GetInstance()->userIndexInRoom);
+		playerInfoFont.Draw(hdc, buf, 30, 720, 100, "DungGeunMo", RGB(255, 0, 0));
+		roomExitButton.Draw(hdc, (char *)"DungGeunMo");
+		startButton.Draw(hdc, (char *)"DungGeunMo");
+
+		DrawPenColorsButton(hdc);
+	}
+	break;
+	case PLAYING:
+	{
+		FontManager playerInfoFont;
+		lobbybackground.DrawResizedObject(hdc, 0, 0, 1000, 800);
+		memoImage.DrawResizedObject(hdc, 640, 0, 400, 400);
+
+		char buf[128];
+		PacketManager::GetInstance()->userIndexInRoom;
+
+		sprintf(buf, "%d 번방 %d번째 유저", PacketManager::GetInstance()->roomIndex, PacketManager::GetInstance()->userIndexInRoom);
+		playerInfoFont.Draw(hdc, buf, 30, 720, 100, "DungGeunMo", RGB(255, 0, 0));
+		roomExitButton.Draw(hdc, (char *)"DungGeunMo");
+		startButton.Draw(hdc, (char *)"DungGeunMo");
+
+		FontManager remainTimeFont;
+		whiteBoardImage.Draw(hdc, 10, 10, 600, 600);
+
+		if (remainTime > 0)
+			sprintf(buf, "남은 시간 : %d", (int)remainTime);
+		else
+		{
+			sprintf(buf, "서버 응답 대기중");
+			//내 턴이면 그리기 막기
+		}
+
+		remainTimeFont.Draw(hdc, buf, 20, 30, 30, "DungGeunMo", RGB(255, 0, 0));
+
+		FontManager CurTurnFont;
+		sprintf(buf, "현재 턴 : %d 내 점수 : %d", PacketManager::GetInstance()->curTurn);
+
+		//vecPlayerID.at(PacketManager::GetInstance()->curTurn)
+		remainTimeFont.Draw(hdc, buf, 15, 200, 30, "DungGeunMo", RGB(255, 0, 0));
+
+		sprintf(buf, "정답 : %s", PacketManager::GetInstance()->score, PacketManager::GetInstance()->answer);
+		remainTimeFont.Draw(hdc, buf, 15, 500, 30, "DungGeunMo", RGB(255, 0, 0));
+
+	}
+	break;
+	}
+}
+
 void GameManager::DrawCurUsers(HDC hdc)
 {
 	int i = 0;
@@ -493,6 +526,18 @@ void GameManager::DumpAll(HDC hdc)
 
 	SelectObject(hdc, oPen);
 	DeleteObject(pen);
-	
 }
+/*
+void GameManager::GameExit(POINT pt)
+{
+	int i = 0;
+
+	if (roomExitButton.isButtonClick(pt))
+	{
+		return;
+	}
+	char buf[10];
+
+	PacketManager::GetInstance()->SendGameExit(i + 1);
+}*/
 GameManager::~GameManager() {}

@@ -8,7 +8,6 @@ using namespace std;
 
 PacketManager* PacketManager::mthis = nullptr;
 
-//여기 부터 서버구조 바뀌면 변경해야할 부분
 void PacketManager::InitConnection(HWND hwnd)
 {
 	//서버한테 데이터 받기
@@ -47,30 +46,7 @@ void PacketManager::InitConnection(HWND hwnd)
 		exit(1);
 	}
 }
-/*
-void PacketManager::ClientExit(POINT pt)//게임 종료 버튼 (보류)
-{
-	
-	if (GetForegroundWindow() != hwnd)
-		return;
 
-	int i = 0;
-
-	if (!Physics::GetInstance()->RECTbyPointCollisionCheck(RoomExitButton, pt))
-	{
-		return;
-	}
-	char buf[10];
-
-	PACKET_GAMEEXIT packet;
-	packet.header.wIndex = PACKET_INDEX_GAMEEXIT;
-	packet.header.wLen = sizeof(packet);
-	strcpy(packet.playerID, playerID);
-	packet.roomIndex = i + 1;
-
-	send(g_sock, (const char*)& packet, sizeof(packet), 0);
-}
-*/
 void PacketManager::SendGameExit(int roomIndex)
 {
 	PACKET_GAMEEXIT packet;
@@ -91,11 +67,7 @@ void PacketManager::SendEnterTheRoomPacket(int roomIndex)
 	strcpy(packet.playerID, playerID);
 	packet.roomInfo.roomIndex = roomIndex;
 
-	for (int i = 0; i < packet.roomInfo.playerNum; i++)
-	{
-		GameManager::GetInstance()->vecPlayerID.push_back(packet.roomInfo.IDs[i]);
-	}
-	
+	GameManager::GetInstance()->PlayerInit(packet.roomInfo.playerNum, packet.roomInfo.IDs);
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
 
@@ -230,10 +202,6 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 			<< "header.wIndex: " << header.wIndex << endl;
 	}
 
-	//왜인지 모르지만 사용
-	//PACKET_USER_DATA packet;
-	//memcpy(&packet, szBuf, header.wLen);
-
 	switch (header.wIndex)
 	{
 	case PACKET_INDEX_USER_DATA:
@@ -255,11 +223,7 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		PACKET_ROOMLIST packet;
 		memcpy(&packet, szBuf, header.wLen);
 
-		for (int i = 0; i < packet.NumOfRoom; i++)
-		{
-			mapRoomPlayers[packet.roomIndex[i]] = packet.playerNum[i];
-			//방버튼
-		}
+		GameManager::GetInstance()->RoomListInit(packet.NumOfRoom, packet.playerNum);
 		GameManager::GetInstance()->RoomButtonUpdate();
 	}
 	break;
@@ -268,6 +232,7 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		PACKET_GAMESTART packet;
 		memcpy(&packet, szBuf, header.wLen);
 		
+		//한글 깨짐 고치고 오는 패킷 확인
 		//if (userIndexInRoom == 0)
 		//	strcpy(answer, packet.answer);
 		
@@ -287,12 +252,13 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		{
 			strcpy(playerID, packet.ID);
 			userIndexInRoom = packet.playerIndexInroom;
-			GetPlayersInRoom(0);
+			GetPlayersInRoom(0); //0번방 (로비) 플레이어 정보 가져오기
 			GameManager::GetInstance()->SceneChange(LOBBY);
 		}
 		else //로그인 실패
 		{
-			MessageBox(hwnd, "?","로그인 실패", MB_OK);
+			//MessageBox(hwnd, "?","로그인 실패", MB_OK);
+			//GameManager로 처리
 		}
 	}
 	break;
@@ -300,7 +266,7 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 	{
 		PACKET_SEND_INGAME_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
-		GameManager::GetInstance()->chatList.push_back(packet.data.chat);
+		GameManager::GetInstance()->ReceiveChatStr(packet.data.chat);
 
 		if (packet.answerIsCorrect && !strcmp(packet.data.ID, playerID))
 		{
@@ -313,13 +279,8 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 	{
 		PACKET_USERSLIST packet;
 		memcpy(&packet, szBuf, header.wLen);
-		GameManager::GetInstance()->vecPlayerID.clear();
-		GameManager::GetInstance()->vecPlayerID.resize(0);
+		GameManager::GetInstance()->PlayerInit(packet.roomInfo.playerNum, packet.roomInfo.IDs);
 
-		for (int i = 0; i < packet.roomInfo.playerNum; i++)
-		{
-			GameManager::GetInstance()->vecPlayerID.push_back(packet.roomInfo.IDs[i]);
-		}
 
 		//로그인 패킷을 보낸 유저만 서버로 발송
 		if (!strcmp(packet.playerID, playerID))
@@ -331,14 +292,9 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		PACKET_USERSLIST packet;
 		memcpy(&packet, szBuf, header.wLen);
 
-		GameManager::GetInstance()->vecPlayerID.clear();
-		GameManager::GetInstance()->vecPlayerID.resize(0);
-		strcpy(packet.playerID, playerID);
-
-		for (int i = 0; i < packet.roomInfo.playerNum; i++)
-		{
-			GameManager::GetInstance()->vecPlayerID.push_back(packet.roomInfo.IDs[i]);
-		}
+		GameManager::GetInstance()->PlayerInit(packet.roomInfo.playerNum, packet.roomInfo.IDs);
+		//strcpy(packet.playerID, playerID);
+		
 		closesocket(wParam);
 	}
 	break;
@@ -348,12 +304,7 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		memcpy(&packet, szBuf, header.wLen);
 		
 		roomIndex = packet.roomInfo.roomIndex;
-		GameManager::GetInstance()->vecPlayerID.clear();
-		
-		for (int i = 0; i < packet.roomInfo.playerNum; i++)
-		{
-			GameManager::GetInstance()->vecPlayerID.push_back(packet.roomInfo.IDs[i]);
-		}
+		GameManager::GetInstance()->PlayerInit(packet.roomInfo.playerNum, packet.roomInfo.IDs);
 
 		if (!strcmp(packet.playerID, playerID))
 		{
@@ -371,12 +322,8 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		memcpy(&packet, szBuf, header.wLen);
 
 		roomIndex = packet.roomInfo.roomIndex;
-		GameManager::GetInstance()->vecPlayerID.clear();
+		GameManager::GetInstance()->PlayerInit(packet.roomInfo.playerNum, packet.roomInfo.IDs);
 
-		for (int i = 0; i < packet.roomInfo.playerNum; i++)
-		{
-			GameManager::GetInstance()->vecPlayerID.push_back(packet.roomInfo.IDs[i]);
-		}
 		userIndexInRoom = 0;
 
 		if (!strcmp(packet.playerID, playerID))
@@ -395,7 +342,8 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		curTurn = packet.CurTurn;
 		GameManager::GetInstance()->TimeOver(ResourceManager::GetInstance()->backBuffer->GetmemDC());
 		
-		if(packet.CurTurn == userIndexInRoom)
+		//자신의 턴인 경우 답안 출력
+		if(isMyTurn())
 			strcpy(answer, packet.answer);
 		else
 			strcpy(answer, "?");
@@ -437,13 +385,35 @@ bool PacketManager::isMyTurn()
 	return false;
 }
 
-PacketManager::PacketManager() {}
-PacketManager::~PacketManager()
-{}
-
 void PacketManager::Release()
 {
-	mapRoomPlayers.clear();
 	closesocket(g_sock);
 	WSACleanup();
 }
+PacketManager::PacketManager() {}
+PacketManager::~PacketManager() {}
+
+/*
+void PacketManager::ClientExit(POINT pt)//게임 종료 버튼 (보류)
+{
+
+	if (GetForegroundWindow() != hwnd)
+		return;
+
+	int i = 0;
+
+	if (!Physics::GetInstance()->RECTbyPointCollisionCheck(RoomExitButton, pt))
+	{
+		return;
+	}
+	char buf[10];
+
+	PACKET_GAMEEXIT packet;
+	packet.header.wIndex = PACKET_INDEX_GAMEEXIT;
+	packet.header.wLen = sizeof(packet);
+	strcpy(packet.playerID, playerID);
+	packet.roomIndex = i + 1;
+
+	send(g_sock, (const char*)& packet, sizeof(packet), 0);
+}
+*/
