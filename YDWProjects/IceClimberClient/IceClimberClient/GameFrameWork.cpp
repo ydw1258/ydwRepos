@@ -1,5 +1,5 @@
 #include "GameFrameWork.h"
-#include "IceClimberGameManager.h"
+#include "GameManager.h"
 
 GameFrameWork::GameFrameWork()
 {
@@ -17,7 +17,9 @@ void GameFrameWork::Init(HWND hWnd, HINSTANCE g_hInst)
 	//ReleaseDC(hWnd, memDC);
 }
 
-void GameFrameWork::Release(){}
+void GameFrameWork::Release(){
+	GameManager::GetInstance()->Release();
+}
 
 #define PI 3.141592f
 
@@ -87,9 +89,8 @@ void GameFrameWork::OperateInput()
 				break;
 			case LOBBY:
 			case ROOM_WAIT:
-				GameManager::GetInstance()->InputChatting();
-				break;
 			case PLAYING:
+				GameManager::GetInstance()->InputChatting();
 				break;
 			}
 			
@@ -110,5 +111,5 @@ void GameFrameWork::Render()
 	//GameManager::GetInstance()->DrawRect(ResourceManager::backBuffer->GetmemDC());
 	BitBlt(memDC, 0, 0, 1000, 800, ResourceManager::GetInstance()->backBuffer->GetmemDC(), 0, 0, SRCCOPY);
 
-	//ReleaseDC(m_hWnd, hdc);
+	
 }

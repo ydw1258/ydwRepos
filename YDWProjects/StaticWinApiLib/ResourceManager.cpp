@@ -6,6 +6,15 @@ using namespace std;
 ResourceManager* ResourceManager::mthis = nullptr;
 BitMap* ResourceManager::backBuffer = nullptr;
 
+void ResourceManager::Release()
+{
+	for (int i = 0; i < 50; i++)
+	{
+		bitmap[i].Release();
+	}
+	delete this;
+}
+
 void ResourceManager::Init(HDC _hdc, string* fileNames, int fileNameCount)
 {
 	hdc = _hdc;
@@ -25,10 +34,7 @@ void ResourceManager::Draw(HDC hdc, int x, int y, int cx, int cy, int imageNum)
 	bitmap[imageNum].Draw(hdc, x, y, cx, cy);
 }
 ResourceManager::ResourceManager() {}
-ResourceManager::~ResourceManager() {}
-
-void ResourceManager::Release()
-{
+ResourceManager::~ResourceManager() {
 	delete[] bitmap;
 	delete mthis;
 }

@@ -1,5 +1,5 @@
 #include "PacketManager.h"
-#include "IceClimberGameManager.h"
+#include "GameManager.h"
 
 using namespace std;
 #define BUFSIZE 1024
@@ -93,9 +93,8 @@ void PacketManager::SendEnterTheRoomPacket(int roomIndex)
 
 	for (int i = 0; i < packet.roomInfo.playerNum; i++)
 	{
-		GameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
+		GameManager::GetInstance()->vecPlayerID.push_back(packet.roomInfo.IDs[i]);
 	}
-
 	
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
@@ -117,11 +116,7 @@ void PacketManager::SendGameStart()
 	PACKET_GAMESTART packet;
 	packet.header.wIndex = PACKET_INDEX_GAMESTART;
 	packet.header.wLen = sizeof(packet);
-	packet.userIndexInRoom = userIndexInRoom;
 	packet.roomInfo.roomIndex = roomIndex;
-
-	if (userIndexInRoom == 0)
-		strcpy(answer, packet.answer);
 	send(g_sock, (const char*)& packet, sizeof(packet), 0);
 }
 
@@ -272,6 +267,10 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 	{
 		PACKET_GAMESTART packet;
 		memcpy(&packet, szBuf, header.wLen);
+		
+		//if (userIndexInRoom == 0)
+		//	strcpy(answer, packet.answer);
+		
 		isGameStart = true;
 		curTurn = 0;
 		score = 0;
@@ -314,12 +313,12 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 	{
 		PACKET_USERSLIST packet;
 		memcpy(&packet, szBuf, header.wLen);
-		GameManager::GetInstance()->listPlayerID.clear();
-		GameManager::GetInstance()->listPlayerID.resize(0);
+		GameManager::GetInstance()->vecPlayerID.clear();
+		GameManager::GetInstance()->vecPlayerID.resize(0);
 
 		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			GameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
+			GameManager::GetInstance()->vecPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 
 		//로그인 패킷을 보낸 유저만 서버로 발송
@@ -332,13 +331,13 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		PACKET_USERSLIST packet;
 		memcpy(&packet, szBuf, header.wLen);
 
-		GameManager::GetInstance()->listPlayerID.clear();
-		GameManager::GetInstance()->listPlayerID.resize(0);
+		GameManager::GetInstance()->vecPlayerID.clear();
+		GameManager::GetInstance()->vecPlayerID.resize(0);
 		strcpy(packet.playerID, playerID);
 
 		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			GameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
+			GameManager::GetInstance()->vecPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 		closesocket(wParam);
 	}
@@ -349,11 +348,11 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		memcpy(&packet, szBuf, header.wLen);
 		
 		roomIndex = packet.roomInfo.roomIndex;
-		GameManager::GetInstance()->listPlayerID.clear();
+		GameManager::GetInstance()->vecPlayerID.clear();
 		
 		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			GameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
+			GameManager::GetInstance()->vecPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 
 		if (!strcmp(packet.playerID, playerID))
@@ -372,11 +371,11 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		memcpy(&packet, szBuf, header.wLen);
 
 		roomIndex = packet.roomInfo.roomIndex;
-		GameManager::GetInstance()->listPlayerID.clear();
+		GameManager::GetInstance()->vecPlayerID.clear();
 
 		for (int i = 0; i < packet.roomInfo.playerNum; i++)
 		{
-			GameManager::GetInstance()->listPlayerID.push_back(packet.roomInfo.IDs[i]);
+			GameManager::GetInstance()->vecPlayerID.push_back(packet.roomInfo.IDs[i]);
 		}
 		userIndexInRoom = 0;
 
@@ -394,7 +393,13 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		PACKET_TIMER packet;
 		memcpy(&packet, szBuf, header.wLen);
 		curTurn = packet.CurTurn;
-		GameManager::GetInstance()->TimeOver();
+		GameManager::GetInstance()->TimeOver(ResourceManager::GetInstance()->backBuffer->GetmemDC());
+		
+		if(packet.CurTurn == userIndexInRoom)
+			strcpy(answer, packet.answer);
+		else
+			strcpy(answer, "?");
+
 		if (packet.isGameOver)
 		{
 			isGameStart = false;
@@ -434,7 +439,11 @@ bool PacketManager::isMyTurn()
 
 PacketManager::PacketManager() {}
 PacketManager::~PacketManager()
+{}
+
+void PacketManager::Release()
 {
+	mapRoomPlayers.clear();
 	closesocket(g_sock);
 	WSACleanup();
 }

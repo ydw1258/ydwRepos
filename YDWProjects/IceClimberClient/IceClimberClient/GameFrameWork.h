@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "IMAGENUM.h"
 #include <Windows.h>
-#include "IceClimberGameManager.h"
+#include "GameManager.h"
 
 using namespace std;
 

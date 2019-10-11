@@ -150,7 +150,6 @@ ACCEPT_AGAIN:
 
 void ServerManager::TimerCheck()
 {
-	
 	//timer Update
 	std::chrono::duration<float> sec = std::chrono::system_clock::now() - m_LastTime;
 	
@@ -172,20 +171,20 @@ void ServerManager::TimerCheck()
 				packet.isGameOver = false;
 				ROTATION++;
 
-				if (ROTATION == MAX_ROTATION)
+				if (ROTATION >= MAX_ROTATION)
 				{
 					packet.isGameOver = true;
 					g_isGameplaying[i] = false;
 				}
 				Timer[i] = TIME_LIMIT;
-				if (curTurn == g_RoomInfo[i].size())
-					curTurn = 0;
+				if (curTurn[i] == g_RoomInfo[i + 1].size() - 1)
+					curTurn[i] = 0;
 				else
-					curTurn++;
+					curTurn[i]++;
 				
 				int answerIndex = rand() % answer.size();
 				strcpy(packet.answer, answer[answerIndex].c_str());
-				packet.CurTurn = curTurn;
+				packet.CurTurn = curTurn[i];
 
 				for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
 				{
@@ -300,10 +299,8 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO_STRING* pUser, char* sz
 
 		char buf[128];
 		sprintf(buf, "%s : %s", packet.data.ID, packet.data.chat);
-		strcpy(packet.data.chat, buf);
 		
-		cout << packet.data.chat << "온거" << endl;
-		cout << packet.data.ID << "온거" << endl;
+		
 		//채팅한 유저의 방이 플레이 중이면
 		if (g_isGameplaying[packet.data.roomIndex])
 		{
@@ -311,8 +308,10 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO_STRING* pUser, char* sz
 			if (strcmp(packet.data.chat, curAnswer))
 			{
 				packet.answerIsCorrect = true;
+				sprintf(buf, " 정답을 맞추셨습니다.");
 			}
 		}
+		strcpy(packet.data.chat, buf);
 		for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
 		{
 			if (iter->second->roomIndex != g_mapUser[sock]->roomIndex)
@@ -484,9 +483,11 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO_STRING* pUser, char* sz
 
 		memcpy(&packet, szBuf, header.wLen);
 		g_isGameplaying[packet.roomInfo.roomIndex - 1] = true;
+		
 		for (auto it = g_mapUser.begin(); it != g_mapUser.end(); it++)
 		{
-			send(it->first, (const char*)& packet, header.wLen, 0);
+			if(it->second->roomIndex == packet.roomInfo.roomIndex)
+				send(it->first, (const char*)& packet, header.wLen, 0);
 		}
 		cout << g_mapUser[sock]->roomIndex << "번 방 게임 시작" << endl;
 	}

@@ -26,7 +26,7 @@ struct SOCKETINFO
 	int sendbytes;
 	WSABUF wsabuf;
 };
-#define TIME_LIMIT 5
+#define TIME_LIMIT 10
 #define MAX_ROTATION 2 //전체유저가 출제할 최대 정답
 
 class ServerManager
@@ -56,7 +56,7 @@ private:
 	int ROTATION = 0;
 	vector<string> answer;
 	char curAnswer[128];
-	int curTurn = 0;
+	int curTurn[ROOMNUM] = { 0 };
 	DWORD lastTime = timeGetTime();   //마지막 시간(temp변수)
 public:
 	static ServerManager* GetInstance()

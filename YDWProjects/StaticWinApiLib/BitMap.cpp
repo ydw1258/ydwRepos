@@ -3,7 +3,6 @@
 BitMap::BitMap() {}
 BitMap::~BitMap()
 {
-	Release();
 }
 
 void BitMap::Init(HDC hdc, int cx, int cy)

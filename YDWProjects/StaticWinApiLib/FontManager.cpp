@@ -6,9 +6,10 @@ void FontManager::Draw(HDC hdc, int num, int fontSize, int x, int y, string font
 {
 	char outText[7];
 	SetTextColor(hdc, RGB);
+
 	//Font 설정
 	//글자 배경 투명하게
-	//myFont = CreateFont(fontSize, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, fontName.c_str());
+	myFont = CreateFont(fontSize, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, fontName.c_str());
 	oldFont = (HFONT)SelectObject(hdc, myFont);
 
 	//Font 설정
@@ -23,7 +24,7 @@ void FontManager::Draw(HDC hdc, int num, int fontSize, int x, int y, string font
 
 void FontManager::Init()
 {
-	AddFontResourceA("Resource\DungGeunMo.ttf");
+	AddFontResourceA("Resources\DungGeunMo.ttf");
 }
 
 void FontManager::Draw(HDC hdc, string str, int fontSize, int x, int y, string fontName, COLORREF RGB)//문자 출력 RGB(255, 255, 0) 형식으로 입력
