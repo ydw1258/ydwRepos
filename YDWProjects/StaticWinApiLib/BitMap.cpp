@@ -5,7 +5,7 @@ BitMap::~BitMap()
 {
 }
 
-void BitMap::Init(HDC hdc, int cx, int cy)
+void BitMap::Init(HDC hdc, int cx, int cy, int r, int g, int b)
 {
 	memDC = CreateCompatibleDC(hdc);
 	hBitmap = CreateCompatibleBitmap(hdc, cx, cy);
@@ -20,7 +20,7 @@ void BitMap::Init(HDC hdc, int cx, int cy)
 	HPEN pen, oPen;
 
 	//pen = CreatePen(PS_SOLID, width, RGB(r, g, b));
-	pen = CreatePen(PS_SOLID, 3000, RGB(255, 255, 255));
+	pen = CreatePen(PS_SOLID, 3000, RGB(r, g, b));
 
 	oPen = (HPEN)SelectObject(GetmemDC(), pen);
 

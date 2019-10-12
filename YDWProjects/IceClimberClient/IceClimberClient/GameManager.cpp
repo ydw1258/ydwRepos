@@ -24,31 +24,6 @@ void GameManager::Init(HDC hdc, HINSTANCE hInstance, HWND _hwnd)
 	SceneInitiator();
 }
 //씬 전환시 UI들 재배치
-void GameManager::SceneInitiator()
-{
-	switch (scene)
-	{
-	case LOGIN:
-		LOGINInput[0] = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 300, 300, 300, 30, hwnd, (HMENU)0, hInstance, NULL);
-		LOGINInput[1] = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 300, 350, 300, 30, hwnd, (HMENU)0, hInstance, NULL);
-		break;
-	case LOBBY:
-		chatInputBoxLobby = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
-			20, 750, 800, 30, hwnd, (HMENU)0, hInstance, NULL);
-		chatList.clear();
-		//chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
-		break;
-	case ROOM_WAIT:
-		chatInputBoxInRoom = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
-		chatList.clear();
-		break;
-	case PLAYING:
-		chatInputBoxInRoom = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
-		chatList.clear();
-		break;
-	}
-}
-
 //수정해야될 UI들
 void GameManager::Draw(HDC hdc)
 {
@@ -78,6 +53,30 @@ void GameManager::Draw(HDC hdc)
 	break;
 	}
 }
+void GameManager::SceneInitiator()
+{
+	switch (scene)
+	{
+	case LOGIN:
+		LOGINInput[0] = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 300, 300, 300, 30, hwnd, (HMENU)0, hInstance, NULL);
+		LOGINInput[1] = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 300, 350, 300, 30, hwnd, (HMENU)0, hInstance, NULL);
+		break;
+	case LOBBY:
+		chatInputBoxLobby = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
+			20, 750, 800, 30, hwnd, (HMENU)0, hInstance, NULL);
+		chatList.clear();
+		//chatInputBox = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
+		break;
+	case ROOM_WAIT:
+		chatInputBoxInRoom = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
+		chatList.clear();
+		break;
+	case PLAYING:
+		chatInputBoxInRoom = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL, 750, 750, 100, 20, hwnd, (HMENU)0, hInstance, NULL);
+		chatList.clear();
+		break;
+	}
+}
 void GameManager::TimeCheck(float deltaTime)
 {
 	remainTime -= deltaTime;
@@ -88,12 +87,10 @@ void GameManager::TimeOver(HDC hdc)
 	//도화지 초기화
 	whiteBoardImage.Init(hdc, 600, 600);
 }
-
 void GameManager::ReceiveChatStr(char* str)
 {
 	chatList.push_back(str);
 }
-
 void GameManager::RoomListInit(int NumOfRoom, int* playerNum)
 {
 	for (int i = 0; i < NumOfRoom; i++)
@@ -146,32 +143,18 @@ void GameManager::UIInit(HDC hdc)
 	startButton.Init(IMAGENUM_BLUEBOARD, 30, 700, 150, 50, (char *)"게임 시작");
 	roomExitButton.Init(IMAGENUM_BLUEBOARD, 230, 700, 150, 50, (char *)"나가기");
 	//gameExitButton.Init(IMAGENUM_BLUEBOARD, 800, 800, 400, 200, (char *)"게임 종료");
-	whiteBoard = { 10, 10, 600, 600 };
+	whiteBoard = { 10, 100, 600, 600 };
 	whiteBoardImage.Init(hdc, 600, 600);
 }
+
 void GameManager::GameOver()
 {
 	FontManager font;
-
 	//결과 화면.
 	//개인 별 스코어 등등
 	SceneChange(ROOM_WAIT);
 	MessageBox(hwnd, "게임 끝~", "><", MB_OK);
 }
-
-void GameManager::Release()
-{
-	lcolorPen.clear();
-	chatList.clear();
-	vecPlayerID.clear();
-	roomButtons.clear();
-	mapRoomPlayers.clear();
-	PacketManager::GetInstance()->Release();
-	ResourceManager::GetInstance()->Release();
-
-	delete this;
-}
-
 void GameManager::PenInit()
 {
 	for (int i = 0; i < PENCOLORNUM / 2 + 1; i++)
@@ -213,7 +196,7 @@ void GameManager::PenColorButtonClickedCheck(POINT pt)
 	}
 	if (Physics::GetInstance()->RECTbyPointCollisionCheck(dumpButton, pt))
 	{
-		DumpAll(ResourceManager::GetInstance()->backBuffer->GetmemDC());
+		PacketManager::GetInstance()->SendDump(curPenInfo.r, curPenInfo.g, curPenInfo.b);
 	}
 	
 }
@@ -369,7 +352,6 @@ void GameManager::DrawChatWindow(HDC hdc)
 		break;
 	}
 }
-
 void GameManager::DrawUI(HDC hdc)
 {
 	switch (scene)
@@ -417,7 +399,7 @@ void GameManager::DrawUI(HDC hdc)
 		startButton.Draw(hdc, (char *)"DungGeunMo");
 
 		FontManager remainTimeFont;
-		whiteBoardImage.Draw(hdc, 10, 10, 600, 600);
+		whiteBoardImage.Draw(hdc, whiteBoard.left, whiteBoard.top, whiteBoard.right, whiteBoard.bottom);
 
 		if (remainTime > 0)
 			sprintf(buf, "남은 시간 : %d", (int)remainTime);
@@ -426,16 +408,15 @@ void GameManager::DrawUI(HDC hdc)
 			sprintf(buf, "서버 응답 대기중");
 			//내 턴이면 그리기 막기
 		}
-
 		remainTimeFont.Draw(hdc, buf, 20, 30, 30, "DungGeunMo", RGB(255, 0, 0));
 
 		FontManager CurTurnFont;
-		sprintf(buf, "현재 턴 : %d 내 점수 : %d", PacketManager::GetInstance()->curTurn);
+		sprintf(buf, "현재 턴 : %d 내 점수 : %d", PacketManager::GetInstance()->curTurn, PacketManager::GetInstance()->score);
 
 		//vecPlayerID.at(PacketManager::GetInstance()->curTurn)
 		remainTimeFont.Draw(hdc, buf, 15, 200, 30, "DungGeunMo", RGB(255, 0, 0));
 
-		sprintf(buf, "정답 : %s", PacketManager::GetInstance()->score, PacketManager::GetInstance()->answer);
+		sprintf(buf, "정답 : %s", PacketManager::GetInstance()->answer);
 		remainTimeFont.Draw(hdc, buf, 15, 500, 30, "DungGeunMo", RGB(255, 0, 0));
 
 	}
@@ -464,7 +445,7 @@ void GameManager::DrawCurUsers(HDC hdc)
 		for (auto it = vecPlayerID.begin(); it != vecPlayerID.end(); it++, i++)
 		{
 			//if(it->)
-				playerInfoFont.Draw(hdc, (*it), 15, 730, 180 + 30 * i, "DungGeunMo", RGB(0, 0, 0));
+			playerInfoFont.Draw(hdc, (*it), 15, 730, 180 + 30 * i, "DungGeunMo", RGB(0, 0, 0));
 		}
 		break;
 	default:
@@ -485,8 +466,8 @@ void GameManager::whiteBoardDraw(DRAWPT drawPt, PenInfo penInfo)
 	pen = CreatePen(PS_SOLID, penInfo.penSize, RGB(penInfo.r, penInfo.g, penInfo.b));
 	oPen = (HPEN)SelectObject(whiteBoardImage.GetmemDC(), pen);
 
-	MoveToEx(whiteBoardImage.GetmemDC(), drawPt.startX, drawPt.startY, NULL);
-	LineTo(whiteBoardImage.GetmemDC(), drawPt.endX, drawPt.endY);
+	MoveToEx(whiteBoardImage.GetmemDC(), drawPt.startX - whiteBoard.left, drawPt.startY - whiteBoard.top, NULL);
+	LineTo(whiteBoardImage.GetmemDC(), drawPt.endX - whiteBoard.left, drawPt.endY - whiteBoard.top);
 
 	SelectObject(whiteBoardImage.GetmemDC(), oPen);
 	DeleteObject(pen);
@@ -512,21 +493,42 @@ void GameManager::DrawPenColorsButton(HDC hdc)
 	SelectObject(hdc, tempOBrush);
 	DeleteObject(tempBrush);
 }
-void GameManager::DumpAll(HDC hdc)
+void GameManager::DumpAll(int r, int g, int b)
 {
-	//흰색으로 초기화
-	HPEN pen, oPen;
-	//pen = CreatePen(PS_SOLID, width, RGB(r, g, b));
-	pen = CreatePen(PS_SOLID, 3000, RGB(curPenInfo.r, curPenInfo.g, curPenInfo.b));
-
-	oPen = (HPEN)SelectObject(hdc, pen);
-
-	MoveToEx(hdc, 0, 0, NULL);
-	LineTo(hdc, 1, 1);
-
-	SelectObject(hdc, oPen);
-	DeleteObject(pen);
+	whiteBoardImage.Init(ResourceManager::GetInstance()->backBuffer->GetmemDC(), 600, 600, r, g, b);
 }
+void GameManager::penSizeAdjust(bool upDown)
+{
+	if(upDown)
+		curPenInfo.penSize += 5;
+	else if(!upDown && curPenInfo.penSize > 5)
+		curPenInfo.penSize -= 5;
+}
+void GameManager::DrawPenCursur(HDC hdc, POINT pt)
+{
+	if (Physics::GetInstance()->RECTbyPointCollisionCheck(whiteBoard, pt) && scene == PLAYING)
+	{
+		HBRUSH tempBrush, tempOBrush;
+		tempBrush = CreateSolidBrush(RGB(curPenInfo.r, curPenInfo.g, curPenInfo.b));
+		tempOBrush = (HBRUSH)SelectObject(hdc, tempBrush);
+		Ellipse(hdc, pt.x, pt.y, pt.x + curPenInfo.penSize, pt.y + curPenInfo.penSize);
+		SelectObject(hdc, tempOBrush);
+		DeleteObject(tempBrush);
+	}
+}
+void GameManager::Release()
+{
+	lcolorPen.clear();
+	chatList.clear();
+	vecPlayerID.clear();
+	roomButtons.clear();
+	mapRoomPlayers.clear();
+	PacketManager::GetInstance()->Release();
+	ResourceManager::GetInstance()->Release();
+
+	delete this;
+}
+
 /*
 void GameManager::GameExit(POINT pt)
 {

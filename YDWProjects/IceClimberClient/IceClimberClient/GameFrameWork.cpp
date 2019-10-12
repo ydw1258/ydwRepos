@@ -102,7 +102,14 @@ void GameFrameWork::OperateInput()
 		if (isKeydown)
 			isKeydown = false;
 	}
-	
+	if (GetKeyState(0x51) & 0x8000)//Q
+	{
+		GameManager::GetInstance()->penSizeAdjust(false);
+	}
+	if (GetKeyState(0x57) & 0x8000)//W
+	{
+		GameManager::GetInstance()->penSizeAdjust(true);
+	}
 }
 
 void GameFrameWork::Render()

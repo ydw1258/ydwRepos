@@ -12,7 +12,7 @@ HWND hWnd;
 LPCTSTR lpszClass = TEXT("OmokClient");
 GameFrameWork g_GameFrame;
 
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #pragma comment(lib, "msimg32.lib")
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "ws2_32")
@@ -39,7 +39,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 {
 	//메모리 릭 검사
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_crtBreakAlloc = 148;
+	// _crtB1 reakAlloc = 214;
 	MSG Message;
 	WNDCLASS WndClass;
 	g_hInst = hInstance;
@@ -105,27 +105,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		InvalidateRect(hWnd, NULL, false);
 		return 0;
 	case WM_MOUSEMOVE:
+	{
+		hdc = GetDC(hWnd);
+		DRAWPT pt;
+		pt.startX = x;
+		pt.startY = y;
+
+		x = LOWORD(lParam);
+		y = HIWORD(lParam);
+		pt.endX = x;
+		pt.endY = y;
+
+		POINT tempPt = { pt.startX, pt.startY };
+		GameManager::GetInstance()->DrawPenCursur(hdc, tempPt);
+
 		if (bnowDraw == TRUE) {
 			if (GameManager::GetInstance()->scene != PLAYING || !PacketManager::GetInstance()->isMyTurn())
 				return 0;
-			
-			hdc = GetDC(hWnd);
-			DRAWPT pt;
-			pt.startX = x;
-			pt.startY = y;
-			
-			x = LOWORD(lParam);
-			y = HIWORD(lParam);
-			pt.endX = x;
-			pt.endY = y;
 			POINT checkPt; checkPt.x = x; checkPt.y = y;
+
 			if (Physics::GetInstance()->RECTbyPointCollisionCheck(GameManager::GetInstance()->whiteBoard, checkPt))
 			{
 				PacketManager::GetInstance()->SendPos(pt);
 			}
 			ReleaseDC(hWnd, hdc);
 		}
-		return 0;
+	}
+	return 0;
 	case WM_LBUTTONUP:
 		bnowDraw = FALSE;
 		return 0;

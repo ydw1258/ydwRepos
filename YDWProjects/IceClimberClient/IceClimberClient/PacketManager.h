@@ -45,7 +45,6 @@ public:
 	int roomIndex;
 	//map<int, int> mapRoomPlayers; //방번호, 플레이어 숫자
 	
-	
 	//패킷 전송
 	void SendGameExit(int roomIndex);
 	void SendEnterTheRoomPacket(int roomIndex);
@@ -53,6 +52,7 @@ public:
 	void SendGameStart();
 	void SendLogin(char* ID, char* password);
 	void SendPos(DRAWPT pt);
+	void SendDump(int r, int g, int b);
 	void SendChattingData(char* str);
 
 	void InitConnection(HWND hwnd);

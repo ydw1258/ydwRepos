@@ -14,7 +14,7 @@
 #include "..\..\Common\PACKET_HEADER.h"
 
 using namespace std;
-#define TIME_LIMIT 30
+#define TIME_LIMIT 50
 #define PENCOLORNUM 17
 
 class GameManager
@@ -53,7 +53,7 @@ private:
 	vector<RECT> lcolorPen;
 public:
 	SERVERMANAGER_SCENE scene = LOGIN;
-	PenInfo curPenInfo;
+	PenInfo curPenInfo = {5, 0, 0, 0};
 	BitMap whiteBoardImage;
 	//list<DRAWPT> mousepointList;
 	
@@ -99,11 +99,13 @@ public:
 	void PlayerInit(int playerNum, char IDs[][10]);
 	void RoomButtonsInit();
 	void UIInit(HDC hdc);
-	void DumpAll(HDC hdc);
+	void DumpAll(int r, int g, int b);
+	void penSizeAdjust(bool sizeAdjust); //false 작게 true 크게
+	void DrawPenCursur(HDC hdc, POINT pt);
+	
 	~GameManager();
 
 	void Release();
-	
 };
 //17개
 	/*blackPen;

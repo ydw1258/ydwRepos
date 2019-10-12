@@ -12,7 +12,8 @@ void ResourceManager::Release()
 	{
 		bitmap[i].Release();
 	}
-	delete this;
+	delete[] bitmap;
+	delete mthis;
 }
 
 void ResourceManager::Init(HDC _hdc, string* fileNames, int fileNameCount)
@@ -35,6 +36,5 @@ void ResourceManager::Draw(HDC hdc, int x, int y, int cx, int cy, int imageNum)
 }
 ResourceManager::ResourceManager() {}
 ResourceManager::~ResourceManager() {
-	delete[] bitmap;
-	delete mthis;
+	
 }

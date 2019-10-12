@@ -47,6 +47,7 @@ enum PACKET_INDEX
 	PACKET_INDEX_GAMESTART,
 	PACKET_INDEX_GAMEEXIT,
 	PACKET_INDEX_TIMER,
+	PACKET_INDEX_DUMP
 };
 
 struct PACKET_HEADER
@@ -130,7 +131,15 @@ struct PACKET_SEND_INGAME_DATA
 {
 	PACKET_HEADER header;
 	USER_DATA data;
+	WORD CurTurn;
 	bool answerIsCorrect;
+	char answer[20];
+};
+struct PACKET_DUMP_ALL
+{
+	PACKET_HEADER header;
+	PenInfo penInfo; //rgb
+	USER_DATA data;
 };
 struct PACKET_USERSLIST
 {
@@ -153,7 +162,7 @@ struct PACKET_GAMESTART
 	ROOM_INFO roomInfo;
 	char playerID[10]; //요청한 플레이어
 	int userIndexInRoom;
-	char answer[10];
+	char answer[20];
 };
 struct PACKET_TIMER //타이머 종료시 발송
 {

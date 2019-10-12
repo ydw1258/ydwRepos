@@ -119,6 +119,18 @@ void PacketManager::SendPos(DRAWPT pt)
 	send(g_sock, (const char*)& packet, packet.header.wLen, 0);
 }
 
+void PacketManager::SendDump(int r, int g, int b)
+{
+	PACKET_DUMP_ALL packet;
+	packet.header.wIndex = PACKET_INDEX_DUMP;
+	packet.header.wLen = sizeof(packet);
+	packet.penInfo.r = r;
+	packet.penInfo.g = g;
+	packet.penInfo.b = b;
+	packet.data.roomIndex = roomIndex;
+	send(g_sock, (const char*)& packet, packet.header.wLen, 0);
+}
+
 void PacketManager::SendChattingData(char *str)
 {
 	PACKET_SEND_INGAME_DATA packet;
@@ -126,6 +138,8 @@ void PacketManager::SendChattingData(char *str)
 	packet.header.wIndex = PACKET_INDEX_SEND_CHATTING;
 	packet.header.wLen = sizeof(packet);
 	packet.data.playerNum = userIndexInRoom;
+	packet.data.roomIndex = roomIndex;
+
 	//strcpy(packet.data.ID, playerID);
 	memcpy(packet.data.ID, playerID, sizeof(packet.data.ID));
 	//strcpy(packet.data.chat, str);
@@ -218,6 +232,14 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		GameManager::GetInstance()->whiteBoardDraw(packet.data.DrawPt, packet.data.penInfo);
 	}
 	break;
+	case PACKET_INDEX_DUMP:
+	{
+		PACKET_DUMP_ALL packet;
+		memcpy(&packet, szBuf, header.wLen);
+
+		GameManager::GetInstance()->DumpAll(packet.penInfo.r, packet.penInfo.g, packet.penInfo.b);
+	}
+	break;
 	case PACKET_INDEX_GET_ROOMS:
 	{
 		PACKET_ROOMLIST packet;
@@ -232,9 +254,8 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		PACKET_GAMESTART packet;
 		memcpy(&packet, szBuf, header.wLen);
 		
-		//한글 깨짐 고치고 오는 패킷 확인
-		//if (userIndexInRoom == 0)
-		//	strcpy(answer, packet.answer);
+		if (userIndexInRoom == 0)
+			strcpy(answer, packet.answer);
 		
 		isGameStart = true;
 		curTurn = 0;
@@ -268,10 +289,25 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		memcpy(&packet, szBuf, header.wLen);
 		GameManager::GetInstance()->ReceiveChatStr(packet.data.chat);
 
-		if (packet.answerIsCorrect && !strcmp(packet.data.ID, playerID))
+		if (packet.answerIsCorrect)
 		{
-			//정답자
-			score++;
+			//출제자가 아닌 정답자
+			if (strcmp(packet.data.ID, playerID))
+			{
+				//정답 효과
+				score++;
+			}
+			//시간, 도화지 리셋
+			GameManager::GetInstance()->TimeOver(ResourceManager::GetInstance()->backBuffer->GetmemDC());
+			curTurn = packet.CurTurn;
+			//정답변경
+			//출제자
+			if (curTurn == userIndexInRoom)
+			{
+				strcpy(answer, packet.answer);
+			}
+			else
+				strcpy(answer, "?");
 		}
 	}
 	break;
@@ -389,6 +425,7 @@ void PacketManager::Release()
 {
 	closesocket(g_sock);
 	WSACleanup();
+	delete this;
 }
 PacketManager::PacketManager() {}
 PacketManager::~PacketManager() {}
