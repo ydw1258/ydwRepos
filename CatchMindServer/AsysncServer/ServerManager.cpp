@@ -180,12 +180,13 @@ void ServerManager::TimerCheck()
 				packet.header.wIndex = PACKET_INDEX_TIMER;
 				packet.header.wLen = sizeof(packet);
 				packet.isGameOver = false;
-				ROTATION++;
+				ROTATION[i]++;
 
-				if (ROTATION >= MAX_ROTATION)
+				if (ROTATION[i]++ >= MAX_ROTATION)
 				{
 					packet.isGameOver = true;
 					g_isGameplaying[i] = false;
+					cout << i + 1 << "번방 게임종료" << endl;
 				}
 				Timer[i] = TIME_LIMIT;
 				if (curTurn[i] == g_RoomInfo[i + 1].size() - 1)
@@ -325,34 +326,34 @@ bool ServerManager::ProcessPacket(SOCKET sock, USER_INFO_STRING* pUser, char* sz
 		packet.answerIsCorrect = false;
 		char buf[128];
 		sprintf(buf, "%s : %s", packet.data.ID, packet.data.chat);
-		
+		packet.isGameOver = false;
 		//채팅한 유저의 방이 플레이 중이면
 		if (g_isGameplaying[packet.data.roomIndex - 1])
 		{
 			//정답체크
-			if (!strcmp(packet.data.chat, curAnswer))
+			if (!strcmp(packet.data.chat, curAnswer) && packet.data.userIndexInRoom != curTurn[packet.data.roomIndex - 1] )
 			{
 				packet.answerIsCorrect = true;
 				Timer[packet.data.roomIndex - 1] = TIME_LIMIT;
-				packet.CurTurn = (WORD)++curTurn[packet.data.roomIndex - 1];
+				if (curTurn[packet.data.roomIndex - 1] == packet.data.playerNum - 1)
+					curTurn[packet.data.roomIndex - 1] = 0;
+				else
+					curTurn[packet.data.roomIndex - 1]++;
+				ROTATION[packet.data.roomIndex - 1]++;
 
-				strcpy(packet.data.chat, buf);
-				strcat(packet.data.chat, "정답");
-				int answerIndex = rand() % answer.size();
-				strcpy(packet.answer, answer[answerIndex].c_str());
-
-				PACKET_SEND_INGAME_DATA systemPacket;
-				memcpy(&packet, szBuf, header.wLen);
-				strcpy(systemPacket.data.chat, "[시스템] 정답");
-
-				for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)
+				if (ROTATION[packet.data.roomIndex - 1]++ >= MAX_ROTATION)
 				{
-					if (iter->second->roomIndex != g_mapUser[sock]->roomIndex)
-						continue;
-
-					send(iter->first, (const char*)& systemPacket, header.wLen, 0);
+					packet.isGameOver = true;
+					g_isGameplaying[packet.data.roomIndex - 1] = false;
+					cout << packet.data.roomIndex - 1 << "번방 게임종료" << endl;
 				}
 
+				packet.CurTurn = (WORD)curTurn[packet.data.roomIndex - 1];
+				
+				strcat(buf, " 정답!");
+
+				int answerIndex = rand() % answer.size();
+				strcpy(packet.answer, answer[answerIndex].c_str());
 			}
 			strcpy(packet.data.chat, buf);
 			for (auto iter = g_mapUser.begin(); iter != g_mapUser.end(); iter++)

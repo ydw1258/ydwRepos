@@ -56,7 +56,7 @@ private:
 
 	SOCKET listen_sock;
 	SOCKADDR_IN serveraddr;
-	int ROTATION = 0;
+	int ROTATION[ROOMNUM] = { 0 };
 	vector<string> answer;
 	char curAnswer[128];
 	int curTurn[ROOMNUM] = { 0 };

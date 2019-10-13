@@ -40,6 +40,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	//메모리 릭 검사
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	// _crtB1 reakAlloc = 214;
+	_CrtSetBreakAlloc(212);
 	MSG Message;
 	WNDCLASS WndClass;
 	g_hInst = hInstance;

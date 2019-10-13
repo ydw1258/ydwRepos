@@ -52,8 +52,6 @@ void GameFrameWork::Update()
 				GameManager::GetInstance()->PenColorButtonClickedCheck(pt);
 				break;
 			}
-
-			ReleaseDC(m_hWnd, hdc);
 		}
 	}
 	else
@@ -117,6 +115,4 @@ void GameFrameWork::Render()
 	GameManager::GetInstance()->Draw(ResourceManager::GetInstance()->backBuffer->GetmemDC());
 	//GameManager::GetInstance()->DrawRect(ResourceManager::backBuffer->GetmemDC());
 	BitBlt(memDC, 0, 0, 1000, 800, ResourceManager::GetInstance()->backBuffer->GetmemDC(), 0, 0, SRCCOPY);
-
-	
 }

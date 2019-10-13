@@ -1,0 +1,19 @@
+﻿  GameManager.cpp
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(100): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(231): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(354): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(355): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(356): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(357): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(384): warning C4101: 'rcTemp' :참조되지 않은 지역 변수입니다.
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(420): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(421): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(422): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(423): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\gitrepos\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(474): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다.
+  0 of 369 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  코드를 생성했습니다.
+  BattleCityIngame.vcxproj -> D:\gitRepos\ydwRepos\BattleCity\BattleCityProject\x64\Release\BattleCityIngame.exe

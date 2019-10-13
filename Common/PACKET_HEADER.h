@@ -133,6 +133,7 @@ struct PACKET_SEND_INGAME_DATA
 	USER_DATA data;
 	WORD CurTurn;
 	bool answerIsCorrect;
+	bool isGameOver;
 	char answer[20];
 };
 struct PACKET_DUMP_ALL

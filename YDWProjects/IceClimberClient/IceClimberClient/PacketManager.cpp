@@ -137,7 +137,7 @@ void PacketManager::SendChattingData(char *str)
 	
 	packet.header.wIndex = PACKET_INDEX_SEND_CHATTING;
 	packet.header.wLen = sizeof(packet);
-	packet.data.playerNum = userIndexInRoom;
+	packet.data.userIndexInRoom = userIndexInRoom;
 	packet.data.roomIndex = roomIndex;
 
 	//strcpy(packet.data.ID, playerID);
@@ -288,7 +288,7 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 		PACKET_SEND_INGAME_DATA packet;
 		memcpy(&packet, szBuf, header.wLen);
 		GameManager::GetInstance()->ReceiveChatStr(packet.data.chat);
-
+		
 		if (packet.answerIsCorrect)
 		{
 			//출제자가 아닌 정답자
@@ -308,6 +308,10 @@ bool PacketManager::ProcessPacket(char* szBuf, int len, WPARAM wParam)
 			}
 			else
 				strcpy(answer, "?");
+		}
+		if (packet.isGameOver)
+		{
+			GameManager::GetInstance()->GameOver();
 		}
 	}
 	break;

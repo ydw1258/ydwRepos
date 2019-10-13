@@ -170,7 +170,7 @@ void GameManager::PenInit()
 	penInfo[2] = { 0, 255, 0, 0 };   //redPen;
 	penInfo[3] = { 0, 0, 0, 255 };   //bluePen;
 	penInfo[4] = { 0, 0, 255, 0 };   //greenPen;
-	penInfo[5] = { 0, 255, 0, 255 };   //yellowPen;
+	penInfo[5] = { 0, 255, 255, 0 };   //yellowPen;
 	penInfo[6] = { 0, 0, 0, 128 };  //NavyPen;
 	penInfo[7] = { 0, 0, 128, 128 };  //darkCyanPen;
 	penInfo[8] = { 0, 128, 0, 0 };  //maroonPen;
@@ -440,6 +440,7 @@ void GameManager::DrawCurUsers(HDC hdc)
 		}
 		break;
 	case ROOM_WAIT:
+	case PLAYING:
 		playerInfoFont.Draw(hdc, "인게임 플레이어 목록", 20, 730, 150, "DungGeunMo", RGB(0, 0, 0));
 		
 		for (auto it = vecPlayerID.begin(); it != vecPlayerID.end(); it++, i++)

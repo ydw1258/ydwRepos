@@ -4,46 +4,42 @@ D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(90,29): warn
 D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(107,28): warning C4267:  '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(130,1): warning C4996:  'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\um\Winsock2.h(1848): message :  'inet_ntoa' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(197,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
 D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(198,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(396,50): warning C4267:  '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(271,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(199,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(327,1): warning C4996:  'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(397,50): warning C4267:  '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(272,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(328,1): warning C4996:  'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1772): message :  'sprintf' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(339,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(340,1): warning C4996:  'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(353,1): warning C4996:  'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(89): message :  'strcat' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(342,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(356,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(346,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(358,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(357,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(377,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(376,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(437,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(436,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(446,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(445,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(497,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(496,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(505,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(532,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(506,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
 D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(533,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(568,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(534,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(633,50): warning C4267:  '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(611,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(569,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(653,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(634,50): warning C4267:  '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(612,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
-D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(687,1): warning C4996:  'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(654,1): warning C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(132): message :  'strcpy' 선언을 참조하십시오.
+D:\gitRepos\ydwRepos\CatchMindServer\AsysncServer\ServerManager.cpp(688,1): warning C4996:  'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\um\Winsock2.h(1848): message :  'inet_ntoa' 선언을 참조하십시오.
   AsysncServer.vcxproj -> D:\gitRepos\ydwRepos\CatchMindServer\x64\Debug\CatchMindServer.exe
