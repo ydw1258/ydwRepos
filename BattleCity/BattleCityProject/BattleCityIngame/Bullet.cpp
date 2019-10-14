@@ -27,12 +27,13 @@ void Bullet::Init(int PlayerX, int PlayerY, DIRECTION _direction)
 	default:
 		break;
 	}
-	//sprite.Init(IMAGENUM_BULLET, 1, 5, 5, x, y);
 	sprite.Init(IMAGENUM_BULLET, 1, 8, 8, x, y);
 }
 
-void Bullet::Move()
+void Bullet::Move(float deltaTime)
 {
+	speed = deltaTime * 300;
+
 	switch (direction)
 	{
 	case UP:
@@ -53,7 +54,10 @@ void Bullet::Move()
 }
 bool Bullet::OutofRange()
 {
-	if (x < 20 || x > GameManager::GetInstance()->TileImageSizeX * 13 + 20 || y < 20 || y > GameManager::GetInstance()->TileImageSizeX * 13 + 20)
+	if (x < GameManager::GetInstance()->GameOffsetX || 
+		x > TILEBLOCK_SIZE * TILE_WIDTH_NUM + GameManager::GetInstance()->GameOffsetX ||
+		y < GameManager::GetInstance()->GameOffsetY ||
+		y > TILEBLOCK_SIZE * TILE_HEIGHT_NUM + GameManager::GetInstance()->GameOffsetY)
 		return true;
 	return false;
 }

@@ -27,7 +27,7 @@ private:
 	int OffsetY = 20;
 
 	int mapTile[13 * 13];
-	bool isLButtonDown = false;
+	bool isButtonDown = false;
 public:
 	GameFrameWork();
 	~GameFrameWork();

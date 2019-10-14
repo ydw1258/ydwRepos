@@ -49,9 +49,9 @@ void GameFrameWork::OperateInput()
 {
 	if (GetKeyState(VK_SPACE) & 0x8000)
 	{
-		if (!isLButtonDown)
+		if (!isButtonDown)
 		{
-			isLButtonDown = true;
+			isButtonDown = true;
 			switch (GameManager::GetInstance()->scene)
 			{
 			case TITLE:
@@ -64,12 +64,12 @@ void GameFrameWork::OperateInput()
 				break;
 			}
 		}
-		else
+		else if(isButtonDown)
 		{
-			isLButtonDown = false;
+			isButtonDown = false;
 		}
 	}
-	if (GameManager::GetInstance()->CollisionCheck())
+	if (GameManager::GetInstance()->CollisionCheck(GameManager::GetInstance()->player.x, GameManager::GetInstance()->player.y, GameManager::GetInstance()->player.direction))
 		return;
 	if (GetKeyState(VK_LEFT) & 0x8000)
 	{
@@ -90,6 +90,17 @@ void GameFrameWork::OperateInput()
 	{
 		GameManager::GetInstance()->PlayerMove(DOWN, m_fElapseTime);
 		return;
+	}
+	if (GetKeyState(VK_SHIFT) & 0x8000)
+	{
+		if (GameManager::GetInstance()->isCollisionView = true)
+		{
+			GameManager::GetInstance()->isCollisionView = false;
+		}
+		else
+		{
+			GameManager::GetInstance()->isCollisionView = true;
+		}
 	}
 }
 

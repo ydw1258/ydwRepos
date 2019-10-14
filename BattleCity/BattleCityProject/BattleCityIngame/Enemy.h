@@ -15,19 +15,18 @@ private:
 	SpriteRenderer leftSprite;
 	SpriteRenderer rightSprite;
 	SpriteRenderer curSprite;
-	list<Bullet> bullets;
 public:
 	DIRECTION direction;
 	float x;
 	float y;
 	
 	void Update(float deltaTime);
-
 	void Init(int _x, int _y);
 	void Draw(HDC hdc);
 	void Move(float deltaTime);
-	void Shot();
 	void SpriteChange();
+	bool ShotTimer(float deltaTime);
+	void DirectionChange();
 	int	sizeX = 32;
 	int	sizeY = 32;
 	Enemy();

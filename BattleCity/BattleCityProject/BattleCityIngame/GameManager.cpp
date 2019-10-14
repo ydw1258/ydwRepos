@@ -50,8 +50,6 @@ void GameManager::Init(HDC _hdc, HINSTANCE _g_hInst, HWND _hwnd)
 
 void GameManager::Update(float deltaTime)
 {
-	cout << greyScreen[0].bottom << endl;
-	
 	switch (scene)
 	{
 	case TITLE:
@@ -61,7 +59,9 @@ void GameManager::Update(float deltaTime)
 		//SpriteChance필요
 		ScreenScroll(deltaTime);
 		SpawnEnemy(deltaTime);
-		MoveBullets();
+		MoveBullets(deltaTime);
+		enemyManager.Update(deltaTime);
+		PlayerBulletCollisionCheck();
 		break;
 	default:
 		break;
@@ -222,30 +222,44 @@ void GameManager::PlayerMove(DIRECTION dir, float deltaTime)
 	player.Move(dir, deltaTime);
 }
 
+void GameManager::PlayerBulletCollisionCheck()
+{
+	for (auto it = playerBullets.begin(); it != playerBullets.end();)
+	{
+		if (CollisionCheckBlockandBullet(it->x, it->y, it->direction))
+		{
+			it = playerBullets.erase(it);
+		}
+		else
+			it++;
+	}
+	
+}
+
 void GameManager::Shot()
 {
-  	if (bullets.size() == 0)
+  	if (playerBullets.size() == 0)
 	{
 		Bullet bullet;
 		bullet.isPlayers = true;
 		bullet.Init(player.x, player.y, player.direction);
-		bullets.push_back(bullet);
+		playerBullets.push_back(bullet);
 	}
 }
-void GameManager::MoveBullets()
+void GameManager::MoveBullets(float deltaTime)
 {
-	for (list<Bullet>::iterator it = bullets.begin(); it != bullets.end();)
+	for (list<Bullet>::iterator it = playerBullets.begin(); it != playerBullets.end();)
 	{
-		it->Move();
+		it->Move(deltaTime);
 		if (it->OutofRange())
-			it = bullets.erase(it);
+			it = playerBullets.erase(it);
 		else
 			it++;
 	}
 }
 void GameManager::DrawBullets(HDC hdc)
 {
-	for (list<Bullet>::iterator it = bullets.begin(); it != bullets.end(); it++)
+	for (list<Bullet>::iterator it = playerBullets.begin(); it != playerBullets.end(); it++)
 	{
 		it->Draw(hdc);
 	}
@@ -253,19 +267,17 @@ void GameManager::DrawBullets(HDC hdc)
 void GameManager::ResourcesInit()
 {
 	BLOCKTYPE mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { EMPTY };
-	startPos.x = 5 * TileImageSizeX;
-	startPos.y = 13 * TileImageSizeY;
+	playerStartPos.x = 5 * TILEBLOCK_SIZE;
+	playerStartPos.y = 13 * TILEBLOCK_SIZE;
 
 	for (int i = 0; i < 11; i++)
 		blockSprites[i].Init((IMAGENUM)(IMAGENUM_BLOCK + i), 1, 16, 16);
 	TitleLogo.Init(IMAGENUM_LOGO, 1, 500, 151);
 	//blocks[IMAGENUM_EGLE].Init(IMAGENUM_EGLE, 1, 32, 32); //손봐야함
-		for (int i = 0; i < 10; i++)
-			Timer[i] = 0;
 	for (int i = 0; i < 6; i++)
 		blocks[i].Init((IMAGENUM_EMPTY + i), 1, 16, 16);
-	greyScreen[0] = { 0, 0, 600, 0 };
-	greyScreen[1] = { 0, 600, 600, 600 };
+	greyScreen[0] = { 0, 0, 1000, 0 };
+	greyScreen[1] = { 0, 800, 1000, 800 };
 
 	flash.Init(IMAGENUM_FLASH_01, 4, 16, 16);
 }
@@ -297,7 +309,8 @@ void GameManager::DrawIngame(HDC hdc)
 	DrawTile(hdc);
 	player.Draw(hdc);
 	DrawBullets(hdc);
-	enemyManager.DrawEnemy(hdc);
+	enemyManager.Draw(hdc);
+	CollisionDraw(hdc);
 }
 void GameManager::DrawScreen(HDC hdc)
 {
@@ -358,64 +371,99 @@ void GameManager::DrawGameInfo(HDC hdc)
 	}
 }
 
-bool GameManager::CollisionCheck()
+bool GameManager::CollisionCheck(float &x, float &y, DIRECTION direction)
 {
-	RECT playerRect;
-	playerRect.top = player.y;
-	playerRect.bottom = player.y + 32;
-	playerRect.left = player.x;
-	playerRect.right = player.x + 32;
-	
-	for (int i = 0; i < TILE_HEIGHT_NUM; i++)
+	RECT rect{ x, y, x + TILEBLOCK_SIZE, y + TILEBLOCK_SIZE };//탱크 RECT
+
+	for (int i = 0; i < SMALL_TILE_HEIGHT_NUM; i++)
 	{
-		for (int j = 0; j < TILE_WIDTH_NUM; j++)
+		for (int j = 0; j < SMALL_TILE_WIDTH_NUM; j++)
 		{
-			if (mapTile[TILE_HEIGHT_NUM*i + j] == BLICK_RIGHT ||
-				mapTile[TILE_HEIGHT_NUM*i + j] == BLICK_DOWN ||
-				mapTile[TILE_HEIGHT_NUM*i + j] == BLICK_LEFT ||
-				mapTile[TILE_HEIGHT_NUM*i + j] == BLICK_UP ||
-				mapTile[TILE_HEIGHT_NUM*i + j] == BLICK_FULL ||
-				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_RIGHT ||
-				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_DOWN ||
-				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_LEFT ||
-				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_UP ||
-				mapTile[TILE_HEIGHT_NUM*i + j] == IRON_FULL ||
-				mapTile[TILE_HEIGHT_NUM*i + j] == BLOCKEGLE ||
-				mapTile[TILE_HEIGHT_NUM*i + j] == WATER)
+			if (judgeMapTile[SMALL_TILE_WIDTH_NUM*i + j] == JUDGE_BRICK ||
+				judgeMapTile[SMALL_TILE_WIDTH_NUM*i + j] == JUDGE_BLOCK ||
+				judgeMapTile[SMALL_TILE_WIDTH_NUM*i + j] == JUDGE_WATER)
 			{
 				RECT Rect;
-				Rect.top = i * TileImageSizeY + GameOffsetY;
-				Rect.bottom = (i + 1) * TileImageSizeY + GameOffsetY;
-				Rect.left = j * TileImageSizeX + GameOffsetX;
-				Rect.right = (j + 1) * TileImageSizeX + GameOffsetX;
+				Rect.top = i * MINIBLOCK_SIZE + GameOffsetY;
+				Rect.bottom = (i + 1) * MINIBLOCK_SIZE + GameOffsetY;
+				Rect.left = j * MINIBLOCK_SIZE + GameOffsetX;
+				Rect.right = (j + 1) * MINIBLOCK_SIZE + GameOffsetX;
 			
-				if (Physics::GetInstance()->RECTbyRECTCollisionCheck(playerRect, Rect))
+				if (Physics::GetInstance()->RECTbyRECTCollisionCheck(rect, Rect))
 				{
 					RECT rcTemp;
 
-					if (playerRect.top > Rect.top && player.direction == UP) //player가 아래에 있을때
+					if (rect.top > Rect.top && direction == UP) //player가 아래에 있을때
 					{
-						player.y++;
+						y++;
 						return true;
 					}
-					else if(playerRect.top < Rect.top && player.direction == DOWN)
+					else if(rect.top < Rect.top && direction == DOWN)
 					{
-						player.y--;
+						y--;
 						return true;
 					}
-					if (playerRect.left > Rect.left && player.direction == LEFT) //player가 오른쪽에 있을때
+					if (rect.left > Rect.left && direction == LEFT) //player가 오른쪽에 있을때
 					{
-						player.x++;
+						x++;
 						return true;
 					}
-					else if(playerRect.left < Rect.left && player.direction == RIGHT)
+					else if(rect.left < Rect.left && direction == RIGHT)
 					{
-						player.x--;
+						x--;
 						return true;
 					}
 					return true;
 				}
-					
+			}
+		}
+	}
+
+	return false;
+}
+bool GameManager::CollisionCheckBlockandBullet(float x, float y, DIRECTION direction)
+{
+	RECT rect{ x, y, x + 16, y + 16 };//총알 RECT
+
+	for (int i = 0; i < SMALL_TILE_HEIGHT_NUM; i++)
+	{
+		for (int j = 0; j < SMALL_TILE_WIDTH_NUM; j++)
+		{
+			if (judgeMapTile[SMALL_TILE_WIDTH_NUM*i + j] == JUDGE_BRICK ||
+				judgeMapTile[SMALL_TILE_WIDTH_NUM*i + j] == JUDGE_BLOCK)
+			{
+				RECT Rect;
+				Rect.top = i * MINIBLOCK_SIZE + GameOffsetY;
+				Rect.bottom = (i + 1) * MINIBLOCK_SIZE + GameOffsetY;
+				Rect.left = j * MINIBLOCK_SIZE + GameOffsetX;
+				Rect.right = (j + 1) * MINIBLOCK_SIZE + GameOffsetX;
+
+				if (Physics::GetInstance()->RECTbyRECTCollisionCheck(rect, Rect))
+				{
+					RECT rcTemp;
+					if (judgeMapTile[SMALL_TILE_WIDTH_NUM*i + j] == JUDGE_BRICK)
+					{
+						judgeMapTile[SMALL_TILE_WIDTH_NUM*i + j] = JUDGE_EMPTY;
+					}
+					//벽돌이 부숴지는 방향 필요
+					if (rect.top > Rect.top && direction == UP) //player가 아래에 있을때
+					{
+						return true;
+					}
+					else if (rect.top < Rect.top && direction == DOWN)
+					{
+						return true;
+					}
+					if (rect.left > Rect.left && direction == LEFT) //player가 오른쪽에 있을때
+					{
+						return true;
+					}
+					else if (rect.left < Rect.left && direction == RIGHT)
+					{
+						return true;
+					}
+					return true;
+				}
 			}
 		}
 	}
@@ -424,6 +472,8 @@ bool GameManager::CollisionCheck()
 }
 void GameManager::CollisionDraw(HDC hdc)
 {
+	if (!isCollisionView)
+		return;
 	RECT playerRect;
 	playerRect.top = player.y;
 	playerRect.bottom = player.y + 32;
@@ -449,10 +499,10 @@ void GameManager::CollisionDraw(HDC hdc)
 				mapTile[TILE_HEIGHT_NUM * i + j] == WATER)
 			{
 				RECT Rect;
-				Rect.top = i * TileImageSizeY + GameOffsetY;
-				Rect.bottom = (i + 1) * TileImageSizeY + GameOffsetY;
-				Rect.left = j * TileImageSizeX + GameOffsetX;
-				Rect.right = (j + 1) * TileImageSizeX + GameOffsetX;
+				Rect.top = i * TILEBLOCK_SIZE + GameOffsetY;
+				Rect.bottom = (i + 1) * TILEBLOCK_SIZE + GameOffsetY;
+				Rect.left = j * TILEBLOCK_SIZE + GameOffsetX;
+				Rect.right = (j + 1) * TILEBLOCK_SIZE + GameOffsetX;
 
 				Rectangle(hdc, Rect.left, Rect.top, Rect.right, Rect.bottom);
 			}
@@ -486,20 +536,21 @@ void GameManager::ScreenScroll(float deltaTime)
 	static bool screenSwitch = false;
 	static float timer = 0;
 	static bool flag = false;
-	static float bottom = 600;
-	static float top = 0;
+	static float bottom = 0;
+	static float top = 600;
 
-	float logoScrollSpeed = deltaTime * 500;
+	float logoScrollSpeed = deltaTime * 400;
 
 	if (isScreenScroll)
 	{
 		logoOffsetY -= logoScrollSpeed;
+
 		if (logoOffsetY < 100)
 		{
 			isScreenScroll = false;
 		}
 	}
-	float scrollSpeed = deltaTime * 50;
+	float scrollSpeed = deltaTime * 200;
 
 	if (isScreenMoving) 
 	{
@@ -511,6 +562,9 @@ void GameManager::ScreenScroll(float deltaTime)
 			{
 				bottom -= scrollSpeed;
 				top += scrollSpeed;
+
+				greyScreen[0].bottom = bottom;
+				greyScreen[1].top = top;
 			}
 			else//다시 열기
 			{
@@ -528,16 +582,18 @@ void GameManager::ScreenScroll(float deltaTime)
 				SelectObject(hdc, tempOBrush);
 				DeleteObject(tempBrush);*/
 
-				//FontManager font;
-				//font.Draw(hdc, "스테이지 시작", 30, 200, 300, "DungGeunMo", RGB(0, 0, 0));
+				/*FontManager font;
+				font.Draw(hdc, "스테이지 시작", 30, 200, 300, "DungGeunMo", RGB(0, 0, 0));*/
 			}
 		}
 		else //닫는 중
 		{
 			bottom += scrollSpeed;
 			top -= scrollSpeed;
-		}
 
+			greyScreen[0].bottom = bottom;
+			greyScreen[1].top = top;
+		}
 		if (greyScreen[0].bottom >= 300)
 		{
 			screenSwitch = true;
@@ -547,44 +603,39 @@ void GameManager::ScreenScroll(float deltaTime)
 			isScreenMoving = false;
 			screenSwitch = false;
 		}
-		greyScreen[0].bottom = bottom;
-		greyScreen[1].top = top;
+
+		/*greyScreen[0].bottom = bottom;
+		greyScreen[1].top = top;*/
 	}
 
 }
-
 void GameManager::SceneChange(Scene _scene, float delayTime)
 {
+	//맨 처음 스크롤 중인 로고 고정
 	if (isScreenScroll)
 	{
 		logoOffsetY= 100;
-
 		isScreenScroll = false;
 		return;
 	}
+	//맨 처음 스크롤 중인 로고 고정
 	switch (scene)
 	{
+		//스크린 닫고열기 시작
 	case TITLE:
 		isScreenMoving = true;
-		//스크린 닫혔다 열기
-		break;
-	case INGAME:
-		//
-		break;
-	case RESULT:
-		break;
-	default:
 		break;
 	}
 }
 void GameManager::Release()
 {
-	bullets.clear();
+	playerBullets.clear();
 
 	ResourceManager::GetInstance()->Release();
 	Physics::GetInstance()->Release();
 	enemyManager.Release();
 	delete this;
 }
+
 GameManager::GameManager() {}
 GameManager::~GameManager() {}

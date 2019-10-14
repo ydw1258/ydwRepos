@@ -65,7 +65,6 @@ enum Scene
 	INGAME,
 	RESULT
 };
-
 struct MapStackInfo
 {
 	POINT pt;
@@ -80,47 +79,49 @@ struct RGBInfo
 class GameManager
 {
 private:
-	Player player;
-	POINT startPos;
-	int score;
-	int remains; //남은 플레이어 기회
+	static GameManager* mthis;
+
+	POINT playerStartPos;
+	int score = 0;
+	int remains;//남은 플레이어 기회
 	HWND hwnd;
-	SpriteRenderer backGround;
+	//SpriteRenderer backGround;
+	BitMap backBlackImage;
 	SpriteRenderer blocks[15];
 	SpriteRenderer TitleLogo;
 	SpriteRenderer flash;
-	EnemyManager enemyManager;
-
-	RECT greyScreen[2]; //위아래 스크린
-	static GameManager* mthis;
-	BitMap backBlackImage;
-	float Timer[10] = { 0 };
-	float TimerReset[10] = { 0 };
-	bool GameOverflag = false;
 	SpriteRenderer blockSprites[11];
-	stack<MapStackInfo> mapTileUndoStack;
-	stack<MapStackInfo> mapTileRedoStack;
-	BLOCKTYPE mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { EMPTY };
-	JUDGEBLOCKTYPE judgeMapTile[SMALL_TILE_HEIGHT_NUM * SMALL_TILE_WIDTH_NUM];
-	list<Bullet> bullets;
-	
-	bool isScreenScroll = true;
-	float logoOffsetY = 600.0f;
-public:
-	const int GameOffsetX = 20;
-	const int GameOffsetY = 20;
-	const int TileImageSizeX = 32;
-	const int TileImageSizeY = 32;
-	bool isGameOver = false;
-	bool isScreenMoving = false;
-	Scene scene = INGAME;
 
+	//위아래로 닫혔다 열리는 회색 스크린
+	RECT greyScreen[2]; 
+	bool isScreenScroll = true;
+
+	float logoOffsetY = 600.0f;
+	
+	EnemyManager enemyManager;
+	bool GameOverflag = false;
+	BLOCKTYPE mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { EMPTY }; //메모장에서 불러올때 사용하는 타일
+	JUDGEBLOCKTYPE judgeMapTile[SMALL_TILE_HEIGHT_NUM * SMALL_TILE_WIDTH_NUM]; //1/4등분으로 나눈 판정 타일
+
+	//list<Bullet> enemyBullets;
+	list<Bullet> playerBullets;
+public:
 	static GameManager* GetInstance()
 	{
 		if (mthis == nullptr)
 			mthis = new GameManager();
 		return mthis;
 	}
+	Player player;
+	Scene scene = TITLE;
+
+	const int GameOffsetX = 20;
+	const int GameOffsetY = 20;
+	bool isGameOver = false;
+	bool isScreenMoving = false;
+	bool isCollisionView = false;
+	
+	
 	void Draw(HDC hdc);
 	void DrawTitle(HDC hdc);
 	void DrawIngame(HDC hdc);
@@ -129,23 +130,24 @@ public:
 	void DrawBlack(HDC hdc);
 	void DrawTile(HDC hdc);
 	void DrawGameInfo(HDC hdc);
-	bool CollisionCheck();
+	bool CollisionCheck(float &x, float &y, DIRECTION direction);
+	bool CollisionCheckBlockandBullet(float bulletX, float bulletY, DIRECTION direction);
 	void CollisionDraw(HDC hdc);
 
 	void Init(HDC hdc, HINSTANCE _g_hInst, HWND _hwnd);
-	void Release();
 
 	void Shot();
 	void LoadMap();
 	void PlayerMove(DIRECTION dir, float deltaTime);
-	void MoveBullets();
+	void PlayerBulletCollisionCheck();
+	void MoveBullets(float deltaTime);
 	void DrawBullets(HDC hdc);
 	void ResourcesInit();
 	void SpawnEnemy(float deltaTime);
 	void Update(float deltaTime);
 	void ScreenScroll(float deltaTime);
-
 	void SceneChange(Scene _scene, float delayTime);
+	void Release();
 
 	GameManager();
 	~GameManager();

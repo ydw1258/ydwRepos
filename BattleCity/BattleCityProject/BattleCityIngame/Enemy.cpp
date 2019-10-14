@@ -6,10 +6,7 @@ Enemy::~Enemy(){}
 void Enemy::Update(float deltaTime)
 {
 	static float moveTimer = 2.0f;
-	static float shotTimer = 1.0f;
-
 	moveTimer -= deltaTime * 10;
-	shotTimer -= deltaTime * 10;
 
 	if (moveTimer < 0)
 	{
@@ -18,20 +15,44 @@ void Enemy::Update(float deltaTime)
 		//¿òÁ÷ÀÌ´Â ¹æÇâ º¯°æ
 		
 	}
+}
+bool Enemy::ShotTimer(float deltaTime)
+{
+	static float shotTimer = 1.0f;
+	shotTimer -= deltaTime * 10;
+
 	if (shotTimer < 0)
 	{
 		shotTimer = 1.0f;
 
 		//ÃÑ½î±â
 		int randNum = rand() % 3;
+
 		if (randNum == 0)// 1/3È®·ü
 		{
-			Shot();
+			return true;
 		}
 	}
-//	Move(deltaTime);
+	return false;
 }
-
+void Enemy::DirectionChange()
+{
+	switch (direction)
+	{
+	case UP:
+		direction = DOWN;
+		break;
+	case DOWN:
+		direction = UP;
+		break;
+	case LEFT:
+		direction = RIGHT;
+		break;
+	case RIGHT:
+		direction = LEFT;
+		break;
+	}
+}
 void Enemy::Init(int _x, int _y)
 {
 	x = _x;
@@ -42,7 +63,7 @@ void Enemy::Init(int _x, int _y)
 	downSprite.Init(IMAGENUM_ENEMY_DOWN01, 2, sizeX, sizeY);
 	leftSprite.Init(IMAGENUM_ENEMY_LEFT01, 2, sizeX, sizeY);
 	rightSprite.Init(IMAGENUM_ENEMY_RIGHT01, 2, sizeX, sizeY);
-	curSprite = upSprite;
+	curSprite = downSprite;
 	
 	direction = DIRECTION::DOWN;
 }
@@ -76,17 +97,6 @@ void Enemy::Move(float deltaTime)
 		if (x < sizeX * 12 + GameManager::GetInstance()->GameOffsetX)
 			x += deltaTime * speed;
 		break;
-	}
-}
-
-void Enemy::Shot()
-{
-	if (bullets.size() == 0)
-	{
-		Bullet bullet;
-		bullet.isPlayers = false;
-		bullet.Init(x, y, direction);
-		bullets.push_back(bullet);
 	}
 }
 

@@ -7,15 +7,16 @@ enum DIRECTION;
 class Bullet
 {
 private:
-	float x;
-	float y;
-	float speed = 1.2f;
-	DIRECTION direction;
+	float speed;
+	
 	SpriteRenderer sprite;
 public:
+	DIRECTION direction;
+	float x;
+	float y;
 	bool isPlayers;
 	bool OutofRange();
 	void Init(int PlayerX, int PlayerY, DIRECTION _direction);
-	void Move();
+	void Move(float deltaTime);
 	void Draw(HDC hdc);
 };
