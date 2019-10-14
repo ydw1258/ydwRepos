@@ -27,24 +27,25 @@ void GameManager::Init(HDC _hdc, HINSTANCE _g_hInst, HWND _hwnd)
 		"BattleResource\\player_down02.bmp",
 		"BattleResource\\player_left01.bmp",
 		"BattleResource\\player_left02.bmp",
-		"BattleResource\\player_right01.bmp",
+		"BattleResource\\player_right01.bmp",//20
 		"BattleResource\\player_right02.bmp",
 		"BattleResource\\flash01.bmp",
 		"BattleResource\\flash02.bmp",
 		"BattleResource\\flash03.bmp",
 		"BattleResource\\flash04.bmp", //25
 		"BattleResource\\enemyIcon.bmp",
-		"BattleResource\\logo.bmp", //27
+		"BattleResource\\logo.bmp",
 		"BattleResource\\__eagle.bmp",
 		"BattleResource\\__crashedeagle.bmp",
 		"BattleResource\\bullet.bmp"
 	};
 	player.Init();
-	ResourceManager::GetInstance()->Init(_hdc, filename, 30);
+	ResourceManager::GetInstance()->Init(_hdc, filename, 31);
 	FontManager::Init();
 	ResourcesInit();
 	LoadMap();
 	backBlackImage.Init(_hdc, 600, 600, 0, 0, 0);
+	enemyManager.Init();
 }
 
 void GameManager::Update(float deltaTime)
@@ -58,9 +59,9 @@ void GameManager::Update(float deltaTime)
 		break;
 	case INGAME:
 		//SpriteChance필요
-
 		ScreenScroll(deltaTime);
-		//MoveBullets();
+		SpawnEnemy(deltaTime);
+		MoveBullets();
 		break;
 	default:
 		break;
@@ -110,115 +111,107 @@ void GameManager::LoadMap()
 	}
 	openFile.close();
 
-	/*for (int i = 0; i < TILE_HEIGHT_NUM; i++)
-	{
-		for (int j = 0; j < TILE_WIDTH_NUM; j++)
-		{
-			if (i == 12 && j == 5)
-			{
-				mapTile[i * TILE_HEIGHT_NUM + j] = BLOCKEGLE;
-				continue;
-			}
-				
-			mapTile[i * TILE_HEIGHT_NUM + j] = (BLOCKTYPE)mapValues[i * TILE_HEIGHT_NUM + j];
-		}
-	}*/
 	for (int i = 0; i < TILE_HEIGHT_NUM; i++)
 	{
 		for (int j = 0; j < TILE_WIDTH_NUM; j++)
 		{
-			switch (mapTile[TILE_HEIGHT_NUM * i + j]) 
+			if (i == 12 && j == 12)
 			{
-			case EMPTY://
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
+				int a = 1;
+			}
+			switch (mapTile[TILE_WIDTH_NUM * i + j])
+			{
+			case EMPTY:
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
 			case BLICK_RIGHT:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BRICK;
 				break;
 			case BLICK_DOWN:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BRICK;
 				break;
 			case BLICK_LEFT:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
 			case BLICK_UP:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
 			case BLICK_FULL:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BRICK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_BRICK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BRICK;
 				break;
 			case IRON_RIGHT:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BLOCK;
 				break;
 			case IRON_DOWN:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BLOCK;
 				break;
 			case IRON_LEFT:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
 			case IRON_UP:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
 			case IRON_FULL:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BLOCK;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_BLOCK;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BLOCK;
 				break;
 			case WATER:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_WATER;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_WATER;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_WATER;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_WATER;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_WATER;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_WATER;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_WATER;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_WATER;
 				break;
 			case BUSH:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_BUSH;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_BUSH;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_BUSH;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BUSH;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_BUSH;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_BUSH;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_BUSH;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_BUSH;
 				break;
 			case ICE:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_STEEL;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_STEEL;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_STEEL;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_STEEL;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_STEEL;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_STEEL;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_STEEL;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_STEEL;
 				break;
 			case BLOCKEGLE:
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
-				judgeMapTile[TILE_HEIGHT_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * i * 2 + j * 2 + 1] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2] = JUDGE_EMPTY;
+				judgeMapTile[SMALL_TILE_WIDTH_NUM * (i * 2 + 1) + j * 2 + 1] = JUDGE_EMPTY;
 				break;
+			
 			}
 		}
 	}
@@ -226,7 +219,7 @@ void GameManager::LoadMap()
 
 void GameManager::PlayerMove(DIRECTION dir, float deltaTime)
 {
-	player.PlayerMove(dir, deltaTime);
+	player.Move(dir, deltaTime);
 }
 
 void GameManager::Shot()
@@ -234,6 +227,7 @@ void GameManager::Shot()
   	if (bullets.size() == 0)
 	{
 		Bullet bullet;
+		bullet.isPlayers = true;
 		bullet.Init(player.x, player.y, player.direction);
 		bullets.push_back(bullet);
 	}
@@ -256,7 +250,6 @@ void GameManager::DrawBullets(HDC hdc)
 		it->Draw(hdc);
 	}
 }
-
 void GameManager::ResourcesInit()
 {
 	BLOCKTYPE mapTile[TILE_HEIGHT_NUM * TILE_WIDTH_NUM] = { EMPTY };
@@ -276,6 +269,19 @@ void GameManager::ResourcesInit()
 
 	flash.Init(IMAGENUM_FLASH_01, 4, 16, 16);
 }
+void GameManager::SpawnEnemy(float deltaTime)
+{
+	static float Timer = 4.0f;
+
+	Timer -= deltaTime;
+	
+	if (Timer < 0)
+	{
+		Timer = SPAWN_DELAY;
+
+		enemyManager.SpawnEnemy();
+	}
+}
 
 void GameManager::DrawTitle(HDC hdc)
 {
@@ -284,15 +290,14 @@ void GameManager::DrawTitle(HDC hdc)
 
 	if(!isScreenScroll)
 		font.Draw(hdc, "게임 시작 space", 30, 150, 400, "DungGeunMo", RGB(128, 128, 128));
-	
 }
 
 void GameManager::DrawIngame(HDC hdc)
 {
-	//DrawTile을 그리는거 찾기
+	DrawTile(hdc);
 	player.Draw(hdc);
-	//DrawScreen(hdc);
-	//DrawBullets(hdc);
+	DrawBullets(hdc);
+	enemyManager.DrawEnemy(hdc);
 }
 void GameManager::DrawScreen(HDC hdc)
 {
@@ -347,8 +352,8 @@ void GameManager::DrawGameInfo(HDC hdc)
 	case TITLE:
 		break;
 	case INGAME:
-		//font.Draw(hdc, (int)player.x, 20, 500, 30, "DungGeunMo", RGB(255, 255, 255));
-		//font.Draw(hdc, (int)player.y, 20, 500, 50, "DungGeunMo", RGB(255, 255, 255));
+		font.Draw(hdc, (int)player.x, 20, 500, 30, "DungGeunMo", RGB(255, 255, 255));
+		font.Draw(hdc, (int)player.y, 20, 500, 50, "DungGeunMo", RGB(255, 255, 255));
 		break;
 	}
 }
@@ -480,17 +485,21 @@ void GameManager::ScreenScroll(float deltaTime)
 {
 	static bool screenSwitch = false;
 	static float timer = 0;
-	static bool flag =false;
+	static bool flag = false;
+	static float bottom = 600;
+	static float top = 0;
+
+	float logoScrollSpeed = deltaTime * 500;
 
 	if (isScreenScroll)
 	{
-		logoOffsetY -= 2;
+		logoOffsetY -= logoScrollSpeed;
 		if (logoOffsetY < 100)
 		{
 			isScreenScroll = false;
 		}
 	}
-	int scrollSpeed = deltaTime * 500;
+	float scrollSpeed = deltaTime * 50;
 
 	if (isScreenMoving) 
 	{
@@ -500,8 +509,8 @@ void GameManager::ScreenScroll(float deltaTime)
 			
 			if (timer > 1) //닫혀있는 중
 			{
-				greyScreen[0].bottom -= scrollSpeed;
-				greyScreen[1].top += scrollSpeed;
+				bottom -= scrollSpeed;
+				top += scrollSpeed;
 			}
 			else//다시 열기
 			{
@@ -525,8 +534,8 @@ void GameManager::ScreenScroll(float deltaTime)
 		}
 		else //닫는 중
 		{
-			greyScreen[0].bottom += scrollSpeed;
-			greyScreen[1].top -= scrollSpeed;
+			bottom += scrollSpeed;
+			top -= scrollSpeed;
 		}
 
 		if (greyScreen[0].bottom >= 300)
@@ -538,10 +547,12 @@ void GameManager::ScreenScroll(float deltaTime)
 			isScreenMoving = false;
 			screenSwitch = false;
 		}
+		greyScreen[0].bottom = bottom;
+		greyScreen[1].top = top;
 	}
+
 }
 
-//현재 무의미
 void GameManager::SceneChange(Scene _scene, float delayTime)
 {
 	if (isScreenScroll)
@@ -572,6 +583,7 @@ void GameManager::Release()
 
 	ResourceManager::GetInstance()->Release();
 	Physics::GetInstance()->Release();
+	enemyManager.Release();
 	delete this;
 }
 GameManager::GameManager() {}

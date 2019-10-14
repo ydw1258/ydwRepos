@@ -11,7 +11,7 @@ HWND hWnd;
 LPCTSTR lpszClass = TEXT("Hello World!!");
 GameFrameWork g_GameFrame;
 
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #pragma comment(lib, "msimg32.lib")
 #pragma comment(lib, "winmm.lib")
 

@@ -6,12 +6,11 @@ Player::~Player() {}
 
 void Player::Init()
 {
-	sizeX = 32;
-	sizeY = 32;
-	//초기 위치 4, 13 집은 6, 13
-	x = 4 * TILEBLOCK_SIZE + GameManager::GetInstance()->GameOffsetX;
-	y = 4 * TILEBLOCK_SIZE + GameManager::GetInstance()->GameOffsetY;
-
+	//player초기 위치 4, 12
+	x = TILEBLOCK_SIZE * 4 + GameManager::GetInstance()->GameOffsetX;
+	y = TILEBLOCK_SIZE * 12 + GameManager::GetInstance()->GameOffsetY;
+	sizeX = TILEBLOCK_SIZE;
+	sizeY = TILEBLOCK_SIZE;
 	upSprite.Init(IMAGENUM_PLAYER_UP01, 2, sizeX, sizeY);
 	downSprite.Init(IMAGENUM_PLAYER_DOWN01, 2, sizeX, sizeY);
 	leftSprite.Init(IMAGENUM_PLAYER_LEFT01, 2, sizeX, sizeY);
@@ -19,20 +18,21 @@ void Player::Init()
 	curSprite = upSprite;
 }
 
-void Player::PlayerMove(DIRECTION _direction, float deltaTime)
+void Player::Move(DIRECTION _direction, float deltaTime)
 {
 	direction = _direction;
+
 	switch (direction)
 	{
 	case UP:
 		curSprite = upSprite;
 		if (y > GameManager::GetInstance()->GameOffsetY)
-			y-= deltaTime * speed;
+			y -= deltaTime * speed;
 		break;
 	case DOWN:
 		curSprite = downSprite;
 		if (y < sizeY * 12 + GameManager::GetInstance()->GameOffsetY)
-			y+= deltaTime * speed;
+			y += deltaTime * speed;
 		break;
 	case LEFT:
 		curSprite = leftSprite;

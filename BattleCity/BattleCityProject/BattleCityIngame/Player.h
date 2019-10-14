@@ -29,6 +29,6 @@ public:
 
 	void Init();
 	void Draw(HDC hdc);
-	void PlayerMove(DIRECTION direction, float deltaTime);
+	void Move(DIRECTION direction, float deltaTime);
 	void SpriteChange();
 };

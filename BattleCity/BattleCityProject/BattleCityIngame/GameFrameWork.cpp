@@ -12,7 +12,7 @@ void GameFrameWork::Init(HWND hWnd, HINSTANCE g_hInst)
 	m_hWnd = hWnd;
 	hdc = GetDC(hWnd);
 	memDC = CreateCompatibleDC(hdc);
-	bitmap = CreateCompatibleBitmap(hdc, 550, 500);
+	bitmap = CreateCompatibleBitmap(hdc, 800, 700);
 	oldBitmap = (HBITMAP)SelectObject(memDC, bitmap);
 
 	GameManager::GetInstance()->Init(hdc, g_hInst, hWnd);
@@ -58,7 +58,7 @@ void GameFrameWork::OperateInput()
 				GameManager::GetInstance()->SceneChange(INGAME, 1);
 				break;
 			case INGAME:
-				//GameManager::GetInstance()->Shot();
+				GameManager::GetInstance()->Shot();
 				//GameManager::GetInstance()->SceneChange(INGAME, 1);
 
 				break;
@@ -97,5 +97,6 @@ void GameFrameWork::Render()
 {
 	//스프라이트 변경은 일정시간마다만 호출
 	GameManager::GetInstance()->Draw(memDC);
-	BitBlt(hdc, 0, 0, 1000, 600, memDC, 0, 0, SRCCOPY);
+	
+	BitBlt(hdc, 0, 0, 1000, 1000, memDC, 0, 0, SRCCOPY);
 }

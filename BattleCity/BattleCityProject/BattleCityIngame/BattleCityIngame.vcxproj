@@ -152,6 +152,7 @@
     <ClInclude Include="BlockType.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="GameFrameWork.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="IMAGENUM.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="BattleCityIngameMain.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameFrameWork.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Player.cpp" />

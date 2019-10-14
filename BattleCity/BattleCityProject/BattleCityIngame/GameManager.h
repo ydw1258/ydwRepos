@@ -13,7 +13,8 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "IMAGENUM.h"
-#include <crtdbg.h>
+#include "EnemyManager.h"
+
 using namespace std;
 
 enum BLOCKTYPE
@@ -55,6 +56,7 @@ enum JUDGEBLOCKTYPE // 1/4 짜리 타일
 
 #define MINIBLOCK_SIZE 16
 #define TILEBLOCK_SIZE 32
+
 using namespace std;
 
 enum Scene
@@ -87,12 +89,11 @@ private:
 	SpriteRenderer blocks[15];
 	SpriteRenderer TitleLogo;
 	SpriteRenderer flash;
+	EnemyManager enemyManager;
 
 	RECT greyScreen[2]; //위아래 스크린
-	//HDC hdc;
 	static GameManager* mthis;
 	BitMap backBlackImage;
-	//FontManager TitleFont;
 	float Timer[10] = { 0 };
 	float TimerReset[10] = { 0 };
 	bool GameOverflag = false;
@@ -104,8 +105,7 @@ private:
 	list<Bullet> bullets;
 	
 	bool isScreenScroll = true;
-	int logoOffsetY = 600;
-	
+	float logoOffsetY = 600.0f;
 public:
 	const int GameOffsetX = 20;
 	const int GameOffsetY = 20;
@@ -113,8 +113,8 @@ public:
 	const int TileImageSizeY = 32;
 	bool isGameOver = false;
 	bool isScreenMoving = false;
-	//Scene scene = TITLE;
-	Scene scene = TITLE;
+	Scene scene = INGAME;
+
 	static GameManager* GetInstance()
 	{
 		if (mthis == nullptr)
@@ -141,7 +141,7 @@ public:
 	void MoveBullets();
 	void DrawBullets(HDC hdc);
 	void ResourcesInit();
-
+	void SpawnEnemy(float deltaTime);
 	void Update(float deltaTime);
 	void ScreenScroll(float deltaTime);
 
