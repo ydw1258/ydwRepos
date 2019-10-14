@@ -1,8 +1,0 @@
-﻿  Main.cpp
-c:\work\cpp\tcp\asysnccs_empty\asysncclient\asysncclient\main.cpp(56): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
-  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\winsock2.h(1830): note: 'inet_addr' 선언을 참조하십시오.
-c:\work\cpp\tcp\asysnccs_empty\asysncclient\asysncclient\main.cpp(64): warning C4996: 'WSAAsyncSelect': Use WSAEventSelect() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
-  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\winsock2.h(2679): note: 'WSAAsyncSelect' 선언을 참조하십시오.
-c:\work\cpp\tcp\asysnccs_empty\asysncclient\asysncclient\main.cpp(166): warning C4101: 'client_sock' :참조되지 않은 지역 변수입니다.
-c:\work\cpp\tcp\asysnccs_empty\asysncclient\asysncclient\main.cpp(167): warning C4101: 'clientaddr' :참조되지 않은 지역 변수입니다.
-  AsysncClient.vcxproj -> C:\Work\CPP\TCP\AsysncCS_empty\AsysncClient\Debug\AsysncClient.exe

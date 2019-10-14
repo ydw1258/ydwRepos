@@ -1,1 +1,4 @@
-﻿  StaticWinApiLib.vcxproj -> D:\gitRepos\ydwRepos\YDWProjects\StaticWinApiLib\.\lib\StaticWinApiLibDebugx64.lib
+﻿  FontManager.cpp
+c:\users\administrator\documents\github\ydwrepos\ydwprojects\staticwinapilib\fontmanager.cpp(19): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\ydwprojects\staticwinapilib\fontmanager.cpp(40): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  StaticWinApiLib.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\YDWProjects\StaticWinApiLib\.\lib\StaticWinApiLibDebugx64.lib

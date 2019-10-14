@@ -115,10 +115,6 @@ void GameManager::LoadMap()
 	{
 		for (int j = 0; j < TILE_WIDTH_NUM; j++)
 		{
-			if (i == 12 && j == 12)
-			{
-				int a = 1;
-			}
 			switch (mapTile[TILE_WIDTH_NUM * i + j])
 			{
 			case EMPTY:
@@ -233,7 +229,6 @@ void GameManager::PlayerBulletCollisionCheck()
 		else
 			it++;
 	}
-	
 }
 
 void GameManager::Shot()
@@ -574,6 +569,8 @@ void GameManager::ScreenScroll(float deltaTime)
 					flag = true;
 					scene = INGAME;
 				}
+
+				//Draw부분으로 뺄 내용
 				/*HBRUSH tempBrush, tempOBrush;
 				tempBrush = CreateSolidBrush(RGB(192, 192, 192));
 				tempOBrush = (HBRUSH)SelectObject(hdc, tempBrush);

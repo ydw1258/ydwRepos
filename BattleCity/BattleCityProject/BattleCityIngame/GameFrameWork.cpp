@@ -33,9 +33,9 @@ void GameFrameWork::Update()
 		ScreenToClient(m_hWnd, &pt);
 	}*/
 	std::chrono::duration<float> sec = std::chrono::system_clock::now() - m_LastTime;
-	/*if (sec.count() < (1 / FPS))
-		return;*/
-
+	if (sec.count() < (1 / FPS))
+		return;
+	
 	m_fElapseTime = sec.count();
 	m_LastTime = std::chrono::system_clock::now();
 
@@ -47,6 +47,7 @@ void GameFrameWork::Update()
 
 void GameFrameWork::OperateInput()
 {
+	//1 / m_fElapseTime // => FPS
 	if (GetKeyState(VK_SPACE) & 0x8000)
 	{
 		if (!isButtonDown)

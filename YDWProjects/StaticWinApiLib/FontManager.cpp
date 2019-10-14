@@ -24,7 +24,7 @@ void FontManager::Draw(HDC hdc, int num, int fontSize, int x, int y, string font
 
 void FontManager::Init()
 {
-	AddFontResourceA("Resources\DungGeunMo.ttf");
+	AddFontResourceA("Resources\\DungGeunMo.ttf");
 }
 
 void FontManager::Draw(HDC hdc, string str, int fontSize, int x, int y, string fontName, COLORREF RGB)//문자 출력 RGB(255, 255, 0) 형식으로 입력
