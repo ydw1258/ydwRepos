@@ -1,0 +1,21 @@
+﻿  SockMgr.cpp
+c:\users\administrator\source\repos\catchmind\catchmind\sockmgr.cpp(35): warning C4267: '=': 'size_t'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\source\repos\catchmind\catchmind\sockmgr.cpp(36): warning C4267: '=': 'size_t'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  main2.cpp
+c:\users\administrator\source\repos\catchmind\catchmind\main2.cpp(19): warning C4005: 'BUFSIZE': 매크로 재정의
+  c:\users\administrator\source\repos\catchmind\catchmind\packet.h(7): note: 'BUFSIZE'의 이전 정의를 참조하십시오.
+c:\users\administrator\source\repos\catchmind\catchmind\main2.cpp(119): warning C4996: 'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\winsock2.h(1848): note: 'inet_ntoa' 선언을 참조하십시오.
+c:\users\administrator\source\repos\catchmind\catchmind\main2.cpp(187): warning C4996: 'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\winsock2.h(1848): note: 'inet_ntoa' 선언을 참조하십시오.
+c:\users\administrator\source\repos\catchmind\catchmind\main2.cpp(199): warning C4996: 'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\winsock2.h(1848): note: 'inet_ntoa' 선언을 참조하십시오.
+c:\users\administrator\source\repos\catchmind\catchmind\main2.cpp(282): warning C4473: 'printf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+  c:\users\administrator\source\repos\catchmind\catchmind\main2.cpp(282): note: 자리 표시자 및 해당 매개 변수에는 variadic 인수가 2개 필요하지만 1개가 제공되었습니다.
+  c:\users\administrator\source\repos\catchmind\catchmind\main2.cpp(282): note: 누락된 variadic 인수 2이(가) 서식 문자열 '%s'에 필요합니다.
+  코드를 생성하고 있습니다...
+c:\users\administrator\source\repos\catchmind\catchmind\sockmgr.h(55): warning C4700: 초기화되지 않은 'data' 지역 변수를 사용했습니다.
+c:\users\administrator\source\repos\catchmind\catchmind\sockmgr.h(55): warning C4700: 초기화되지 않은 'data' 지역 변수를 사용했습니다.
+c:\users\administrator\source\repos\catchmind\catchmind\sockmgr.h(55): warning C4700: 초기화되지 않은 'data' 지역 변수를 사용했습니다.
+c:\users\administrator\source\repos\catchmind\catchmind\sockmgr.h(55): warning C4700: 초기화되지 않은 'data' 지역 변수를 사용했습니다.
+  CatchMind.vcxproj -> C:\Users\Administrator\source\repos\CatchMind\Debug\CatchMind.exe

@@ -1,9 +1,0 @@
-﻿  main.cpp
-  Map.cpp
-D:\gitRepos\ydwRepos\CppLectureResult\FallingStarGame_verClass\Map.cpp(9,16): error C2065:  'EMPTY': 선언되지 않은 식별자입니다.
-D:\gitRepos\ydwRepos\CppLectureResult\FallingStarGame_verClass\Map.cpp(19,8): error C2059:  구문 오류: ')'
-D:\gitRepos\ydwRepos\CppLectureResult\FallingStarGame_verClass\Map.cpp(20,4): error C2143:  구문 오류: ';'이(가) '{' 앞에 없습니다.
-  Player.cpp
-D:\gitRepos\ydwRepos\CppLectureResult\FallingStarGame_verClass\Map.cpp(23,4): error C2181:  if와 짝을 이루지 않는 잘못된 else문입니다.
-  코드를 생성하고 있습니다...
-D:\gitRepos\ydwRepos\CppLectureResult\FallingStarGame_verClass\Player.cpp(10,17): error C3867:  'Map::SetPlayer': 비표준 구문입니다. '&'를 사용하여 멤버 포인터를 만드세요.

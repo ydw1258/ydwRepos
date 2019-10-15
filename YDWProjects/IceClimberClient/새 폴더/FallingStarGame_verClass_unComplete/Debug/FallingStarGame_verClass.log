@@ -1,9 +1,0 @@
-﻿  main.cpp
-c:\svn\neopleacademy\fallingstargame_verclass\main.cpp(23): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\conio.h(459): note: 'kbhit' 선언을 참조하십시오.
-c:\svn\neopleacademy\fallingstargame_verclass\main.cpp(25): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\conio.h(453): note: 'getch' 선언을 참조하십시오.
-c:\svn\neopleacademy\fallingstargame_verclass\main.cpp(58): warning C4244: '인수': 'float'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Player.cpp
-  코드를 생성하고 있습니다...
-  FallingStarGame_verClass.vcxproj -> C:\Svn\neopleacademy\Debug\FallingStarGame_verClass.exe

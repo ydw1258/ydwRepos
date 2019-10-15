@@ -1,3 +1,0 @@
-﻿  CppOmok.cpp
-D:\gitRepos\ydwRepos\YDWProjects\Cpp\CppOmok.cpp(92,1): error C4996:  'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\conio.h(452): message :  'getch' 선언을 참조하십시오.
