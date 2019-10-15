@@ -1,0 +1,23 @@
+trade-off
+service level
+
+DB
+검색 등록 수정 제거
+계층형 DB : 조직도, 전체 구조도
+RDB(관계형) : 2차원 표방식 DB
+객체지향 DB, XML DB : 
+NoSQL DB : 
+
+DBMS DB management System : db를 관리하는 소프트웨어
+DB : DBMS를 포함한 OS, 추가 애플리케이션 등을 포함한 개념
+APM 등
+
+Oracle, MSSQL, MYSQL, PostgreSQL..
+
+RDB 계층
+인스턴스 메모리에 올라간 프로그램
+DB 한개의 프로젝트
+오브젝트 테이블, 프로시져 index등
+
+transition세팅(10/16)
+
