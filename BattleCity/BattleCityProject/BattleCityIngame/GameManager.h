@@ -70,12 +70,7 @@ struct MapStackInfo
 	POINT pt;
 	BLOCKTYPE mapValue;
 };
-struct RGBInfo
-{
-	int r;
-	int b;
-	int g;
-};
+
 class GameManager
 {
 private:

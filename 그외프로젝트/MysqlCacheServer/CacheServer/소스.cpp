@@ -4,7 +4,6 @@ using namespace std;
 #include <WinSock2.h>
 
 #pragma comment(lib, "libmysql.lib")
-
 //include, lib추가한 뒤 libmysql.dll파일을 현재 프로젝트에 복사
 #pragma comment(lib, "ws2_32.lib")
 

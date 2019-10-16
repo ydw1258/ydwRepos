@@ -1,0 +1,73 @@
+#pragma once
+#include <assert.h>
+
+#define RELEASE_PTR(PTR) \
+{\
+	if (nullptr != PTR)\
+	{\
+		delete PTR;\
+		PTR = nullptr;\
+	}\
+}
+
+
+// 무조건 터진다.
+#define KASSERT assert(false)
+#define KNAMING 256
+-----------------
+
+Winapi 메인에 넣을 헤더
+//Winsock2 #include<WinSock2.h> 사용할 떄 씀 링크 입력
+#pragma comment(lib ");
+
+
+인풋 매니저
+
+class KInputManager : public KSingleton<KInputManager>
+{
+public:
+	friend class KCore;
+public:
+	bool is_down(const int& _Value);
+	bool is_press(const int& _Value);
+	bool is_up(const int& _Value);
+	bool is_unpress(const int& _Value);
+
+	KPos2 pos_mouse();
+};
+
+deltaTime 받아서 처리
+FontManager => FontRenderer (폰트 인스턴스 선언 안해도 되게 변경)
+
+Animator 상속으로 하위 클래스로 구현
+
+Collider2D
+
+버튼, Tile 구분, 수정
+
+Transfrom클래스
+vec, size가지고 상속해서 사용하기 위함.
+void create() override;
+bool init() override;
+void update() override;
+void release() override;
+
+
+void moving_pluspos(const KVec2& _Speed);
+	void moving_pos(const KVec2& _Speed);
+	void moving_delta(const KVec2& _Speed);
+SceneManager
+
+
+-----
+
+FileStreamManager
+write_file
+read_file
+해쉬 정리
+
+iterator로 찾아서 출력, erase등을 쓸수있게 할 수 있는지 조절
+
+erase();
+save();
+

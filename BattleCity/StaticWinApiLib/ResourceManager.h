@@ -5,6 +5,13 @@
 #include"BitMap.h"
 using namespace std;
 
+struct RGBInfo
+{
+	int r;
+	int b;
+	int g;
+};
+
 class ResourceManager
 {
 private:
