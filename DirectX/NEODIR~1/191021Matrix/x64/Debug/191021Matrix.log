@@ -1,0 +1,78 @@
+﻿  main.cpp
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(122,19): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(123,16): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(127,19): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(128,19): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(141,19): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(143,19): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(151,16): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(153,19): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(166,19): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(167,16): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(171,19): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\MainMatrix.h(172,19): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(124,24): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(124,18): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(125,22): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(125,16): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(127,24): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(127,18): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(128,22): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(128,16): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(130,24): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(130,18): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(131,22): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\191021Matrix\main.cpp(131,16): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+main.obj : error LNK2019: memset 외부 기호(참조 위치: WinMain 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_GetStockObject 외부 기호(참조 위치: WinMain 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_LineTo 외부 기호(참조 위치: "void __cdecl rotating(void)" (?rotating@@YAXXZ) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_MoveToEx 외부 기호(참조 위치: "void __cdecl rotating(void)" (?rotating@@YAXXZ) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_TranslateMessage 외부 기호(참조 위치: WinMain 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_DispatchMessageA 외부 기호(참조 위치: WinMain 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_PeekMessageA 외부 기호(참조 위치: WinMain 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_DefWindowProcA 외부 기호(참조 위치: "__int64 __cdecl WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64)" (?WndProc@@YA_JPEAUHWND__@@I_K_J@Z) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_PostQuitMessage 외부 기호(참조 위치: "__int64 __cdecl WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64)" (?WndProc@@YA_JPEAUHWND__@@I_K_J@Z) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_RegisterClassA 외부 기호(참조 위치: WinMain 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_CreateWindowExA 외부 기호(참조 위치: WinMain 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_ShowWindow 외부 기호(참조 위치: WinMain 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_SetTimer 외부 기호(참조 위치: "__int64 __cdecl WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64)" (?WndProc@@YA_JPEAUHWND__@@I_K_J@Z) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_KillTimer 외부 기호(참조 위치: "__int64 __cdecl WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64)" (?WndProc@@YA_JPEAUHWND__@@I_K_J@Z) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_UpdateWindow 외부 기호(참조 위치: WinMain 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_BeginPaint 외부 기호(참조 위치: "void __cdecl rotating(void)" (?rotating@@YAXXZ) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_EndPaint 외부 기호(참조 위치: "void __cdecl rotating(void)" (?rotating@@YAXXZ) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_InvalidateRect 외부 기호(참조 위치: "__int64 __cdecl WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64)" (?WndProc@@YA_JPEAUHWND__@@I_K_J@Z) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_GetClientRect 외부 기호(참조 위치: "void __cdecl init_vertex(void)" (?init_vertex@@YAXXZ) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_LoadCursorA 외부 기호(참조 위치: WinMain 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_LoadIconA 외부 기호(참조 위치: WinMain 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __imp_timeGetTime 외부 기호(참조 위치: "void __cdecl rotating(void)" (?rotating@@YAXXZ) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: cos 외부 기호(참조 위치: "public: struct MMatrix __cdecl MMatrix::RotY(float const &)" (?RotY@MMatrix@@QEAA?AU1@AEBM@Z) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: sin 외부 기호(참조 위치: "public: struct MMatrix __cdecl MMatrix::RotY(float const &)" (?RotY@MMatrix@@QEAA?AU1@AEBM@Z) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: D3DXMatrixMultiply 외부 기호(참조 위치: "void __cdecl Test(void)" (?Test@@YAXXZ) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: D3DXMatrixScaling 외부 기호(참조 위치: "void __cdecl Test(void)" (?Test@@YAXXZ) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: D3DXMatrixTranslation 외부 기호(참조 위치: "void __cdecl Test(void)" (?Test@@YAXXZ) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: D3DXMatrixRotationZ 외부 기호(참조 위치: "void __cdecl Test(void)" (?Test@@YAXXZ) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: _RTC_CheckStackVars 외부 기호(참조 위치: "public: struct MMatrix __cdecl MMatrix::operator*(struct MMatrix const &)" (??DMMatrix@@QEAA?AU0@AEBU0@@Z) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2001: _RTC_InitBase 외부 기호를 확인할 수 없습니다.
+main.obj : error LNK2001: _RTC_Shutdown 외부 기호를 확인할 수 없습니다.
+main.obj : error LNK2001: __GSHandlerCheck 외부 기호를 확인할 수 없습니다.
+main.obj : error LNK2019: __security_check_cookie 외부 기호(참조 위치: "public: struct MVector4 __cdecl MMatrix::operator*(struct MVector4 const &)" (??DMMatrix@@QEAA?AUMVector4@@AEBU1@@Z) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2019: __security_cookie 외부 기호(참조 위치: "public: struct MVector4 __cdecl MMatrix::operator*(struct MVector4 const &)" (??DMMatrix@@QEAA?AUMVector4@@AEBU1@@Z) 함수)에서 확인하지 못했습니다.
+main.obj : error LNK2001: _fltused 외부 기호를 확인할 수 없습니다.
+LINK : error LNK2001: WinMainCRTStartup 외부 기호를 확인할 수 없습니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\kernel32.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\user32.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\gdi32.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\winspool.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\comdlg32.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\advapi32.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\shell32.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\ole32.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\oleaut32.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\uuid.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\odbc32.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\odbccp32.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\d3d9.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\d3dx9.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Windows Kits\10\lib\10.0.18362.0\um\x86\winmm.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\lib\x86\MSVCRTD.lib : warning LNK4272: 'x86' 라이브러리 컴퓨터 종류가 'x64' 대상 컴퓨터 종류와 충돌합니다.
+D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\x64\Debug\191021Matrix.exe : fatal error LNK1120: 36개의 확인할 수 없는 외부 참조입니다.

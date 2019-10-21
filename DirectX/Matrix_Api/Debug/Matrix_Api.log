@@ -1,3 +1,3 @@
 ﻿  main.cpp
-c:\svn\강사님\directx\matrix_api\main.cpp(77): warning C4101: 'st' :참조되지 않은 지역 변수입니다.
-  Matrix_Api.vcxproj -> C:\Svn\강사님\DirectX\Debug\MatricesApi.exe
+F:\ydwRepos\DirectX\Matrix_Api\main.cpp(79): warning C4101: 'st' :참조되지 않은 지역 변수입니다.
+  Matrix_Api.vcxproj -> F:\ydwRepos\DirectX\Debug\MatricesApi.exe

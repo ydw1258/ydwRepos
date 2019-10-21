@@ -41,6 +41,38 @@ void printMat(Metrices4X4 &mat);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hinst;
 
+void rotating()
+{
+	UINT iTime = timeGetTime() % 1000;
+	float fAngle = iTime * (2.0f * D3DX_PI) / 1000.0f;
+
+	MMatrix Rot;
+	MMatrix TP;
+
+	Rot.RotY(fAngle);
+	TP.identity();
+	TP.proj(1000.0f, 600.0f, .5f, 1000.0f);
+
+	MVector4 T1 = Rot * TV1;
+	MVector4 T2 = Rot * TV2;
+	MVector4 T3 = Rot * TV3;
+
+
+
+	PAINTSTRUCT Rc;
+
+	HDC hdc = BeginPaint(g_hWnd, &Rc);
+	MoveToEx(hdc, T1.x + rc.right * .5f, T1.y, NULL);
+	LineTo(hdc, T2.x + rc.right * .5f, T2.y);
+
+	MoveToEx(hdc, T2.x + rc.right * .5f, T2.y, NULL);
+	LineTo(hdc, T3.x + rc.right * .5f, T3.y);
+
+	MoveToEx(hdc, T3.x + rc.right * .5f, T3.y, NULL);
+	LineTo(hdc, T1.x + rc.right * .5f, T1.y);
+	EndPaint(g_hWnd, &Rc);
+}
+
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstance, LPSTR lpszCmdParam, int nCmdShow)
 {
 	HWND hWnd;
