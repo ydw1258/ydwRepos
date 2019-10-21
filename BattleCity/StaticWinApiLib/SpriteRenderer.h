@@ -32,7 +32,6 @@ public:
 	void DrawMoveBackground(HDC hdc, int objectX, int objectY);
 	void DrawSrolledBackground(HDC hdc, int objectX, int objectY, int repeatXNum, int repeatYNum, int _scrollSpeedX = 0, int _scrollSpeedY = 0);
 	
-	//
 	void DrawResizedObject(HDC hdc, int objectX, int objectY, int sizeX, int sizeY);
 	void SpriteChange();
 };
