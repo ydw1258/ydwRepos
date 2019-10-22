@@ -49,3 +49,4 @@ InitGeometry()
 
 
 https://www.slideshare.net/agebreak/nhnnext-directx-tutorial
+https://hoodymong.tistory.com/4
