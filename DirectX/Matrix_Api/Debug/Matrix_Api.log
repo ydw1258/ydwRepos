@@ -1,3 +1,52 @@
 ﻿  main.cpp
-F:\ydwRepos\DirectX\Matrix_Api\main.cpp(79): warning C4101: 'st' :참조되지 않은 지역 변수입니다.
-  Matrix_Api.vcxproj -> F:\ydwRepos\DirectX\Debug\MatricesApi.exe
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(47): error C2065: 'D3DX_PI': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(49): error C2065: 'MMatrix': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(49): error C2146: 구문 오류: ';'이(가) 'Rot' 식별자 앞에 없습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(49): error C2065: 'Rot': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(50): error C2065: 'MMatrix': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(50): error C2146: 구문 오류: ';'이(가) 'TP' 식별자 앞에 없습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(50): error C2065: 'TP': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(52): error C2065: 'Rot': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(53): error C2065: 'TP': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(55): error C2065: 'TP': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(57): error C2065: 'MVector4': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(57): error C2146: 구문 오류: ';'이(가) 'T1' 식별자 앞에 없습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(57): error C2065: 'T1': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(57): error C2065: 'Rot': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(57): error C2065: 'TV1': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(58): error C2065: 'MVector4': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(58): error C2146: 구문 오류: ';'이(가) 'T2' 식별자 앞에 없습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(58): error C2065: 'T2': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(58): error C2065: 'Rot': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(58): error C2065: 'TV2': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(59): error C2065: 'MVector4': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(59): error C2146: 구문 오류: ';'이(가) 'T3' 식별자 앞에 없습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(59): error C2065: 'T3': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(59): error C2065: 'Rot': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(59): error C2065: 'TV3': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(64): error C2065: 'g_hWnd': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(65): error C2065: 'T1': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(65): error C2065: 'rc': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(65): error C2660: 'MoveToEx': 함수는 2개의 매개 변수를 사용하지 않습니다.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\wingdi.h(5095): note: 'MoveToEx' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(66): error C2065: 'T2': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(66): error C2065: 'rc': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(66): error C2660: 'LineTo': 함수는 1개의 매개 변수를 사용하지 않습니다.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\wingdi.h(4494): note: 'LineTo' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(68): error C2065: 'T2': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(68): error C2065: 'rc': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(68): error C2660: 'MoveToEx': 함수는 2개의 매개 변수를 사용하지 않습니다.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\wingdi.h(5095): note: 'MoveToEx' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(69): error C2065: 'T3': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(69): error C2065: 'rc': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(69): error C2660: 'LineTo': 함수는 1개의 매개 변수를 사용하지 않습니다.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\wingdi.h(4494): note: 'LineTo' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(71): error C2065: 'T3': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(71): error C2065: 'rc': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(71): error C2660: 'MoveToEx': 함수는 2개의 매개 변수를 사용하지 않습니다.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\wingdi.h(5095): note: 'MoveToEx' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(72): error C2065: 'T1': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(72): error C2065: 'rc': 선언되지 않은 식별자입니다.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(72): error C2660: 'LineTo': 함수는 1개의 매개 변수를 사용하지 않습니다.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\um\wingdi.h(4494): note: 'LineTo' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\directx\matrix_api\main.cpp(73): error C2065: 'g_hWnd': 선언되지 않은 식별자입니다.

@@ -20,13 +20,16 @@ MVector4 TV3 = { .0f, -50.0f, .0f };
 
 void Test()
 {
+	//렌더링 파이프 라인
+	//로컬스페이스, 
+	//
+
 	MMatrix Test1;
 	Test1.V1 = { 1.0f, 2.0f, 3.0f, 4.0f };
 	Test1.V2 = { 2.0f, 3.0f, 4.0f, 5.0f };
 	Test1.V3 = { 3.0f, 4.0f, 5.0f, 6.0f };
 	Test1.V4 = { 4.0f, 5.0f, 6.0f, 7.0f };
-
-
+	
 	MMatrix Test2;
 	Test2.V1 = { 1.0f, 2.0f, 3.0f, 4.0f };
 	Test2.V2 = { 2.0f, 3.0f, 4.0f, 5.0f };
@@ -41,9 +44,7 @@ void Test()
 	// T3 = T3.RotY(60.0f);
 	T3 = T3.RotZ(60.0f);
 	// T3 = T3.Scale(Test1.V1);
-
-
-
+	   
 	D3DXMATRIXA16 A1 =
 	{ 1.0f, 2.0f, 3.0f, 4.0f,
 	 2.0f, 3.0f, 4.0f, 5.0f,
@@ -55,13 +56,11 @@ void Test()
 	 2.0f, 3.0f, 4.0f, 5.0f,
 	 3.0f, 4.0f, 5.0f, 6.0f,
 	 4.0f, 5.0f, 6.0f, 7.0f, };
-
-
+	
 	D3DXMATRIXA16 A3;
 	D3DXMatrixMultiply(&A3, &A1, &A2);
 	D3DXMatrixTranslation(&A3, 1.0f, 2.0f, 3.0f);
-
-
+	
 	// D3DXMatrixRotationX(&A3, 60.0f);
 	// D3DXMatrixRotationY(&A3, 60.0f);
 	D3DXMatrixRotationZ(&A3, 60.0f);
@@ -77,7 +76,6 @@ void init_vertex()
 {
 	RECT rc;
 	GetClientRect(g_hWnd, &rc);
-
 
 	/*
 	TV1.x += rc.right * .5f;

@@ -51,12 +51,12 @@ void rotating()
 
 	Rot.RotY(fAngle);
 	TP.identity();
+
 	TP.proj(1000.0f, 600.0f, .5f, 1000.0f);
 
 	MVector4 T1 = Rot * TV1;
 	MVector4 T2 = Rot * TV2;
 	MVector4 T3 = Rot * TV3;
-
 
 
 	PAINTSTRUCT Rc;

@@ -1,0 +1,5 @@
+﻿  main.cpp
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191018model\main.cpp(66): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191018model\main.cpp(92): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191018model\main.cpp(136): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  191018Model.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\DirectX\NEODIR~1\Debug\191018Model.exe

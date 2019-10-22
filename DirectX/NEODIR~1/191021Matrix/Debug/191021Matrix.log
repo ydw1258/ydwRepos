@@ -1,20 +1,20 @@
 ﻿  main.cpp
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(132): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(133): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(137): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(138): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(151): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(153): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(161): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(163): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(176): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(177): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(181): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\MainMatrix.h(182): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\main.cpp(124): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\main.cpp(125): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\main.cpp(127): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\main.cpp(128): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\main.cpp(130): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-F:\ydwRepos\DirectX\NEODIR~1\191021Matrix\main.cpp(131): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  191021Matrix.vcxproj -> F:\ydwRepos\DirectX\NEODIR~1\Debug\191021Matrix.exe
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(132): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(133): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(137): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(138): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(151): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(153): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(161): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(163): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(176): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(177): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(181): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\mainmatrix.h(182): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\main.cpp(124): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\main.cpp(125): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\main.cpp(127): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\main.cpp(128): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\main.cpp(130): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\directx\neodir~1\191021matrix\main.cpp(131): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  191021Matrix.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\DirectX\NEODIR~1\Debug\191021Matrix.exe
