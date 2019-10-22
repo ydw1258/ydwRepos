@@ -2,10 +2,8 @@
 
 void Planet::Init(HWND hWnd)
 {
-	InitIB();
-	InitVB();
-
 	g_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
+	
 	if (g_pD3D == NULL)
 		return;
 
@@ -26,6 +24,9 @@ void Planet::Init(HWND hWnd)
 	g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	InitIB();
+	InitVB();
 }
 void Planet::Render()
 {
@@ -36,7 +37,7 @@ void Planet::Render()
 	
 	if (SUCCEEDED(g_pD3DDevice->BeginScene()))
 	{
-
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 		g_pD3DDevice->SetStreamSource(0, g_pVB, 0, sizeof(CUSTOMVECTEX));
 		g_pD3DDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
 		g_pD3DDevice->SetIndices(g_pIB);
@@ -46,14 +47,16 @@ void Planet::Render()
 	}
 
 	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
-}
 
-void Planet::SetupMatrices()
+	DrawMesh();
+}
+void Planet::Update()
 {
+	//update
 	UINT iTime = timeGetTime() % 1000;
 	FLOAT fAngle = iTime * (1.0f * D3DX_PI) / 1000.0f;
 
-	D3DXMatrixScaling(&matS, 1, 1, 1);
+	D3DXMatrixScaling(&matS, 10, 10, 10);
 	D3DXMatrixRotationY(&matR, fAngle);
 	D3DXMatrixTranslation(&matT, 0, 0, 0);
 
@@ -62,10 +65,13 @@ void Planet::SetupMatrices()
 	//부모 SRT까지 계산하면 월드 스페이스
 
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-
+}
+void Planet::SetupMatrices()
+{
+	//카메라 셋팅 한번만
 	//카메라 뷰스페이스
 	D3DXVECTOR3 vEyept(0.0f, 3.0f, -20.0f);
-	D3DXVECTOR3 vLootatPt(0.0f, 1.0f, 0.0f);
+	D3DXVECTOR3 vLootatPt(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
 	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &vEyept, &vLootatPt, &vUpVec);
@@ -142,7 +148,14 @@ HRESULT Planet::InitIB()
 
 	return S_OK;
 }
-
+void Planet::DrawMesh()
+{
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+	g_pD3DDevice->SetStreamSource(0, g_pVB, 0, sizeof(CUSTOMVECTEX));
+	g_pD3DDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
+	g_pD3DDevice->SetIndices(g_pIB);
+	g_pD3DDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
+}
 
 Planet::Planet()
 {

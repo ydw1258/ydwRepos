@@ -37,7 +37,6 @@ Metrices4X4 RotationMatZ(float angle);
 void ScalingMat(Metrices4X4 &mat, float TransSize);
 void printMat(Metrices4X4 &mat);
 
-
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hinst;
 

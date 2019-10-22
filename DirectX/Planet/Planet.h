@@ -29,7 +29,6 @@ private:
 	LPDIRECT3DVERTEXBUFFER9		g_pVB = NULL;
 	LPDIRECT3DINDEXBUFFER9		g_pIB = NULL;
 	LPDIRECT3D9					g_pD3D = NULL;
-	
 public:
 	void Init(HWND hWnd);
 	void Render();
@@ -38,7 +37,7 @@ public:
 	Planet();
 	~Planet();
 	void SetupMatrices();
-	
+	void Update();
+	void DrawMesh();
 	void Release();
 };
-

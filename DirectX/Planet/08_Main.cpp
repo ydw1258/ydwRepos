@@ -10,8 +10,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 char g_szClassName[256] = "Hello World!!";
 
-//로컬스페이스 VB IB
-
+//로컬스페이스 VB, IB
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
 	HWND hWnd;
@@ -38,12 +37,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	//if (SUCCEEDED(InitIB()) && SUCCEEDED(InitVB()))
 	Planet sun;
 	sun.Init(hWnd);
+
 	//sun.Init(g_pD3DDevice);
 	//moon.Init(g_pD3DDevice);
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
 	ZeroMemory(&Message, sizeof(Message));
+
 	while (Message.message != WM_QUIT)
 	{
 		if (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE))
@@ -53,12 +54,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 		}
 		else
 		{
+			sun.Update();
 			//Render();
 			sun.Render();
 		}
-			
 	}
-		
 	
 	sun.Release();
 
