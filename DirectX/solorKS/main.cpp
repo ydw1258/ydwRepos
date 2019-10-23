@@ -15,12 +15,9 @@
 #include "Sun.h"
 #include "Moon.h"
 
-
-
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 HWND g_hWnd;
-
 
 LPDIRECT3D9 g_pD3D = NULL;
 LPDIRECT3DDEVICE9	g_pd3dDevice = NULL;
@@ -102,7 +99,6 @@ HRESULT InitVB()
 
 	return S_OK;
 }
-
 HRESULT InitIB()
 {
 	MYINDEX indices[] =
@@ -114,7 +110,7 @@ HRESULT InitIB()
 		{ 3,2,6 },{ 3,6,7 },
 		{ 0,4,5 },{ 0,5,1 },
 	};
-
+	
 	if (FAILED(g_pd3dDevice->CreateIndexBuffer(12 * sizeof(MYINDEX), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT,
 		&g_pIB, NULL)))
 		return E_FAIL;
@@ -146,7 +142,6 @@ void InitAnimation()
 	D3DXQuaternionRotationYawPitchRoll(&g_aniRot[1], Yaw, Pitch, Roll);
 }
 
-
 HRESULT InitGeometry()
 {
 	if (FAILED(InitVB()))
@@ -177,7 +172,6 @@ void SetupCamera()
 	D3DXMatrixPerspectiveLH(&matProj, D3DX_PI / 4, 1.0f, 1.0f, 1000.0f);
 	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 }
-
 
 float Linear(float v0, float v1, float t)
 {
@@ -217,8 +211,6 @@ VOID Cleanup()
 	SAFE_RELEASE(g_pD3D);
 }
 
-
-
 void DrawMesh(D3DXMATRIXA16* pMat)
 {
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, pMat);
@@ -228,14 +220,11 @@ void DrawMesh(D3DXMATRIXA16* pMat)
 	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
 }
 
-
-
 VOID Render()
 {
 	D3DXMATRIXA16 matWorld;
 
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
-
 	Animate();
 
 	if (SUCCEEDED(g_pd3dDevice->BeginScene()))
@@ -248,8 +237,8 @@ VOID Render()
 
 		matWorld = g_matRChild * g_matTMChild * matWorld;
 		DrawMesh(&matWorld);
+		*/
 
-*/
 		DrawMesh(&SolarManager::inst()->pSun->MyFinalMat);
 		DrawMesh(&SolarManager::inst()->pMercury->MyFinalMat);
 		DrawMesh(&SolarManager::inst()->pVenus->MyFinalMat);
@@ -263,13 +252,11 @@ VOID Render()
 	g_pd3dDevice->Present(NULL, NULL, NULL, NULL);
 }
 
-
 char g_szClassName[256] = "BasicFrame";
 #define ROT_DELTA 0.1f
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-
 	switch (iMessage)
 	{
 	case WM_DESTROY:
@@ -286,7 +273,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
 }
-
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -319,6 +305,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
+
 
 	SolarManager::inst()->init();
 

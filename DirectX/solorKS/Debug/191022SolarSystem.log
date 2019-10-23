@@ -1,20 +1,2 @@
-﻿  Earth.cpp
-  main.cpp
-  Mars.cpp
-  Mercury.cpp
-  Moon.cpp
-  Planet.cpp
-d:\class\6.1\neoacademy\neodirectx\neodirectx9\191022solarsystem\planet.cpp(16): warning C4101: 'z' :참조되지 않은 지역 변수입니다.
-d:\class\6.1\neoacademy\neodirectx\neodirectx9\191022solarsystem\planet.cpp(16): warning C4101: 'y' :참조되지 않은 지역 변수입니다.
-d:\class\6.1\neoacademy\neodirectx\neodirectx9\191022solarsystem\planet.cpp(16): warning C4101: 'x' :참조되지 않은 지역 변수입니다.
-  SolarManager.cpp
-d:\class\6.1\neoacademy\neodirectx\neodirectx9\191022solarsystem\solarmanager.cpp(25): warning C4316: 'Mercury': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-d:\class\6.1\neoacademy\neodirectx\neodirectx9\191022solarsystem\solarmanager.cpp(26): warning C4316: 'Venus': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-d:\class\6.1\neoacademy\neodirectx\neodirectx9\191022solarsystem\solarmanager.cpp(27): warning C4316: 'Earth': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-d:\class\6.1\neoacademy\neodirectx\neodirectx9\191022solarsystem\solarmanager.cpp(28): warning C4316: 'Mars': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-d:\class\6.1\neoacademy\neodirectx\neodirectx9\191022solarsystem\solarmanager.cpp(29): warning C4316: 'Sun': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-d:\class\6.1\neoacademy\neodirectx\neodirectx9\191022solarsystem\solarmanager.cpp(30): warning C4316: 'Moon': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-  Sun.cpp
-  Venus.cpp
-  코드를 생성하고 있습니다...
-  191022SolarSystem.vcxproj -> D:\Class\6.1\NeoAcademy\NeoDirectX\NeoDirectX9\Debug\191022SolarSystem.exe
+﻿  main.cpp
+  191022SolarSystem.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\DirectX\Debug\191022SolarSystem.exe

@@ -1,23 +1,47 @@
-﻿  GameManager.cpp
+﻿  BattleCityIngameMain.cpp
+  Bullet.cpp
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\bullet.cpp(12): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\bullet.cpp(13): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\bullet.cpp(16): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\bullet.cpp(17): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\bullet.cpp(20): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\bullet.cpp(21): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\bullet.cpp(24): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\bullet.cpp(25): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\bullet.cpp(30): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\bullet.cpp(66): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Enemy.cpp
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\enemy.cpp(58): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\enemy.cpp(59): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\enemy.cpp(73): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  EnemyManager.cpp
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\enemymanager.cpp(46): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  GameFrameWork.cpp
+  GameManager.cpp
 c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(104): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\string.h(440): note: 'strtok' 선언을 참조하십시오.
 c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(108): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\string.h(440): note: 'strtok' 선언을 참조하십시오.
 c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(93): warning C4101: 'mapValues' :참조되지 않은 지역 변수입니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(245): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(300): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(376): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(376): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(394): warning C4101: 'rcTemp' :참조되지 않은 지역 변수입니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(426): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(426): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(443): warning C4101: 'rcTemp' :참조되지 않은 지역 변수입니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(478): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(479): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(480): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(481): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(566): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(567): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(594): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(595): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(240): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(295): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(371): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(371): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(389): warning C4101: 'rcTemp' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(421): warning C4838: 'float'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(421): warning C4244: '초기화 중': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(438): warning C4101: 'rcTemp' :참조되지 않은 지역 변수입니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(473): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(474): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(475): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(476): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(561): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(562): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(591): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\gamemanager.cpp(592): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Player.cpp
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\player.cpp(10): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\player.cpp(11): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\battlecityproject\battlecityingame\player.cpp(52): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
   BattleCityIngame.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\BattleCity\BattleCityProject\x64\Debug\BattleCityIngame.exe

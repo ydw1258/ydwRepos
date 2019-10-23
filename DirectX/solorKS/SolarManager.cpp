@@ -1,13 +1,10 @@
 #include "SolarManager.h"
-
 #include "Mercury.h"
 #include "Venus.h"
 #include "Earth.h"
 #include "Mars.h"
 #include "Sun.h"
 #include "Moon.h"
-
-
 
 SolarManager* SolarManager::pSolar = nullptr;
 
@@ -28,8 +25,6 @@ void SolarManager::init()
 	pMars = new Mars;
 	pSun = new Sun;
 	pMoon = new Moon;
-
-
 
 	pSun->set_pos(.0f, .0f, .0f);
 	pSun->set_anglespeed(1 / 25.370f * 365.0f);

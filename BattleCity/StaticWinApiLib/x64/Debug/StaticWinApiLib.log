@@ -1,2 +1,45 @@
-﻿  SpriteRenderer.cpp
-  StaticWinApiLib.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\BattleCity\StaticWinApiLib\.\lib\StaticWinApiLibDebugx64.lib
+﻿  Animator.cpp
+  Collider2D.cpp
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\collider2d.cpp(1): fatal error C1083: 포함 파일을 열 수 없습니다. 'Collider.h': No such file or directory
+  FileStreamManager.cpp
+  FontManager.cpp
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\fontmanager.cpp(19): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\fontmanager.cpp(39): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Physics.cpp
+  ResourceManager.cpp
+  SpriteRenderer.cpp
+  Transform.cpp
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(26): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+  c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(147): note: 컴파일 중인 클래스 템플릿 인스턴스화 'Vector2D<T>'에 대한 참조를 확인하세요.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(26): error C2143: 구문 오류: ','이(가) '&' 앞에 없습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(28): error C3861: '_Value': 식별자를 찾을 수 없습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(29): error C3861: '_Value': 식별자를 찾을 수 없습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\transform.cpp(5): error C2955: 'Transform': 클래스 템플릿을(를) 사용하려면 템플릿 인수 목록이 필요합니다.
+  c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\transform.h(6): note: 'Transform' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\transform.cpp(6): error C2509: '{ctor}': 멤버 함수를 'Transform'에서 선언하지 않았습니다.
+  c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\transform.h(6): note: 'Transform' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\transform.cpp(10): error C2955: 'Transform': 클래스 템플릿을(를) 사용하려면 템플릿 인수 목록이 필요합니다.
+  c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\transform.h(6): note: 'Transform' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\transform.cpp(11): error C2509: '{dtor}': 멤버 함수를 'Transform'에서 선언하지 않았습니다.
+  c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\transform.h(6): note: 'Transform' 선언을 참조하십시오.
+  UIButton.cpp
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\uibutton.cpp(9): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
+  Vector2D.cpp
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(26): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+  c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(147): note: 컴파일 중인 클래스 템플릿 인스턴스화 'Vector2D<T>'에 대한 참조를 확인하세요.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(26): error C2143: 구문 오류: ','이(가) '&' 앞에 없습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(28): error C3861: '_Value': 식별자를 찾을 수 없습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(29): error C3861: '_Value': 식별자를 찾을 수 없습니다.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.cpp(3): error C2955: 'Vector2D': 클래스 템플릿을(를) 사용하려면 템플릿 인수 목록이 필요합니다.
+  c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(4): note: 'Vector2D' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.cpp(4): error C2509: '{ctor}': 멤버 함수를 'Vector2D'에서 선언하지 않았습니다.
+  c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(4): note: 'Vector2D' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.cpp(7): error C2955: 'Vector2D': 클래스 템플릿을(를) 사용하려면 템플릿 인수 목록이 필요합니다.
+  c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(4): note: 'Vector2D' 선언을 참조하십시오.
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.cpp(8): error C2509: '{dtor}': 멤버 함수를 'Vector2D'에서 선언하지 않았습니다.
+  c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\vector2d.h(4): note: 'Vector2D' 선언을 참조하십시오.
+  YRect.cpp
+c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\yrect.cpp(52): error C2440: '=': 'HBRUSH'에서 'HPEN'(으)로 변환할 수 없습니다.
+  c:\users\administrator\documents\github\ydwrepos\battlecity\staticwinapilib\yrect.cpp(52): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+  코드를 생성하고 있습니다...
