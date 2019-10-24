@@ -1,60 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GameFrameWork.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>GameFrameWork</Filter>
     </ClCompile>
-    <ClCompile Include="Triangle.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SpinTriangle.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="main.cpp">
+      <Filter>GameFrameWork</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SpinTriangle.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanetManager.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ZCamera.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ZFLog.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SAFE_DELETE.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="GameFrameWork.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CUSTOM_DATATYPES.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Triangle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SpinTriangle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>GameFrameWork</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SpinTriangle.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CUSTOM_DATATYPES.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SAFE_DELETE.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanetManager.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ZCamera.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ZFLog.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GameFrameWork">
+      <UniqueIdentifier>{d9818ef3-b96c-4f2d-bb86-1c66bdc8c3ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{81ad2295-fc68-4c20-adb2-0957481bd140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{0dd72a8a-1518-4f85-9d43-c51a5a69c4cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

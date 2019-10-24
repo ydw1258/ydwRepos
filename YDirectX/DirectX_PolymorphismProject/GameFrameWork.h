@@ -6,6 +6,12 @@
 //dx 그래픽 카드에 명령
 //a 그릴 옵션 a draw b 그릴 옵션 b draw
 
+enum Scene
+{
+	UNIVERSE,
+	CUBE_RENDER,
+	TRIANGLE
+};
 class GameFrameWork
 {
 private:
@@ -13,6 +19,7 @@ private:
 	LPDIRECT3DDEVICE9	g_pD3DDevice = NULL;
 	Triangle tri;
 	SpinTriangle tri2;
+	Scene scene = UNIVERSE;
 public:
 	HRESULT InitD3D(HWND hWnd);
 	

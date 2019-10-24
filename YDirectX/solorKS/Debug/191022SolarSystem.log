@@ -1,10 +1,1 @@
-﻿  SolarManager.cpp
-c:\users\administrator\documents\github\ydwrepos\directx\solorks\solarmanager.cpp(22): warning C4316: 'Mercury': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-c:\users\administrator\documents\github\ydwrepos\directx\solorks\solarmanager.cpp(23): warning C4316: 'Venus': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-c:\users\administrator\documents\github\ydwrepos\directx\solorks\solarmanager.cpp(24): warning C4316: 'Earth': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-c:\users\administrator\documents\github\ydwrepos\directx\solorks\solarmanager.cpp(25): warning C4316: 'Mars': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-c:\users\administrator\documents\github\ydwrepos\directx\solorks\solarmanager.cpp(26): warning C4316: 'Sun': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-c:\users\administrator\documents\github\ydwrepos\directx\solorks\solarmanager.cpp(27): warning C4316: 'Moon': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-  main.cpp
-  코드를 생성하고 있습니다...
-  191022SolarSystem.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\DirectX\Debug\191022SolarSystem.exe
+﻿  191022SolarSystem.vcxproj -> F:\ydwRepos\YDirectX\Debug\191022SolarSystem.exe

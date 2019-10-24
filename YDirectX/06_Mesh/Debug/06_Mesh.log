@@ -1,5 +1,0 @@
-﻿  06_Main.cpp
-c:\svn\directx\06_mesh\06_main.cpp(65): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\svn\directx\06_mesh\06_main.cpp(88): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\svn\directx\06_mesh\06_main.cpp(141): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  06_Mesh.vcxproj -> C:\Svn\DirectX\Debug\06_Mesh.exe

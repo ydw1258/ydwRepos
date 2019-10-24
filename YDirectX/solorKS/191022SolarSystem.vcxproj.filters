@@ -45,6 +45,7 @@
       <Filter>Palnet</Filter>
     </ClInclude>
     <ClInclude Include="Moon.h" />
+    <ClInclude Include="SAFE_DELETE.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Palnet">
