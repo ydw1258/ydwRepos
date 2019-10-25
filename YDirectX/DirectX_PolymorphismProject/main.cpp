@@ -27,13 +27,17 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	hWnd = CreateWindow(g_szClassName, g_szClassName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
 		CW_USEDEFAULT, CW_USEDEFAULT, NULL, (HMENU)NULL, hInstance, NULL);
 
+	
 	if (SUCCEEDED(gameFrameWork.InitD3D(hWnd)))
 	{
 		ShowWindow(hWnd, nCmdShow);
 		UpdateWindow(hWnd);
+		
 
 		while (GetMessage(&Message, NULL, 0, 0))
 		{
+			gameFrameWork.ProcessInputs(hWnd);
+			gameFrameWork.Update();
 			TranslateMessage(&Message);
 			DispatchMessage(&Message);
 		}
@@ -49,11 +53,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	switch (iMessage)
 	{
 	case WM_PAINT:
-		gameFrameWork.Render();
+		
 		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case VK_ESCAPE:
+			PostMessage(hWnd, WM_DESTROY, 0, 0L);
+			break;
+		case '1':
+			gameFrameWork.g_bWireframe = !gameFrameWork.g_bWireframe;
+			break;
+		case '2':
+			gameFrameWork.g_bLockFrustum = !gameFrameWork.g_bLockFrustum;
+			gameFrameWork.g_bHideFrustum = !gameFrameWork.g_bLockFrustum;
+			break;
+		}
+		break;
 	}
 
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));

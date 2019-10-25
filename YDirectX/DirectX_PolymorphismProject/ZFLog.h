@@ -3,6 +3,7 @@
 
 #include <windows.h>
 #include <stdio.h>
+#include "define.h"
 
 #define ZF_LOG_TARGET_CONSOLE			0x00000001
 #define ZF_LOG_TARGET_FILE				0x00000002
@@ -14,40 +15,20 @@
 
 class ZFLog
 {
-	static ZFLog*	m_pThis;
 	unsigned int	m_nTarget;
 	char			m_szFilename[MAX_PATH];
 	HWND			m_hwnd;
 	HWND			m_hwndList;
 public:
-			
-			~ZFLog();
+	ZFLog(UINT32 nTarget, const char* szFilename = NULL);
+	~ZFLog();
 	void	CreateLogWindow();
-	int		Log(const char* fmt, ... );
+	int		Log(const char* fmt, ...);
 
-
-public:
-	static ZFLog*	GetInstance()
-	{
-		if (m_pThis == NULL)
-		{
-			m_pThis = new ZFLog(ZF_LOG_TARGET_WINDOW);
-		}
-
-		return m_pThis;
-	}
-
-	static void Release()
-	{
-		if (m_pThis)
-		{
-			delete m_pThis;
-		}
-
-		m_pThis = NULL;
-	}
 private:
-	ZFLog(UINT32 nTarget, LPSTR szFilename = NULL);
-	static	LRESULT CALLBACK WndProcZFLog( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+	static	LRESULT CALLBACK WndProcZFLog(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 };
+
+DECLARE ZFLog*		g_pLog;
+
 #endif // _ZFLOG_H_

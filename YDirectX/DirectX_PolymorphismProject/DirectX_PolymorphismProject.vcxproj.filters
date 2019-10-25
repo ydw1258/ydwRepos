@@ -10,26 +10,38 @@
     <ClCompile Include="Cube.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Triangle.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="SpinTriangle.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Planet.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="PlanetManager.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="ZCamera.cpp">
-      <Filter>Objects</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="ZFLog.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BillBoard.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
       <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ZFrustum.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Dib.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalFunc.cpp">
+      <Filter>Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -37,9 +49,6 @@
       <Filter>GameFrameWork</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Triangle.h">
@@ -54,17 +63,35 @@
     <ClInclude Include="SAFE_DELETE.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Planet.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="PlanetManager.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="ZCamera.h">
-      <Filter>Objects</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="ZFLog.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BillBoard.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ZFrustum.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Dib.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalFunc.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +103,12 @@
     </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{0dd72a8a-1518-4f85-9d43-c51a5a69c4cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{91ca1ec7-12c7-4bf6-8a30-7225957bcad2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{d323acf5-268b-422b-8c95-1b279620e0ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

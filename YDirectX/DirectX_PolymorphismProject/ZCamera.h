@@ -22,9 +22,10 @@ private:
 
 	D3DXMATRIXA16	m_matView;		/// 카메라 행렬
 	D3DXMATRIXA16	m_matBill;		/// 빌보드 행렬(카메라의 역행렬)
-
+	DWORD g_czHeight = 0;
 	ZCamera();/// 생성자
 public:
+	
 	static ZCamera* GetInstance()
 	{
 		if (m_pThis == NULL)
@@ -51,7 +52,7 @@ public:
 	D3DXMATRIXA16*	GetBillMatrix() { return &m_matBill; }
 
 public:
-
+	void SetupCamera(LPDIRECT3DDEVICE9& g_pd3dDevice);
 	/// 카메라 행렬을 생성하기위한 기본 벡터값들을 설정한다.
 	D3DXMATRIXA16*	SetView( D3DXVECTOR3* pvEye,D3DXVECTOR3* pvLookat,D3DXVECTOR3* pvUp);
 

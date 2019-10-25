@@ -8,11 +8,30 @@ ZCamera* ZCamera::m_pThis = NULL;
 ZCamera::ZCamera()
 {
 	D3DXVECTOR3	eye(0.0f,0.0f,0.0f);
-	D3DXVECTOR3	lookat(0.0f,0.0f,-1.0f);
+	D3DXVECTOR3	lookat(0.0f,0.0f,-1.7f);
 	D3DXVECTOR3	up(0.0f,1.0f,0.0f);
 	D3DXMatrixIdentity( &m_matView );
 	D3DXMatrixIdentity( &m_matBill );
 	SetView( &eye, &lookat, &up );
+}
+void ZCamera::SetupCamera(LPDIRECT3DDEVICE9& g_pd3dDevice)
+{
+	D3DXMATRIXA16 matWorld;
+	D3DXMatrixIdentity(&matWorld);
+	g_pd3dDevice->SetTransform(D3DTS_WORLD, &matWorld);
+
+	D3DXVECTOR3 vEyePt(0.0f, 0.0f, -(float)g_czHeight);
+	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, -1.0f);
+	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+	D3DXMATRIXA16 matView;
+	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
+	g_pd3dDevice->SetTransform(D3DTS_VIEW, &matView);
+
+	D3DXMATRIXA16 matProj;
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4, 1.0f, 1.0f, 1000.0f);
+	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+
+	ZCamera::GetInstance()->SetView(&vEyePt, &vLookatPt, &vUpVec);
 }
 
 /// 카메라 행렬을 생성하기위한 기본 벡터값들을 설정한다.
