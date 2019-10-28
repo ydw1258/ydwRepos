@@ -77,3 +77,31 @@ HRESULT Cube::InitIB(LPDIRECT3DDEVICE9& g_pD3DDevice)
 
 	return S_OK;
 }
+void Cube::InitAnimation()
+{
+	g_aniPos[0] = D3DXVECTOR3(0, 0, 0);
+	g_aniPos[1] = D3DXVECTOR3(5, 5, 5);
+
+	FLOAT Yaw = D3DX_PI * 90.0f / 180.0f;
+	FLOAT Pitch = 0;
+	FLOAT Roll = 0;
+	D3DXQuaternionRotationYawPitchRoll(&g_aniRot[0], Yaw, Pitch, Roll);
+
+	Yaw = 0;
+	Pitch = D3DX_PI * 90 / 180.0f;
+	Roll = 0;
+
+	D3DXQuaternionRotationYawPitchRoll(&g_aniRot[1], Yaw, Pitch, Roll);
+}
+HRESULT Cube::InitGeometry(LPDIRECT3DDEVICE9& g_pD3DDevice)
+{
+	if (FAILED(InitVB(g_pD3DDevice)))
+		return E_FAIL;
+
+	if (FAILED(InitIB(g_pD3DDevice)))
+		return E_FAIL;
+
+	InitAnimation();
+
+	return S_OK;
+}

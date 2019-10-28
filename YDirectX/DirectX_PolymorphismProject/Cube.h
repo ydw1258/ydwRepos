@@ -16,6 +16,8 @@ class Cube : public Transform
 {
 	LPDIRECT3DVERTEXBUFFER9		g_pVB = NULL;
 	LPDIRECT3DINDEXBUFFER9		g_pIB = NULL;
+	D3DXVECTOR3 g_aniPos[2];
+	D3DXQUATERNION g_aniRot[2];
 public:
 	Cube();
 	~Cube();
@@ -23,8 +25,10 @@ public:
 	void Init(LPDIRECT3DDEVICE9& g_pD3DDevice);
 	void update();
 	void Render(LPDIRECT3DDEVICE9& g_pD3DDevice);
+
 	HRESULT InitVB(LPDIRECT3DDEVICE9& g_pD3DDevice);
 	HRESULT InitIB(LPDIRECT3DDEVICE9& g_pD3DDevice);
-
+	void InitAnimation();
+	HRESULT InitGeometry(LPDIRECT3DDEVICE9& g_pD3DDevice);
 };
 

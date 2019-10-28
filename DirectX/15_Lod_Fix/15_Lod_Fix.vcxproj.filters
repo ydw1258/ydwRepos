@@ -21,9 +21,6 @@
     <ClCompile Include="15_Main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Common\Dib.cpp">
-      <Filter>소스 파일\Common</Filter>
-    </ClCompile>
     <ClCompile Include="ZFrustum.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -42,17 +39,17 @@
     <ClCompile Include="ZCamera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\Common\ZCamera.cpp">
+      <Filter>소스 파일\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\ZFLog.cpp">
+      <Filter>소스 파일\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\ZFrustum.cpp">
+      <Filter>소스 파일\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Common\define.h">
-      <Filter>소스 파일\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Dib.h">
-      <Filter>소스 파일\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\SAFE_DELETE.h">
-      <Filter>소스 파일\Common</Filter>
-    </ClInclude>
     <ClInclude Include="ZFrustum.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -70,6 +67,15 @@
     </ClInclude>
     <ClInclude Include="ZCamera.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ZCamera.h">
+      <Filter>소스 파일\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ZFLog.h">
+      <Filter>소스 파일\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ZFrustum.h">
+      <Filter>소스 파일\Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

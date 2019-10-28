@@ -140,7 +140,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Common\Dib.cpp" />
+    <ClCompile Include="..\Common\ZCamera.cpp" />
+    <ClCompile Include="..\Common\ZFLog.cpp" />
+    <ClCompile Include="..\Common\ZFrustum.cpp" />
     <ClCompile Include="15_Main.cpp" />
     <ClCompile Include="GlobalFunc.cpp" />
     <ClCompile Include="ZCamera.cpp" />
@@ -150,9 +152,9 @@
     <ClCompile Include="ZTerrain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Common\define.h" />
-    <ClInclude Include="..\Common\Dib.h" />
-    <ClInclude Include="..\Common\SAFE_DELETE.h" />
+    <ClInclude Include="..\Common\ZCamera.h" />
+    <ClInclude Include="..\Common\ZFLog.h" />
+    <ClInclude Include="..\Common\ZFrustum.h" />
     <ClInclude Include="GlobalFunc.h" />
     <ClInclude Include="ZCamera.h" />
     <ClInclude Include="ZFLog.h" />

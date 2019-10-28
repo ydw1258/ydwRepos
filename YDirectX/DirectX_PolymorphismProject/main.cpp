@@ -1,16 +1,40 @@
-#include"GameFrameWork.h"
+#include <d3d9.h>
+#include <d3dx9.h>
+#include "ZFLog.h"
+#include "ZCamera.h"
+#include "SAFE_DELETE.h"
+#include "GameFrameWork.h"
 
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-HINSTANCE g_hInst;
-char g_szClassName[256] = "Hello World!!";
+#define WINDOW_W		500
+#define WINDOW_H		500
+#define WINDOW_TITLE	"HeightMap-TList"
+#define BMP_HEIGHTMAP	"map128.bmp"
 GameFrameWork gameFrameWork;
+char g_szClassName[256] = "BasicFrame";
+HWND g_hWnd = NULL;
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+	switch (iMessage)
+	{
+	case WM_DESTROY:
+		gameFrameWork.CleanUp();
+		PostQuitMessage(0);
+		return 0;
+	case WM_KEYDOWN:
+		if (wParam == VK_ESCAPE)
+			PostMessage(hWnd, WM_DESTROY, 0, 0);
+		return 0;
+	}
+
+	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}
+
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
-	HWND hWnd;
 	MSG Message;
 	WNDCLASS WndClass;
-	g_hInst = hInstance;
 
 	WndClass.cbClsExtra = 0;
 	WndClass.cbWndExtra = 0;
@@ -23,58 +47,39 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	WndClass.lpszMenuName = NULL;
 	WndClass.style = CS_HREDRAW | CS_VREDRAW;
 	RegisterClass(&WndClass);
-
-	hWnd = CreateWindow(g_szClassName, g_szClassName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
+	
+	g_hWnd = CreateWindow(g_szClassName, g_szClassName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
 		CW_USEDEFAULT, CW_USEDEFAULT, NULL, (HMENU)NULL, hInstance, NULL);
 
-	
-	if (SUCCEEDED(gameFrameWork.InitD3D(hWnd)))
-	{
-		ShowWindow(hWnd, nCmdShow);
-		UpdateWindow(hWnd);
-		
+	if (FAILED(gameFrameWork.Init(g_hWnd)))
+		return -1;
 
-		while (GetMessage(&Message, NULL, 0, 0))
+	//if (FAILED(gameFrameWork.InitGeometry()))
+			//return -1;
+	//다그리고 마지막에 카메라 셋업
+	gameFrameWork.SetupCamera();
+	ShowWindow(g_hWnd, nCmdShow);
+	UpdateWindow(g_hWnd);
+
+	while (true)
+	{
+		/// 메시지큐에 메시지가 있으면 메시지 처리
+		if (PeekMessage(&Message, NULL, 0U, 0U, PM_REMOVE))
 		{
-			gameFrameWork.ProcessInputs(hWnd);
-			gameFrameWork.Update();
+			if (Message.message == WM_QUIT)
+				break;
+
 			TranslateMessage(&Message);
 			DispatchMessage(&Message);
 		}
+		else
+		{
+			gameFrameWork.Render();
+		}
 	}
 
-	gameFrameWork.CleanUp();
+	ZFLog::Release();
 
+	UnregisterClass(g_szClassName, hInstance);
 	return (int)Message.wParam;
 }
-
-LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
-{
-	switch (iMessage)
-	{
-	case WM_PAINT:
-		
-		return 0;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		return 0;
-	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case VK_ESCAPE:
-			PostMessage(hWnd, WM_DESTROY, 0, 0L);
-			break;
-		case '1':
-			gameFrameWork.g_bWireframe = !gameFrameWork.g_bWireframe;
-			break;
-		case '2':
-			gameFrameWork.g_bLockFrustum = !gameFrameWork.g_bLockFrustum;
-			gameFrameWork.g_bHideFrustum = !gameFrameWork.g_bLockFrustum;
-			break;
-		}
-		break;
-	}
-
-	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
-}
-

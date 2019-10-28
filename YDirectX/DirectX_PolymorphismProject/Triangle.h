@@ -20,5 +20,6 @@ public:
 	HRESULT InitVB(LPDIRECT3DDEVICE9& g_pD3DDevice);
 	
 	void Render(LPDIRECT3DDEVICE9& g_pD3DDevice);
+	void Spin(LPDIRECT3DDEVICE9& g_pD3DDevice);
 };
 

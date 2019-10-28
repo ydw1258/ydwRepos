@@ -2,7 +2,7 @@
 #include <time.h>
 
 ZFLog*	ZFLog::m_pThis = NULL;
-ZFLog::ZFLog( UINT32 nTarget, LPSTR szFilename )
+ZFLog::ZFLog( UINT32 nTarget, const char* szFilename )
 {
 	m_nTarget = nTarget;
 

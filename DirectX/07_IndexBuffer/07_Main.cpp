@@ -15,7 +15,6 @@ LPDIRECT3DDEVICE9			g_pD3DDevice = NULL;
 LPDIRECT3DVERTEXBUFFER9		g_pVB = NULL;
 LPDIRECT3DINDEXBUFFER9		g_pIB = NULL;
 
-
 struct CUSTOMVECTEX
 {
 	float x, y, z;
@@ -213,7 +212,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 				}
 			}
 		}
-
 	}
 
 	CleanUp();

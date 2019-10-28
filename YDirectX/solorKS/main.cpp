@@ -32,7 +32,7 @@ D3DXMATRIXA16	g_matRChild;
 
 float g_fRot = .0f;
 
-struct CUSTOMVERTEX
+struct TERRAINVERTEX
 {
 	float x, y, z;
 	DWORD color;
@@ -74,7 +74,7 @@ HRESULT InitD3D(HWND hWnd)
 
 HRESULT InitVB()
 {
-	CUSTOMVERTEX vertices[] =
+	TERRAINVERTEX vertices[] =
 	{
 		{-1, 1, 1, 0xffff0000},
 		{  1, 1, 1, 0xff00ff00 },
@@ -87,7 +87,7 @@ HRESULT InitVB()
 		{ -1, -1, -1, 0xffffffff },
 	};
 
-	if (FAILED(g_pd3dDevice->CreateVertexBuffer(8 * sizeof(CUSTOMVERTEX), 0, D3DFVF_CUSTOMVERTEX,
+	if (FAILED(g_pd3dDevice->CreateVertexBuffer(8 * sizeof(TERRAINVERTEX), 0, D3DFVF_CUSTOMVERTEX,
 		D3DPOOL_DEFAULT, &g_pVB, NULL)))
 		return E_FAIL;
 
@@ -214,7 +214,7 @@ VOID Cleanup()
 void DrawMesh(D3DXMATRIXA16* pMat)
 {
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, pMat);
-	g_pd3dDevice->SetStreamSource(0, g_pVB, 0, sizeof(CUSTOMVERTEX));
+	g_pd3dDevice->SetStreamSource(0, g_pVB, 0, sizeof(TERRAINVERTEX));
 	g_pd3dDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
 	g_pd3dDevice->SetIndices(g_pIB);
 	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
