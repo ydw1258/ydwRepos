@@ -10,6 +10,7 @@
 #define WINDOW_TITLE	"HeightMap-TList"
 #define BMP_HEIGHTMAP	"map128.bmp"
 GameFrameWork gameFrameWork;
+
 char g_szClassName[256] = "BasicFrame";
 HWND g_hWnd = NULL;
 
@@ -51,20 +52,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	g_hWnd = CreateWindow(g_szClassName, g_szClassName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
 		CW_USEDEFAULT, CW_USEDEFAULT, NULL, (HMENU)NULL, hInstance, NULL);
 
-	if (FAILED(gameFrameWork.Init(g_hWnd)))
-		return -1;
-
-	//if (FAILED(gameFrameWork.InitGeometry()))
-			//return -1;
+	gameFrameWork.InitD3D(g_hWnd);
+	gameFrameWork.Init();
+	
 	//다그리고 마지막에 카메라 셋업
-	gameFrameWork.SetupCamera();
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);
 
 	while (true)
 	{
-		/// 메시지큐에 메시지가 있으면 메시지 처리
-		if (PeekMessage(&Message, NULL, 0U, 0U, PM_REMOVE))
+		if (PeekMessage(&Message, 0, 0, 0, PM_REMOVE))
 		{
 			if (Message.message == WM_QUIT)
 				break;
@@ -72,10 +69,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 			TranslateMessage(&Message);
 			DispatchMessage(&Message);
 		}
-		else
-		{
-			gameFrameWork.Render();
+		else {
+			gameFrameWork.Update();
+			
 		}
+
 	}
 
 	ZFLog::Release();

@@ -38,7 +38,7 @@ struct TERRAINVERTEX
 	DWORD color;
 };
 
-#define D3DFVF_CUSTOMVERTEX		(D3DFVF_XYZ | D3DFVF_DIFFUSE)
+#define D3DFVF_TEXTUREVERTEX		(D3DFVF_XYZ | D3DFVF_DIFFUSE)
 
 struct  MYINDEX
 {
@@ -87,7 +87,7 @@ HRESULT InitVB()
 		{ -1, -1, -1, 0xffffffff },
 	};
 
-	if (FAILED(g_pd3dDevice->CreateVertexBuffer(8 * sizeof(TERRAINVERTEX), 0, D3DFVF_CUSTOMVERTEX,
+	if (FAILED(g_pd3dDevice->CreateVertexBuffer(8 * sizeof(TERRAINVERTEX), 0, D3DFVF_TEXTUREVERTEX,
 		D3DPOOL_DEFAULT, &g_pVB, NULL)))
 		return E_FAIL;
 
@@ -215,7 +215,7 @@ void DrawMesh(D3DXMATRIXA16* pMat)
 {
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, pMat);
 	g_pd3dDevice->SetStreamSource(0, g_pVB, 0, sizeof(TERRAINVERTEX));
-	g_pd3dDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
+	g_pd3dDevice->SetFVF(D3DFVF_TEXTUREVERTEX);
 	g_pd3dDevice->SetIndices(g_pIB);
 	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
 }

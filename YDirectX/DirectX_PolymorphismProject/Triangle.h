@@ -4,7 +4,7 @@
 #include <mmsystem.h>
 #include "SAFE_DELETE.h"
 #include "CUSTOM_DATATYPES.h"
-#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
+#define D3DFVF_TEXTUREVERTEX (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
 
 #pragma comment(lib , "d3d9.lib")
 #pragma comment(lib , "d3dx9.lib")

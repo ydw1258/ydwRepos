@@ -5,9 +5,9 @@
 class Transform
 {
 public:
-	D3DXVECTOR3 sv;
-	D3DXVECTOR3 rv;
-	D3DXVECTOR3 tv;
+	D3DXVECTOR3 sv = {1, 1, 1};
+	D3DXVECTOR3 rv = {0, 0, 0};
+	D3DXVECTOR3 tv = {0, 0, 0};
 
 	D3DXMATRIXA16 s;
 	D3DXMATRIXA16 rx;
@@ -17,7 +17,7 @@ public:
 	D3DXMATRIXA16 finalmat;
 
 
-	void Update();
+	void TransformUpdate();
 	Transform();
 	~Transform();
 };

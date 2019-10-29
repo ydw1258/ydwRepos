@@ -43,6 +43,9 @@
     <ClCompile Include="GlobalFunc.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFrameWork.h">
@@ -92,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="GlobalFunc.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

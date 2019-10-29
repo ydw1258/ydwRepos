@@ -160,6 +160,7 @@
     <ClCompile Include="Dib.cpp" />
     <ClCompile Include="GameFrameWork.cpp" />
     <ClCompile Include="GlobalFunc.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SpinTriangle.cpp" />
     <ClCompile Include="Terrain.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Dib.h" />
     <ClInclude Include="GameFrameWork.h" />
     <ClInclude Include="GlobalFunc.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="SAFE_DELETE.h" />
     <ClInclude Include="SpinTriangle.h" />
     <ClInclude Include="Terrain.h" />

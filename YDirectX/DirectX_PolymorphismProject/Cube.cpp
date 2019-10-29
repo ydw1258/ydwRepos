@@ -10,47 +10,43 @@ void Cube::Init(LPDIRECT3DDEVICE9 & g_pD3DDevice)
 }
 void Cube::update()
 {
-	Transform::Update();
+	Transform::TransformUpdate();
 }
 void Cube::Render(LPDIRECT3DDEVICE9& g_pD3DDevice)
 {
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &(Transform::finalmat));
-	g_pD3DDevice->SetStreamSource(0, g_pVB, 0, sizeof(CUSTOMVECTEX));
-	g_pD3DDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &finalmat);
+	g_pD3DDevice->SetStreamSource(0, g_pVB, 0, sizeof(CubeVERTEX));
 	g_pD3DDevice->SetIndices(g_pIB);
-	g_pD3DDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
+	g_pD3DDevice->SetFVF(D3DFVF_CUBEVERTEX); //FVF옵션 VB초기화, 렌더시 필요
+	g_pD3DDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 6 * 2);
+	g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 //정점을 찍고
-HRESULT Cube::InitVB(LPDIRECT3DDEVICE9& g_pD3DDevice)
+void Cube::InitVB(LPDIRECT3DDEVICE9& g_pD3DDevice)
 {
-	CubeVERTEX vertices[] =
-	{
-		{ -1 , 1 , 1 , 0xffffffff } ,
-		{ 1 , 1 , 1 , 0xffffffff } ,
-		{ 1 ,   1 ,  -1 , 0xffffffff },
-		{ -1 , 1 ,  -1 , 0xffffffff },
-
-		{ -1 , -1 , 1 ,  0xffffffff} ,
-		{ 1 , -1 , 1 ,  0xffffffff } ,
-		{ 1 , -1 ,  -1 ,  0xffffffff },
-		{ -1 , -1 ,  -1 ,  0xffffffff },
+	CubeVERTEX Vertices[] = {
+		{ D3DXVECTOR3(-1.0f, 1.0f,  1.0f) ,  D3DCOLOR_RGBA(255, 0, 255, 255) },
+		{ D3DXVECTOR3(1.0f, 1.0f,  1.0f)  , D3DCOLOR_RGBA(0, 255, 0, 255) },
+		{ D3DXVECTOR3(1.0f, 1.0f, -1.0f)  , D3DCOLOR_RGBA(0, 0, 255, 255) },
+		{ D3DXVECTOR3(-1.0f, 1.0f, -1.0f)  , D3DCOLOR_RGBA(255, 255, 0, 255) },
+		{ D3DXVECTOR3(-1.0f, -1.0f,  1.0f) , D3DCOLOR_RGBA(255, 0, 0, 255) },
+		{ D3DXVECTOR3(1.0f, -1.0f,  1.0f) , D3DCOLOR_RGBA(0, 255, 10, 255) },
+		{ D3DXVECTOR3(1.0f, -1.0f, -1.0f) , D3DCOLOR_RGBA(0, 0, 255, 255) },
+		{ D3DXVECTOR3(-1.0f, -1.0f, -1.0f) , D3DCOLOR_RGBA(255, 0, 0, 255) }
 	};
-
-	if (FAILED(g_pD3DDevice->CreateVertexBuffer(8 * sizeof(CUSTOMVECTEX), 0,
-		D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_pVB, NULL)))
-		return E_FAIL;
+	//FVF옵션
+	g_pD3DDevice->CreateVertexBuffer(8 * sizeof(CubeVERTEX), 0, D3DFVF_CUBEVERTEX, D3DPOOL_DEFAULT, &g_pVB, NULL);
 
 	void* pVertices;
-	if (FAILED(g_pVB->Lock(0, sizeof(vertices), (void**)&pVertices, 0)))
-		return E_FAIL;
+	g_pVB->Lock(0, sizeof(Vertices), (void**)&pVertices, 0);
 
-	memcpy(pVertices, vertices, sizeof(vertices));
+	memcpy(pVertices, Vertices, sizeof(Vertices));
 	g_pVB->Unlock();
 
-	return S_OK;
 }
 // 정점 그릴순서 index Buffer
-HRESULT Cube::InitIB(LPDIRECT3DDEVICE9& g_pD3DDevice)
+void Cube::InitIB(LPDIRECT3DDEVICE9& g_pD3DDevice)
 {
 	MYINDEX indeices[] =
 	{
@@ -62,20 +58,12 @@ HRESULT Cube::InitIB(LPDIRECT3DDEVICE9& g_pD3DDevice)
 		{0,4,5},{0,5,1}//뒷면
 	};
 
-	if (FAILED(g_pD3DDevice->CreateIndexBuffer(12 * sizeof(MYINDEX), 0,
-		D3DFMT_INDEX16, D3DPOOL_DEFAULT, &g_pIB, NULL)))
-	{
-		return E_FAIL;
-	}
-
+	g_pD3DDevice->CreateIndexBuffer(12 * sizeof(MYINDEX), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &g_pIB, NULL);
 
 	void* pIndices;
-	if (FAILED(g_pIB->Lock(0, sizeof(indeices), (void**)&pIndices, 0)))
-		return E_FAIL;
+	g_pIB->Lock(0, sizeof(indeices), (void**)&pIndices, 0);
 	memcpy(pIndices, indeices, sizeof(indeices));
 	g_pIB->Unlock();
-
-	return S_OK;
 }
 void Cube::InitAnimation()
 {
@@ -93,15 +81,11 @@ void Cube::InitAnimation()
 
 	D3DXQuaternionRotationYawPitchRoll(&g_aniRot[1], Yaw, Pitch, Roll);
 }
-HRESULT Cube::InitGeometry(LPDIRECT3DDEVICE9& g_pD3DDevice)
+
+void Cube::Release()
 {
-	if (FAILED(InitVB(g_pD3DDevice)))
-		return E_FAIL;
-
-	if (FAILED(InitIB(g_pD3DDevice)))
-		return E_FAIL;
-
-	InitAnimation();
-
-	return S_OK;
+	if (g_pVB != NULL)
+		g_pVB->Release();
+	if (g_pIB != NULL)
+		g_pIB->Release();
 }

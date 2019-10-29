@@ -12,7 +12,7 @@ HRESULT SpinTriangle::InitGeometry(LPDIRECT3DDEVICE9& g_pD3DDevice)
 		{ 0.0f , 1.0f ,  0.0f , 0xffffffff }
 	};
 
-	if (FAILED(g_pD3DDevice->CreateVertexBuffer(3 * sizeof(CUSTOMVECTEX2), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_pVB, NULL)))
+	if (FAILED(g_pD3DDevice->CreateVertexBuffer(3 * sizeof(CUSTOMVECTEX2), 0, D3DFVF_TEXTUREVERTEX, D3DPOOL_DEFAULT, &g_pVB, NULL)))
 		return E_FAIL;
 
 	void* pVertices;
@@ -53,6 +53,6 @@ void SpinTriangle::Render(LPDIRECT3DDEVICE9& g_pD3DDevice)
 	SetupMareices(g_pD3DDevice);
 
 	g_pD3DDevice->SetStreamSource(0, g_pVB, 0, sizeof(CUSTOMVECTEX2));
-	g_pD3DDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
+	g_pD3DDevice->SetFVF(D3DFVF_TEXTUREVERTEX);
 	g_pD3DDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
 }

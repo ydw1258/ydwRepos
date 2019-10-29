@@ -1,6 +1,6 @@
 #include "Transform.h"
 
-void Transform::Update()
+void Transform::TransformUpdate()
 {
 	float x, y, z;
 	D3DXQUATERNION quat;
@@ -16,6 +16,12 @@ void Transform::Update()
 
 Transform::Transform()
 {
+	D3DXMatrixIdentity(&s);
+	D3DXMatrixIdentity(&rx);
+	D3DXMatrixIdentity(&ry);
+	D3DXMatrixIdentity(&rz);
+	D3DXMatrixIdentity(&t);
+	D3DXMatrixIdentity(&finalmat);
 }
 
 

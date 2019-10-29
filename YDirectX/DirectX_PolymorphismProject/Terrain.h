@@ -22,7 +22,6 @@ class Terrain : public Transform
 	DWORD						g_czHeight = 0;
 	DWORD						g_dwMouseX = 0;
 	DWORD						g_dwMouseY = 0;
-
 	
 public:
 	HRESULT InitTexture(LPDIRECT3DDEVICE9& g_pd3dDevice);

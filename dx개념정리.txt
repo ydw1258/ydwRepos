@@ -1,0 +1,34 @@
+dx 개념 정리
+LPDIRECT3DDEVICE9 g_pd3dDevice = NULL; 사용할 그래픽 카드
+InitD3D로 g_pd3dDevice 초기화
+
+Render
+원칙 적으로는g_pd3dDevice 가 NULL인지 매프레임 확인
+//화면 파란색으로 초기화
+g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+g_pd3dDevice->Present(NULL, NULL, NULL, NULL); //백버퍼의 내용 그리기
+
+geometry 
+
+mesh : 삼각형으로 이루어진 정점 더미
+x.File (메쉬 파일)
+
+머티리얼 & 텍스처
+
+단위벡터함수 : D3DXVec3Normalize 
+벡터 내적 결과 : cos (투영에 많이 사용)
+이동행렬 : 단위 행렬에서 마지막 행의 요소 x, y, z
+크기 행렬 : 크기 벡터와 행렬의 곱(대각선, x, y, z)
+회전 행렬 : 못외움
+
+쿼터니온 (사원수) : 회전 행렬에 비해 계산량이 적고 메모리를 적게 차지
+임의의 축을 기준으로 회전 행렬을 구해줌
+x, y, z는 회전축 벡터, w는 회전값(라디안)
+
+*렌더링 파이프 라인
+
+IB
+VB만으로 큐브를 만들면 6면에 12개의 삼각형 필요.(정점 36개)
+정점의 순서를 쓰면 8개면됨
+
+https://nowcampus.tistory.com/entry/14%EA%B0%95?category=655183

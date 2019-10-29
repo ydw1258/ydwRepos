@@ -1,17 +1,16 @@
 #include "GameFrameWork.h"
 
-HRESULT GameFrameWork::Init(HWND& hWnd)
+void GameFrameWork::Init()
 {
-	InitD3D(hWnd);
-	terrain.InitGeometry(g_pd3dDevice);
-
+	//InitD3D(hWnd);
+	cube.Init(g_pd3dDevice);
+	ground.Init(g_pd3dDevice);
+	SetupCamera();
 	// 최초의 마우스 위치 보관
 	POINT	pt;
 	GetCursorPos(&pt);
 	g_dwMouseX = pt.x;
 	g_dwMouseY = pt.y;
-	
-	return S_OK;
 }
 HRESULT GameFrameWork::InitD3D(HWND& hWnd)
 {
@@ -38,6 +37,8 @@ HRESULT GameFrameWork::InitD3D(HWND& hWnd)
 }
 void GameFrameWork::Update()
 {
+	cube.update();
+	ProcessInputs();
 	Render();
 }
 
@@ -47,7 +48,7 @@ void GameFrameWork::SetupCamera()
 	D3DXMatrixIdentity(&matWorld);
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, &matWorld);
 
-	D3DXVECTOR3 vEyePt(0.0f, 100.0f, -(float)g_czHeight);
+	D3DXVECTOR3 vEyePt(0.0f, 50.0f, -50.0f);
 	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
 	D3DXMATRIXA16 matView;
@@ -55,7 +56,7 @@ void GameFrameWork::SetupCamera()
 	g_pd3dDevice->SetTransform(D3DTS_VIEW, &matView);
 
 	D3DXMATRIXA16 matProj;
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4, 1.0f, 1.0f, 1000.0f);
+	D3DXMatrixPerspectiveLH(&matProj, D3DX_PI / 4, 1.0f, 1.0f, 1000.0f);
 	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 
 	ZCamera::GetInstance()->SetView(&vEyePt, &vLookatPt, &vUpVec);
@@ -63,16 +64,14 @@ void GameFrameWork::SetupCamera()
 
 void GameFrameWork::Render()
 {
-	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(255, 255, 255), 1.0f, 0);
-	Animate();
+	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+	//Animate();
+	SetupLights();
 	
-
 	if (SUCCEEDED(g_pd3dDevice->BeginScene()))
 	{
-		terrain.Render(g_pd3dDevice);
-		terrain.DrawMesh(g_pd3dDevice);
-		//DrawMesh(&g_matAni);
-
+		cube.Render(g_pd3dDevice);
+		ground.Render();
 		g_pd3dDevice->EndScene();
 	}
 
@@ -126,7 +125,8 @@ VOID GameFrameWork::Animate()
 
 void GameFrameWork::CleanUp()
 {
-	terrain.CleanUp();
+	ground.CleanUp();
+	cube.Release();
 	SAFE_RELEASE(g_pd3dDevice);
 	SAFE_RELEASE(g_pD3D);
 }
@@ -183,3 +183,14 @@ void GameFrameWork::ProcessKey(void)
 }
 GameFrameWork::GameFrameWork(){}
 GameFrameWork::~GameFrameWork(){}
+
+
+HRESULT GameFrameWork::InitGeometry()
+{
+	ground.Init(g_pd3dDevice);
+
+	
+	
+
+	return S_OK;
+}

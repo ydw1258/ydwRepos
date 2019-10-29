@@ -6,7 +6,7 @@
 #include "CUSTOM_DATATYPES.h"
 #include "Transform.h"
 
-#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
+
 
 #pragma comment(lib , "d3d9.lib")
 #pragma comment(lib , "d3dx9.lib")
@@ -26,9 +26,9 @@ public:
 	void update();
 	void Render(LPDIRECT3DDEVICE9& g_pD3DDevice);
 
-	HRESULT InitVB(LPDIRECT3DDEVICE9& g_pD3DDevice);
-	HRESULT InitIB(LPDIRECT3DDEVICE9& g_pD3DDevice);
+	void InitVB(LPDIRECT3DDEVICE9& g_pD3DDevice);
+	void InitIB(LPDIRECT3DDEVICE9& g_pD3DDevice);
 	void InitAnimation();
-	HRESULT InitGeometry(LPDIRECT3DDEVICE9& g_pD3DDevice);
+	void Release();
 };
 

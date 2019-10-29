@@ -6,7 +6,7 @@
 //#include "ZFLog.h" //잠시 보류
 #include "CUSTOM_DATATYPES.h"
 #include "ZCamera.h"
-#include "Terrain.h"
+#include "Ground.h"
 
 //dx 그래픽 카드에 명령
 //a 그릴 옵션 a draw b 그릴 옵션 b draw
@@ -27,6 +27,8 @@ private:
 
 	HWND						g_hWnd = NULL;
 	LPDIRECT3D9					g_pD3D = NULL;
+
+	Cube cube;
 	/*
 	LPDIRECT3DVERTEXBUFFER9		g_pVB = NULL;
 	LPDIRECT3DINDEXBUFFER9		g_pIB = NULL;
@@ -35,11 +37,14 @@ private:
 
 	//D3DXMATRIXA16				g_matAni;
 
-	DWORD						g_cxHeight = 0;
-	DWORD						g_czHeight = 0;
 	DWORD						g_dwMouseX = 0;
 	DWORD						g_dwMouseY = 0;
-	Terrain terrain;
+	Ground ground;
+
+
+	DWORD						g_cxHeight = 0;
+	DWORD						g_czHeight = 0;
+	
 public:
 	LPDIRECT3DDEVICE9 g_pd3dDevice = NULL;
 	HRESULT InitD3D(HWND& hWnd);
@@ -56,7 +61,7 @@ public:
 	BOOL					g_bWireframe = FALSE;	// 와이어프레임으로 그릴것인가?
 	BOOL					g_bHideFrustum = TRUE;	// Frustum을 안그릴 것인가?
 	BOOL					g_bLockFrustum = FALSE;	// Frustum을 고정할 것인가?
-	HRESULT Init(HWND& hWnd);
+	void Init();
 	void SetupCamera();
 	
 	VOID Animate();
@@ -65,4 +70,7 @@ public:
 	
 	GameFrameWork();
 	~GameFrameWork();
+
+	HRESULT InitGeometry();
+	
 };

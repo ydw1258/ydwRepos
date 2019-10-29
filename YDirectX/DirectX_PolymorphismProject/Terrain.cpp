@@ -22,7 +22,7 @@ HRESULT Terrain::InitVB(LPDIRECT3DDEVICE9& g_pd3dDevice)
 	g_czHeight = ddsd.Height;
 	//ZFLog::GetInstance()->Log("Texturel Size:[%d,%d]", g_cxHeight, g_czHeight);
 	if (FAILED(g_pd3dDevice->CreateVertexBuffer(ddsd.Width*ddsd.Height * sizeof(TERRAINVERTEX), 0,
-		D3DFVF_CUSTOMVVERTEX, D3DPOOL_DEFAULT, &g_pVB, NULL)))
+		D3DFVF_TEXTUREVERTEX, D3DPOOL_DEFAULT, &g_pVB, NULL)))
 		return E_FAIL;
 
 	g_pTexHeight->LockRect(0, &d3drc, NULL, D3DLOCK_READONLY);
@@ -88,7 +88,7 @@ HRESULT Terrain::InitIB(LPDIRECT3DDEVICE9& g_pd3dDevice)
 }
 HRESULT Terrain::InitGeometry(LPDIRECT3DDEVICE9& g_pd3dDevice)
 {
-	D3DXMatrixIdentity(&g_matAni);
+	//D3DXMatrixIdentity(&g_matAni);
 
 	if (FAILED(InitTexture(g_pd3dDevice)))
 		return E_FAIL;
@@ -105,7 +105,7 @@ void Terrain::DrawMesh(LPDIRECT3DDEVICE9& g_pd3dDevice)
 {
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, &finalmat);
 	g_pd3dDevice->SetStreamSource(0, g_pVB, 0, sizeof(TERRAINVERTEX));
-	g_pd3dDevice->SetFVF(D3DFVF_CUSTOMVVERTEX);
+	g_pd3dDevice->SetFVF(D3DFVF_TEXTUREVERTEX);
 	g_pd3dDevice->SetIndices(g_pIB);
 	g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, g_cxHeight * g_czHeight, 0, (g_cxHeight - 1) * (g_czHeight - 1) * 2);
 }

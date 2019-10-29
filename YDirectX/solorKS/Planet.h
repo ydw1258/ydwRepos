@@ -9,8 +9,6 @@ class Planet
 public:
 	Planet();
 	~Planet();
-
-
 private:
 	float MyAngleSpeed;
 	float MyPAngleSpeed;
