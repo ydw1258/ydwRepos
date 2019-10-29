@@ -119,9 +119,9 @@ void Terrain::Render(LPDIRECT3DDEVICE9& g_pd3dDevice)
 	g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
 	g_pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
 
-	D3DXMatrixScaling(&s, sv.x, sv.y, sv.z);
-	D3DXMatrixTranslation(&t, tv.x, tv.y, tv.z);
-	finalmat = s * t;
+	D3DXMatrixScaling(&sizeMat, sizeVector.x, sizeVector.y, sizeVector.z);
+	D3DXMatrixTranslation(&transformMat, transformVector.x, transformVector.y, transformVector.z);
+	finalmat = sizeMat * transformMat;
 
 	DrawMesh(g_pd3dDevice);
 }

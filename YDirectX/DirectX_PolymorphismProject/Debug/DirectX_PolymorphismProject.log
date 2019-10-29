@@ -1,5 +1,22 @@
-﻿  GameFrameWork.cpp
-c:\users\administrator\documents\github\ydwrepos\ydirectx\directx_polymorphismproject\triangle.h(7): warning C4005: 'D3DFVF_CUSTOMVERTEX': 매크로 재정의
-  c:\users\administrator\documents\github\ydwrepos\ydirectx\directx_polymorphismproject\custom_datatypes.h(25): note: 'D3DFVF_CUSTOMVERTEX'의 이전 정의를 참조하십시오.
-c:\users\administrator\documents\github\ydwrepos\ydirectx\directx_polymorphismproject\zcamera.h(32): warning C4316: 'ZCamera': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-  DirectX_PolymorphismProject.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\YDirectX\Debug\DirectX_PolymorphismProject.exe
+﻿  Cube.cpp
+  GameFrameWork.cpp
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\Triangle.h(7): warning C4005: 'D3DFVF_TEXTUREVERTEX': 매크로 재정의
+  F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\CUSTOM_DATATYPES.h(26): note: 'D3DFVF_TEXTUREVERTEX'의 이전 정의를 참조하십시오.
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\ZCamera.h(32): warning C4316: 'ZCamera': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
+  Terrain.cpp
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\Terrain.cpp(74): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\Terrain.cpp(75): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\Terrain.cpp(76): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\Terrain.cpp(79): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\Terrain.cpp(80): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\Terrain.cpp(81): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Transform.cpp
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\Transform.cpp(36): warning C4101: 'z' :참조되지 않은 지역 변수입니다.
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\Transform.cpp(36): warning C4101: 'y' :참조되지 않은 지역 변수입니다.
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\Transform.cpp(36): warning C4101: 'x' :참조되지 않은 지역 변수입니다.
+  main.cpp
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\ZCamera.h(32): warning C4316: 'ZCamera': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
+F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\Triangle.h(7): warning C4005: 'D3DFVF_TEXTUREVERTEX': 매크로 재정의
+  F:\ydwRepos\YDirectX\DirectX_PolymorphismProject\CUSTOM_DATATYPES.h(26): note: 'D3DFVF_TEXTUREVERTEX'의 이전 정의를 참조하십시오.
+  코드를 생성하고 있습니다...
+  DirectX_PolymorphismProject.vcxproj -> F:\ydwRepos\YDirectX\Debug\DirectX_PolymorphismProject.exe

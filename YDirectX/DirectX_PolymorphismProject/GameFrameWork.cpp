@@ -12,11 +12,11 @@ void GameFrameWork::Init()
 	g_dwMouseX = pt.x;
 	g_dwMouseY = pt.y;
 }
-HRESULT GameFrameWork::InitD3D(HWND& hWnd)
+HRESULT GameFrameWork::InitD3D(HWND& _hWnd)
 {
 	if (NULL == (g_pD3D = Direct3DCreate9(D3D_SDK_VERSION)))
 		return E_FAIL;
-	g_hWnd = hWnd;
+	hWnd = _hWnd;
 
 	D3DPRESENT_PARAMETERS d3dpp;
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
@@ -56,7 +56,12 @@ void GameFrameWork::SetupCamera()
 	g_pd3dDevice->SetTransform(D3DTS_VIEW, &matView);
 
 	D3DXMATRIXA16 matProj;
-	D3DXMatrixPerspectiveLH(&matProj, D3DX_PI / 4, 1.0f, 1.0f, 1000.0f);
+
+	RECT rect;
+	GetClientRect(hWnd, &rect);
+
+	//투영
+	D3DXMatrixPerspectiveLH(&matProj, D3DX_PI / 4, (float)rect.bottom / (float)rect.right, 1.0f, 1000.0f);
 	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 
 	ZCamera::GetInstance()->SetView(&vEyePt, &vLookatPt, &vUpVec);
@@ -163,10 +168,10 @@ void GameFrameWork::ProcessMouse()
 	// 마우스를 윈도우의 중앙으로 초기화
 //	SetCursor( NULL );	// 마우스를 나타나지 않게 않다.
 	RECT	rc;
-	GetClientRect(g_hWnd, &rc);
+	GetClientRect(hWnd, &rc);
 	pt.x = (rc.right - rc.left) / 2;
 	pt.y = (rc.bottom - rc.top) / 2;
-	ClientToScreen(g_hWnd, &pt);
+	ClientToScreen(hWnd, &pt);
 	SetCursorPos(pt.x, pt.y);
 	g_dwMouseX = pt.x;
 	g_dwMouseY = pt.y;
@@ -178,8 +183,17 @@ void GameFrameWork::ProcessMouse()
  */
 void GameFrameWork::ProcessKey(void)
 {
-	if (GetAsyncKeyState('A')) ZCamera::GetInstance()->MoveLocalZ(0.5f);	// 카메라 전진!
-	if (GetAsyncKeyState('Z')) ZCamera::GetInstance()->MoveLocalZ(-0.5f);	// 카메라 후진!
+	//if (GetAsyncKeyState('A')) ZCamera::GetInstance()->MoveLocalZ(0.5f);	// 카메라 전진!
+	//if (GetAsyncKeyState('Z')) ZCamera::GetInstance()->MoveLocalZ(-0.5f);	// 카메라 후진!
+/*
+	if (GetAsyncKeyState('W'))
+		
+	if (GetAsyncKeyState('A'))
+		
+	if (GetAsyncKeyState('S'))
+
+	if (GetAsyncKeyState('D'))
+*/
 }
 GameFrameWork::GameFrameWork(){}
 GameFrameWork::~GameFrameWork(){}

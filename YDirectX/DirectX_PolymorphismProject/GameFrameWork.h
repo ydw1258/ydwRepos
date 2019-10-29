@@ -25,7 +25,7 @@ class GameFrameWork
 private:
 	Scene scene = UNIVERSE;
 
-	HWND						g_hWnd = NULL;
+	HWND						hWnd = NULL;
 	LPDIRECT3D9					g_pD3D = NULL;
 
 	Cube cube;
