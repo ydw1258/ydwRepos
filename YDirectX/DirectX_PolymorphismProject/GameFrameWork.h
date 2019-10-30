@@ -7,7 +7,7 @@
 #include "CUSTOM_DATATYPES.h"
 #include "ZCamera.h"
 #include "Ground.h"
-
+#include "Sphere.h"
 //dx 그래픽 카드에 명령
 //a 그릴 옵션 a draw b 그릴 옵션 b draw
 
@@ -29,6 +29,7 @@ private:
 	LPDIRECT3D9					g_pD3D = NULL;
 
 	Cube cube;
+	Sphere sphere;
 	/*
 	LPDIRECT3DVERTEXBUFFER9		g_pVB = NULL;
 	LPDIRECT3DINDEXBUFFER9		g_pIB = NULL;

@@ -4,7 +4,6 @@
 #include "ZCamera.h"
 #include "SAFE_DELETE.h"
 
-#define MAINBODY
 #define WINDOW_W		500
 #define WINDOW_H		500
 #define WINDOW_TITLE	"HeightMap-TList"
@@ -18,7 +17,6 @@ LPDIRECT3DINDEXBUFFER9		g_pIB = NULL;
 LPDIRECT3DTEXTURE9			g_pTexHeight = NULL;
 LPDIRECT3DTEXTURE9			g_pTexDiffuse = NULL;
 D3DXMATRIXA16				g_matAni;
-D3DXMATRIXA16				g_cube;
 DWORD						g_cxHeight = 0;
 DWORD						g_czHeight = 0;
 DWORD						g_dwMouseX = 0;
@@ -30,11 +28,7 @@ struct CUSTOMVERTEX
 	D3DXVECTOR3	n;
 	D3DXVECTOR3	t;
 };
-struct CUSTOMVECTEX
-{
-	float x, y, z;
-	DWORD color;
-};
+
 #define D3DFVF_CUSTOMVVERTEX (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX1)
 
 struct MYINDEX
@@ -58,20 +52,15 @@ HRESULT InitD3D(HWND hWnd)
 	if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
 		D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &g_pd3dDevice)))
 		return E_FAIL;
-	//D3DCULL_CCW 반시계 방향 렌더
+
 	g_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 
 	return S_OK;
-	
-
 }
 
 HRESULT InitTexture()
 {
-	//png, jpg 압축모델 : 
-	//png 비손실 압축
-	//jpg 손실압축 : 원본이 손상 복원이 힘듬 - 게임에서 잘 안씀
 	if (FAILED(D3DXCreateTextureFromFileEx(g_pd3dDevice, BMP_HEIGHTMAP, D3DX_DEFAULT, D3DX_DEFAULT,
 		D3DX_DEFAULT, 0, D3DFMT_X8R8G8B8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL,
 		&g_pTexHeight)))
@@ -88,17 +77,14 @@ HRESULT InitVB()
 	D3DSURFACE_DESC ddsd;
 	D3DLOCKED_RECT	d3drc;
 
-	g_pTexHeight->GetLevelDesc(0, &ddsd); //GetLevelDesc (Description; 설명) 
+	g_pTexHeight->GetLevelDesc(0, &ddsd);
 	g_cxHeight = ddsd.Width;
 	g_czHeight = ddsd.Height;
-
 	ZFLog::GetInstance()->Log("Texturel Size:[%d,%d]", g_cxHeight, g_czHeight);
-
 	if (FAILED(g_pd3dDevice->CreateVertexBuffer(ddsd.Width*ddsd.Height * sizeof(CUSTOMVERTEX), 0,
 		D3DFVF_CUSTOMVVERTEX, D3DPOOL_DEFAULT, &g_pVB, NULL)))
 		return E_FAIL;
 
-	//Lock하고 복사
 	g_pTexHeight->LockRect(0, &d3drc, NULL, D3DLOCK_READONLY);
 	VOID* pVertices;
 	if (FAILED(g_pVB->Lock(0, g_cxHeight * g_czHeight * sizeof(CUSTOMVERTEX), (void**)&pVertices, 0)))
@@ -106,14 +92,12 @@ HRESULT InitVB()
 
 	CUSTOMVERTEX v;
 	CUSTOMVERTEX* pV = (CUSTOMVERTEX*)pVertices;
-
 	for (DWORD z = 0; z < g_czHeight; z++)
 	{
 		for (DWORD x = 0; x < g_cxHeight; x++)
 		{
 			v.p.x = (float)x - g_cxHeight / 2.0f;
 			v.p.z = -((float)z - g_czHeight / 2.0f);
-			//d3drc.Pitch 실제 데이터
 			v.p.y = ((float)(*((LPDWORD)d3drc.pBits + x + z * (d3drc.Pitch / 4)) & 0x0000ff)) / 10.0f;
 			v.n.x = v.p.x;
 			v.n.y = v.p.y;
@@ -168,7 +152,7 @@ void SetupCamera()
 	D3DXMatrixIdentity(&matWorld);
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, &matWorld);
 
-	D3DXVECTOR3 vEyePt(0.0f, 100.0f, -(float)g_czHeight);
+	D3DXVECTOR3 vEyePt(0.0f, 50.0f, -50.0f);
 	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
 	D3DXMATRIXA16 matView;
@@ -176,11 +160,8 @@ void SetupCamera()
 	g_pd3dDevice->SetTransform(D3DTS_VIEW, &matView);
 
 	D3DXMATRIXA16 matProj;
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4, 1.0f, 1.0f, 1000.0f);
+	D3DXMatrixPerspectiveLH(&matProj, D3DX_PI / 4, 1.0f, 1.0f, 1000.0f);
 	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &matProj);
-
-	ZCamera::GetInstance()->SetView(&vEyePt, &vLookatPt, &vUpVec);
-
 }
 
 
@@ -201,6 +182,7 @@ HRESULT InitGeometry()
 	GetCursorPos(&pt);
 	g_dwMouseX = pt.x;
 	g_dwMouseY = pt.y;
+	
 
 	return S_OK;
 }
@@ -303,7 +285,9 @@ VOID Animate()
 	/// Y축 회전행렬
 	//	D3DXMatrixRotationY( &g_matAni, d / 1000.0f );
 	D3DXMatrixIdentity(&g_matAni);
+
 	LogFPS();
+
 	SetupLights();
 	ProcessInputs();
 }

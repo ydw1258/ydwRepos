@@ -39,11 +39,8 @@ HRESULT InitD3D(HWND hWnd)
 	{
 		return E_FAIL;
 	}
-
 	g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-
 
 	return S_OK;
 }
@@ -87,20 +84,7 @@ void SetupMareices()
 	//D3DXMatrixScaling()
 	D3DXMatrixRotationY(&matWorld, fAngle);
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-
 	//wasd
-
-	D3DXVECTOR3 vEyept(0.0f, 3.0f, -5.0f);
-	D3DXVECTOR3 vLootatPt(0.0f, 0.0f, 0.0f);
-	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
-	D3DXMATRIXA16 matView;
-	D3DXMatrixLookAtLH(&matView, &vEyept, &vLootatPt, &vUpVec);
-	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
-
-	D3DXMATRIXA16 matProj;
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4, 1.0f, 1.0f, 100.0f);
-
-	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
 void Render()
@@ -109,6 +93,7 @@ void Render()
 		return;
 
 	g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+	
 
 	if (SUCCEEDED(g_pD3DDevice->BeginScene()))
 	{
@@ -148,13 +133,28 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	hWnd = CreateWindow(g_szClassName, g_szClassName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
 		CW_USEDEFAULT, CW_USEDEFAULT, NULL, (HMENU)NULL, hInstance, NULL);
 
-
+	
 	if (SUCCEEDED(InitD3D(hWnd)))
 	{
 		if (SUCCEEDED(InitGeometry()))
 		{
 			ShowWindow(hWnd, nCmdShow);
 			UpdateWindow(hWnd);
+
+			//朝五虞 実特
+			D3DXVECTOR3 vEyept(0.0f, 3.0f, -5.0f);
+			D3DXVECTOR3 vLootatPt(0.0f, 0.0f, 0.0f);
+			D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+
+			D3DXMATRIXA16 matView;
+			D3DXMatrixLookAtLH(&matView, &vEyept, &vLootatPt, &vUpVec);
+			g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+
+			D3DXMATRIXA16 matProj;
+			D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4, 1.0f, 1.0f, 100.0f);
+
+			g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+			//
 
 			ZeroMemory(&Message, sizeof(Message));
 			while (Message.message != WM_QUIT)

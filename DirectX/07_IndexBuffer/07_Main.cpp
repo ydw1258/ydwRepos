@@ -15,6 +15,7 @@ LPDIRECT3DDEVICE9			g_pD3DDevice = NULL;
 LPDIRECT3DVERTEXBUFFER9		g_pVB = NULL;
 LPDIRECT3DINDEXBUFFER9		g_pIB = NULL;
 
+
 struct CUSTOMVECTEX
 {
 	float x, y, z;
@@ -104,7 +105,6 @@ HRESULT InitIB()
 	{
 		return E_FAIL;
 	}
-		
 
 	void* pIndices;
 	if (FAILED(g_pIB->Lock(0, sizeof(indeices),(void**)&pIndices , 0 )))
@@ -129,7 +129,6 @@ void SetupMareices()
 	FLOAT fAngle = iTime * (2.0f * D3DX_PI) / 1000.0f;
 	D3DXMatrixRotationY(&matWorld, fAngle);
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-
 	//wasd
 
 	D3DXVECTOR3 vEyept(0.0f, 3.0f, -5.0f);
@@ -143,6 +142,7 @@ void SetupMareices()
 	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4, 1.0f, 1.0f, 100.0f);
 
 	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+
 }
 
 void Render()
@@ -189,7 +189,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	hWnd = CreateWindow(g_szClassName, g_szClassName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
 		CW_USEDEFAULT, CW_USEDEFAULT, NULL, (HMENU)NULL, hInstance, NULL);
 
-
 	if (SUCCEEDED(InitD3D(hWnd)))
 	{
 		if (SUCCEEDED(InitVB()))
@@ -212,6 +211,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 				}
 			}
 		}
+
 	}
 
 	CleanUp();

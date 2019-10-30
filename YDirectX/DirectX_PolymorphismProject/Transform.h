@@ -11,6 +11,8 @@ enum DIRECTION
 };
 class Transform
 {
+private:
+	Transform* parent;
 public:
 	D3DXVECTOR3 sizeVector = {10, 10, 10};
 	D3DXVECTOR3 rotateVector = {120, 40, 50};
@@ -28,10 +30,9 @@ public:
 	D3DXVECTOR3 Right;
 
 	void Move(DIRECTION direction);
-	void RotateY(DIRECTION direction);
+	void RotateY(float degree);
 
 	void TransformUpdate();
-	Transform();
+	Transform(Transform* _parent = NULL);
 	~Transform();
 };
-

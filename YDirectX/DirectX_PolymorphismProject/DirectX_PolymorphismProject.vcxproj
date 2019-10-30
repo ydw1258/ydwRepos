@@ -23,13 +23,13 @@
     <ProjectGuid>{FA12CA2C-77C1-42C4-8D47-CBFBD9971B86}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>DirectXPolymorphismProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -162,6 +162,8 @@
     <ClCompile Include="GlobalFunc.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Planet.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpinTriangle.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -180,7 +182,9 @@
     <ClInclude Include="GameFrameWork.h" />
     <ClInclude Include="GlobalFunc.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="Planet.h" />
     <ClInclude Include="SAFE_DELETE.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpinTriangle.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Texture.h" />

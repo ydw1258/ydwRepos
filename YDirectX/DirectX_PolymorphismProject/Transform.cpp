@@ -18,17 +18,9 @@ void Transform::Move(DIRECTION direction)
 	}
 }
 
-void Transform::RotateY(DIRECTION direction)
+void Transform::RotateY(float degree)
 {
-	switch (direction)
-	{
-	case LEFT:
-		break;
-	case RIGHT:
-		break;
-	default:
-		break;
-	}
+	
 }
 
 void Transform::TransformUpdate()
@@ -59,9 +51,18 @@ void Transform::TransformUpdate()
 
 	//vertex 정점 전부에 finalmat을 곱함
 	finalmat = sizeMat * rotmat * transformMat;
+
+	//부모의 좌표 변환도 적용
+	while (parent != nullptr)
+	{
+		finalmat = parent->sizeMat * parent->rotateMatX
+			* parent->rotateMatY * parent->rotateMatZ * parent->transformMat;
+
+		parent = parent->parent;
+	}
 }
 
-Transform::Transform()
+Transform::Transform(Transform* _parent)
 {
 	D3DXMatrixIdentity(&sizeMat);
 	D3DXMatrixIdentity(&rotateMatX);
@@ -69,6 +70,8 @@ Transform::Transform()
 	D3DXMatrixIdentity(&rotateMatZ);
 	D3DXMatrixIdentity(&transformMat);
 	D3DXMatrixIdentity(&finalmat);
+
+	parent = _parent;
 }
 
 

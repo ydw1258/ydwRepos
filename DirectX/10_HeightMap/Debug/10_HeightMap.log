@@ -1,9 +1,9 @@
 ﻿  10_Main.cpp
-c:\users\administrator\documents\github\ydwrepos\directx\common\zcamera.h(32): warning C4316: 'ZCamera': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
-c:\users\administrator\documents\github\ydwrepos\directx\10_heightmap\10_main.cpp(149): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\directx\10_heightmap\10_main.cpp(150): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\directx\10_heightmap\10_main.cpp(151): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\directx\10_heightmap\10_main.cpp(154): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\directx\10_heightmap\10_main.cpp(155): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\administrator\documents\github\ydwrepos\directx\10_heightmap\10_main.cpp(156): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  10_HeightMap.vcxproj -> C:\Users\Administrator\Documents\GitHub\ydwRepos\DirectX\Debug\10_HeightMap.exe
+c:\svn\강사님\directx\common\zcamera.h(32): warning C4316: 'ZCamera': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
+c:\svn\강사님\directx\10_heightmap\10_main.cpp(133): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\svn\강사님\directx\10_heightmap\10_main.cpp(134): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\svn\강사님\directx\10_heightmap\10_main.cpp(135): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\svn\강사님\directx\10_heightmap\10_main.cpp(138): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\svn\강사님\directx\10_heightmap\10_main.cpp(139): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\svn\강사님\directx\10_heightmap\10_main.cpp(140): warning C4244: '=': 'unsigned long'에서 'WORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  10_HeightMap.vcxproj -> C:\Svn\강사님\DirectX\Debug\10_HeightMap.exe

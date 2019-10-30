@@ -46,6 +46,10 @@
     <ClCompile Include="Ground.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Planet.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFrameWork.h">
@@ -99,6 +103,10 @@
     <ClInclude Include="Ground.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Planet.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameFrameWork">

@@ -11,6 +11,8 @@ void GameFrameWork::Init()
 	GetCursorPos(&pt);
 	g_dwMouseX = pt.x;
 	g_dwMouseY = pt.y;
+	
+	sphere.Init(g_pd3dDevice);
 }
 HRESULT GameFrameWork::InitD3D(HWND& _hWnd)
 {
@@ -77,6 +79,7 @@ void GameFrameWork::Render()
 	{
 		cube.Render(g_pd3dDevice);
 		ground.Render();
+		sphere.Render();
 		g_pd3dDevice->EndScene();
 	}
 
@@ -164,7 +167,7 @@ void GameFrameWork::ProcessMouse()
 	ZCamera::GetInstance()->RotateLocalY(dx * fDelta);	// 마우스의 X축 회전값은 3D world의  Y축 회전값
 	D3DXMATRIXA16*	pmatView = ZCamera::GetInstance()->GetViewMatrix();		// 카메라 행렬을 얻는다.
 	g_pd3dDevice->SetTransform(D3DTS_VIEW, pmatView);			// 카메라 행렬 셋팅
-
+	cube.RotateY(dx * fDelta);
 	// 마우스를 윈도우의 중앙으로 초기화
 //	SetCursor( NULL );	// 마우스를 나타나지 않게 않다.
 	RECT	rc;
@@ -202,9 +205,6 @@ GameFrameWork::~GameFrameWork(){}
 HRESULT GameFrameWork::InitGeometry()
 {
 	ground.Init(g_pd3dDevice);
-
-	
-	
 
 	return S_OK;
 }

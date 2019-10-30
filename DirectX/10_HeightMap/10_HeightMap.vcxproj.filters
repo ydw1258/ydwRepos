@@ -24,9 +24,6 @@
     <ClCompile Include="..\Common\ZFLog.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Billboard.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\ZCamera.h">
@@ -34,9 +31,6 @@
     </ClInclude>
     <ClInclude Include="..\Common\ZFLog.h">
       <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Billboard.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

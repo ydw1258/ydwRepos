@@ -1,0 +1,99 @@
+﻿  ASEParser.cpp
+c:\svn\강사님\directx\aseparser\aseparser.cpp(24): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(73): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(76): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(79): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(82): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(97): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(112): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(144): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(149): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(156): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(164): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(172): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(178): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(184): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(219): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(311): warning C4316: 'MeshData': 힙에 할당된 개체가 16에 맞추어져 있지 않을 수도 있습니다
+c:\svn\강사님\directx\aseparser\aseparser.cpp(321): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(356): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(383): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(386): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(389): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(392): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(396): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(400): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(404): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(408): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(412): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(416): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(429): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(432): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(461): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(466): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(477): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(507): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(532): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(551): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(555): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(560): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(565): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(584): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(604): warning C4477: 'sscanf' : 서식 문자열 '%d'에 'int *' 형식의 인수가 필요하지만 variadic 인수 18의 형식이 'char *'입니다.
+  c:\svn\강사님\directx\aseparser\aseparser.cpp(604): note: 서식 문자열에서 '%hhd'을(를) 사용하는 것이 좋습니다.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(614): warning C4474: 'sscanf' : 서식 문자열에 전달된 인수가 너무 많습니다.
+  c:\svn\강사님\directx\aseparser\aseparser.cpp(614): note: 자리 표시자 및 해당 매개 변수에는 variadic 인수가 18개 필요하지만 19개가 제공되었습니다.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(604): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(630): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(640): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(645): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(656): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(666): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+c:\svn\강사님\directx\aseparser\aseparser.cpp(672): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(2263): note: 'sscanf' 선언을 참조하십시오.
+  ASEParser.vcxproj -> C:\Svn\강사님\DirectX\Debug\ASEParser.exe

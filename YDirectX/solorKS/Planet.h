@@ -2,8 +2,6 @@
 #include <d3dx9.h>
 #include "SolarCommon.h"
 
-
-
 class Planet
 {
 public:
@@ -18,8 +16,6 @@ private:
 	D3DXMATRIXA16	MyTransMat;
 
 	Planet* MyParent;
-
-
 public:
 	void set_pos(FLOAT _X, FLOAT _Y, FLOAT _Z)
 	{
@@ -47,4 +43,3 @@ public:
 
 	virtual void animate();
 };
-

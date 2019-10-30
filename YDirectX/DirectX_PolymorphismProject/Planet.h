@@ -3,12 +3,12 @@
 #include <mmsystem.h>
 #include "SAFE_DELETE.h"
 #include "CUSTOM_DATATYPES.h"
-
+#include "Transform.h"
 #pragma comment(lib , "d3d9.lib")
 #pragma comment(lib , "d3dx9.lib")
 #pragma comment(lib , "winmm.lib")
 
-class Planet
+class Planet : public Transform
 {
 private:
 
@@ -18,7 +18,9 @@ public:
 	void Update();
 	void SetupMatrices();
 	void Release();
-	HRESULT InitVB();
-	HRESULT InitIB();
+	//HRESULT InitVB();
+	//HRESULT InitIB();
 	void DrawMesh();
+	Planet();
+	~Planet();
 };

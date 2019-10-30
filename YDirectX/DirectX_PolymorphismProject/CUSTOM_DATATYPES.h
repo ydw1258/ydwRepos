@@ -16,7 +16,6 @@ struct CubeVERTEX
 {
 	D3DXVECTOR3 position; // The transformed position for the vertex.
 	DWORD color;        // The vertex color.
-	
 };
 struct MYINDEX
 {
@@ -37,7 +36,3 @@ struct TERRAINVERTEX
 	D3DXVECTOR3	n;
 	D3DXVECTOR3	t;
 };
-
-
-
-

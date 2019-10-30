@@ -170,15 +170,15 @@ VOID Animate()
 	if (t > 1.0f)
 		t = 0.0f;
 
-
 	x = Linear(g_aniPos[0].x, g_aniPos[1].x, t);
 	y = Linear(g_aniPos[0].y, g_aniPos[1].y, t);
 	z = Linear(g_aniPos[0].z, g_aniPos[1].z, t);
-	D3DXMatrixTranslation(&g_matTMParent, x, y, z);
 
-	//D3DXVECTOR3 v;
-	//D3DXVec3Lerp(&v, &g_aniPos[0], &g_aniPos[1], t);
-	//D3DXMatrixTranslation(&g_matTMParent, v.x, v.y, v.z);
+	D3DXMatrixTranslation(&g_matTMParent, x, y, z);
+	
+	//짐벌락 해결을 위해 사원수 사용
+	//사원수를 매트릭스로 바꿔줌.
+	//선형 보간 함수
 
 	D3DXQuaternionSlerp(&quat, &g_aniRot[0], &g_aniRot[1], t);
 	D3DXMatrixRotationQuaternion(&g_matRParent, &quat);
@@ -207,7 +207,6 @@ void DrawMesh(D3DXMATRIXA16* pMat)
 VOID Render()
 {
 	D3DXMATRIXA16 matWorld;
-
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 
 	Animate();
@@ -225,7 +224,6 @@ VOID Render()
 
 	g_pd3dDevice->Present(NULL, NULL, NULL, NULL);
 }
-
 
 char g_szClassName[256] = "BasicFrame";
 #define ROT_DELTA 0.1f

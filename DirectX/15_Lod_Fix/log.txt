@@ -313,3 +313,43 @@
 (date[10/25/19] time[17:03:08]) : Wireframe:0
 (date[10/25/19] time[17:03:08]) : HideFrustum:1
 (date[10/25/19] time[17:03:08]) : LockFrustum:0
+(date[10/28/19] time[13:49:12]) : F-Killer Logging Started...
+(date[10/28/19] time[13:49:12]) : Using 16bit index buffer...
+(date[10/28/19] time[13:49:12]) : FPS:0
+(date[10/28/19] time[13:49:12]) : Wireframe:0
+(date[10/28/19] time[13:49:12]) : HideFrustum:1
+(date[10/28/19] time[13:49:12]) : LockFrustum:0
+(date[10/28/19] time[13:49:13]) : FPS:60
+(date[10/28/19] time[13:49:13]) : Wireframe:0
+(date[10/28/19] time[13:49:13]) : HideFrustum:1
+(date[10/28/19] time[13:49:13]) : LockFrustum:0
+(date[10/28/19] time[13:49:14]) : FPS:59
+(date[10/28/19] time[13:49:14]) : Wireframe:0
+(date[10/28/19] time[13:49:14]) : HideFrustum:1
+(date[10/28/19] time[13:49:14]) : LockFrustum:0
+(date[10/28/19] time[13:49:15]) : FPS:60
+(date[10/28/19] time[13:49:15]) : Wireframe:0
+(date[10/28/19] time[13:49:15]) : HideFrustum:1
+(date[10/28/19] time[13:49:15]) : LockFrustum:0
+(date[10/28/19] time[13:49:16]) : FPS:60
+(date[10/28/19] time[13:49:16]) : Wireframe:0
+(date[10/28/19] time[13:49:16]) : HideFrustum:1
+(date[10/28/19] time[13:49:16]) : LockFrustum:0
+(date[10/28/19] time[13:49:17]) : FPS:60
+(date[10/28/19] time[13:49:17]) : Wireframe:0
+(date[10/28/19] time[13:49:17]) : HideFrustum:1
+(date[10/28/19] time[13:49:17]) : LockFrustum:0
+(date[10/28/19] time[13:49:18]) : FPS:60
+(date[10/28/19] time[13:49:18]) : Wireframe:0
+(date[10/28/19] time[13:49:18]) : HideFrustum:1
+(date[10/28/19] time[13:49:18]) : LockFrustum:0
+(date[10/28/19] time[14:05:16]) : F-Killer Logging Started...
+(date[10/28/19] time[14:05:16]) : Using 16bit index buffer...
+(date[10/28/19] time[14:05:16]) : FPS:0
+(date[10/28/19] time[14:05:16]) : Wireframe:0
+(date[10/28/19] time[14:05:16]) : HideFrustum:1
+(date[10/28/19] time[14:05:16]) : LockFrustum:0
+(date[10/28/19] time[14:05:17]) : FPS:60
+(date[10/28/19] time[14:05:17]) : Wireframe:0
+(date[10/28/19] time[14:05:17]) : HideFrustum:1
+(date[10/28/19] time[14:05:17]) : LockFrustum:0
