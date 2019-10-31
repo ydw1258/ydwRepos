@@ -122,7 +122,7 @@ LPD3DXEFFECT LoadShader(const char* fileName)
 LPD3DXMESH LoadModel(const char* fileName)
 {
 	LPD3DXMESH ret = NULL;
-	if (FAILED(D3DXLoadMeshFromX(fileName, D3DXMESH_SYSTEMMEM, g_pD3DDevice,
+	if (FAILED(D3DXLoadMeshFromX(fileびびびびびびたたName, D3DXMESH_SYSTEMMEM, g_pD3DDevice,
 		NULL, NULL, NULL, NULL, &ret)))
 	{
 		OutputDebugString("乞季 稽漁 叔鳶 : ");
